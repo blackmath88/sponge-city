@@ -319,3 +319,48 @@ await app.load(selection);
 - **Status, not feasibility.** Each intervention is `candidate`, `requires-investigation`, `excluded` or `not-applicable` from the PlaceModel's context and the catalogue's rules. With unknown utilities, nothing is ever a candidate.
 - **Geometry-only effects.** Sealed, permeable and planted area, parking spaces and trees. Design areas are `assumed` and shown next to the effect. Runoff, storage, infiltration and cooling are listed as **not modelled**.
 - **No AI in the loop.** Nothing in `runtime/` calls a model.
+
+---
+
+## State engine (next slice)
+
+Status: runnable with mocks. Conceptual centre:
+
+> **A place has a state. An intervention changes that state. Effects emerge from the resulting state under a scenario.**
+
+```text
+PlaceModel 0.1 ──placeToState──▶ StateModel 0.2 ─┬─ evaluateState(·, scenario) ─▶ baselineEffects ─┐
+                                                 │                                                  ├─ compareEffects ─▶ effectDelta ─▶ renderer
+intervention knowledge ──compileIntervention──▶ operations ─▶ applyStateOperations ─▶ scenarioState ─▶ scenarioEffects ─┘
+```
+
+| Path | Role |
+|---|---|
+| `contracts/state-model.schema.json` | StateModel `adaptive-state/0.2`: elements with surface, subsurface, vegetation, thermal drivers; typed routing `connections`; evidence on every value |
+| `contracts/scenario.schema.json` | Scenarios `adaptive-scenarios/0.1` |
+| `contracts/effect-result.schema.json` | Effects `adaptive-effects/0.1`: low / medium / high / unknown / not-applicable with drivers |
+| `contracts/intervention-knowledge.schema.json` | Researcher-facing `intervention-knowledge/0.1`; no renderer, layout or execution fields (`additionalProperties: false`) |
+| `catalogues/surfaces.json` | 12 surface archetypes (the 11 requested plus `sealed-roof`) with qualitative defaults, all `assumed` |
+| `catalogues/scenarios.json` | `heavy-rain`, `hot-day`, `hot-drought` |
+| `catalogues/intervention-knowledge.json` | depave, permeable parking, curb cut, tree trench (Baumrigole), rain garden, green roof |
+| `runtime/place-to-state.js` | Compatibility adapter PlaceModel 0.1 → StateModel 0.2 |
+| `runtime/state-model.js` | `connectionsFrom`, `connectionsTo`, `replaceConnection`, `downstreamPaths`, `applyStateOperations` (internal `intervention-execution/0.2`) |
+| `runtime/effect-engine.js` | `evaluateState`, `compareEffects`; the V0 rules and their thresholds are in `RULES` |
+| `runtime/intervention-compiler.js` | `evaluateKnowledge`, `compileIntervention`; internal recipe library |
+| `runtime/state-geometry.js` | Geometry effects on state (same shape as PR #3's) |
+| `modules/mock-knowledge-provider.js` | **mock**: serves the knowledge catalogue |
+| `modules/street-slice-adapter.js` | Seam: state + effects + scenario → Street Slice visual tokens |
+| `tests/state-engine.test.mjs` | 14 tests for the state layer |
+
+How the engine stays honest:
+
+- **Unknown as an interval.** Where an input is unknown, the engine computes the best and worst case. Same category → `derived`; different → `unknown` with the inputs it depends on. In the demo, the unknown tram surface makes runoff unknown once interventions bring the sealed share near a threshold; correcting it in "Does this look right?" resolves it.
+- **Routing is state.** A curb cut is one `replace-connection`, no material change, and it lowers sewer load.
+- **Assumed defaults stay visible.** Archetype properties, drainage routing (PlaceModel 0.1 has none), tree canopy and design areas are `assumed`. A provider that sends `connections` gets them used as `observed`.
+- **Thresholds are prototype assumptions**, written into each result's `rule`. They are not calibrated.
+
+### Compatibility
+
+- `placeProvider.getPlace(selection)` and PlaceModel 0.1 are unchanged. The data team may optionally add `connections`.
+- The PR #3 executable catalogue still runs: pass `interventionProvider` instead of `knowledgeProvider` (demo: `?mode=execution-0.1`). PR #3's 15 tests are untouched and pass.
+- adaptive-view/0.2 is a superset of 0.1 (`contracts/renderer-contract.md`).

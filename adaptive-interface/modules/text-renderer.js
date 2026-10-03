@@ -12,10 +12,22 @@ export function renderText(view) {
   for (const el of view.scenario.elements) {
     lines.push(`  ${el.type.padEnd(11)} ${el.label.padEnd(30)} surface=${show(el.surface)} [${el.surface.state}] area=${show(el.area_m2)} [${el.area_m2.state}] present=${show(el.presence)}`);
   }
+  if (view.scenarioState) {
+    const added = view.scenarioState.elements.filter(el => el.origin?.startsWith("intervention"));
+    for (const el of added) lines.push(`  + ${el.type.padEnd(9)} ${el.label.padEnd(30)} (scenario, assumed)`);
+  }
   lines.push("", "INTERVENTIONS");
   for (const item of view.interventions) lines.push(`  ${item.id.padEnd(18)} ${item.status.padEnd(23)} ${item.reason}`);
   lines.push("", "EFFECTS (today → scenario, change)");
   for (const effect of view.effects) lines.push(`  ${effect.label.padEnd(16)} ${show(effect.baseline).padStart(8)} → ${show(effect.scenario).padStart(8)}  Δ ${show(effect.change)} [${effect.change.state}]`);
+  if (view.scenarioEffects) {
+    lines.push("", `TENDENCIES (${view.scenario_id}; today → scenario)`);
+    for (const [key, after] of Object.entries(view.scenarioEffects.effects)) {
+      const before = view.baselineEffects.effects[key];
+      if (after.state === "not-applicable") continue;
+      lines.push(`  ${key.padEnd(30)} ${String(before.value ?? before.state).padStart(8)} → ${String(after.value ?? after.state).padStart(8)}  ${view.effectDelta.changes[key].direction}`);
+    }
+  }
   lines.push("", "UNKNOWNS");
   for (const item of view.unknowns) lines.push(`  ${item.scope}: ${item.label}`);
   return lines.join("\n");

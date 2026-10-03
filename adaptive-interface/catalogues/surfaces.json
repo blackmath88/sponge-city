@@ -1,0 +1,40 @@
+{
+  "schema_version": "surface-archetypes/0.1",
+  "note": "Qualitative prototype defaults. Every property taken from here enters the StateModel as state 'assumed' unless stronger evidence replaces it. No value here is measured.",
+  "scales": {
+    "sealed_fraction": ["none", "low", "medium", "high"],
+    "permeability": ["low", "medium", "high"],
+    "vegetation_fraction": ["none", "low", "medium", "high"],
+    "depression_storage": ["low", "medium", "high"],
+    "albedo": ["low", "medium-low", "medium", "medium-high", "high"],
+    "storage_capacity": ["low", "medium", "high"],
+    "rootable_volume": ["none", "low", "medium", "high"]
+  },
+  "archetypes": [
+    { "id": "asphalt", "label": "Asphalt", "class": "sealed",
+      "properties": { "sealed_fraction": "high", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "low", "albedo": "medium-low", "storage_capacity": "low", "rootable_volume": "none" } },
+    { "id": "concrete", "label": "Concrete", "class": "sealed",
+      "properties": { "sealed_fraction": "high", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "low", "albedo": "medium", "storage_capacity": "low", "rootable_volume": "none" } },
+    { "id": "sealed-paving", "label": "Sealed paving", "class": "sealed",
+      "properties": { "sealed_fraction": "high", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "low", "albedo": "medium", "storage_capacity": "low", "rootable_volume": "none" } },
+    { "id": "sealed-roof", "label": "Sealed roof", "class": "sealed",
+      "note": "Added beside the initial list so buildings have a non-green roof.",
+      "properties": { "sealed_fraction": "high", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "low", "albedo": "medium-low", "storage_capacity": "low", "rootable_volume": "none" } },
+    { "id": "gravel", "label": "Gravel", "class": "permeable",
+      "properties": { "sealed_fraction": "low", "permeability": "high", "vegetation_fraction": "none", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "medium", "rootable_volume": "low" } },
+    { "id": "permeable-paving", "label": "Permeable paving", "class": "permeable",
+      "properties": { "sealed_fraction": "medium", "permeability": "medium", "vegetation_fraction": "none", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "medium", "rootable_volume": "none" } },
+    { "id": "grass-joint-paving", "label": "Grass-joint paving", "class": "permeable",
+      "properties": { "sealed_fraction": "medium", "permeability": "medium", "vegetation_fraction": "low", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "medium", "rootable_volume": "low" } },
+    { "id": "planted-soil", "label": "Planted soil", "class": "planted",
+      "properties": { "sealed_fraction": "none", "permeability": "high", "vegetation_fraction": "high", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "medium", "rootable_volume": "medium" } },
+    { "id": "grass", "label": "Grass", "class": "planted",
+      "properties": { "sealed_fraction": "none", "permeability": "medium", "vegetation_fraction": "high", "depression_storage": "low", "albedo": "medium", "storage_capacity": "low", "rootable_volume": "low" } },
+    { "id": "tree-bed", "label": "Tree bed / trench substrate", "class": "planted",
+      "properties": { "sealed_fraction": "none", "permeability": "high", "vegetation_fraction": "medium", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "high", "rootable_volume": "high" } },
+    { "id": "green-roof", "label": "Green roof", "class": "planted",
+      "properties": { "sealed_fraction": "low", "permeability": "medium", "vegetation_fraction": "high", "depression_storage": "medium", "albedo": "medium", "storage_capacity": "medium", "rootable_volume": "low" } },
+    { "id": "water", "label": "Open water", "class": "water",
+      "properties": { "sealed_fraction": "none", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "high", "albedo": "low", "storage_capacity": "high", "rootable_volume": "none" } }
+  ]
+}

@@ -8,7 +8,7 @@ validate: build
 
 smoke: validate
 	node scripts/check.mjs
-	node --test adaptive-interface/tests/adaptive-interface.test.mjs
+	node --test adaptive-interface/tests/adaptive-interface.test.mjs adaptive-interface/tests/state-engine.test.mjs
 
 run: build
 	node scripts/serve.mjs
@@ -21,4 +21,4 @@ new:
 	node scripts/new-solution.mjs $(name) "$(title)"
 
 test-adaptive:
-	node --test adaptive-interface/tests/adaptive-interface.test.mjs
+	node --test adaptive-interface/tests/adaptive-interface.test.mjs adaptive-interface/tests/state-engine.test.mjs

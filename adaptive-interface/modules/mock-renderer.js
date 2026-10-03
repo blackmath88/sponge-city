@@ -1,6 +1,9 @@
 // MOCK renderer: deliberately neutral and disposable. The frontend team replaces it with the
 // educational Sponge Street renderer. It knows only the view model (contracts/renderer-contract.md):
 // no Basel datasets, no WMS, no API schemas, no calculations — only layout for drawing.
+// With a StateModel in the view (adaptive-view/0.2) it draws state elements and shows the effect results
+// it is given; it never evaluates effects itself.
+import { stateToStreetSlice, explainerStages } from "./street-slice-adapter.js";
 
 const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
 const fmt = (value, unit = "") => value?.state === "unknown" ? `unknown${Number.isFinite(value.known_part) && value.known_part ? ` (≥ ${value.known_part}${unit ? " " + unit : ""} known)` : ""}`
@@ -12,6 +15,18 @@ const SURFACE_FILL = { sealed: "#9b9b97", permeable: "url(#ai-permeable)", plant
 const TYPE_FILL = { building: "#6f6f6b", road: "#8a8a86", tram: "#a29b8f" };
 
 const isPoint = el => el.type === "tree" || el.type === "entrance" || el.layout?.point !== undefined;
+const RECEIVER_FILL = { "rain-garden": "#5f9e58", "tree-trench": "#7d9b4f" };
+const isStateElement = el => el.surface && typeof el.surface === "object" && "archetype" in el.surface;
+// Drawing key for a surface. PlaceModel elements carry surface.value; StateModel elements carry archetype properties.
+function surfaceKey(el) {
+  if (!el.surface) return null;
+  if (!isStateElement(el)) return el.surface.state === "unknown" ? "unknown" : el.surface.value;
+  const sealed = el.surface.sealed_fraction; const veg = el.surface.vegetation_fraction;
+  if (sealed?.state === "unknown" || veg?.state === "unknown") return "unknown";
+  if (["medium", "high"].includes(veg.value)) return "planted";
+  return sealed.value === "high" ? "sealed" : "permeable";
+}
+const surfaceText = el => isStateElement(el) ? `${el.surface.archetype.value ?? "unknown"} (${el.surface.archetype.state})` : `${fmt(el.surface)} (${el.surface?.state})`;
 
 function bandLayout(elements) {
   const bands = new Map();
@@ -62,9 +77,10 @@ function sceneSvg(place, title, changedIds) {
     if (!row || isPoint(el)) continue;
     const [a, b] = span.get(el.id);
     const absent = el.presence?.value === false;
-    const fill = el.surface?.state === "unknown" ? SURFACE_FILL.unknown : TYPE_FILL[el.type] && el.surface?.value === "sealed" ? TYPE_FILL[el.type] : SURFACE_FILL[el.surface?.value] || "#ccc";
+    const key = surfaceKey(el);
+    const fill = RECEIVER_FILL[el.type] || (key === "unknown" ? SURFACE_FILL.unknown : TYPE_FILL[el.type] && key === "sealed" ? TYPE_FILL[el.type] : SURFACE_FILL[key] || "#ccc");
     const changed = changedIds.has(el.id);
-    shapes.push(`<g><title>${esc(el.label)} · surface ${esc(fmt(el.surface))} (${esc(el.surface?.state)})</title>
+    shapes.push(`<g><title>${esc(el.label)} · surface ${esc(surfaceText(el))}</title>
       <rect x="${a * W}" y="${row.y}" width="${Math.max(2, (b - a) * W)}" height="${row.h}" fill="${absent ? "none" : fill}" stroke="${changed ? "#111" : "#fff"}" stroke-width="${changed ? 2.5 : 1}" ${absent ? 'stroke-dasharray="4 3"' : ""}/>
       ${(b - a) * W > 70 ? `<text x="${a * W + 6}" y="${row.y + row.h / 2 + 4}" class="ai-svg-label">${esc(el.label)}${el.count?.state && el.count.state !== "not-applicable" ? ` · ${esc(fmt(el.count))} bays` : ""}</text>` : ""}</g>`);
   }
@@ -122,11 +138,11 @@ function correctionPanel(view) {
 function interventionPanel(view) {
   return `<section class="ai-panel"><h2>Interventions</h2>
     ${view.interventions.map(item => `<article class="ai-intervention" data-status="${esc(item.status)}">
-      <header><strong>${esc(item.label)}</strong> ${chip(item.status)} ${item.applied_count ? `<span class="ai-note">applied ×${item.applied_count}</span>` : ""}</header>
+      <header><strong>${esc(item.label)}</strong> ${chip(item.status)} ${item.category ? `<span class="ai-note">${esc(item.category)}</span>` : ""} ${item.applied_count ? `<span class="ai-note">applied ×${item.applied_count}</span>` : ""}</header>
       <p>${esc(item.summary)}</p>
       <p class="ai-mech">${item.mechanisms.map(m => `<span>${esc(m)}</span>`).join("")}</p>
       <p class="ai-note">${esc(item.reason)}</p>
-      ${item.eligible_targets.length && item.status !== "excluded" ? `<label>on <select data-target-for="${esc(item.id)}">${item.eligible_targets.map(id => `<option value="${esc(id)}">${esc(view.scenario.elements.find(el => el.id === id)?.label || id)}</option>`).join("")}</select></label>
+      ${item.eligible_targets.length && !["excluded", "no-recipe", "not-applicable"].includes(item.status) ? `<label>on <select data-target-for="${esc(item.id)}">${item.eligible_targets.map(id => `<option value="${esc(id)}">${esc((view.scenarioState || view.scenario).elements.find(el => el.id === id)?.label || id)}</option>`).join("")}</select></label>
         <button type="button" data-apply="${esc(item.id)}">Apply</button>` : ""}
     </article>`).join("")}
     <p><button type="button" data-action="reset-scenario">Reset scenario</button> <button type="button" data-action="reset-all">Reset corrections too</button></p>
@@ -134,7 +150,7 @@ function interventionPanel(view) {
 }
 
 function effectsPanel(view) {
-  return `<section class="ai-panel"><h2>Effects <span class="ai-note">geometry only</span></h2>
+  return `<section class="ai-panel"><h2>Geometry <span class="ai-note">direct quantities</span></h2>
     <table class="ai-table"><thead><tr><th>Measure</th><th>Today</th><th>Scenario</th><th>Change</th><th>Basis</th></tr></thead><tbody>
     ${view.effects.map(e => `<tr><td>${esc(e.label)}</td><td>${esc(fmt(e.baseline, e.unit))}</td><td>${esc(fmt(e.scenario, e.unit))}</td><td><strong>${esc(signed(e.change, e.unit))}</strong></td><td>${chip(e.change.state)}${e.change.assumptions?.length ? `<div class="ai-note">${e.change.assumptions.map(esc).join("; ")}</div>` : ""}</td></tr>`).join("")}
     </tbody></table>
@@ -143,13 +159,61 @@ function effectsPanel(view) {
 }
 
 function unknownPanel(view) {
-  const groups = [["context", "About the place"], ["element", "About elements"], ["effect", "Not modelled in this prototype"]];
+  const groups = [["context", "About the place"], ["element", "About elements"], ["tendency", "Tendencies that depend on unknowns"], ["effect", "Not modelled in this prototype"]];
   return `<section class="ai-panel"><h2>Unknowns</h2>
     ${groups.map(([scope, title]) => {
       const items = view.unknowns.filter(item => item.scope === scope);
       return items.length ? `<h3>${title}</h3><ul class="ai-list">${items.map(item => `<li>${esc(item.label)}${item.note ? ` <span class="ai-note">${esc(item.note)}</span>` : ""}</li>`).join("")}</ul>` : "";
     }).join("")}
   </section>`;
+}
+
+const TENDENCY_LABELS = {
+  runoff_tendency: "Runoff", sewer_load_tendency: "Sewer load", storage_potential: "Storage", infiltration_potential: "Infiltration",
+  soil_water_availability: "Soil water", shade: "Shade", evapotranspiration_potential: "Evapotranspiration", surface_heating_tendency: "Surface heating"
+};
+const ARROW = { up: "↑", down: "↓", same: "=", unknown: "?", "not-applicable": "" };
+const tendency = r => r.state === "derived" ? r.value : r.state;
+
+function scenarioSwitch(view) {
+  if (!view.scenarios?.length) return "";
+  return `<p class="ai-scenarios"><label>Conditions <select data-scenario aria-label="Scenario">${view.scenarios.map(s => `<option value="${esc(s.id)}" ${s.id === view.scenario_id ? "selected" : ""}>${esc(s.label)}</option>`).join("")}</select></label>
+    <span class="ai-note">${esc(view.scenarioDef?.description || "")}</span></p>`;
+}
+
+function tendencyPanel(view) {
+  if (!view.baselineEffects) return "";
+  const rows = Object.keys(view.scenarioEffects.effects).map(key => {
+    const before = view.baselineEffects.effects[key];
+    const after = view.scenarioEffects.effects[key];
+    if (before.state === "not-applicable" && after.state === "not-applicable") return "";
+    const change = view.effectDelta.changes[key];
+    const drivers = after.drivers.length ? after.drivers.join("\n") : "";
+    return `<tr title="${esc(after.rule || "")}"><td>${esc(TENDENCY_LABELS[key] || key)}</td><td>${chip(tendency(before))}</td><td>${chip(tendency(after))}</td><td><strong>${ARROW[change.direction]}</strong></td>
+      <td>${after.reason ? `<span class="ai-note">${esc(after.reason)}</span>` : drivers ? `<details><summary class="ai-note">${after.drivers.length} drivers</summary><pre class="ai-drivers">${esc(drivers)}</pre></details>` : ""}</td></tr>`;
+  }).join("");
+  return `<section class="ai-panel"><h2>Tendencies <span class="ai-note">${esc(view.scenarioDef?.label || "")} · qualitative</span></h2>
+    <table class="ai-table"><thead><tr><th>Effect</th><th>Today</th><th>Scenario</th><th></th><th>Why</th></tr></thead><tbody>${rows}</tbody></table>
+    <p class="ai-note">Low / medium / high from state rules. No runoff percentages, rates or temperatures.</p></section>`;
+}
+
+function routingPanel(view) {
+  const state = view.scenarioState;
+  if (!state) return "";
+  const byId = new Map(state.elements.map(el => [el.id, el]));
+  const edges = state.connections.filter(edge => byId.get(edge.from)?.layout);
+  return `<section class="ai-panel"><h2>Where the rain goes <span class="ai-note">scenario routing</span></h2>
+    <ul class="ai-list">${edges.map(edge => `<li>${esc(byId.get(edge.from)?.label)} → ${esc(byId.get(edge.to)?.label || edge.to)} <span class="ai-note">${esc(edge.mode)}</span> ${chip(edge.state)}</li>`).join("")}</ul></section>`;
+}
+
+function streetSlicePanel(view) {
+  if (!view.scenarioState) return "";
+  const visual = stateToStreetSlice(view.scenarioState, view.scenarioEffects, view.scenarioDef);
+  const stages = explainerStages(visual);
+  return `<section class="ai-panel"><h2>Street Slice seam <span class="ai-note">state → visual tokens</span></h2>
+    <p class="ai-note">What a cross-section renderer would draw, derived from state (no stage numbers).</p>
+    <table class="ai-table"><tbody>${Object.entries(stages).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table>
+    <p class="ai-mech">${visual.mechanisms.map(m => `<span>${esc(m)}</span>`).join("")} <span class="ai-note">mode: ${esc(visual.mode)}${visual.drought ? " · drought" : ""}</span></p></section>`;
 }
 
 export function createMockRenderer(root) {
@@ -159,6 +223,7 @@ export function createMockRenderer(root) {
 
   root.addEventListener("change", event => {
     const el = event.target;
+    if (el.dataset.scenario !== undefined) { actions.setScenario(el.value); return; }
     if (el.dataset.correctSurface) {
       actions.correct({ element_id: el.dataset.correctSurface, property: "surface", value: el.value === "unknown" ? null : el.value, reason: "corrected in demo" });
     } else if (el.dataset.correctPresence) {
@@ -194,9 +259,10 @@ export function createMockRenderer(root) {
         ${fixture ? `<div class="ai-fixture"><strong>Demo fixture.</strong> ${esc(fixture.note)}</div>` : ""}
         <header class="ai-head"><h1>${esc(view.scenario.label)}</h1>
           <p class="ai-note">Selection ${view.selection ? `${esc(view.selection.lat)}, ${esc(view.selection.lon)} · r ${esc(view.selection.radius_m)} m${view.selection.from ? ` · from ${esc(view.selection.from)}` : ""}` : "none (demo default)"}</p></header>
-        <div class="ai-compare">${sceneSvg(view.baseline, "Today", new Set())}${sceneSvg(view.scenario, view.applied.length ? "Scenario" : "Scenario (no change yet)", changedElementIds(view.baseline, view.scenario))}</div>
+        ${scenarioSwitch(view)}
+        <div class="ai-compare">${sceneSvg(view.baselineState || view.baseline, "Today", new Set())}${sceneSvg(view.scenarioState || view.scenario, view.applied.length ? "Scenario" : "Scenario (no change yet)", changedElementIds(view.baselineState || view.baseline, view.scenarioState || view.scenario))}</div>
         <p class="ai-legend"><span><i style="background:#9b9b97"></i>sealed</span><span><i style="background:#c9cdc4"></i>permeable</span><span><i style="background:#8fbf86"></i>planted</span><span><i class="ai-hatch"></i>unknown</span><span><i class="ai-ring"></i>changed</span></p>
-        <div class="ai-grid">${interventionPanel(view)}${effectsPanel(view)}${correctionPanel(view)}${unknownPanel(view)}</div>`;
+        <div class="ai-grid">${interventionPanel(view)}${tendencyPanel(view)}${effectsPanel(view)}${routingPanel(view)}${correctionPanel(view)}${unknownPanel(view)}${streetSlicePanel(view)}</div>`;
     }
   };
 }

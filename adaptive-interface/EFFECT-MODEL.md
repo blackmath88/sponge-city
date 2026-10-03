@@ -1,6 +1,6 @@
 # Adaptive Interface — Scenario and Effect Model
 
-Status: working architecture, 3 October 2026.
+Status: working architecture, 3 October 2026. Implemented as a first qualitative slice; see *State engine* in [README.md](README.md).
 
 ## Purpose
 

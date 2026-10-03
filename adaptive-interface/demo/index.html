@@ -46,6 +46,12 @@
     .ai-chip[data-state="excluded"] { color: #a33c32; }
     .ai-chip[data-state="candidate"] { color: #0d6b4c; }
     .ai-chip[data-state="not-applicable"] { color: #777; }
+    .ai-chip[data-state="low"] { color: #19678a; }
+    .ai-chip[data-state="medium"] { color: #b96a16; }
+    .ai-chip[data-state="high"] { color: #a33c32; }
+    .ai-chip[data-state="no-recipe"] { color: #777; }
+    .ai-scenarios { display: flex; gap: 14px; align-items: center; margin: 10px 0 0; }
+    .ai-drivers { font: 11px/1.4 var(--mono, monospace); white-space: pre-wrap; margin: 4px 0 0; max-height: 140px; overflow: auto; }
     button, select { font: inherit; font-size: 13px; }
     .file-warning { display: none; max-width: 720px; margin: 40px auto; padding: 16px; border: 1px solid #a33c32; }
     @media (max-width: 900px) { .ai-compare, .ai-grid { grid-template-columns: 1fr; } }
@@ -55,6 +61,7 @@
   <header class="bar">
     <strong>Adaptive Interface</strong><span>orchestration prototype · all modules are mocks</span>
     <span class="spacer"></span>
+    <a id="mode-switch" href="?mode=execution-0.1">PR #3 execution path</a>
     <a id="renderer-switch" href="?renderer=text">Switch to text renderer</a>
     <a href="../../site/situation-map.html">Situation map</a>
     <a href="../README.md">How it works</a>

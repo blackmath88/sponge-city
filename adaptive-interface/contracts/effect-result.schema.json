@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/effect-result.schema.json",
+  "title": "Effect result (adaptive-effects/0.1)",
+  "description": "Output of runtime/effect-engine.js evaluateState(state, scenario). Qualitative tendencies only. Derived results list their drivers (state property paths and connection ids) and the rule used; unknown and not-applicable results carry value null and a reason. No percentages, rates or temperatures.",
+  "type": "object",
+  "required": ["schema_version", "scenario_id", "effects"],
+  "properties": {
+    "schema_version": { "const": "adaptive-effects/0.1" },
+    "scenario_id": { "type": "string" },
+    "effects": {
+      "type": "object",
+      "required": ["runoff_tendency", "sewer_load_tendency", "storage_potential", "infiltration_potential", "soil_water_availability", "shade", "evapotranspiration_potential", "surface_heating_tendency"],
+      "additionalProperties": { "$ref": "#/$defs/result" }
+    }
+  },
+  "$defs": {
+    "result": {
+      "type": "object",
+      "required": ["value", "state", "drivers"],
+      "properties": {
+        "value": { "enum": ["low", "medium", "high", null] },
+        "state": { "enum": ["derived", "unknown", "not-applicable"] },
+        "drivers": {
+          "type": "array",
+          "description": "e.g. 'road-east.surface.sealed_fraction', 'connection:road-east→gully-2', 'scenario:hot-day', 'effect:shade'",
+          "items": { "type": "string" }
+        },
+        "rule": { "type": "string", "description": "The V0 rule, in words, including its prototype thresholds" },
+        "reason": { "type": "string", "description": "Why the result is unknown or not applicable" },
+        "note": { "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "state": { "const": "derived" } } }, "then": { "properties": { "value": { "enum": ["low", "medium", "high"] } } } },
+        { "if": { "properties": { "state": { "enum": ["unknown", "not-applicable"] } } }, "then": { "properties": { "value": { "const": null } }, "required": ["reason"] } }
+      ]
+    },
+    "comparison": {
+      "description": "compareEffects(before, after) → { scenario_id, changes: { key: { before, after, direction: up|down|same|unknown|not-applicable } } }",
+      "type": "object"
+    }
+  }
+}

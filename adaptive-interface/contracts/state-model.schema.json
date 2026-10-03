@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/state-model.schema.json",
+  "title": "StateModel (adaptive-state/0.2)",
+  "description": "Internal, multi-dimensional state of a place: semantic elements with surface, subsurface, vegetation and thermal properties, plus a typed water-routing graph. Built from PlaceModel 0.1 by runtime/place-to-state.js; data providers do not need to produce it. Every property is an evidence value; unknown and not-applicable carry value null. No single 'sponginess' score.",
+  "type": "object",
+  "required": ["schema_version", "place_id", "label", "elements", "connections", "context", "provenance"],
+  "properties": {
+    "schema_version": { "const": "adaptive-state/0.2" },
+    "place_id": { "type": "string" },
+    "label": { "type": "string" },
+    "fixture": { "type": "boolean" },
+    "schematic": { "type": "object" },
+    "elements": { "type": "array", "items": { "$ref": "#/$defs/element" } },
+    "connections": { "type": "array", "items": { "$ref": "#/$defs/connection" } },
+    "context": { "type": "object", "additionalProperties": { "$ref": "#/$defs/evidence" } },
+    "provenance": { "type": "array", "items": { "type": "object", "required": ["id", "kind", "label"] } }
+  },
+  "$defs": {
+    "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected", "unknown", "not-applicable"] },
+    "evidence": {
+      "type": "object",
+      "required": ["value", "state"],
+      "properties": {
+        "value": {},
+        "state": { "$ref": "#/$defs/state" },
+        "source_id": { "type": "string" },
+        "method": { "type": "string" },
+        "drivers": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" },
+        "replaces": {}
+      },
+      "if": { "properties": { "state": { "enum": ["unknown", "not-applicable"] } } },
+      "then": { "properties": { "value": { "const": null } } }
+    },
+    "qualitative": {
+      "allOf": [{ "$ref": "#/$defs/evidence" }],
+      "properties": { "value": { "enum": ["none", "low", "medium-low", "medium", "medium-high", "high", null] } }
+    },
+    "surface": {
+      "type": ["object", "null"],
+      "description": "Material layer. archetype names an entry of catalogues/surfaces.json; the other properties are the engine's inputs.",
+      "properties": {
+        "archetype": { "$ref": "#/$defs/evidence" },
+        "sealed_fraction": { "$ref": "#/$defs/qualitative" },
+        "permeability": { "$ref": "#/$defs/qualitative" },
+        "vegetation_fraction": { "$ref": "#/$defs/qualitative" },
+        "depression_storage": { "$ref": "#/$defs/qualitative" },
+        "albedo": { "$ref": "#/$defs/qualitative" }
+      }
+    },
+    "subsurface": {
+      "type": ["object", "null"],
+      "properties": {
+        "infiltration_capacity": { "$ref": "#/$defs/evidence" },
+        "storage_capacity": { "$ref": "#/$defs/qualitative" },
+        "rootable_volume": { "$ref": "#/$defs/qualitative" },
+        "utility_conflict": { "$ref": "#/$defs/evidence" },
+        "groundwater_constraint": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "vegetation": {
+      "type": ["object", "null"],
+      "properties": {
+        "canopy": { "$ref": "#/$defs/qualitative" },
+        "soil_water_available": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "thermal": {
+      "type": ["object", "null"],
+      "description": "Thermal drivers, not temperatures.",
+      "properties": {
+        "albedo": { "$ref": "#/$defs/qualitative" },
+        "shade_fraction": { "$ref": "#/$defs/qualitative" }
+      }
+    },
+    "element": {
+      "type": "object",
+      "required": ["id", "type", "label", "presence", "area_m2"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "water", "tram", "entrance", "fixed-area", "unknown-area", "rain-garden", "tree-trench", "gully", "downpipe", "sewer", "ground"] },
+        "label": { "type": "string" },
+        "presence": { "$ref": "#/$defs/evidence" },
+        "area_m2": { "$ref": "#/$defs/evidence" },
+        "count": { "$ref": "#/$defs/evidence" },
+        "fixed": { "type": "boolean" },
+        "origin": { "type": "string", "description": "absent = provider; 'adapter' (placeToState); 'correction'; 'intervention:<id>'" },
+        "layout": { "type": "object", "description": "Opaque renderer hint carried over from the PlaceModel; the engine never reads it." },
+        "surface": { "$ref": "#/$defs/surface" },
+        "subsurface": { "$ref": "#/$defs/subsurface" },
+        "vegetation": { "$ref": "#/$defs/vegetation" },
+        "thermal": { "$ref": "#/$defs/thermal" }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "required": ["from", "to", "mode", "state"],
+      "description": "Typed water-routing edge, e.g. road → gully → sewer, roof → downpipe → sewer, road → rain-garden → overflow → sewer.",
+      "properties": {
+        "id": { "type": "string", "description": "'from→to'" },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "medium": { "const": "rainwater" },
+        "mode": { "enum": ["surface-runoff", "roof-runoff", "pipe", "overflow", "infiltration"] },
+        "state": { "$ref": "#/$defs/state" },
+        "replaces": { "type": "string" },
+        "origin": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

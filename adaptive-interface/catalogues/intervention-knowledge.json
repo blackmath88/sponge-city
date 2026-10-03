@@ -1,0 +1,278 @@
+{
+  "schema_version": "intervention-knowledge/0.1",
+  "catalogue_id": "mock-knowledge",
+  "label": "Mock intervention knowledge",
+  "note": "Researcher-facing records. Requirements and constraints here are prototype placeholders until the Basel research team replaces them. Records describe what an intervention is and needs; they contain no layout, no rendering and no executable operations.",
+  "interventions": [
+    {
+      "id": "depave",
+      "label": "Depave",
+      "category": "surface",
+      "description": "Remove sealing from part of a paved surface and plant it, so rain can soak in and plants can evaporate water.",
+      "mechanisms": [
+        "ABSORB",
+        "SWEAT"
+      ],
+      "applies_to": [
+        "sidewalk",
+        "parking"
+      ],
+      "requirements": [
+        {
+          "id": "space",
+          "label": "Remaining width still serves walking, access and parking needs",
+          "evidence": "context.access_requirements"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "utilities",
+          "label": "Underground utilities below the opened area",
+          "evidence": "context.utilities"
+        },
+        {
+          "id": "ownership",
+          "label": "Ownership and maintenance responsibility",
+          "evidence": "context.ownership"
+        }
+      ],
+      "basel_examples": [
+        {
+          "label": "Basel tests surfaces for depaved parking spaces (2022)",
+          "url": "https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "id": "permeable-parking",
+      "label": "Permeable parking",
+      "category": "surface",
+      "description": "Replace sealed parking paving with a permeable system while keeping the parking use where feasible.",
+      "mechanisms": [
+        "ABSORB",
+        "STORE",
+        "SLOW"
+      ],
+      "applies_to": [
+        "parking"
+      ],
+      "requirements": [
+        {
+          "id": "load",
+          "label": "Suitable traffic load",
+          "evidence": "context.traffic_load"
+        },
+        {
+          "id": "subgrade",
+          "label": "Suitable subgrade / drainage strategy",
+          "evidence": "context.infiltration_capacity"
+        },
+        {
+          "id": "groundwater",
+          "label": "Outside groundwater protection zones S1/S2",
+          "evidence": "context.groundwater_protection_zone",
+          "exclude_if": [
+            "S1",
+            "S2"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "id": "contamination",
+          "label": "Water quality / contamination of runoff"
+        },
+        {
+          "id": "maintenance",
+          "label": "Maintenance and clogging"
+        }
+      ],
+      "basel_examples": [],
+      "sources": [
+        {
+          "label": "Permeable paving (overview)",
+          "url": "https://en.wikipedia.org/wiki/Permeable_paving"
+        }
+      ]
+    },
+    {
+      "id": "curb-cut",
+      "label": "Curb cut",
+      "category": "routing",
+      "description": "Open the kerb so street runoff flows into an adjacent rain garden or tree trench instead of the gully. No surface material changes.",
+      "mechanisms": [
+        "SLOW",
+        "STORE"
+      ],
+      "applies_to": [
+        "road",
+        "parking",
+        "sidewalk"
+      ],
+      "requirements": [
+        {
+          "id": "receiver",
+          "label": "An adjacent receiving element (rain garden or tree trench) exists"
+        },
+        {
+          "id": "slope",
+          "label": "Slope lets water reach the opening",
+          "evidence": "context.slope"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "pollution",
+          "label": "Road runoff pollution and de-icing salt"
+        }
+      ],
+      "basel_examples": [],
+      "sources": [
+        {
+          "label": "NACTO Urban Street Stormwater Guide",
+          "url": "https://planning.org/knowledgebase/resource/9196672"
+        }
+      ]
+    },
+    {
+      "id": "tree-trench",
+      "label": "Tree trench (Baumrigole)",
+      "category": "storage-infiltration",
+      "description": "A connected underground trench of structural substrate that gives a street tree much more rootable soil and stores runoff from the adjacent sealed surface.",
+      "mechanisms": [
+        "STORE",
+        "ABSORB",
+        "SHADE",
+        "SWEAT"
+      ],
+      "applies_to": [
+        "sidewalk",
+        "parking"
+      ],
+      "requirements": [
+        {
+          "id": "utilities",
+          "label": "Space free of underground utilities",
+          "evidence": "context.utilities"
+        },
+        {
+          "id": "infiltration",
+          "label": "Infiltration or a controlled overflow",
+          "evidence": "context.infiltration_capacity"
+        },
+        {
+          "id": "groundwater",
+          "label": "Outside groundwater protection zones S1/S2",
+          "evidence": "context.groundwater_protection_zone",
+          "exclude_if": [
+            "S1",
+            "S2"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "id": "ownership",
+          "label": "Ownership and maintenance",
+          "evidence": "context.ownership"
+        }
+      ],
+      "basel_examples": [
+        {
+          "label": "ZHAW 74640: vegetation building blocks for Therwiler-, Lysbüchel- and Weinlagerstrasse (structurally stable substrates)",
+          "url": "https://www.zhaw.ch/de/forschung/projekt/74640",
+          "note": "Related substrate work; not confirmed as a tree trench."
+        }
+      ],
+      "sources": [
+        {
+          "label": "ZHAW thesis: Kommunizierende Baumrigolen (CC BY 4.0)",
+          "url": "https://digitalcollection.zhaw.ch/handle/11475/33090"
+        }
+      ]
+    },
+    {
+      "id": "rain-garden",
+      "label": "Rain garden",
+      "category": "storage-infiltration",
+      "description": "A planted depression that collects runoff from the surrounding sealed surface, lets it soak in and overflows safely when full.",
+      "mechanisms": [
+        "STORE",
+        "ABSORB",
+        "SWEAT"
+      ],
+      "applies_to": [
+        "parking",
+        "sidewalk"
+      ],
+      "requirements": [
+        {
+          "id": "infiltration",
+          "label": "Infiltration capacity or a controlled overflow",
+          "evidence": "context.infiltration_capacity"
+        },
+        {
+          "id": "groundwater",
+          "label": "Outside groundwater protection zones S1/S2",
+          "evidence": "context.groundwater_protection_zone",
+          "exclude_if": [
+            "S1",
+            "S2"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "id": "utilities",
+          "label": "Underground utilities",
+          "evidence": "context.utilities"
+        },
+        {
+          "id": "maintenance",
+          "label": "Planting care and sediment removal"
+        }
+      ],
+      "basel_examples": [],
+      "sources": [
+        {
+          "label": "Rain garden (overview)",
+          "url": "https://en.wikipedia.org/wiki/Rain_garden"
+        }
+      ]
+    },
+    {
+      "id": "green-roof",
+      "label": "Green roof",
+      "category": "vegetation",
+      "description": "A planted roof build-up that holds part of the rain and evaporates it. Excess still leaves through the downpipe.",
+      "mechanisms": [
+        "STORE",
+        "SWEAT",
+        "COOL"
+      ],
+      "applies_to": [
+        "building"
+      ],
+      "requirements": [
+        {
+          "id": "structure",
+          "label": "Roof structure can carry the load"
+        },
+        {
+          "id": "ownership",
+          "label": "Building owner agrees",
+          "evidence": "context.ownership"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "heritage",
+          "label": "Heritage protection of the roofscape"
+        }
+      ],
+      "basel_examples": [],
+      "sources": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/scenario.schema.json",
+  "title": "Scenario catalogue (adaptive-scenarios/0.1)",
+  "description": "External conditions under which a state is evaluated. Qualitative archetypes; no rainfall depths or temperatures. A scenario has rain or heat (or both, later).",
+  "type": "object",
+  "required": ["schema_version", "scenarios"],
+  "properties": {
+    "schema_version": { "const": "adaptive-scenarios/0.1" },
+    "note": { "type": "string" },
+    "scenarios": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scenario" } }
+  },
+  "$defs": {
+    "level": { "enum": ["low", "normal", "medium", "high"] },
+    "scenario": {
+      "type": "object",
+      "required": ["id", "label", "rain", "heat"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "rain": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["intensity", "duration", "antecedent_moisture"],
+              "additionalProperties": false,
+              "properties": {
+                "intensity": { "$ref": "#/$defs/level" },
+                "duration": { "enum": ["short", "long"] },
+                "antecedent_moisture": { "$ref": "#/$defs/level" }
+              }
+            }
+          ]
+        },
+        "heat": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["solar_exposure", "air_temperature", "drought_stress"],
+              "additionalProperties": false,
+              "properties": {
+                "solar_exposure": { "$ref": "#/$defs/level" },
+                "air_temperature": { "$ref": "#/$defs/level" },
+                "drought_stress": { "$ref": "#/$defs/level" }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

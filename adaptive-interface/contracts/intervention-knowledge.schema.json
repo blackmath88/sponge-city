@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/intervention-knowledge.schema.json",
+  "title": "Intervention knowledge (intervention-knowledge/0.1)",
+  "description": "Researcher-facing records: what an intervention is, why it is used, what it needs and where Basel has used it. No renderer fields, no layout and no executable operations: runtime/intervention-compiler.js turns a record plus a target in the StateModel into intervention-execution/0.2 operations. A record without a compiler recipe is listed with status 'no-recipe'.",
+  "type": "object",
+  "required": ["schema_version", "interventions"],
+  "properties": {
+    "schema_version": { "const": "intervention-knowledge/0.1" },
+    "catalogue_id": { "type": "string" },
+    "label": { "type": "string" },
+    "note": { "type": "string" },
+    "interventions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/intervention" } }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["id", "label"],
+      "additionalProperties": false,
+      "description": "A requirement or constraint in plain language. 'evidence' optionally links it to a PlaceModel/StateModel context key (e.g. context.utilities) so the engine can say whether it is known. 'exclude_if' lists known values that rule the intervention out.",
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "label": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "string", "pattern": "^context\\.[a-z0-9_]+$" },
+        "exclude_if": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "required": ["label"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "url": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "intervention": {
+      "type": "object",
+      "required": ["id", "label", "category", "description", "mechanisms", "applies_to", "requirements", "constraints", "basel_examples", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "label": { "type": "string", "minLength": 1 },
+        "category": { "enum": ["surface", "routing", "storage-infiltration", "vegetation", "reuse"] },
+        "description": { "type": "string", "minLength": 1 },
+        "mechanisms": { "type": "array", "items": { "enum": ["ABSORB", "STORE", "SLOW", "SWEAT", "SHADE", "COOL"] } },
+        "applies_to": {
+          "type": "array", "minItems": 1,
+          "description": "Semantic element types the intervention can be placed on.",
+          "items": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "water", "tram", "fixed-area", "unknown-area", "rain-garden", "tree-trench"] }
+        },
+        "requirements": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "constraints": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "basel_examples": { "type": "array", "items": { "$ref": "#/$defs/reference" } },
+        "sources": { "type": "array", "items": { "$ref": "#/$defs/reference" } },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}
