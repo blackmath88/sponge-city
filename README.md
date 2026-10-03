@@ -24,6 +24,7 @@ Everything you open lives in `site/` and is built from `solutions/`. Open `site/
 |---|---|---|
 | [Evidence atlas](site/evidence-atlas.html) | What do we actually know about VoltaNord and Basel's sponge-city decisions, and what is still open? | [solutions/evidence-atlas](solutions/evidence-atlas) |
 | [Basel situation map](site/situation-map.html) | What do we know about this place, and what don't we? | [solutions/situation-map](solutions/situation-map) |
+| [Sponge Street](site/sponge-street.html) | How does an old European street become a connected sponge, one intervention at a time? | [solutions/sponge-street](solutions/sponge-street) |
 
 Add one with `make new name=my-solution`; the contract is in [docs/SOLUTIONS.md](docs/SOLUTIONS.md). `make smoke` builds, validates the atlas and runs every solution's test; `make fetch` refreshes data snapshots. Shared evidence lives in `data/evidence-atlas.json`, so edit records there, not inside a solution.
 
@@ -37,4 +38,4 @@ Separate **need**, **possibility** and **potential effect**. A place with high r
 
 Explore one Basel neighbourhood, identify a small set of candidate sites, and examine one real location in depth. Connect that spatial evidence to the responsible institutions, decision gates and public influence routes. This is screening-level decision support; detailed engineering and quantified performance require further investigation.
 
-Current repository state: concept and research documentation, two solutions (evidence atlas, situation map) on shared data, and a Basel open-data snapshot. No verified site assessment or hydrological model yet.
+Current repository state: concept and research documentation, three solutions (evidence atlas, situation map, sponge street), and a Basel open-data snapshot. No verified site assessment or hydrological model yet.

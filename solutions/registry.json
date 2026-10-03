@@ -2,6 +2,7 @@
   "schema_version": "solutions/0.1",
   "solutions": [
     "evidence-atlas",
-    "situation-map"
+    "situation-map",
+    "sponge-street"
   ]
 }
