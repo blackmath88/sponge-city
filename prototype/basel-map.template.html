@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Basel Tree Map</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css">
+  <style>
+    :root {
+      --ink: #13271f;
+      --muted: #607068;
+      --paper: #f2f0e8;
+      --surface: #fbfaf5;
+      --line: #c9cec7;
+      --green: #0d6b4c;
+      --green-2: #b7dac8;
+      --blue: #19678a;
+      --amber: #b96a16;
+      --red: #a33c32;
+      --violet: #66508f;
+      --shadow: 0 18px 55px rgba(19, 39, 31, 0.16);
+      --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      --sans: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+      --bar: 52px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.45; overflow: hidden; }
+    button, input, select { font: inherit; color: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #4e9ac0; outline-offset: 2px; }
+    a { color: inherit; }
+
+    .bar { height: var(--bar); display: flex; align-items: center; gap: 18px; padding: 0 16px; border-bottom: 1px solid var(--ink); background: var(--paper); position: relative; z-index: 3; }
+    .wordmark { font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+    .bar h1 { font: 500 22px/1 var(--serif); letter-spacing: -.02em; margin: 0; white-space: nowrap; }
+    .bar .spacer { flex: 1; }
+    .bar a, .bar button.link { font: 12px/1 var(--mono); color: var(--muted); text-decoration: none; background: none; border: 0; cursor: pointer; padding: 6px 0; white-space: nowrap; }
+    .bar a:hover, .bar button.link:hover { color: var(--ink); }
+    .snapshot { font: 11px/1.2 var(--mono); color: var(--muted); white-space: nowrap; }
+
+    #map { position: absolute; top: var(--bar); left: 0; right: 0; bottom: 0; background: #e8e6df; }
+
+    .panel { position: absolute; top: calc(var(--bar) + 12px); left: 12px; width: 300px; max-height: calc(100% - var(--bar) - 24px); overflow: auto; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); z-index: 2; }
+    .panel-section { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .panel-section:last-child { border-bottom: 0; }
+    .label { display: block; font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 8px; }
+    .search { position: relative; }
+    .search input { width: 100%; border: 0; border-bottom: 2px solid var(--ink); background: transparent; padding: 6px 2px; font: 500 18px/1.2 var(--serif); }
+    .search-results { list-style: none; margin: 6px 0 0; padding: 0; }
+    .search-results button { width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--line); padding: 7px 2px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+    .search-results button:hover { background: var(--green-2); }
+    .search-results small { font: 11px/1.4 var(--mono); color: var(--muted); }
+    .segmented { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--ink); }
+    .segmented button { border: 0; background: transparent; padding: 7px 4px; font-size: 13px; cursor: pointer; }
+    .segmented button + button { border-left: 1px solid var(--ink); }
+    .segmented button[aria-pressed="true"] { background: var(--ink); color: white; }
+    .legend { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 5px; }
+    .legend li { display: grid; grid-template-columns: 14px 1fr auto; gap: 8px; align-items: center; font-size: 13px; }
+    .legend .swatch { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px rgba(19,39,31,.25); }
+    .legend .count { font: 11px/1 var(--mono); color: var(--muted); }
+    .toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 3px 0; cursor: pointer; }
+    .toggle input { accent-color: var(--green); width: 16px; height: 16px; }
+    select { width: 100%; background: white; border: 1px solid var(--line); padding: 7px; }
+    .counts { font: 11px/1.4 var(--mono); color: var(--muted); margin-top: 10px; }
+    .panel-toggle { display: none; }
+
+    .drawer { position: absolute; top: calc(var(--bar) + 12px); right: 12px; width: 380px; max-height: calc(100% - var(--bar) - 24px); overflow: auto; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); z-index: 2; display: none; }
+    .drawer.open { display: block; }
+    .drawer-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); position: relative; }
+    .drawer-head .kicker { margin-right: 40px; font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--green); margin-bottom: 8px; }
+    .drawer-head h2 { font: 500 30px/1 var(--serif); letter-spacing: -.02em; margin: 0 32px 6px 0; }
+    .drawer-head .latin { font-style: italic; color: var(--muted); }
+    .drawer-head .id { font: 11px/1 var(--mono); color: var(--muted); margin-top: 8px; }
+    .close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 18px; line-height: 1; }
+    .block { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+    .block:last-child { border-bottom: 0; }
+    .block h3 { font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 10px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    dl.facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: 14px; }
+    dl.facts dt { color: var(--muted); }
+    dl.facts dd { margin: 0; text-align: right; }
+    .badge { font: 700 9px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; padding: 4px 6px; border: 1px solid currentColor; white-space: nowrap; }
+    .badge.verified, .badge.observed { color: var(--green); }
+    .badge.inference { color: var(--blue); }
+    .badge.unknown { color: var(--amber); }
+    .badge.proposal { color: var(--violet); }
+    .badge.conflict { color: var(--red); }
+    .note { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+    .button { border: 1px solid var(--ink); background: transparent; padding: 6px 10px; cursor: pointer; font-size: 13px; }
+    .button:hover { background: var(--ink); color: white; }
+
+    .layers { display: grid; gap: 3px; margin: 2px 0 0; }
+    .layer { display: grid; grid-template-columns: 54px 1fr auto; gap: 10px; align-items: center; height: 34px; padding: 0 10px; background: repeating-linear-gradient(135deg, rgba(185,106,22,.10) 0 6px, rgba(185,106,22,.22) 6px 7px); border-left: 4px solid var(--amber); }
+    .layer:nth-child(1) { background-color: #efe7d9; }
+    .layer:nth-child(2) { background-color: #e6dccb; }
+    .layer:nth-child(3) { background-color: #ddd0bc; }
+    .layer b { font: 700 11px/1 var(--mono); }
+    .layer span { font-size: 13px; }
+    .reference { margin-top: 12px; font-size: 13px; }
+    .reference summary { cursor: pointer; color: var(--muted); }
+    .reference ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; opacity: .75; }
+    .reference li { display: grid; grid-template-columns: 12px 1fr auto; gap: 8px; align-items: center; }
+    .reference i { width: 12px; height: 12px; border: 1px dashed var(--muted); border-radius: 50%; }
+
+    .story h3 { font: 500 24px/1.05 var(--serif); text-transform: none; letter-spacing: -.01em; color: var(--ink); margin: 0 0 10px; }
+    .story-item { border-top: 1px solid var(--line); padding: 10px 0; }
+    .story-item:first-of-type { border-top: 0; padding-top: 0; }
+    .story-item b { display: flex; justify-content: space-between; gap: 10px; align-items: start; font-size: 14px; margin-bottom: 4px; }
+    .story-item p { margin: 0; font-size: 14px; }
+    .sources { font-size: 12px; color: var(--muted); }
+    .sources a { color: var(--muted); }
+
+    .maplibregl-ctrl-attrib { font-size: 11px; }
+    .maplibregl-popup-content { font: 13px/1.3 var(--sans); padding: 6px 9px; border-radius: 0; box-shadow: var(--shadow); }
+    .map-error { position: absolute; inset: auto 12px 12px auto; max-width: 340px; background: var(--surface); border: 1px solid var(--red); padding: 12px; font-size: 13px; z-index: 2; display: none; }
+
+    @media (max-width: 760px) {
+      .bar { gap: 10px; }
+      .bar h1, .snapshot, .wordmark { display: none; }
+      .bar .spacer { display: none; }
+      .bar { justify-content: space-between; }
+      .panel { left: 8px; right: 8px; width: auto; top: calc(var(--bar) + 8px); max-height: 50%; }
+      .panel:not(.expanded) .panel-section:not(:first-child) { display: none; }
+      .panel-toggle { display: block; width: 100%; margin-top: 10px; }
+      .drawer { left: 0; right: 0; top: auto; bottom: 0; width: auto; max-height: 62%; border-left: 0; border-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <span class="wordmark">Sponge City</span>
+    <h1>Basel tree map</h1>
+    <span class="spacer"></span>
+    <span class="snapshot" id="snapshot"></span>
+    <button class="link" type="button" id="open-story">Why no water status?</button>
+    <a href="evidence-atlas.html">Evidence atlas →</a>
+  </header>
+
+  <div id="map" role="region" aria-label="Map of Basel trees"></div>
+  <div class="map-error" id="map-error" role="alert"></div>
+
+  <aside class="panel" id="panel" aria-label="Map controls">
+    <div class="panel-section">
+      <label class="label" for="search">Find a street or tree number</label>
+      <div class="search">
+        <input id="search" type="search" autocomplete="off" placeholder="e.g. Elsässerstrasse, BS004993">
+        <ul class="search-results" id="search-results"></ul>
+      </div>
+      <button class="button panel-toggle" type="button" id="panel-toggle" aria-expanded="false">Layers and legend</button>
+    </div>
+    <div class="panel-section">
+      <span class="label" id="colour-label">Colour trees by</span>
+      <div class="segmented" role="group" aria-labelledby="colour-label">
+        <button type="button" data-mode="age" aria-pressed="true">Age</button>
+        <button type="button" data-mode="group" aria-pressed="false">Setting</button>
+        <button type="button" data-mode="genus" aria-pressed="false">Genus</button>
+      </div>
+      <ul class="legend" id="legend"></ul>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div class="panel-section">
+      <span class="label">Show</span>
+      <label class="toggle"><input type="checkbox" id="street-only"> Street trees only</label>
+      <label class="toggle"><input type="checkbox" id="show-stations" checked> Climate stations (meteoblue)</label>
+      <label class="toggle"><input type="checkbox" id="show-perimeter" checked> VoltaNord development plan</label>
+      <label class="label" for="municipality" style="margin-top:12px">Municipality</label>
+      <select id="municipality"><option value="">Basel and Riehen</option></select>
+      <label class="label" for="basemap" style="margin-top:12px">Basemap · swisstopo</label>
+      <select id="basemap">
+        <option value="light">Light base map</option>
+        <option value="grey">National map (grey)</option>
+        <option value="aerial">Aerial image (SWISSIMAGE)</option>
+      </select>
+    </div>
+  </aside>
+
+  <aside class="drawer" id="drawer" aria-live="polite"></aside>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
+  <script id="map-logic">
+    const SNAPSHOT = /*__MAP_DATA__*/ null;
+    const ATLAS = /*__ATLAS_DATA__*/ null;
+
+    const AGE_CLASSES = [
+      { id: "a0", label: "Under 10 years", color: "#6da7ec", test: age => age < 10 },
+      { id: "a1", label: "10–29 years", color: "#3987e5", test: age => age < 30 },
+      { id: "a2", label: "30–59 years", color: "#256abf", test: age => age < 60 },
+      { id: "a3", label: "60–99 years", color: "#184f95", test: age => age < 100 },
+      { id: "a4", label: "100 years or more", color: "#0d366b", test: age => age <= 400 },
+      { id: "check", label: "Over 400 (check source)", color: "#fab219", test: () => true }
+    ];
+    const UNKNOWN = { id: "unknown", label: "Not recorded", color: "#a9a69c" };
+    const OTHER = { id: "other", label: "Other", color: "#8f8d86" };
+    const CATEGORICAL = ["#2a78d6", "#eb6834", "#1baf7a", "#4a3aa7"];
+
+    const GROUP_CLASSES = [
+      { id: "street", label: "Street trees", match: ["Strassenbäume", "Verkehrsgrün / Strassenbäume"] },
+      { id: "public", label: "Parks and public green", match: ["Öffentliche Grünflächen", "Parkgrün", "Landschaftsgrün", "Naturschutzanlage", "Spiel- und Rastplätze", "Freizeit- und Sportanlagen"] },
+      { id: "school", label: "Schools and kindergartens", match: ["Schul- und Kindergartenareal", "Schulen", "Kindergärten"] },
+      { id: "private", label: "Private, maintained by city", match: ["Privatbäume gepflegt durch STG", "Privatbäume Pflege Gärtnerei"] }
+    ].map((item, i) => ({ ...item, color: CATEGORICAL[i] }));
+
+    const MODES = {
+      age: { title: "Tree age", classes: [...AGE_CLASSES, UNKNOWN] },
+      group: { title: "Setting (Baumkataster group)", classes: [...GROUP_CLASSES, OTHER] },
+      genus: { title: "Most common genera", classes: [] }
+    };
+
+    const SOIL_WATER = {
+      status: "unknown",
+      depths: ["30 cm", "60 cm", "90 cm"],
+      reference: [
+        { label: "Good", range: "0–33" },
+        { label: "Moderate", range: "33–81" },
+        { label: "Critical", range: "81–270" }
+      ],
+      record_ids: ["fact-no-public-monitoring-data", "precedent-qtrees-status-classes", "boundary-qtrees-transfer"]
+    };
+
+    const STORIES = [
+      { title: "Why the map shows no water status", record_ids: ["fact-no-public-monitoring-data", "precedent-qtrees-sensor-schema", "precedent-qtrees-status-classes", "boundary-qtrees-transfer"] },
+      { title: "What VoltaNord will measure", record_ids: ["fact-monitoring-scope", "fact-voltanord-plan-perimeter", "fact-74640-measurement-concept", "interpret-voltanord-likely-instruments", "question-protocol"] }
+    ];
+
+    function ageClass(age) {
+      if (age === null || age === undefined) return UNKNOWN.id;
+      return AGE_CLASSES.find(item => item.test(age)).id;
+    }
+
+    function groupClass(group) {
+      const hit = GROUP_CLASSES.find(item => item.match.includes(group));
+      return hit ? hit.id : OTHER.id;
+    }
+
+    function genusOf(latin) {
+      const word = (latin || "").trim().split(/\s+/)[0] || "";
+      return /^[A-Z][a-z]+$/.test(word) ? word : "";
+    }
+
+    function decodeTrees(snapshot) {
+      const { columns, dictionaries, rows } = snapshot.trees;
+      const at = Object.fromEntries(columns.map((name, i) => [name, i]));
+      return rows.map(row => {
+        const [latin, german] = dictionaries.species[row[at.species]].split("|");
+        const group = dictionaries.group[row[at.group]];
+        return {
+          id: row[at.id],
+          lon: row[at.lon],
+          lat: row[at.lat],
+          latin,
+          german,
+          genus: genusOf(latin),
+          age: row[at.age_years],
+          yearsAtSite: row[at.years_at_site],
+          street: dictionaries.street[row[at.street]],
+          group,
+          groupClass: groupClass(group),
+          municipality: dictionaries.municipality[row[at.municipality]],
+          protection: dictionaries.protection[row[at.protection]]
+        };
+      });
+    }
+
+    function topGenera(trees, n = CATEGORICAL.length) {
+      const counts = new Map();
+      for (const tree of trees) if (tree.genus) counts.set(tree.genus, (counts.get(tree.genus) || 0) + 1);
+      return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, n)
+        .map(([genus], i) => ({ id: genus, label: genus, color: CATEGORICAL[i] }));
+    }
+
+    function classify(tree, mode) {
+      if (mode === "age") return ageClass(tree.age);
+      if (mode === "group") return tree.groupClass;
+      return MODES.genus.classes.some(item => item.id === tree.genus) ? tree.genus : OTHER.id;
+    }
+
+    function isVisible(tree, filters) {
+      if (filters.streetOnly && tree.groupClass !== "street") return false;
+      if (filters.municipality && tree.municipality !== filters.municipality) return false;
+      return true;
+    }
+
+    function legendCounts(trees, mode, filters) {
+      const counts = Object.fromEntries(MODES[mode].classes.map(item => [item.id, 0]));
+      let total = 0;
+      for (const tree of trees) {
+        if (!isVisible(tree, filters)) continue;
+        counts[classify(tree, mode)] += 1;
+        total += 1;
+      }
+      return { counts, total };
+    }
+
+    function distanceMetres(lon1, lat1, lon2, lat2) {
+      const rad = Math.PI / 180;
+      const dLat = (lat2 - lat1) * rad;
+      const dLon = (lon2 - lon1) * rad;
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLon / 2) ** 2;
+      return 2 * 6371000 * Math.asin(Math.sqrt(a));
+    }
+
+    function nearestStation(lon, lat, stations) {
+      let best = null;
+      for (const station of stations) {
+        const distance = distanceMetres(lon, lat, station.lon, station.lat);
+        if (!best || distance < best.distance) best = { station, distance };
+      }
+      return best;
+    }
+
+    function normalise(text) {
+      return (text || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss");
+    }
+
+    function search(trees, query, limit = 8) {
+      const q = normalise(query).trim();
+      if (q.length < 2) return [];
+      const exact = trees.find(tree => normalise(tree.id) === q);
+      if (exact) return [{ type: "tree", label: exact.id, detail: `${exact.german || exact.latin} · ${exact.street}`, trees: [exact] }];
+      const streets = new Map();
+      for (const tree of trees) {
+        const name = normalise(tree.street);
+        if (!name.includes(q)) continue;
+        if (!streets.has(tree.street)) streets.set(tree.street, { starts: name.startsWith(q), trees: [] });
+        streets.get(tree.street).trees.push(tree);
+      }
+      return [...streets.entries()]
+        .sort((a, b) => (b[1].starts - a[1].starts) || b[1].trees.length - a[1].trees.length)
+        .slice(0, limit)
+        .map(([street, hit]) => ({ type: "street", label: street, detail: `${hit.trees.length} trees`, trees: hit.trees }));
+    }
+
+    function bounds(trees) {
+      const lons = trees.map(tree => tree.lon);
+      const lats = trees.map(tree => tree.lat);
+      return [[Math.min(...lons), Math.min(...lats)], [Math.max(...lons), Math.max(...lats)]];
+    }
+
+    function treeFeatures(trees) {
+      return {
+        type: "FeatureCollection",
+        features: trees.map((tree, i) => ({
+          type: "Feature",
+          id: i,
+          geometry: { type: "Point", coordinates: [tree.lon, tree.lat] },
+          properties: { i, age: ageClass(tree.age), group: tree.groupClass, genus: tree.genus, muni: tree.municipality }
+        }))
+      };
+    }
+
+    function recordById(id) {
+      return ATLAS && ATLAS.records.find(record => record.id === id);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+    }
+
+    function formatYears(value) {
+      return value === null || value === undefined ? "Not recorded" : `${value} years`;
+    }
+
+    function formatTime(iso) {
+      if (!iso) return "–";
+      return new Date(iso).toLocaleString("de-CH", { timeZone: "Europe/Zurich", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    }
+
+    function formatNumber(value, unit, digits = 1) {
+      return value === null || value === undefined ? "–" : `${Number(value).toFixed(digits)} ${unit}`;
+    }
+
+    const TREES = decodeTrees(SNAPSHOT);
+    MODES.genus.classes = [...topGenera(TREES), OTHER];
+    const MUNICIPALITIES = SNAPSHOT.trees.dictionaries.municipality.filter(Boolean);
+  </script>
+  <script>
+    const state = { mode: "age", filters: { streetOnly: false, municipality: "" }, layers: { stations: true, perimeter: true }, basemap: "light", selected: null };
+    const $ = selector => document.querySelector(selector);
+    const SWISSTOPO = "© <a href=\"https://www.swisstopo.admin.ch/\">swisstopo</a>";
+    const DATA_ATTRIBUTION = "Data: Stadtgärtnerei Basel, Gemeinde Riehen, meteoblue AG, Städtebau & Architektur BS via <a href=\"https://data.bs.ch\">data.bs.ch</a> (CC BY 4.0)";
+
+    const rasterStyle = (layer, format) => ({
+      version: 8,
+      sources: {
+        base: {
+          type: "raster",
+          tiles: [`https://wmts.geo.admin.ch/1.0.0/${layer}/default/current/3857/{z}/{x}/{y}.${format}`],
+          tileSize: 256,
+          maxzoom: 19,
+          attribution: SWISSTOPO
+        }
+      },
+      layers: [{ id: "base", type: "raster", source: "base" }]
+    });
+
+    const BASEMAPS = {
+      light: "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json",
+      grey: rasterStyle("ch.swisstopo.pixelkarte-grau", "jpeg"),
+      aerial: rasterStyle("ch.swisstopo.swissimage", "jpeg")
+    };
+
+    function colourExpression(mode) {
+      const property = { age: "age", group: "group", genus: "genus" }[mode];
+      const expression = ["match", ["get", property]];
+      for (const item of MODES[mode].classes) if (item.id !== OTHER.id) expression.push(item.id, item.color);
+      expression.push(mode === "age" ? UNKNOWN.color : OTHER.color);
+      return expression;
+    }
+
+    function treeFilter() {
+      const filter = ["all"];
+      if (state.filters.streetOnly) filter.push(["==", ["get", "group"], "street"]);
+      if (state.filters.municipality) filter.push(["==", ["get", "muni"], state.filters.municipality]);
+      return filter;
+    }
+
+    function renderLegend() {
+      const { counts, total } = legendCounts(TREES, state.mode, state.filters);
+      $("#legend").innerHTML = MODES[state.mode].classes.map(item => `
+        <li><span class="swatch" style="background:${item.color}"></span><span>${escapeHtml(item.label)}</span><span class="count">${counts[item.id].toLocaleString("de-CH")}</span></li>`).join("");
+      $("#counts").textContent = `${total.toLocaleString("de-CH")} of ${TREES.length.toLocaleString("de-CH")} trees shown · ${MODES[state.mode].title}`;
+      document.querySelectorAll(".segmented button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.mode === state.mode)));
+    }
+
+    function sourceLinks(ids) {
+      return SNAPSHOT.sources.filter(source => ids.includes(source.dataset))
+        .map(source => `<a href="${source.url}" target="_blank" rel="noopener">${escapeHtml(source.title)}</a> (${escapeHtml(source.publisher)}, ${escapeHtml(source.licence)})`).join("; ");
+    }
+
+    function recordBadge(id) {
+      const record = recordById(id);
+      return record ? `<span class="badge ${record.status}">${record.status}</span>` : "";
+    }
+
+    function soilWaterBlock() {
+      return `
+        <div class="block">
+          <h3>Soil water in the tree pit <span class="badge unknown">unknown</span></h3>
+          <div class="layers" aria-label="Soil water by depth: unknown at all depths">
+            ${SOIL_WATER.depths.map(depth => `<div class="layer"><b>${depth}</b><span>No public measurement</span><span class="badge unknown">unknown</span></div>`).join("")}
+          </div>
+          <p class="note">Basel publishes no soil-water sensor data, so this map shows no water status. Berlin's QTrees measured suction tension at these three depths.</p>
+          <details class="reference">
+            <summary>Berlin reference classes (not applied here)</summary>
+            <ul>${SOIL_WATER.reference.map(item => `<li><i></i><span>${item.label}</span><span class="count">${item.range}</span></li>`).join("")}</ul>
+            <p class="note">Suction tension, unit likely kPa (inferred). Not calibrated for Basel soils or sponge-city substrates. ${recordBadge("precedent-qtrees-status-classes")}</p>
+          </details>
+        </div>`;
+    }
+
+    function stationBlock(hit, title = "Nearest climate station") {
+      const station = hit.station;
+      return `
+        <div class="block" id="station-block">
+          <h3>${title} <span class="badge observed">observed</span></h3>
+          <dl class="facts">
+            <dt>Station</dt><dd>${escapeHtml(station.name)}${hit.distance !== null ? ` · ${Math.round(hit.distance)} m` : ""}</dd>
+            <dt>Air temperature</dt><dd data-field="air_temp_c">${formatNumber(station.air_temp_c, "°C")}</dd>
+            <dt>Rain, last 24 h</dt><dd data-field="rain_24h_mm">${formatNumber(station.rain_24h_mm, "mm")}</dd>
+            <dt>Rain, last 48 h</dt><dd data-field="rain_48h_mm">${formatNumber(station.rain_48h_mm, "mm")}</dd>
+            <dt>Observed</dt><dd data-field="observed_at">${formatTime(station.observed_at)}</dd>
+          </dl>
+          <p class="note">Air and rain at the station, not soil water at the tree. <button class="button" type="button" id="refresh-station" data-station="${escapeHtml(station.id)}">Refresh live</button></p>
+        </div>`;
+    }
+
+    function openDrawer(html) {
+      $("#drawer").innerHTML = html;
+      $("#drawer").classList.add("open");
+      $("#drawer .close")?.addEventListener("click", closeDrawer);
+      $("#refresh-station")?.addEventListener("click", event => refreshStation(event.currentTarget.dataset.station));
+    }
+
+    function closeDrawer() {
+      $("#drawer").classList.remove("open");
+      state.selected = null;
+      if (window.map?.getSource("selected")) map.getSource("selected").setData({ type: "FeatureCollection", features: [] });
+      if (location.hash) history.replaceState(null, "", location.pathname);
+    }
+
+    function showTree(tree) {
+      state.selected = tree;
+      history.replaceState(null, "", `#tree=${encodeURIComponent(tree.id)}`);
+      if (window.map?.getSource("selected")) map.getSource("selected").setData({ type: "Feature", geometry: { type: "Point", coordinates: [tree.lon, tree.lat] }, properties: {} });
+      openDrawer(`
+        <div class="drawer-head">
+          <button class="close" type="button" aria-label="Close">×</button>
+          <div class="kicker">${escapeHtml(tree.group)}</div>
+          <h2>${escapeHtml(tree.german || tree.latin || "Unknown species")}</h2>
+          <div class="latin">${escapeHtml(tree.latin)}</div>
+          <div class="id">${escapeHtml(tree.id)} · ${escapeHtml(tree.street)}, ${escapeHtml(tree.municipality)}</div>
+        </div>
+        <div class="block">
+          <h3>Tree register <span class="badge observed">observed</span></h3>
+          <dl class="facts">
+            <dt>Age</dt><dd>${formatYears(tree.age)}${tree.age > 400 ? " (check source)" : ""}</dd>
+            <dt>At this site</dt><dd>${formatYears(tree.yearsAtSite)}</dd>
+            <dt>Setting</dt><dd>${escapeHtml(tree.group)}</dd>
+            <dt>Protection</dt><dd>${escapeHtml(tree.protection)}</dd>
+          </dl>
+        </div>
+        ${SNAPSHOT.stations.length ? stationBlock(nearestStation(tree.lon, tree.lat, SNAPSHOT.stations)) : ""}
+        ${soilWaterBlock()}
+        <div class="block sources">Sources: ${sourceLinks(["100052", "100082", "100009"])}. Snapshot ${formatTime(SNAPSHOT.fetched_at)}.</div>`);
+    }
+
+    function showStation(station) {
+      openDrawer(`
+        <div class="drawer-head">
+          <button class="close" type="button" aria-label="Close">×</button>
+          <div class="kicker">meteoblue Smart Climate station</div>
+          <h2>${escapeHtml(station.name)}</h2>
+          <div class="id">${escapeHtml(station.id)}</div>
+        </div>
+        ${stationBlock({ station, distance: null }, "Latest reading")}
+        <div class="block sources">Sources: ${sourceLinks(["100082", "100009"])}.</div>`);
+    }
+
+    function showPerimeter(properties) {
+      openDrawer(`
+        <div class="drawer-head">
+          <button class="close" type="button" aria-label="Close">×</button>
+          <div class="kicker">Development plan · ${escapeHtml(properties.status)} since ${escapeHtml(properties.status_date)}</div>
+          <h2>${escapeHtml(properties.title)}</h2>
+          <div class="id"><a href="${escapeHtml(properties.geolink)}" target="_blank" rel="noopener">Legal documents (ÖREB) →</a></div>
+        </div>
+        <div class="block">
+          <h3>What this outline is ${recordBadge("fact-voltanord-plan-perimeter")}</h3>
+          <p class="note" style="margin:0">${escapeHtml(recordById("fact-voltanord-plan-perimeter")?.answer || "")}</p>
+        </div>
+        <div class="block">
+          <h3>ZHAW monitoring ${recordBadge("fact-monitoring-scope")}</h3>
+          <p class="note" style="margin:0">${escapeHtml(recordById("fact-monitoring-scope")?.answer || "")}</p>
+        </div>
+        <div class="block sources">Source: ${sourceLinks(["100234"])}.</div>`);
+    }
+
+    function showStories() {
+      openDrawer(`
+        <div class="drawer-head">
+          <button class="close" type="button" aria-label="Close">×</button>
+          <div class="kicker">From the evidence atlas</div>
+          <h2>What the map can and cannot say</h2>
+        </div>
+        ${STORIES.map(story => `
+          <div class="block story">
+            <h3>${escapeHtml(story.title)}</h3>
+            ${story.record_ids.map(recordById).filter(Boolean).map(record => `
+              <div class="story-item"><b><span>${escapeHtml(record.title)}</span><span class="badge ${record.status}">${record.status}</span></b><p>${escapeHtml(record.answer)}</p></div>`).join("")}
+          </div>`).join("")}
+        <div class="block sources">Full records, sources and open questions: <a href="evidence-atlas.html">Evidence atlas</a>.</div>`);
+    }
+
+    async function refreshStation(id) {
+      const button = $("#refresh-station");
+      button.disabled = true;
+      button.textContent = "Loading…";
+      try {
+        const params = new URLSearchParams({ where: `name_original="${id}"`, order_by: "dates_max_date desc", limit: "1", select: "dates_max_date,meta_airtemp,meta_rain24h_sum,meta_rain48h_sum" });
+        const response = await fetch(`https://data.bs.ch/api/explore/v2.1/catalog/datasets/100009/records?${params}`);
+        if (!response.ok) throw new Error(response.status);
+        const row = (await response.json()).results[0];
+        if (!row) throw new Error("no reading");
+        const values = { air_temp_c: formatNumber(row.meta_airtemp, "°C"), rain_24h_mm: formatNumber(row.meta_rain24h_sum, "mm"), rain_48h_mm: formatNumber(row.meta_rain48h_sum, "mm"), observed_at: formatTime(row.dates_max_date) };
+        for (const [field, text] of Object.entries(values)) document.querySelector(`#station-block [data-field="${field}"]`).textContent = text;
+        button.textContent = "Live ✓";
+      } catch {
+        button.textContent = "Live data unavailable";
+      }
+    }
+
+    function renderSearch() {
+      const results = search(TREES, $("#search").value);
+      $("#search-results").innerHTML = results.map((result, i) => `<li><button type="button" data-i="${i}"><span>${escapeHtml(result.label)}</span><small>${escapeHtml(result.detail)}</small></button></li>`).join("");
+      document.querySelectorAll("#search-results button").forEach(button => button.addEventListener("click", () => {
+        const result = results[Number(button.dataset.i)];
+        if (result.type === "tree") {
+          map.flyTo({ center: [result.trees[0].lon, result.trees[0].lat], zoom: 18 });
+          showTree(result.trees[0]);
+        } else {
+          map.fitBounds(bounds(result.trees), { padding: 80, maxZoom: 18 });
+        }
+        $("#search-results").innerHTML = "";
+      }));
+    }
+
+    function addDataLayers() {
+      map.addSource("trees", { type: "geojson", data: treeFeatures(TREES) });
+      map.addSource("stations", { type: "geojson", data: { type: "FeatureCollection", features: SNAPSHOT.stations.map((station, i) => ({ type: "Feature", id: i, geometry: { type: "Point", coordinates: [station.lon, station.lat] }, properties: { i } })) } });
+      map.addSource("perimeter", { type: "geojson", data: SNAPSHOT.perimeters });
+      map.addSource("selected", { type: "geojson", data: state.selected ? { type: "Feature", geometry: { type: "Point", coordinates: [state.selected.lon, state.selected.lat] }, properties: {} } : { type: "FeatureCollection", features: [] } });
+
+      map.addLayer({ id: "perimeter-fill", type: "fill", source: "perimeter", paint: { "fill-color": "#66508f", "fill-opacity": 0.08 } });
+      map.addLayer({ id: "perimeter-line", type: "line", source: "perimeter", paint: { "line-color": "#66508f", "line-width": 2, "line-dasharray": [3, 2] } });
+      map.addLayer({
+        id: "trees", type: "circle", source: "trees", filter: treeFilter(),
+        paint: {
+          "circle-color": colourExpression(state.mode),
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 1.6, 14, 3, 17, 7, 19, 11],
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 12, 0, 15, 1]
+        }
+      });
+      map.addLayer({ id: "selected", type: "circle", source: "selected", paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 7, 17, 13], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#13271f", "circle-stroke-width": 3 } });
+      map.addLayer({ id: "stations", type: "circle", source: "stations", paint: { "circle-radius": 6, "circle-color": "#ffffff", "circle-stroke-color": "#13271f", "circle-stroke-width": 2.5 } });
+      map.addLayer({ id: "stations-dot", type: "circle", source: "stations", paint: { "circle-radius": 2, "circle-color": "#13271f" } });
+      applyLayerVisibility();
+    }
+
+    function applyLayerVisibility() {
+      const set = (id, on) => map.getLayer(id) && map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
+      set("stations", state.layers.stations);
+      set("stations-dot", state.layers.stations);
+      set("perimeter-fill", state.layers.perimeter);
+      set("perimeter-line", state.layers.perimeter);
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      if (map.getLayer("trees")) map.setPaintProperty("trees", "circle-color", colourExpression(mode));
+      renderLegend();
+    }
+
+    function setFilters() {
+      if (map.getLayer("trees")) map.setFilter("trees", treeFilter());
+      renderLegend();
+    }
+
+    $("#snapshot").textContent = `Snapshot ${formatTime(SNAPSHOT.fetched_at)}`;
+    $("#municipality").insertAdjacentHTML("beforeend", MUNICIPALITIES.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join(""));
+    renderLegend();
+
+    let map;
+    if (typeof maplibregl === "undefined") {
+      $("#map-error").style.display = "block";
+      $("#map-error").textContent = "The map library could not load (offline?). Search, legend and tree cards still work from the embedded snapshot.";
+    } else {
+      map = window.map = new maplibregl.Map({
+        container: "map",
+        style: BASEMAPS.light,
+        center: [7.598, 47.565],
+        zoom: 12.4,
+        minZoom: 10,
+        maxZoom: 19.5,
+        maxBounds: [[7.35, 47.45], [7.85, 47.68]],
+        attributionControl: false
+      });
+      map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: [DATA_ATTRIBUTION] }), "bottom-right");
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+      map.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-left");
+      map.on("style.load", addDataLayers);
+      map.on("error", event => {
+        if (String(event.error?.message || "").includes("style")) {
+          $("#map-error").style.display = "block";
+          $("#map-error").textContent = "The swisstopo basemap could not load. Try another basemap.";
+        }
+      });
+
+      const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 8 });
+      map.on("mousemove", "trees", event => {
+        map.getCanvas().style.cursor = "pointer";
+        const tree = TREES[event.features[0].properties.i];
+        popup.setLngLat([tree.lon, tree.lat]).setHTML(`<b>${escapeHtml(tree.german || tree.latin)}</b><br>${formatYears(tree.age)} · ${escapeHtml(tree.street)}`).addTo(map);
+      });
+      map.on("mouseleave", "trees", () => { map.getCanvas().style.cursor = ""; popup.remove(); });
+      map.on("mousemove", "stations", event => {
+        map.getCanvas().style.cursor = "pointer";
+        const station = SNAPSHOT.stations[event.features[0].properties.i];
+        popup.setLngLat([station.lon, station.lat]).setHTML(`<b>${escapeHtml(station.name)}</b><br>${formatNumber(station.air_temp_c, "°C")} · ${formatNumber(station.rain_48h_mm, "mm")} in 48 h`).addTo(map);
+      });
+      map.on("mouseleave", "stations", () => { map.getCanvas().style.cursor = ""; popup.remove(); });
+      map.on("click", event => {
+        const hits = map.queryRenderedFeatures(event.point, { layers: ["stations", "trees", "perimeter-fill"].filter(id => map.getLayer(id)) });
+        if (!hits.length) return;
+        const hit = hits[0];
+        if (hit.layer.id === "stations") showStation(SNAPSHOT.stations[hit.properties.i]);
+        else if (hit.layer.id === "trees") showTree(TREES[hit.properties.i]);
+        else showPerimeter(hit.properties);
+      });
+
+      map.on("load", () => {
+        const match = location.hash.match(/^#tree=(.+)$/);
+        const tree = match && TREES.find(item => item.id === decodeURIComponent(match[1]));
+        if (tree) { map.jumpTo({ center: [tree.lon, tree.lat], zoom: 17.5 }); showTree(tree); }
+      });
+    }
+
+    document.querySelectorAll(".segmented button").forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
+    $("#street-only").addEventListener("change", event => { state.filters.streetOnly = event.target.checked; setFilters(); });
+    $("#municipality").addEventListener("change", event => { state.filters.municipality = event.target.value; setFilters(); });
+    $("#show-stations").addEventListener("change", event => { state.layers.stations = event.target.checked; if (map) applyLayerVisibility(); });
+    $("#show-perimeter").addEventListener("change", event => { state.layers.perimeter = event.target.checked; if (map) applyLayerVisibility(); });
+    $("#basemap").addEventListener("change", event => { state.basemap = event.target.value; $("#map-error").style.display = "none"; map?.setStyle(BASEMAPS[state.basemap], { diff: false }); });
+    $("#search").addEventListener("input", renderSearch);
+    $("#open-story").addEventListener("click", showStories);
+    $("#panel-toggle").addEventListener("click", event => {
+      const expanded = $("#panel").classList.toggle("expanded");
+      event.currentTarget.setAttribute("aria-expanded", String(expanded));
+    });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && $("#drawer").classList.contains("open")) closeDrawer(); });
+  </script>
+</body>
+</html>

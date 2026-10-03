@@ -154,6 +154,15 @@
       "accessed": "2026-10-03",
       "kind": "method-precedent",
       "note": "MIT licence (© 2022 Technologiestiftung Berlin). Last commit 2024-07-17; demo mode with static data."
+    },
+    {
+      "id": "data-bs-zoning-overlays-100234",
+      "title": "Nutzungsplan - Zonenplan Stadt Basel: Überlagernde Festlegungen",
+      "publisher": "Kanton Basel-Stadt (Städtebau & Architektur)",
+      "url": "https://data.bs.ch/explore/dataset/100234/",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Contains the legally binding development plans BP 226A 'Areal VoltaNord' and BP 226B 'VoltaNord 2. Stufe' (in force since 16 June 2026). CC BY 4.0."
     }
   ],
   "entities": [
@@ -661,6 +670,18 @@
       "source_ids": ["github-qtrees-ai-data", "github-baumblick-frontend", "zhaw-voltanord-80788"],
       "entity_ids": ["indicator-soil-water", "project-qtrees-berlin"],
       "related_record_ids": ["precedent-qtrees-sensor-schema", "interpret-voltanord-likely-instruments"]
+    },
+    {
+      "id": "fact-voltanord-plan-perimeter",
+      "kind": "fact",
+      "title": "Where is VoltaNord on the map?",
+      "answer": "The map draws the official development-plan perimeters BP 226A (Areal VoltaNord) and BP 226B (VoltaNord 2. Stufe), both in force since 16 June 2026. This is the planning perimeter. It is not the set of streets or elements that ZHAW monitors; those sites are not public.",
+      "status": "verified",
+      "scope": "Planning geometry from the zoning overlay dataset; monitoring sites unknown",
+      "tags": ["voltanord", "perimeter", "bebauungsplan", "map", "geometry", "sites"],
+      "source_ids": ["data-bs-zoning-overlays-100234", "zhaw-voltanord-80788"],
+      "entity_ids": ["place-voltanord", "project-voltanord-monitoring"],
+      "related_record_ids": ["question-protocol", "question-74640-streets"]
     }
   ],
   "decision_routes": [

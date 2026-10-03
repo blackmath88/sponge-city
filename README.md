@@ -24,6 +24,12 @@ make run
 
 Then visit <http://127.0.0.1:4173>. Edit the canonical records in `data/evidence-atlas.json`; `make build` regenerates the standalone file, `make validate` checks references and IDs, and `make smoke` exercises search, route selection and brief generation.
 
+## Basel tree map
+
+Open `prototype/basel-map.html` directly (or `make run`, then <http://127.0.0.1:4173/prototype/basel-map.html>). It shows all 32,378 trees in the Basel and Riehen tree register on swisstopo base maps, coloured by age, setting or genus, with active meteoblue climate stations and the VoltaNord development-plan perimeter. Each tree card lists register facts, the nearest station's air temperature and rainfall (refreshable live) and an explicit **unknown** for soil water: Basel publishes no soil-water sensor data, so the map shows no water status. The interaction patterns are adapted from Berlin's [Baumblick](docs/PRECEDENT-QTREES-BERLIN.md) (MIT); no Baumblick code is copied.
+
+Data is a committed snapshot in `data/basel-map.json` (data.bs.ch, CC BY 4.0). `make fetch` refreshes it and re-runs the checks; `make smoke` also tests the map logic.
+
 ## Working principle
 
 **GIS calculates. Rules constrain. AI explains.**
