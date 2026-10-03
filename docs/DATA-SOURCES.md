@@ -117,6 +117,7 @@ How to fill the gaps listed below (deduce, detect, synthesise, measure, ask), wi
 ## Licences
 
 - **data.bs.ch:** mostly CC BY 4.0. Some say "CC BY 4.0 + OpenStreetMap" (the map background). IWB and BVB datasets allow free use with attribution, but commercial use needs permission. BAFU hydrology is CC0.
+- **OpenStreetMap:** Basel-Stadt allows its CC BY 4.0 datasets to be incorporated into OpenStreetMap (waiver of 22 August 2024, Grundbuch- und Vermessungsamt: [PDF](https://data-bs.ch/stata/dataspot/permalinks/20240822-osm-vektordaten.pdf)). Values derived from city data, such as parking positions, can therefore be contributed back to OSM.
 - **Basel STAC:** CC-BY-4.0. WMS: attribution «Quelle: Geodaten Kanton Basel-Stadt».
 - **Federal geodata:** free under the federal open-government-data (OGD) terms, with attribution. The STAC `license: proprietary` is a generic value; check the product page before shipping. MeteoSwiss OGD collections are CC-BY.
 
