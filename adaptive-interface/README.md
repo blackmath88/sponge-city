@@ -248,6 +248,10 @@ Adaptive Interface adds a complementary interaction layer:
 
 It can consume the same evidence model and intervention ontology.
 
+## Current orchestration strategy
+
+The current integration contract is documented in [ORCHESTRATION.md](ORCHESTRATION.md). The near-term goal is not to finish the frontend or Basel data layer, but to connect **disposable basic modules** behind stable interfaces so the parallel teams can swap in their real work later.
+
 ## North-star sentence
 
 > **Learn what a sponge city is. Then see what it could mean for your street.**
