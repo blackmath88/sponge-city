@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive Interface Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper, #f2f0e8); color: var(--ink, #13271f); font-family: var(--sans, sans-serif); line-height: 1.45; }
+    .bar { display: flex; gap: 16px; align-items: center; padding: 12px 20px; border-bottom: 1px solid currentColor; font: 12px/1.2 var(--mono, monospace); }
+    .bar strong { letter-spacing: .1em; text-transform: uppercase; }
+    .bar a { color: inherit; }
+    .bar .spacer { flex: 1; }
+    #app { max-width: 1280px; margin: 0 auto; padding: 20px; }
+    pre { font: 12px/1.45 var(--mono, monospace); white-space: pre-wrap; }
+    .ai-fixture { border: 2px dashed #b96a16; background: #fff7e8; padding: 10px 14px; margin-bottom: 14px; font-size: 14px; }
+    .ai-errors { border: 1px solid #a33c32; background: #fbecea; padding: 10px 14px; margin-bottom: 14px; font-size: 14px; }
+    .ai-head h1 { font: 500 30px/1.1 var(--serif, serif); margin: 0 0 4px; }
+    .ai-note { color: var(--muted, #607068); font-size: 13px; }
+    .ai-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 6px; }
+    .ai-scene { margin: 0; background: #fff; border: 1px solid var(--line, #ccc); padding: 10px; }
+    .ai-scene figcaption { font: 700 11px/1 var(--mono, monospace); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+    .ai-scene svg { width: 100%; height: auto; display: block; }
+    .ai-svg-label { font: 11px var(--sans, sans-serif); fill: #111; }
+    .ai-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted, #607068); }
+    .ai-legend i { display: inline-block; width: 12px; height: 12px; margin-right: 5px; vertical-align: -2px; border: 1px solid #999; }
+    .ai-legend .ai-hatch { background: repeating-linear-gradient(45deg, #f3efe4 0 3px, #c49a3a 3px 5px); }
+    .ai-legend .ai-ring { border: 2px solid #111; }
+    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+    .ai-panel { background: var(--surface, #fff); border: 1px solid var(--line, #ccc); padding: 14px 16px; }
+    .ai-panel h2 { font: 700 12px/1 var(--mono, monospace); letter-spacing: .1em; text-transform: uppercase; margin: 0 0 10px; }
+    .ai-panel h3 { font-size: 13px; margin: 12px 0 4px; }
+    .ai-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .ai-table th, .ai-table td { text-align: left; padding: 5px 6px; border-top: 1px solid var(--line, #ddd); vertical-align: top; }
+    .ai-list { margin: 0; padding-left: 18px; font-size: 13px; }
+    .ai-intervention { border-top: 1px solid var(--line, #ddd); padding: 8px 0; font-size: 14px; }
+    .ai-intervention p { margin: 4px 0; }
+    .ai-mech span { font: 700 10px/1 var(--mono, monospace); border: 1px solid currentColor; padding: 2px 5px; margin-right: 4px; }
+    .ai-chip { font: 700 10px/1 var(--mono, monospace); text-transform: uppercase; letter-spacing: .05em; padding: 2px 5px; border: 1px solid currentColor; white-space: nowrap; }
+    .ai-chip[data-state="observed"] { color: #0d6b4c; }
+    .ai-chip[data-state="derived"] { color: #2c7a7b; }
+    .ai-chip[data-state="modelled"] { color: #19678a; }
+    .ai-chip[data-state="assumed"], .ai-chip[data-state="user-corrected"] { color: #66508f; }
+    .ai-chip[data-state="unknown"], .ai-chip[data-state="requires-investigation"] { color: #b96a16; }
+    .ai-chip[data-state="excluded"] { color: #a33c32; }
+    .ai-chip[data-state="candidate"] { color: #0d6b4c; }
+    .ai-chip[data-state="not-applicable"] { color: #777; }
+    button, select { font: inherit; font-size: 13px; }
+    .file-warning { display: none; max-width: 720px; margin: 40px auto; padding: 16px; border: 1px solid #a33c32; }
+    @media (max-width: 900px) { .ai-compare, .ai-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <strong>Adaptive Interface</strong><span>orchestration prototype · all modules are mocks</span>
+    <span class="spacer"></span>
+    <a id="renderer-switch" href="?renderer=text">Switch to text renderer</a>
+    <a href="../../site/situation-map.html">Situation map</a>
+    <a href="../README.md">How it works</a>
+  </header>
+  <div class="file-warning" id="file-warning">This demo uses ES modules, which browsers block on <code>file://</code>. Run <code>make run</code> in the repo and open <a href="http://127.0.0.1:4173/adaptive-interface/demo/">http://127.0.0.1:4173/adaptive-interface/demo/</a>.</div>
+  <main id="app" aria-live="polite"><p class="ai-note">Loading…</p></main>
+  <script>if (location.protocol === "file:") { document.getElementById("file-warning").style.display = "block"; document.getElementById("app").hidden = true; }</script>
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

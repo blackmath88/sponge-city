@@ -10,7 +10,7 @@ const types = { ".html": "text/html; charset=utf-8", ".json": "application/json;
 
 createServer(async (request, response) => {
   const pathname = request.url === "/" ? "/site/index.html" : new URL(request.url, "http://localhost").pathname;
-  const relative = normalize(pathname).replace(/^[/\\]+/, "");
+  const relative = normalize(pathname.endsWith("/") ? `${pathname}index.html` : pathname).replace(/^[/\\]+/, "");
   const file = join(root, relative);
   if (!file.startsWith(root)) {
     response.writeHead(403).end("Forbidden");

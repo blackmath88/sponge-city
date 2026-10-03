@@ -251,3 +251,67 @@ It can consume the same evidence model and intervention ontology.
 ## North-star sentence
 
 > **Learn what a sponge city is. Then see what it could mean for your street.**
+
+---
+
+## Implementation: orchestration prototype
+
+Status: runnable with mocks, 3 October 2026. **Every module is a mock**; the point is the seams, not the content.
+
+```text
+selection ─▶ PlaceProvider ─▶ PlaceModel ─▶ (corrections) ─▶ baseline ─▶ InterventionCatalogue ─▶ ScenarioEngine ─▶ scenario ─▶ Renderer
+             modules/mock-     contracts/                     runtime/                 modules/mock-            runtime/               modules/mock-
+             place-provider    place-model                    orchestrator             intervention-provider    scenario-engine        renderer
+```
+
+Run it: `make run`, then open <http://127.0.0.1:4173/adaptive-interface/demo/> (ES modules do not load from `file://`). `?renderer=text` swaps in a second renderer. From the Situation Map, the place lens has **Open in Sponge View**.
+
+Test it: `make test-adaptive` (also part of `make smoke`). No dependencies.
+
+### Who gives what
+
+| Team | Delivers | Contract | Replaces |
+|---|---|---|---|
+| **Data / API** | `{ async getPlace(selection) }` returning a `PlaceModel` | [`contracts/place-model.schema.json`](contracts/place-model.schema.json) | `modules/mock-place-provider.js` + `examples/demo-place.json` |
+| **Basel research** | An `InterventionCatalogue` (JSON) | [`contracts/intervention-catalog.schema.json`](contracts/intervention-catalog.schema.json) | `examples/demo-interventions.json` (loaded by `modules/mock-intervention-provider.js`) |
+| **Frontend** | `{ render(view), connect?(actions) }` | [`contracts/renderer-contract.md`](contracts/renderer-contract.md) | `modules/mock-renderer.js` |
+| **Situation Map** | A URL with `lat`, `lon`, `radius` | [`contracts/handoff.md`](contracts/handoff.md) | — (link already in the place lens) |
+| **Orchestration** | Connects them, validates, keeps state | `runtime/orchestrator.js` | — |
+
+Assembly is one call, in [`demo/demo.js`](demo/demo.js), the only file that names implementations:
+
+```js
+const app = new AdaptiveInterfaceOrchestrator({ placeProvider, interventionProvider, renderer });
+await app.load(selection);
+```
+
+### Files
+
+| Path | Role | Mock? |
+|---|---|---|
+| `contracts/place-model.schema.json` | PlaceModel `adaptive-place/0.1` | contract |
+| `contracts/intervention-catalog.schema.json` | Catalogue `intervention-catalog/0.1` | contract |
+| `contracts/renderer-contract.md` | View model `adaptive-view/0.1` and actions | contract |
+| `contracts/handoff.md` | Situation Map → Adaptive Interface URL | contract |
+| `runtime/evidence.js` | Evidence states and vocabularies | stable |
+| `runtime/validate.js` | Runtime checks of both data contracts | stable |
+| `runtime/scenario-engine.js` | Pure functions: corrections, status, transforms, geometry effects, unknowns | stable |
+| `runtime/orchestrator.js` | Wires modules, owns state, never imports a mock | stable |
+| `runtime/selection.js` | Parses and builds the handoff URL | stable |
+| `modules/mock-place-provider.js` | Returns the demo fixture for any selection | **mock** |
+| `modules/mock-intervention-provider.js` | Serves a catalogue object | **mock** |
+| `modules/mock-renderer.js` | Neutral schematic renderer | **mock, disposable** |
+| `modules/text-renderer.js` | Second renderer proving the swap | **mock** |
+| `examples/demo-place.json` | Invented Basel-like street, labelled as such | **fixture** |
+| `examples/demo-interventions.json` | Depave, permeable parking, tree + rain garden; rules marked `placeholder` | **fixture** |
+| `demo/` | Composition root and page | demo |
+| `tests/adaptive-interface.test.mjs` | Architectural invariants | test |
+
+### Rules the engine enforces
+
+- **Three layers.** `source` (provider, frozen) → `baseline` = source + corrections (TODAY) → `scenario` = baseline + interventions. Applying an intervention never touches the baseline; `resetScenario()` restores it; `resetAll()` drops corrections.
+- **Corrections are evidence.** A correction becomes `state: "user-corrected"` with `replaces` holding the original value. "Not sure" is recorded as unknown.
+- **Unknown stays unknown.** The validator rejects an unknown with a value. Totals become `unknown` (with the known part shown) while any relevant surface is unknown. Effects are computed from changed elements only, so a known change still shows.
+- **Status, not feasibility.** Each intervention is `candidate`, `requires-investigation`, `excluded` or `not-applicable` from the PlaceModel's context and the catalogue's rules. With unknown utilities, nothing is ever a candidate.
+- **Geometry-only effects.** Sealed, permeable and planted area, parking spaces and trees. Design areas are `assumed` and shown next to the effect. Runoff, storage, infiltration and cooling are listed as **not modelled**.
+- **No AI in the loop.** Nothing in `runtime/` calls a model.
