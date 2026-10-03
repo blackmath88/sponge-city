@@ -92,3 +92,9 @@ for lo, hi in [(13, 25), (26, 50), (51, 500)]:
         if not sel: continue
         d = np.array([r["c2024"] - r["c2012"] for r in sel])
         print(f"  {ctx:14} n={len(sel):5}  canopy within {RADIUS_M:g} m: {np.median([r['c2012'] for r in sel]):6.1f} -> {np.median([r['c2024'] for r in sel]):6.1f} m2, median change {np.median(d):+5.1f}")
+
+print("all street trees by years at site (both contexts):")
+for lo, hi in [(1, 12), (13, 25), (26, 50), (51, 80), (81, 500)]:
+    sel = [r["c2024"] for r in rows if r["standing"] and lo <= r["standing"] <= hi]
+    print(f"  {lo:>2}-{hi:<3} n={len(sel):5}  median canopy within {RADIUS_M:g} m (2024): {np.median(sel):5.0f} m2")
+
