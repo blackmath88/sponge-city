@@ -110,17 +110,19 @@ All carry **CC BY 4.0** (some with an OpenStreetMap base-map attribution) and we
 
 The `opendatabs/data-processing` repo (GitHub org of the Basel statistical office) has no ETL for soil moisture, sponge-city or VoltaNord data. Its only "stadtgaertnerei" pipeline (`stadtgaertnerei_spielen`) concerns playgrounds and is irrelevant. [confirmed by code search]
 
-### F8 — Adjacent precedent (not ZHAW): Berlin "Baumblick" street-tree suction-tension viewer
+### F8 — Adjacent precedent (not ZHAW): Berlin QTrees / Baumblick
+
+Full write-up: [PRECEDENT-QTREES-BERLIN.md](PRECEDENT-QTREES-BERLIN.md).
 
 | Field | Value |
 |---|---|
-| URL | <https://github.com/technologiestiftung/baumblick-frontend> |
-| Owner | Technologiestiftung Berlin (organisation account) [confirmed] |
-| Verification | Organisation repo. Turned up only because it was the sole GitHub code hit for "Saugspannung" [confirmed] |
-| Contents | Map UI showing soil suction tension per street tree from underground sensors plus model nowcasts, with a story page `pages/stories/saugspannung-und-sensoren.mdx` [confirmed]. Running in demo mode with static data since July 2024 [confirmed per repo page] |
-| Licence | **MIT** [confirmed on repo page; verify the LICENSE file before any reuse] |
-| Last activity | Demo mode since 2024-07-11 [confirmed]. Last commit date [unknown] |
-| Place Profile relevance | Interaction precedent for presenting `soil_water_balance` per tree. It has no Basel data and is no evidence of VoltaNord methods. [inferred] |
+| URL | <https://github.com/technologiestiftung/qtrees-ai-data>, <https://github.com/technologiestiftung/baumblick-frontend>, <https://www.qtrees.ai/> |
+| Owner | Technologiestiftung Berlin (organisation account), with Birds on Mars [confirmed] |
+| Verification | Organisation repos linked from the official project site qtrees.ai [confirmed] |
+| Contents | Watermark suction-tension sensors at 30/60/90 cm in >120 Berlin tree pits. PostGIS schema, ETL, random-forest nowcast and 14-day forecast for all street trees. Public map with three classes (0–33 / 33–81 / 81–270). Raw sensor data kept private [confirmed] |
+| Licence | **MIT** for both repos (LICENSE files read) [confirmed] |
+| Last activity | Backend 2024-06-20, frontend 2024-07-17. Project ended 09/2023; demo mode since 07/2024 [confirmed] |
+| Place Profile relevance | Design precedent for `soil_water` evidence (long format, observed vs modelled, display classes kept separate). Not sponge-city evidence. Thresholds are not calibrated for Basel [inferred] |
 
 ## Not found
 

@@ -46,6 +46,114 @@
       "accessed": "2026-10-03",
       "kind": "method-precedent",
       "note": "A separate ZHAW project using sensors and plant assessments with interactive, near-real-time communication. It is not evidence of the VoltaNord method."
+    },
+    {
+      "id": "zhaw-vegetationsbausteine-74640",
+      "title": "Schwammstadt-Vegetationsbausteine für Basel-Stadt",
+      "publisher": "ZHAW",
+      "url": "https://www.zhaw.ch/de/forschung/projekt/74640",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "2024 predecessor project for Stadtgärtnerei Basel. States that a measurement concept was designed for three street locations; the concept itself is not published."
+    },
+    {
+      "id": "zhaw-scheuchzerstrasse-81151",
+      "title": "Schwammstadt Scheuchzerstrasse in der Stadt Zürich",
+      "publisher": "ZHAW",
+      "url": "https://www.zhaw.ch/de/forschung/projekt/81151",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "Zurich sister project with the same team, started 07/2026. Names visual vitality scoring, dendrometers and soil sensors. Not evidence of the Basel method."
+    },
+    {
+      "id": "zenodo-efuf2023-waedenswil-substrates",
+      "title": "Structurally stable substrates for sustainable green infrastructure and stormwater management: a field trial with urban trees in Wädenswil (EFUF 2023 slides)",
+      "publisher": "Zenodo",
+      "url": "https://zenodo.org/records/10698162",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "Slides only, CC BY 4.0, DOI 10.5281/zenodo.10698162. No dataset or code."
+    },
+    {
+      "id": "zenodo-efuf2023-zurich-sponge-trees",
+      "title": "Sponge city principle for sustainable urban tree growth: innovative substrate and vegetation systems in Zurich's industrial district (EFUF 2023 slides)",
+      "publisher": "Zenodo",
+      "url": "https://zenodo.org/records/10698196",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "Slides only, CC BY 4.0, DOI 10.5281/zenodo.10698196. No dataset or code."
+    },
+    {
+      "id": "zhaw-thesis-kommunizierende-baumrigolen",
+      "title": "Kommunizierende Baumrigolen (BSc thesis)",
+      "publisher": "ZHAW digitalcollection",
+      "url": "https://digitalcollection.zhaw.ch/handle/11475/33090",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "2023 literature review on connected tree trenches, advised by Stevanovic and Heinrich. CC BY 4.0."
+    },
+    {
+      "id": "zhaw-talk-belaege-schwammstadt",
+      "title": "Beläge in der Schwammstadt (conference talk)",
+      "publisher": "ZHAW digitalcollection",
+      "url": "https://digitalcollection.zhaw.ch/handle/11475/35772",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "2026 talk on permeable and vegetated paving, infiltration capacity and thermography. Metadata only; licence not specified."
+    },
+    {
+      "id": "zhaw-thesis-klimadach-gundeldinger-feld",
+      "title": "Bewässerte Klima-Dachbegrünung im Gundeldinger Feld, Basel (MSc thesis)",
+      "publisher": "ZHAW digitalcollection",
+      "url": "https://digitalcollection.zhaw.ch/handle/11475/34380",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "2025 Basel field measurement of surface and air temperature under irrigated green roofs (May–Oct 2024). CC BY 4.0. Not a street or VoltaNord site."
+    },
+    {
+      "id": "data-bs-catalogue",
+      "title": "Open Data Basel-Stadt catalogue (data.bs.ch)",
+      "publisher": "Kanton Basel-Stadt",
+      "url": "https://data.bs.ch/explore/",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Checked datasets 100052, 100054, 100357 (trees and canopy), 100477 (land cover), 100164/100180 (groundwater), 100291/100292 (water protection), 100009/100082 (meteoblue climate network), 100254 (MeteoSchweiz). All CC BY 4.0. No sponge-city or soil-moisture dataset."
+    },
+    {
+      "id": "qtrees-landing",
+      "title": "Quantified Trees (QTrees)",
+      "publisher": "Technologiestiftung Berlin",
+      "url": "https://www.qtrees.ai/",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "Completed Berlin project (09/2021–09/2023) forecasting street-tree water supply from suction-tension sensors, open data and an ML model."
+    },
+    {
+      "id": "uba-tatenbank-qtrees",
+      "title": "Tatenbank: Quantified Trees – intelligente Bewässerungsvorhersage für Stadtbäume",
+      "publisher": "Umweltbundesamt",
+      "url": "https://www.umweltbundesamt.de/themen/klima-energie/klimafolgen-anpassung/werkzeuge-der-anpassung/tatenbank/quantified-trees-qtrees-intelligente",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Funding (BMUV/DAS, EUR 410,544), partners, >120 sensors in Mitte and Neukölln, no follow-up funding."
+    },
+    {
+      "id": "github-qtrees-ai-data",
+      "title": "qtrees-ai-data (data and AI backend)",
+      "publisher": "Technologiestiftung Berlin / Birds on Mars",
+      "url": "https://github.com/technologiestiftung/qtrees-ai-data",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "MIT licence (© 2022 Birds on Mars). Last commit 2024-06-20. PostGIS schema, ETL scripts and random-forest nowcast/forecast."
+    },
+    {
+      "id": "github-baumblick-frontend",
+      "title": "baumblick-frontend",
+      "publisher": "Technologiestiftung Berlin",
+      "url": "https://github.com/technologiestiftung/baumblick-frontend",
+      "accessed": "2026-10-03",
+      "kind": "method-precedent",
+      "note": "MIT licence (© 2022 Technologiestiftung Berlin). Last commit 2024-07-17; demo mode with static data."
     }
   ],
   "entities": [
@@ -71,7 +179,7 @@
       "name": "ZHAW Institute of Natural Resource Sciences (IUNR)",
       "summary": "Research institute responsible for the public VoltaNord monitoring project entry.",
       "source_ids": ["zhaw-voltanord-80788"],
-      "related_entity_ids": ["project-voltanord-monitoring", "person-stefan-stevanovic"]
+      "related_entity_ids": ["project-voltanord-monitoring", "person-stefan-stevanovic", "project-zhaw-vegetationsbausteine", "project-zhaw-scheuchzerstrasse"]
     },
     {
       "id": "org-stadtgaertnerei-basel",
@@ -135,7 +243,7 @@
       "name": "Soil-water balance",
       "summary": "One of four indicator areas named on the public ZHAW project page.",
       "source_ids": ["zhaw-voltanord-80788"],
-      "related_entity_ids": ["project-voltanord-monitoring"]
+      "related_entity_ids": ["project-voltanord-monitoring", "project-qtrees-berlin"]
     },
     {
       "id": "decision-monitoring-funding-2025",
@@ -144,6 +252,38 @@
       "summary": "The Basel-Stadt government approved CHF 280,000 for scientific monitoring in November 2025.",
       "source_ids": ["basel-government-monitoring-decision-2025"],
       "related_entity_ids": ["project-voltanord-monitoring"]
+    },
+    {
+      "id": "project-zhaw-vegetationsbausteine",
+      "type": "project",
+      "name": "Schwammstadt-Vegetationsbausteine Basel-Stadt (ZHAW 74640)",
+      "summary": "Completed 2024 ZHAW project for Stadtgärtnerei: improved substrates and vegetation components plus a measurement concept for three Basel streets.",
+      "source_ids": ["zhaw-vegetationsbausteine-74640"],
+      "related_entity_ids": ["org-zhaw-iunr", "org-stadtgaertnerei-basel", "project-voltanord-monitoring"]
+    },
+    {
+      "id": "project-zhaw-scheuchzerstrasse",
+      "type": "project",
+      "name": "Schwammstadt Scheuchzerstrasse Zürich (ZHAW 81151)",
+      "summary": "Zurich sister monitoring project with the same team; the most specific public description of the team's instruments.",
+      "source_ids": ["zhaw-scheuchzerstrasse-81151"],
+      "related_entity_ids": ["org-zhaw-iunr", "project-voltanord-monitoring"]
+    },
+    {
+      "id": "project-qtrees-berlin",
+      "type": "project",
+      "name": "Quantified Trees (QTrees), Berlin",
+      "summary": "Completed 2021–2023 Berlin project that forecasts street-tree water supply from suction-tension sensors, open data and machine learning; open-source code.",
+      "source_ids": ["qtrees-landing", "uba-tatenbank-qtrees", "github-qtrees-ai-data", "github-baumblick-frontend"],
+      "related_entity_ids": ["org-technologiestiftung-berlin", "indicator-soil-water"]
+    },
+    {
+      "id": "org-technologiestiftung-berlin",
+      "type": "organisation",
+      "name": "Technologiestiftung Berlin",
+      "summary": "Lead of QTrees and publisher of its open-source repositories.",
+      "source_ids": ["qtrees-landing"],
+      "related_entity_ids": ["project-qtrees-berlin"]
     }
   ],
   "records": [
@@ -277,7 +417,7 @@
       "tags": ["protocol", "method", "instrument", "baseline", "control", "cadence", "quality", "data access", "publication"],
       "source_ids": ["zhaw-voltanord-80788", "basel-government-monitoring-decision-2025"],
       "entity_ids": ["project-voltanord-monitoring", "org-zhaw-iunr", "org-stadtgaertnerei-basel"],
-      "related_record_ids": ["action-request-protocol"]
+      "related_record_ids": ["action-request-protocol", "fact-no-public-monitoring-data"]
     },
     {
       "id": "question-decision-use",
@@ -307,13 +447,13 @@
       "id": "action-request-protocol",
       "kind": "next-action",
       "title": "Request a 60-minute evidence hand-off with ZHAW and Stadtgärtnerei",
-      "answer": "Ask for the protocol, indicator definitions, site and comparator design, measurement cadence, first reporting milestone, data fields, licences, confidentiality limits and named contact for future updates. Resolve the 2031/2034 date discrepancy in the same meeting.",
+      "answer": "Ask for the protocol, indicator definitions, site and comparator design, measurement cadence, first reporting milestone, data fields, licences, confidentiality limits and named contact for future updates. Resolve the 2031/2034 date discrepancy in the same meeting. Also ask for the 2024 three-street measurement concept (project 74640) and whether it is the basis of the VoltaNord protocol.",
       "status": "proposal",
       "scope": "Immediate research action",
       "tags": ["next step", "meeting", "protocol", "zhaw", "stadtgärtnerei", "handoff"],
-      "source_ids": ["zhaw-voltanord-80788", "basel-government-monitoring-decision-2025"],
+      "source_ids": ["zhaw-voltanord-80788", "basel-government-monitoring-decision-2025", "zhaw-vegetationsbausteine-74640"],
       "entity_ids": ["person-stefan-stevanovic", "person-frieder-kaiser", "project-voltanord-monitoring"],
-      "related_record_ids": ["question-protocol", "conflict-project-end"],
+      "related_record_ids": ["question-protocol", "conflict-project-end", "question-74640-streets", "fact-74640-measurement-concept"],
       "owner": "Working group lead",
       "due": "Before defining any parallel monitoring"
     },
@@ -364,6 +504,163 @@
       "source_ids": [],
       "entity_ids": [],
       "related_record_ids": ["question-decision-use"]
+    },
+    {
+      "id": "fact-no-public-monitoring-data",
+      "kind": "fact",
+      "title": "Is any VoltaNord code, sensor schema or data public?",
+      "answer": "No. A search of GitHub (ZHAW orgs, opendatabs, keyword code search), Zenodo, ZHAW digitalcollection, ORCID and data.bs.ch found no code, sensor schema, processing pipeline, protocol or dataset for VoltaNord or for ZHAW project 74640. Details and the list of searches are in docs/ZHAW-SOURCES.md.",
+      "status": "verified",
+      "scope": "Public-source search completed 3 October 2026; sources not listed there remain unchecked",
+      "tags": ["data access", "code", "github", "zenodo", "open data", "sensor", "schema", "protocol"],
+      "source_ids": ["zhaw-voltanord-80788", "zhaw-vegetationsbausteine-74640", "data-bs-catalogue"],
+      "entity_ids": ["project-voltanord-monitoring", "org-zhaw-iunr"],
+      "related_record_ids": ["question-protocol", "action-request-protocol"]
+    },
+    {
+      "id": "fact-74640-measurement-concept",
+      "kind": "fact",
+      "title": "Did ZHAW already design a Basel measurement concept?",
+      "answer": "Yes. The 2024 project Schwammstadt-Vegetationsbausteine für Basel-Stadt (client: Stadtgärtnerei) states that a measurement concept was designed to document effectiveness at three street locations. The concept, the street names and any results are not public.",
+      "status": "verified",
+      "scope": "Project-page statement only; content unknown",
+      "tags": ["measurement concept", "74640", "stadtgärtnerei", "street", "substrate", "vegetation"],
+      "source_ids": ["zhaw-vegetationsbausteine-74640"],
+      "entity_ids": ["project-zhaw-vegetationsbausteine", "org-stadtgaertnerei-basel"],
+      "related_record_ids": ["question-74640-streets", "action-request-protocol"]
+    },
+    {
+      "id": "question-74640-streets",
+      "kind": "open-question",
+      "title": "Which three Basel streets does the 2024 measurement concept cover?",
+      "answer": "Unknown. It is also unknown whether they are in VoltaNord, and whether the 2024 concept became the 80788 protocol. Ask for this explicitly; it is the most useful unpublished artefact.",
+      "status": "unknown",
+      "scope": "Open until ZHAW or Stadtgärtnerei confirms",
+      "tags": ["74640", "sites", "streets", "protocol", "voltanord"],
+      "source_ids": ["zhaw-vegetationsbausteine-74640"],
+      "entity_ids": ["project-zhaw-vegetationsbausteine", "project-voltanord-monitoring"],
+      "related_record_ids": ["action-request-protocol"],
+      "question": "Which three streets, and is the 2024 concept the basis of the VoltaNord protocol?"
+    },
+    {
+      "id": "precedent-zhaw-zurich-instruments",
+      "kind": "precedent",
+      "title": "Which instruments does the ZHAW team use elsewhere?",
+      "answer": "In the Zurich Scheuchzerstrasse project (81151, same team, started July 2026) ZHAW names visual vitality scoring (Bonituren), dendrometer measurements and soil sensors for tree growth and the substrate's water and energy balance. The sensor type is not stated.",
+      "status": "verified",
+      "scope": "Zurich project; not confirmed for VoltaNord",
+      "tags": ["instrument", "dendrometer", "bonitur", "soil sensor", "vitality", "zurich"],
+      "source_ids": ["zhaw-scheuchzerstrasse-81151"],
+      "entity_ids": ["project-zhaw-scheuchzerstrasse", "org-zhaw-iunr"],
+      "related_record_ids": ["interpret-voltanord-likely-instruments"]
+    },
+    {
+      "id": "interpret-voltanord-likely-instruments",
+      "kind": "interpretation",
+      "title": "Will VoltaNord use the same instruments?",
+      "answer": "Probably similar: same team, same indicator families and a parallel start. Treat vitality scoring, dendrometers and soil-water sensors as the working assumption for the Place Profile fields, but mark them inferred until the protocol is shared.",
+      "status": "inference",
+      "scope": "Working assumption for schema design only",
+      "tags": ["instrument", "assumption", "schema", "soil water", "vitality"],
+      "source_ids": ["zhaw-scheuchzerstrasse-81151", "zhaw-voltanord-80788"],
+      "entity_ids": ["project-voltanord-monitoring", "indicator-soil-water", "indicator-vegetation-vitality"],
+      "related_record_ids": ["precedent-zhaw-zurich-instruments", "question-protocol"]
+    },
+    {
+      "id": "precedent-zhaw-substrate-trials",
+      "kind": "precedent",
+      "title": "What has the team published about tree substrates?",
+      "answer": "Two EFUF 2023 slide decks on Zenodo (CC BY 4.0): a Wädenswil field trial of structurally stable substrates for green infrastructure and stormwater management, and Zurich sponge-city substrate and vegetation systems. They are slides only, with no data, and count as mechanism-supported evidence, not observed Basel effects.",
+      "status": "verified",
+      "scope": "Mechanism evidence; claim-ladder level 1",
+      "tags": ["substrate", "tree trench", "field trial", "zenodo", "cc-by", "mechanism"],
+      "source_ids": ["zenodo-efuf2023-waedenswil-substrates", "zenodo-efuf2023-zurich-sponge-trees"],
+      "entity_ids": ["org-zhaw-iunr"],
+      "related_record_ids": ["action-use-claim-ladder"]
+    },
+    {
+      "id": "precedent-zhaw-related-theses",
+      "kind": "precedent",
+      "title": "Which ZHAW student or conference work is reusable?",
+      "answer": "Kommunizierende Baumrigolen (connected tree trenches, CC BY 4.0) gives a requirement checklist for the tree-trench intervention. Beläge in der Schwammstadt (2026 talk; licence not specified) covers infiltration of permeable paving. The Gundeldinger Feld thesis (CC BY 4.0) measured cooling under irrigated green roofs in Basel.",
+      "status": "verified",
+      "scope": "Context and mechanism evidence; not VoltaNord",
+      "tags": ["thesis", "tree trench", "permeable paving", "infiltration", "green roof", "cooling", "basel"],
+      "source_ids": ["zhaw-thesis-kommunizierende-baumrigolen", "zhaw-talk-belaege-schwammstadt", "zhaw-thesis-klimadach-gundeldinger-feld"],
+      "entity_ids": ["org-zhaw-iunr", "indicator-infiltration"],
+      "related_record_ids": []
+    },
+    {
+      "id": "fact-basel-open-data-context",
+      "kind": "fact",
+      "title": "Which Basel open data can fill the Place Profile now?",
+      "answer": "data.bs.ch offers CC BY 4.0 datasets for tree inventory and felling list, canopy cover, land cover, groundwater level, water-protection zones and the meteoblue climate network. They cover need and possibility screening. None measures soil water, infiltration or VoltaNord performance.",
+      "status": "verified",
+      "scope": "Catalogue check 3 October 2026",
+      "tags": ["open data", "data.bs.ch", "trees", "canopy", "land cover", "groundwater", "climate", "licence"],
+      "source_ids": ["data-bs-catalogue"],
+      "entity_ids": ["place-voltanord"],
+      "related_record_ids": ["fact-no-public-monitoring-data"]
+    },
+    {
+      "id": "precedent-qtrees-sensor-schema",
+      "kind": "precedent",
+      "title": "How did Berlin structure street-tree soil-water data?",
+      "answer": "QTrees stores readings as tree_id + sensor type + timestamp + value. The four types are suction tension at 30, 60 and 90 cm, plus a stem-area/average channel. Watermark sensors by ARBOR revital sit in the tree pit at the three depths. Raw sensor readings live in a private schema; nowcasts and 14-day forecasts per tree are public. Model features are month, genus, tree age, shading index, wind, temperature, rainfall, solar radiation, watering events and yesterday's mean value. The model is a random forest. Code is MIT-licensed.",
+      "status": "verified",
+      "scope": "Read from the public repositories; Berlin irrigation context",
+      "tags": ["qtrees", "berlin", "schema", "suction tension", "saugspannung", "watermark", "depth", "forecast", "mit"],
+      "source_ids": ["github-qtrees-ai-data", "github-baumblick-frontend"],
+      "entity_ids": ["project-qtrees-berlin", "indicator-soil-water"],
+      "related_record_ids": ["precedent-qtrees-status-classes", "interpret-soil-water-field-design"]
+    },
+    {
+      "id": "precedent-qtrees-status-classes",
+      "kind": "precedent",
+      "title": "How did Berlin make suction tension understandable?",
+      "answer": "Baumblick maps suction tension to three classes: Gut (0–33], Mäßig (33–81], Kritisch (81–270]. The code does not state the unit. Watermark sensors normally report centibar (= kPa), so kPa is the likely unit, but that is inferred.",
+      "status": "verified",
+      "scope": "Thresholds verified in code; unit inferred",
+      "tags": ["qtrees", "baumblick", "threshold", "class", "communication", "kpa", "centibar"],
+      "source_ids": ["github-baumblick-frontend"],
+      "entity_ids": ["project-qtrees-berlin"],
+      "related_record_ids": ["precedent-qtrees-sensor-schema"]
+    },
+    {
+      "id": "boundary-qtrees-transfer",
+      "kind": "boundary",
+      "title": "Can QTrees results stand in for VoltaNord?",
+      "answer": "No. QTrees forecasts irrigation need for existing Berlin street trees in conventional tree pits. It does not measure infiltration, stormwater retention or sponge-city substrates, and its thresholds are not calibrated for Basel soils or ZHAW substrates. Use it as a schema, modelling and communication precedent only.",
+      "status": "inference",
+      "scope": "Transfer boundary",
+      "tags": ["qtrees", "transferability", "boundary", "calibration", "substrate"],
+      "source_ids": ["qtrees-landing", "github-qtrees-ai-data"],
+      "entity_ids": ["project-qtrees-berlin", "project-voltanord-monitoring"],
+      "related_record_ids": ["boundary-transferability"]
+    },
+    {
+      "id": "fact-qtrees-status",
+      "kind": "fact",
+      "title": "Is QTrees still running?",
+      "answer": "No. The project ran September 2021 – September 2023 with EUR 410,544 of BMUV funding (German climate adaptation programme DAS). It deployed more than 120 sensors in Mitte and Neukölln and got no follow-up funding. Baumblick runs in demo mode with static data (since July 2024); the backend's last commit was June 2024.",
+      "status": "verified",
+      "scope": "Status at 3 October 2026",
+      "tags": ["qtrees", "status", "funding", "maintenance", "berlin"],
+      "source_ids": ["qtrees-landing", "uba-tatenbank-qtrees", "github-baumblick-frontend", "github-qtrees-ai-data"],
+      "entity_ids": ["project-qtrees-berlin"],
+      "related_record_ids": []
+    },
+    {
+      "id": "interpret-soil-water-field-design",
+      "kind": "interpretation",
+      "title": "How should the Place Profile hold soil-water evidence?",
+      "answer": "Follow the QTrees long format: site/tree id, variable (e.g. suction tension at a named depth), timestamp, value, unit and origin (observed or modelled). Keep the raw value and any display class separate. Leave the class thresholds unset until VoltaNord or Basel calibration exists.",
+      "status": "proposal",
+      "scope": "Schema proposal for the Decision Canvas; not yet implemented",
+      "tags": ["place profile", "schema", "soil water", "design", "observed", "modelled"],
+      "source_ids": ["github-qtrees-ai-data", "github-baumblick-frontend", "zhaw-voltanord-80788"],
+      "entity_ids": ["indicator-soil-water", "project-qtrees-berlin"],
+      "related_record_ids": ["precedent-qtrees-sensor-schema", "interpret-voltanord-likely-instruments"]
     }
   ],
   "decision_routes": [

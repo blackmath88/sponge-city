@@ -11,6 +11,7 @@ Turn overlapping heat, surface-runoff and urban-form evidence into specific plac
 - [Governance and measurement](docs/GOVERNANCE-AND-MEASUREMENT.md): the second map—how Basel decides, who can influence it, which evidence is missing and how outcomes could be measured.
 - [Queryable evidence atlas](docs/QUERYABLE-EVIDENCE-ATLAS.md): evidence model, claim ladder and group-access design, seeded with the VoltaNord/ZHAW monitoring case.
 - [ZHAW / VoltaNord public-source check](docs/ZHAW-SOURCES.md): what code, data and method material is (not) public, with licences and a contact recommendation.
+- [Precedent: QTrees / Baumblick Berlin](docs/PRECEDENT-QTREES-BERLIN.md): open street-tree soil-water schema, model and status classes (MIT), with limits on transfer.
 - [Open the standalone prototype](prototype/evidence-atlas.html): search verified facts, boundaries, open questions, actors and next actions without an AI service.
 
 ## Run the evidence atlas
