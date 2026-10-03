@@ -1,5 +1,7 @@
 # Adaptive Interface — Prototype Plan
 
+> **Status:** the orchestration layer, contracts and a mock vertical slice (Prototype 0 with a hand-authored fixture, plus correction mode and the three interventions) are implemented. See *Implementation* in [README.md](README.md). Data, catalogue and renderer are mocks awaiting the three teams.
+
 ## Goal
 
 Prove one vertical slice:

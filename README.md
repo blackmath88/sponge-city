@@ -13,6 +13,7 @@ Turn overlapping heat, surface-runoff and urban-form evidence into specific plac
 - [Monitoring and data stack](docs/MONITORING-DATA-STACK.md): verified 2024→2026 Basel evidence chain, usable open data, maturity ladder and research-dump triage.
 - [ZHAW / VoltaNord public-source check](docs/ZHAW-SOURCES.md): what code, data and method material is (not) public, with licences and a contact recommendation.
 - [Precedent: QTrees / Baumblick Berlin](docs/PRECEDENT-QTREES-BERLIN.md): open street-tree soil-water schema, model and status classes (MIT), with limits on transfer.
+- [Adaptive Interface](adaptive-interface/README.md): concept, contracts and the runnable orchestration prototype (mocks) that turns a selected place into an editable scenario. Demo: `make run` → `/adaptive-interface/demo/`.
 - [Solution model](docs/SOLUTIONS.md): how solutions plug into one canvas, the manifest contract and `make new`.
 - **[Open the solutions hub](site/index.html)**: every solution, its question, roles and data.
 

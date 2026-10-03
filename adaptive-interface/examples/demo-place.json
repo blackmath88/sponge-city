@@ -1,0 +1,126 @@
+{
+  "schema_version": "adaptive-place/0.1",
+  "place_id": "demo-street-fixture",
+  "label": "Demo street (fixture): Basel-like, not a real site",
+  "fixture": true,
+  "selection": { "lon": 7.5741, "lat": 47.5735, "radius_m": 50 },
+  "schematic": {
+    "length_m": 60,
+    "note": "Cross-section bands from north facade (0) to south facade (8). Renderer hints only, not survey geometry."
+  },
+  "elements": [
+    {
+      "id": "building-north", "type": "building", "label": "Building, north side",
+      "layout": { "band": 0, "width_m": 15, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 900, "state": "observed", "source_id": "fixture:demo-street" }
+    },
+    {
+      "id": "entrance-north", "type": "entrance", "label": "House entrance",
+      "layout": { "band": 0, "point": 0.35 },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": null, "state": "not-applicable" },
+      "area_m2": { "value": null, "state": "not-applicable" }
+    },
+    {
+      "id": "sidewalk-north", "type": "sidewalk", "label": "Sidewalk, north",
+      "layout": { "band": 1, "width_m": 3, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 180, "state": "derived", "source_id": "fixture:demo-street", "method": "60 m × 3 m" }
+    },
+    {
+      "id": "parking-north", "type": "parking", "label": "Parking bays, north",
+      "layout": { "band": 2, "width_m": 2.2, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 132, "state": "derived", "source_id": "fixture:demo-street", "method": "60 m × 2.2 m" },
+      "count": { "value": 10, "state": "observed", "source_id": "fixture:demo-street" }
+    },
+    {
+      "id": "road", "type": "road", "label": "Carriageway",
+      "layout": { "band": 3, "width_m": 6.5, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 390, "state": "derived", "source_id": "fixture:demo-street", "method": "60 m × 6.5 m" }
+    },
+    {
+      "id": "tram", "type": "tram", "label": "Tram track bed",
+      "layout": { "band": 4, "width_m": 6, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": null, "state": "unknown", "note": "Track bed could be paved or lawn; the source does not say." },
+      "area_m2": { "value": 360, "state": "derived", "source_id": "fixture:demo-street", "method": "60 m × 6 m" }
+    },
+    {
+      "id": "verge-south", "type": "vegetation", "label": "Planting strip",
+      "layout": { "band": 5, "width_m": 1.5, "along": [0, 0.4] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "planted", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 36, "state": "derived", "source_id": "fixture:demo-street", "method": "24 m × 1.5 m" }
+    },
+    {
+      "id": "tree-1", "type": "tree", "label": "Tree 1 (cadastre)",
+      "layout": { "band": 5, "point": 0.1 },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": null, "state": "not-applicable" },
+      "area_m2": { "value": null, "state": "not-applicable" }
+    },
+    {
+      "id": "tree-2", "type": "tree", "label": "Tree 2 (cadastre)",
+      "layout": { "band": 5, "point": 0.3 },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": null, "state": "not-applicable" },
+      "area_m2": { "value": null, "state": "not-applicable" }
+    },
+    {
+      "id": "tree-3", "type": "tree", "label": "Tree 3 (seen in imagery only)",
+      "layout": { "band": 6, "point": 0.62 },
+      "presence": { "value": null, "state": "unknown", "note": "Visible in aerial imagery but not in the tree cadastre." },
+      "surface": { "value": null, "state": "not-applicable" },
+      "area_m2": { "value": null, "state": "not-applicable" }
+    },
+    {
+      "id": "sidewalk-south", "type": "sidewalk", "label": "Sidewalk, south",
+      "layout": { "band": 6, "width_m": 4, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 204, "state": "derived", "source_id": "fixture:demo-street", "method": "60 m × 4 m minus tram stop" }
+    },
+    {
+      "id": "tram-stop", "type": "fixed-area", "label": "Tram stop platform",
+      "fixed": true,
+      "layout": { "band": 6, "width_m": 4, "along": [0.7, 0.85] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 36, "state": "derived", "source_id": "fixture:demo-street", "method": "9 m × 4 m" }
+    },
+    {
+      "id": "building-south", "type": "building", "label": "Building, south side",
+      "layout": { "band": 7, "width_m": 15, "along": [0, 1] },
+      "presence": { "value": true, "state": "observed", "source_id": "fixture:demo-street" },
+      "surface": { "value": "sealed", "state": "observed", "source_id": "fixture:demo-street" },
+      "area_m2": { "value": 900, "state": "observed", "source_id": "fixture:demo-street" }
+    }
+  ],
+  "context": {
+    "heat_focus_area": { "value": "focus", "state": "observed", "source_id": "fixture:demo-street", "label": "Heat focus area", "note": "Illustrative value in the vocabulary of Basel's Stadtklimakonzept." },
+    "surface_runoff_hazard": { "value": "low", "state": "modelled", "source_id": "fixture:demo-street", "label": "Surface runoff hazard (rare events)" },
+    "groundwater_protection_zone": { "value": "outside", "state": "observed", "source_id": "fixture:demo-street", "label": "Groundwater protection zone" },
+    "infiltration_capacity": { "value": null, "state": "unknown", "label": "Infiltration capacity", "note": "Needs soil tests." },
+    "utilities": { "value": null, "state": "unknown", "label": "Underground utilities", "note": "Not public." },
+    "ownership": { "value": null, "state": "unknown", "label": "Ownership", "note": "Not in the fixture." },
+    "traffic_load": { "value": null, "state": "unknown", "label": "Traffic and load requirements" },
+    "access_requirements": { "value": null, "state": "unknown", "label": "Access, delivery and emergency requirements" },
+    "slope": { "value": null, "state": "unknown", "label": "Slope and flow direction" },
+    "soil_water": { "value": null, "state": "unknown", "label": "Soil water", "note": "No public sensors in Basel." }
+  },
+  "provenance": [
+    {
+      "id": "fixture:demo-street",
+      "kind": "demo-fixture",
+      "label": "Hand-authored demo fixture",
+      "note": "A Basel-like street invented for the prototype. Nothing here was measured and it does not describe a real site. Evidence states show what a real provider would return."
+    }
+  ]
+}
