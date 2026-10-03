@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Sponge City Evidence Atlas</title>
+  <style>
+    :root {
+      --ink: #13271f;
+      --muted: #607068;
+      --paper: #f2f0e8;
+      --surface: #fbfaf5;
+      --line: #c9cec7;
+      --green: #0d6b4c;
+      --green-2: #b7dac8;
+      --blue: #19678a;
+      --amber: #b96a16;
+      --red: #a33c32;
+      --violet: #66508f;
+      --shadow: 0 18px 55px rgba(19, 39, 31, 0.10);
+      --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      --sans: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button, a, input, select { outline-offset: 3px; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #4e9ac0; }
+    a { color: inherit; }
+
+    .masthead {
+      min-height: 88vh;
+      padding: 26px clamp(20px, 5vw, 72px) 64px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, transparent 49.85%, rgba(19,39,31,.09) 50%, transparent 50.15%),
+        linear-gradient(0deg, transparent 49.85%, rgba(19,39,31,.08) 50%, transparent 50.15%),
+        var(--paper);
+      background-size: 84px 84px;
+    }
+    .masthead::after {
+      content: "";
+      position: absolute;
+      width: min(46vw, 620px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(13,107,76,.35);
+      border-radius: 50%;
+      right: -10vw;
+      top: 12vh;
+      box-shadow: inset 0 0 0 90px rgba(183,218,200,.30), inset 0 0 0 180px rgba(25,103,138,.08);
+      pointer-events: none;
+    }
+    .topline { display: flex; justify-content: space-between; align-items: center; gap: 24px; position: relative; z-index: 1; }
+    .wordmark { font: 700 13px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .mode { color: var(--muted); font-size: 13px; }
+    .hero { align-self: center; max-width: 960px; position: relative; z-index: 1; padding: 70px 0 40px; }
+    .eyebrow { color: var(--green); font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .13em; margin-bottom: 22px; }
+    h1 { font: 500 clamp(52px, 9vw, 122px)/.88 var(--serif); letter-spacing: -.055em; margin: 0; max-width: 900px; }
+    .hero p { font-size: clamp(18px, 2.2vw, 27px); line-height: 1.35; max-width: 760px; margin: 34px 0 0; }
+    .hero strong { color: var(--green); font-weight: 650; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+    .button { border: 1px solid var(--ink); background: var(--ink); color: white; padding: 12px 18px; cursor: pointer; text-decoration: none; border-radius: 2px; }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button.small { padding: 8px 12px; font-size: 13px; }
+    .legend-strip { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--ink); }
+    .legend-item { padding: 14px 10px 0 0; font: 12px/1.3 var(--mono); color: var(--muted); }
+    .legend-item b { display: block; color: var(--ink); margin-bottom: 4px; text-transform: uppercase; }
+
+    .shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); max-width: 1500px; margin: 0 auto; }
+    .rail { min-height: 100vh; border-right: 1px solid var(--line); padding: 30px 22px; position: sticky; top: 0; height: 100vh; align-self: start; background: rgba(242,240,232,.94); backdrop-filter: blur(10px); }
+    .rail-title { font: 700 11px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 28px; }
+    .rail a { display: grid; grid-template-columns: 32px 1fr; gap: 6px; padding: 12px 0; text-decoration: none; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    .rail a:hover { color: var(--ink); }
+    .rail a span:first-child { font-family: var(--mono); font-size: 11px; }
+    .rail-note { position: absolute; bottom: 28px; left: 22px; right: 22px; color: var(--muted); font-size: 12px; }
+    main { min-width: 0; }
+    section { padding: 84px clamp(24px, 5vw, 80px); border-bottom: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .65fr); gap: 48px; align-items: end; margin-bottom: 38px; }
+    .kicker { font: 700 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--green); margin-bottom: 10px; }
+    h2 { font: 500 clamp(38px, 5vw, 68px)/.96 var(--serif); letter-spacing: -.035em; margin: 0; }
+    h3 { font-size: 20px; margin: 0; }
+    .section-head p { color: var(--muted); margin: 0; max-width: 560px; }
+
+    .ask-panel { background: var(--surface); border: 1px solid var(--line); padding: clamp(18px, 4vw, 38px); box-shadow: var(--shadow); }
+    .search-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .search-row input { width: 100%; border: 0; border-bottom: 2px solid var(--ink); background: transparent; font: 500 clamp(20px, 3vw, 34px)/1.25 var(--serif); padding: 12px 4px; color: var(--ink); }
+    .search-row button { border: 0; background: var(--green); color: white; padding: 0 24px; cursor: pointer; }
+    .examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .chip { border: 1px solid var(--line); background: transparent; padding: 7px 10px; font-size: 13px; cursor: pointer; color: var(--ink); }
+    .chip:hover, .chip.active { border-color: var(--green); background: var(--green-2); }
+    .filters { display: grid; grid-template-columns: repeat(4, minmax(130px, 1fr)); gap: 10px; margin-top: 22px; }
+    .filter label { display: block; font: 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 7px; color: var(--muted); }
+    .filter select { width: 100%; background: white; border: 1px solid var(--line); padding: 9px; color: var(--ink); }
+    .result-meta { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin: 24px 0 12px; color: var(--muted); font: 12px/1.3 var(--mono); }
+    .results { display: grid; gap: 12px; }
+    .card { background: var(--surface); border: 1px solid var(--line); padding: 20px; position: relative; }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--line); }
+    .card[data-status="verified"]::before { background: var(--green); }
+    .card[data-status="inference"]::before { background: var(--blue); }
+    .card[data-status="unknown"]::before { background: var(--amber); }
+    .card[data-status="conflict"]::before { background: var(--red); }
+    .card[data-status="proposal"]::before { background: var(--violet); }
+    .card-top { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge { font: 700 10px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; padding: 5px 7px; border: 1px solid currentColor; }
+    .badge.verified { color: var(--green); }
+    .badge.inference { color: var(--blue); }
+    .badge.unknown { color: var(--amber); }
+    .badge.conflict { color: var(--red); }
+    .badge.proposal { color: var(--violet); }
+    .badge.neutral { color: var(--muted); }
+    .card h3 { margin-top: 12px; max-width: 800px; }
+    .card p { margin: 10px 0 0; max-width: 900px; }
+    .scope { color: var(--muted); font-size: 13px; padding-top: 13px; border-top: 1px solid var(--line); margin-top: 16px; }
+    .sources { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .sources a { font-size: 12px; color: var(--blue); }
+
+    .claim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .claim-step { background: var(--surface); padding: 24px; min-height: 250px; }
+    .claim-step .number { font: 600 48px/1 var(--serif); color: var(--green); }
+    .claim-step h3 { margin: 30px 0 10px; }
+    .claim-step p { color: var(--muted); font-size: 14px; }
+    .claim-step:nth-child(3) { background: var(--green); color: white; }
+    .claim-step:nth-child(3) .number, .claim-step:nth-child(3) p { color: white; }
+
+    .route-tool { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; }
+    .route-controls { border: 1px solid var(--line); background: var(--surface); padding: 22px; }
+    .route-controls fieldset { border: 0; padding: 0; margin: 0 0 24px; }
+    .route-controls legend { font: 700 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+    .segmented { display: grid; gap: 6px; }
+    .segmented button { text-align: left; border: 1px solid var(--line); background: transparent; padding: 10px; cursor: pointer; }
+    .segmented button.active { background: var(--ink); color: white; border-color: var(--ink); }
+    .route-card { background: var(--ink); color: white; padding: clamp(24px, 5vw, 48px); min-height: 560px; display: grid; align-content: start; }
+    .route-card .kicker { color: var(--green-2); }
+    .route-card h3 { font: 500 clamp(30px, 4vw, 48px)/1.02 var(--serif); letter-spacing: -.025em; max-width: 780px; }
+    .route-card h4 { font: 700 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--green-2); margin: 26px 0 9px; }
+    .route-card ul, .route-card ol { margin: 0; padding-left: 20px; }
+    .route-card li { margin-bottom: 6px; }
+    .route-card .caution { border-top: 1px solid rgba(255,255,255,.3); margin-top: 28px; padding-top: 18px; color: #f0c49a; }
+    .matrix { display: grid; grid-template-columns: 180px repeat(3, 1fr); margin-top: 34px; border: 1px solid var(--line); }
+    .matrix > div { padding: 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 80px; }
+    .matrix > div:nth-child(4n) { border-right: 0; }
+    .matrix .head { font: 700 11px/1.2 var(--mono); text-transform: uppercase; background: var(--green-2); min-height: 46px; }
+    .matrix .rowhead { font-weight: 650; background: var(--surface); }
+    .matrix button { border: 0; background: transparent; padding: 0; text-align: left; color: var(--ink); cursor: pointer; font-size: 13px; }
+    .matrix button:hover { text-decoration: underline; }
+
+    .handoff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .handoff-panel { border-top: 5px solid var(--amber); background: var(--surface); padding: 24px; }
+    .handoff-panel.actions { border-color: var(--violet); }
+    .handoff-panel h3 { margin-bottom: 16px; }
+    .compact-list { display: grid; gap: 10px; }
+    .compact-item { padding-top: 10px; border-top: 1px solid var(--line); }
+    .compact-item b { display: block; margin-bottom: 4px; }
+    .compact-item span { color: var(--muted); font-size: 13px; }
+
+    .brief { background: var(--surface); border: 1px solid var(--ink); display: grid; grid-template-columns: 1fr 280px; }
+    .brief-copy { padding: clamp(24px, 5vw, 52px); }
+    .brief-copy pre { white-space: pre-wrap; font: 13px/1.55 var(--mono); margin: 24px 0 0; color: var(--ink); }
+    .brief-actions { border-left: 1px solid var(--ink); padding: 24px; display: flex; flex-direction: column; gap: 10px; justify-content: flex-end; }
+    .brief-actions p { font-size: 13px; color: var(--muted); margin: 0 0 auto; }
+    .footer { padding: 34px clamp(24px, 5vw, 80px); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+
+    .empty { padding: 36px; border: 1px dashed var(--line); color: var(--muted); text-align: center; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 980px) {
+      .shell { display: block; }
+      .rail { display: none; }
+      .section-head, .route-tool, .brief { grid-template-columns: 1fr; }
+      .claim-grid { grid-template-columns: repeat(2, 1fr); }
+      .brief-actions { border-left: 0; border-top: 1px solid var(--ink); }
+      .filters { grid-template-columns: repeat(2, 1fr); }
+      .matrix { grid-template-columns: 130px repeat(3, 1fr); overflow-x: auto; }
+    }
+    @media (max-width: 640px) {
+      .masthead { min-height: 100svh; background-size: 58px 58px; }
+      .mode { display: none; }
+      .legend-strip { grid-template-columns: repeat(2, 1fr); }
+      .section-head { gap: 18px; }
+      section { padding: 62px 18px; }
+      .search-row { grid-template-columns: 1fr; }
+      .search-row button { padding: 12px; }
+      .filters, .claim-grid, .handoff-grid { grid-template-columns: 1fr; }
+      .route-tool { grid-template-columns: 1fr; }
+      .matrix { display: none; }
+      .footer { flex-direction: column; }
+    }
+    @media print {
+      .masthead, .rail, #ask, #boundary, #routes, #handoff, .brief-actions, .footer { display: none !important; }
+      .shell { display: block; }
+      section { border: 0; padding: 0; }
+      .brief { display: block; border: 0; }
+      .brief-copy { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="topline">
+      <div class="wordmark">Sponge City · Basel</div>
+      <div class="mode">Evidence atlas · deterministic core · Apertus-ready</div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow">VoltaNord case · working prototype</div>
+      <h1>A map can find the place. Who changes it?</h1>
+      <p>The Decision Canvas screens upstream. VoltaNord can test some of its claims downstream. Between them sits the real work: <strong>evidence, ownership and a decision window.</strong></p>
+      <div class="hero-actions">
+        <a class="button" href="#ask">Ask the atlas</a>
+        <a class="button secondary" href="#routes">Choose a decision route</a>
+      </div>
+    </div>
+    <div class="legend-strip" aria-label="Evidence statuses">
+      <div class="legend-item"><b>Verified</b>stated by a named source</div>
+      <div class="legend-item"><b>Inference</b>reasoned, not directly stated</div>
+      <div class="legend-item"><b>Unknown</b>answer still needed</div>
+      <div class="legend-item"><b>Conflict</b>sources disagree</div>
+      <div class="legend-item"><b>Proposal</b>a design to test</div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <nav class="rail" aria-label="Atlas sections">
+      <div class="rail-title">Move through the case</div>
+      <a href="#ask"><span>01</span><span>Ask</span></a>
+      <a href="#boundary"><span>02</span><span>Know the boundary</span></a>
+      <a href="#routes"><span>03</span><span>Choose the route</span></a>
+      <a href="#handoff"><span>04</span><span>Close the gaps</span></a>
+      <a href="#brief"><span>05</span><span>Take a brief</span></a>
+      <div class="rail-note">Every answer keeps its status, scope and source. An absent fact stays unknown.</div>
+    </nav>
+
+    <main>
+      <section id="ask">
+        <div class="section-head">
+          <div><div class="kicker">01 · Ask</div><h2>Start with a real question.</h2></div>
+          <p>Search across evidence, actors, open questions and decision routes. This first version uses transparent keyword and tag matching; it does not ask an AI to invent an answer.</p>
+        </div>
+        <div class="ask-panel">
+          <form id="search-form" class="search-row">
+            <label class="sr-only" for="query">Ask the evidence atlas</label>
+            <input id="query" type="search" autocomplete="off" placeholder="e.g. What can VoltaNord validate?">
+            <button type="submit">Find evidence</button>
+          </form>
+          <div class="examples" aria-label="Suggested questions">
+            <button class="chip" data-query="What can VoltaNord validate?">What can VoltaNord validate?</button>
+            <button class="chip" data-query="Who leads the scientific work?">Who leads the scientific work?</button>
+            <button class="chip" data-query="What is still unknown about the protocol?">What is still unknown?</button>
+            <button class="chip" data-query="private renovation incentive permit">Private renovation?</button>
+            <button class="chip" data-query="public infrastructure renewal">Public renewal?</button>
+          </div>
+          <div class="filters">
+            <div class="filter"><label for="status-filter">Evidence status</label><select id="status-filter"><option value="">All statuses</option><option>verified</option><option>inference</option><option>unknown</option><option>conflict</option><option>proposal</option></select></div>
+            <div class="filter"><label for="kind-filter">Record type</label><select id="kind-filter"><option value="">All record types</option><option value="fact">fact</option><option value="interpretation">interpretation</option><option value="boundary">boundary</option><option value="open-question">open question</option><option value="next-action">next action</option><option value="precedent">precedent</option><option value="decision-route">decision route</option><option value="entity">actor / entity</option></select></div>
+            <div class="filter"><label for="context-filter">Intervention window</label><select id="context-filter"><option value="">Any window</option><option value="new-development">new development</option><option value="existing-retrofit">retrofit now</option><option value="planned-renewal">planned renovation / renewal</option></select></div>
+            <div class="filter"><label for="ownership-filter">Ownership</label><select id="ownership-filter"><option value="">Any ownership</option><option value="public">public</option><option value="private">private</option><option value="mixed">mixed</option></select></div>
+          </div>
+        </div>
+        <div class="result-meta"><span id="result-count">Showing the starting evidence</span><button id="clear-search" class="button secondary small" type="button">Clear</button></div>
+        <div id="results" class="results" aria-live="polite"></div>
+      </section>
+
+      <section id="boundary">
+        <div class="section-head">
+          <div><div class="kicker">02 · Know the boundary</div><h2>“Potential effect” is four different claims.</h2></div>
+          <p>VoltaNord matters because it can move selected claims from expected to observed. It cannot automatically make them transferable.</p>
+        </div>
+        <div class="claim-grid">
+          <article class="claim-step"><div class="number">1</div><h3>Mechanism supported</h3><p>Research or precedent explains how an intervention can work under stated conditions.</p></article>
+          <article class="claim-step"><div class="number">2</div><h3>Effect expected here</h3><p>The upstream Canvas finds need, opportunity and a compatible mechanism at a candidate site.</p></article>
+          <article class="claim-step"><div class="number">3</div><h3>Effect observed</h3><p>Monitoring records what happened at an implemented place. This is VoltaNord’s ground-truth role for the four published indicators.</p></article>
+          <article class="claim-step"><div class="number">4</div><h3>Transfer assessed</h3><p>A named reviewer checks whether design, soil, weather, operation and maintenance are comparable elsewhere.</p></article>
+        </div>
+      </section>
+
+      <section id="routes">
+        <div class="section-head">
+          <div><div class="kicker">03 · Choose the route</div><h2>Same goal. Nine decision paths.</h2></div>
+          <p>First choose when change is possible. Then choose who controls the asset. The available powers and incentives change with both.</p>
+        </div>
+        <div class="route-tool">
+          <div class="route-controls">
+            <fieldset><legend>Intervention window</legend><div id="context-buttons" class="segmented"></div></fieldset>
+            <fieldset><legend>Ownership</legend><div id="ownership-buttons" class="segmented"></div></fieldset>
+            <p style="color:var(--muted);font-size:13px;margin:0">These routes are working proposals to verify with Basel practitioners. They are not claims of legal authority.</p>
+          </div>
+          <article id="route-card" class="route-card" aria-live="polite"></article>
+        </div>
+        <div id="route-matrix" class="matrix" aria-label="Decision route matrix"></div>
+      </section>
+
+      <section id="handoff">
+        <div class="section-head">
+          <div><div class="kicker">04 · Close the gaps</div><h2>The next deliverable is an agreement.</h2></div>
+          <p>A dashboard is premature without a protocol and learning route. The first useful hand-off is between the working group, Stadtgärtnerei and ZHAW.</p>
+        </div>
+        <div class="handoff-grid">
+          <article class="handoff-panel"><h3>Questions that remain open</h3><div id="open-questions" class="compact-list"></div></article>
+          <article class="handoff-panel actions"><h3>Safe next actions</h3><div id="next-actions" class="compact-list"></div></article>
+        </div>
+      </section>
+
+      <section id="brief">
+        <div class="section-head">
+          <div><div class="kicker">05 · Take a brief</div><h2>Leave with the decision, not the dashboard.</h2></div>
+          <p>The brief follows the currently selected decision route and your latest query. Use it to start a working session or evidence hand-off.</p>
+        </div>
+        <div class="brief">
+          <div class="brief-copy"><h3>Working brief</h3><pre id="brief-text"></pre></div>
+          <div class="brief-actions"><p id="copy-status">Generated from the same typed records shown above.</p><button id="copy-brief" class="button" type="button">Copy brief</button><button id="print-brief" class="button secondary" type="button">Print / save PDF</button></div>
+        </div>
+      </section>
+      <footer class="footer"><span>Sponge City Evidence Atlas · seed case updated 3 October 2026</span><span>No result is a permit, engineering design or legal opinion.</span></footer>
+    </main>
+  </div>
+
+  <script>
+    const DATA = {"schema_version":"evidence-atlas/0.1","updated":"2026-10-03","sources":[{"id":"zhaw-voltanord-80788","title":"Monitoringkonzept VoltaNord Pilot Schwammstadtstrassen","publisher":"ZHAW","url":"https://www.zhaw.ch/de/forschung/projekt/80788","accessed":"2026-10-03","kind":"primary","note":"Canonical public project page for project scope, team and start status."},{"id":"zhaw-project-list-pflanzenverwendung","title":"Projekte der Forschungsgruppe Pflanzenverwendung","publisher":"ZHAW","url":"https://www.zhaw.ch/de/lsfm/institute-zentren/iunr/urbane-oekosysteme/pflanzenverwendung/projekte","accessed":"2026-10-03","kind":"official-context","note":"The listing displays a project range ending 08/2034, which conflicts with the stated five-year duration from a 05/2026 start."},{"id":"basel-government-monitoring-decision-2025","title":"Kurzmitteilungen aus der Regierungsrats-Sitzung, 18 November 2025","publisher":"Kanton Basel-Stadt","url":"https://www.bs.ch/medienmitteilungen/2025-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-33","accessed":"2026-10-03","kind":"primary","note":"Official approval of CHF 280,000 for five years of scientific monitoring of VoltaNord sponge-city pilots."},{"id":"basel-voltanord-overview","title":"VoltaNord","publisher":"Kanton Basel-Stadt","url":"https://www.bs.ch/schwerpunkte/arealentwicklungen-im-kanton-basel-stadt/voltanord","accessed":"2026-10-03","kind":"official-context","note":"Official area-development context, owners, planning history and contacts."},{"id":"zhaw-grueze-living-lab-77837","title":"Schwammstadt Winterthur – Smart City Living Lab Grüze","publisher":"ZHAW","url":"https://www.zhaw.ch/de/forschung/projekt/77837","accessed":"2026-10-03","kind":"method-precedent","note":"A separate ZHAW project using sensors and plant assessments with interactive, near-real-time communication. It is not evidence of the VoltaNord method."}],"entities":[{"id":"place-voltanord","type":"place","name":"VoltaNord","summary":"A developing Basel neighbourhood and pilot area for sponge-city street elements.","source_ids":["basel-voltanord-overview"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"project-voltanord-monitoring","type":"project","name":"VoltaNord sponge-city monitoring","summary":"A ZHAW monitoring project commissioned for the implemented sponge-city elements in the VoltaNord perimeter.","source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"related_entity_ids":["place-voltanord","org-zhaw-iunr","org-stadtgaertnerei-basel"]},{"id":"org-zhaw-iunr","type":"organisation","name":"ZHAW Institute of Natural Resource Sciences (IUNR)","summary":"Research institute responsible for the public VoltaNord monitoring project entry.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring","person-stefan-stevanovic"]},{"id":"org-stadtgaertnerei-basel","type":"organisation","name":"Stadtgärtnerei Basel","summary":"City unit named as the public contact for the monitoring expenditure decision. ZHAW's page uses the wording “Stadtgrün Basel” for the commissioning party.","source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"related_entity_ids":["project-voltanord-monitoring","person-frieder-kaiser"]},{"id":"person-stefan-stevanovic","type":"person","name":"Stefan Stevanovic","summary":"ZHAW project lead and the clearest public scientific contact for the monitoring design.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["org-zhaw-iunr","project-voltanord-monitoring"]},{"id":"person-doris-tausendpfund","type":"person","name":"Doris Tausendpfund","summary":"Deputy ZHAW project lead.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"person-frieder-kaiser","type":"person","name":"Frieder Kaiser","summary":"Stadtgärtnerei contact named in the Basel government monitoring decision.","source_ids":["basel-government-monitoring-decision-2025"],"related_entity_ids":["org-stadtgaertnerei-basel","project-voltanord-monitoring"]},{"id":"indicator-vegetation-vitality","type":"indicator","name":"Tree and understorey vitality","summary":"One of four indicator areas named on the public ZHAW project page.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"indicator-root-development","type":"indicator","name":"Root development","summary":"One of four indicator areas named on the public ZHAW project page.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"indicator-infiltration","type":"indicator","name":"Infiltration capacity","summary":"One of four indicator areas named on the public ZHAW project page.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"indicator-soil-water","type":"indicator","name":"Soil-water balance","summary":"One of four indicator areas named on the public ZHAW project page.","source_ids":["zhaw-voltanord-80788"],"related_entity_ids":["project-voltanord-monitoring"]},{"id":"decision-monitoring-funding-2025","type":"decision","name":"Monitoring expenditure approval","summary":"The Basel-Stadt government approved CHF 280,000 for scientific monitoring in November 2025.","source_ids":["basel-government-monitoring-decision-2025"],"related_entity_ids":["project-voltanord-monitoring"]}],"records":[{"id":"fact-commission","kind":"fact","title":"Who commissioned the monitoring?","answer":"ZHAW states that “Stadtgrün Basel” commissioned the five-year monitoring. The Basel government decision names Stadtgärtnerei as the public contact, so the exact contracting-unit name should be confirmed from the contract or protocol.","status":"verified","scope":"Commissioning relationship; public-source wording only","tags":["commission","owner","stadtgrün","stadtgärtnerei","contract","governance"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["org-stadtgaertnerei-basel","org-zhaw-iunr","project-voltanord-monitoring"],"related_record_ids":["question-protocol"]},{"id":"fact-project-status","kind":"fact","title":"When did the project start?","answer":"The official ZHAW project page marks the project as ongoing and started in May 2026.","status":"verified","scope":"Public project status as accessed 3 October 2026","tags":["start","date","timeline","status","may 2026"],"source_ids":["zhaw-voltanord-80788"],"entity_ids":["project-voltanord-monitoring"],"related_record_ids":["conflict-project-end"]},{"id":"fact-monitoring-scope","kind":"fact","title":"What does ZHAW monitor?","answer":"The public scope names four indicator areas: tree and understorey vitality, root development, infiltration capacity and soil-water balance.","status":"verified","scope":"Named indicator areas; not a measurement protocol","tags":["measure","monitor","indicator","vitality","roots","infiltration","soil water"],"source_ids":["zhaw-voltanord-80788"],"entity_ids":["project-voltanord-monitoring","indicator-vegetation-vitality","indicator-root-development","indicator-infiltration","indicator-soil-water"],"related_record_ids":["boundary-not-yet-covered","question-protocol"]},{"id":"fact-budget-purpose","kind":"fact","title":"What did Basel approve and why?","answer":"In November 2025 the Regierungsrat approved CHF 280,000 for five years of scientific monitoring. The stated purpose is to assess the pilot elements for possible use elsewhere in Basel.","status":"verified","scope":"Government expenditure decision and stated policy intent","tags":["budget","280000","funding","regierungsrat","transfer","citywide"],"source_ids":["basel-government-monitoring-decision-2025"],"entity_ids":["decision-monitoring-funding-2025","project-voltanord-monitoring"],"related_record_ids":["boundary-transferability"]},{"id":"fact-team","kind":"fact","title":"Who leads the scientific work?","answer":"Stefan Stevanovic is the project lead; Doris Tausendpfund is deputy. The published team also includes Axel Heinrich, Tal Hertig, Alain Bertschy and Nadin Iten.","status":"verified","scope":"Team listed on the ZHAW project page","tags":["who","team","contact","lead","zhaw","scientific"],"source_ids":["zhaw-voltanord-80788"],"entity_ids":["person-stefan-stevanovic","person-doris-tausendpfund","org-zhaw-iunr"],"related_record_ids":["action-request-protocol"]},{"id":"interpret-ground-truth-role","kind":"interpretation","title":"Is ZHAW the ground-truth partner?","answer":"Yes—with a boundary. ZHAW is the primary empirical validation partner for the four published biophysical indicator areas at VoltaNord. That does not make it the ground-truth source for governance, social outcomes, maintenance cost, citywide transferability or impacts not named in the protocol.","status":"inference","scope":"Role in this Decision Canvas, inferred from the commissioned monitoring scope","tags":["ground truth","partner","validation","role","scope"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["org-zhaw-iunr","project-voltanord-monitoring"],"related_record_ids":["fact-monitoring-scope","boundary-not-yet-covered"]},{"id":"interpret-screening-validation-loop","kind":"interpretation","title":"How should the Canvas connect to VoltaNord?","answer":"The Canvas should screen upstream: identify a place, intervention mechanism and explicit expected effect. VoltaNord can then supply observed evidence for comparable implemented elements. The result should update the claim, its confidence and the screening rule—not be used as automatic proof for every site.","status":"proposal","scope":"Product architecture","tags":["canvas","screening","validation","learning loop","rules","claims"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["project-voltanord-monitoring","place-voltanord"],"related_record_ids":["boundary-transferability","action-use-claim-ladder"]},{"id":"boundary-not-yet-covered","kind":"boundary","title":"What is not publicly shown as measured?","answer":"The public VoltaNord description does not name air or surface cooling, sewer peak flow, combined-sewer overflow, flood damage, lifecycle cost, maintenance effort, public use, distributional equity or resident experience. These may not be claimed as monitored until the protocol confirms them.","status":"verified","scope":"Absence from the public project description—not proof of absence from the internal protocol","tags":["not covered","cooling","sewer","overflow","flood","cost","maintenance","equity","social"],"source_ids":["zhaw-voltanord-80788"],"entity_ids":["project-voltanord-monitoring"],"related_record_ids":["question-protocol","interpret-ground-truth-role"]},{"id":"boundary-transferability","kind":"boundary","title":"Can VoltaNord prove an effect elsewhere in Basel?","answer":"Not by itself. VoltaNord can validate observed performance under its own design, soils, weather, construction and maintenance conditions. Transfer to another site requires a comparability check and may require new measurement or modelling.","status":"inference","scope":"Scientific use of site-specific monitoring","tags":["transfer","citywide","generalise","comparison","limits"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["project-voltanord-monitoring","place-voltanord"],"related_record_ids":["fact-budget-purpose","interpret-screening-validation-loop"]},{"id":"conflict-project-end","kind":"boundary","title":"How long does the monitoring run?","answer":"The project description and Basel decision say five years from a May 2026 start. A ZHAW research-group listing displays May 2026 to August 2034. The discrepancy is unresolved and should be confirmed with the project team.","status":"conflict","scope":"Public date metadata","tags":["duration","end date","five years","2031","2034","conflict"],"source_ids":["zhaw-voltanord-80788","zhaw-project-list-pflanzenverwendung","basel-government-monitoring-decision-2025"],"entity_ids":["project-voltanord-monitoring"],"related_record_ids":["fact-project-status","action-request-protocol"]},{"id":"question-protocol","kind":"open-question","title":"Where is the monitoring protocol?","answer":"No public protocol was found in the checked official pages. We still need definitions, instruments, sampling sites, baselines, comparison design, cadence, quality controls, data ownership, publication schedule and reuse terms.","status":"unknown","scope":"Targeted public-source check completed 3 October 2026","tags":["protocol","method","instrument","baseline","control","cadence","quality","data access","publication"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["project-voltanord-monitoring","org-zhaw-iunr","org-stadtgaertnerei-basel"],"related_record_ids":["action-request-protocol"]},{"id":"question-decision-use","kind":"open-question","title":"Which future decision will each result change?","answer":"The public rationale is possible citywide application, but no decision rule is published. The group should ask which thresholds, standards, design details or investment choices will be updated—and who signs off on that update.","status":"unknown","scope":"Learning-to-decision hand-off","tags":["decision","threshold","standard","owner","sign off","citywide","learning"],"source_ids":["basel-government-monitoring-decision-2025"],"entity_ids":["project-voltanord-monitoring","decision-monitoring-funding-2025"],"related_record_ids":["interpret-screening-validation-loop","action-create-learning-agreement"]},{"id":"precedent-grueze-access","kind":"precedent","title":"Has ZHAW made similar monitoring understandable before?","answer":"In the separate Grüze Living Lab project, ZHAW describes sensor and plant-assessment data being visualised interactively and in near real time. This is a useful access precedent, but it does not prove that VoltaNord uses the same method or publication model.","status":"verified","scope":"Separate project; method and communication precedent only","tags":["precedent","dashboard","realtime","sensor","visualisation","grüze","access"],"source_ids":["zhaw-grueze-living-lab-77837"],"entity_ids":["org-zhaw-iunr"],"related_record_ids":["action-create-learning-agreement"]},{"id":"action-request-protocol","kind":"next-action","title":"Request a 60-minute evidence hand-off with ZHAW and Stadtgärtnerei","answer":"Ask for the protocol, indicator definitions, site and comparator design, measurement cadence, first reporting milestone, data fields, licences, confidentiality limits and named contact for future updates. Resolve the 2031/2034 date discrepancy in the same meeting.","status":"proposal","scope":"Immediate research action","tags":["next step","meeting","protocol","zhaw","stadtgärtnerei","handoff"],"source_ids":["zhaw-voltanord-80788","basel-government-monitoring-decision-2025"],"entity_ids":["person-stefan-stevanovic","person-frieder-kaiser","project-voltanord-monitoring"],"related_record_ids":["question-protocol","conflict-project-end"],"owner":"Working group lead","due":"Before defining any parallel monitoring"},{"id":"action-use-claim-ladder","kind":"next-action","title":"Use a four-step claim ladder","answer":"Store claims separately as: mechanism supported by external evidence; effect expected at a screened site; effect observed at VoltaNord; effect judged transferable to a new site. Never collapse those four states into one “potential effect” badge.","status":"proposal","scope":"Evidence model for the Decision Canvas","tags":["claim ladder","mechanism","expected","observed","transferable","evidence model"],"source_ids":[],"entity_ids":["project-voltanord-monitoring"],"related_record_ids":["interpret-screening-validation-loop","boundary-transferability"]},{"id":"action-create-learning-agreement","kind":"next-action","title":"Create a VoltaNord learning agreement","answer":"Agree who can see raw and processed data, when results are released, how caveats travel with every chart, which city standards may change, and who records the decision. Publish at least a compact indicator dictionary and reporting calendar for the wider group.","status":"proposal","scope":"Governance of evidence and group access","tags":["learning agreement","data governance","publication","calendar","standards","access"],"source_ids":["basel-government-monitoring-decision-2025","zhaw-grueze-living-lab-77837"],"entity_ids":["org-zhaw-iunr","org-stadtgaertnerei-basel","project-voltanord-monitoring"],"related_record_ids":["question-decision-use","precedent-grueze-access"]},{"id":"question-voltanord-ownership","kind":"open-question","title":"Is VoltaNord a public or private development case?","answer":"The wider area has several owners, including Basel-Stadt, SBB and Stiftung Habitat. The public monitoring pages do not identify the ownership and operating responsibility of every monitored street element. The atlas should therefore classify each element—not the whole area—before assigning a public, private or mixed decision route.","status":"unknown","scope":"Ownership of individual monitored elements","tags":["ownership","public","private","mixed","voltanord","operator","landowner"],"source_ids":["basel-voltanord-overview","zhaw-voltanord-80788"],"entity_ids":["place-voltanord","project-voltanord-monitoring"],"related_record_ids":["question-protocol","interpret-screening-validation-loop"]},{"id":"interpret-three-intervention-windows","kind":"interpretation","title":"Why split new development, retrofit and renewal?","answer":"They are different decisions. New development can reserve space and performance before design is fixed. A retrofit must justify changing an asset that is still operating. A scheduled renewal can attach sponge-city requirements to work that will happen anyway and avoid replacing the old condition like for like.","status":"proposal","scope":"Decision-atlas organising model","tags":["new development","retrofit","renovation","renewal","decision window","infrastructure"],"source_ids":[],"entity_ids":[],"related_record_ids":["question-decision-use"]}],"decision_routes":[{"id":"route-new-public","context":"new-development","ownership":"public","question":"How should a new public development build sponge-city performance in from the start?","primary_levers":["planning brief","public-space standard","project budget","procurement requirements","handover and maintenance specification"],"decision_route":["set performance intent","reserve surface and subsurface space","test design options","approve project and budget","procure","accept asset and monitoring plan"],"accountable_role":"Public project owner, with the competent planning, water, mobility and green-space offices","evidence_needed":["site water balance","soil and groundwater constraints","utilities","maintenance capacity","expected effect and monitoring plan"],"caution":"A design label such as “sponge city” is not a performance requirement. Specify measurable functions and who will maintain them.","status":"proposal","source_ids":[]},{"id":"route-new-private","context":"new-development","ownership":"private","question":"How can a new private development be governed or incentivised?","primary_levers":["zoning and development-plan requirements","building-permit requirements within the legal basis","land-sale or lease conditions where the public owns land","development agreement","grant, advice or fee incentive"],"decision_route":["identify legal and ownership leverage","set requirements before design lock-in","review evidence at planning and permit gates","secure maintenance duty","verify delivery"],"accountable_role":"Competent planning or permit authority; landowner where contractual conditions apply","evidence_needed":["applicable legal basis","site runoff and heat need","feasible intervention area","proportionality","long-term owner and maintenance plan"],"caution":"Do not treat an incentive as a requirement or imply powers the authority does not have. Record the exact legal, contractual or voluntary basis.","status":"proposal","source_ids":[]},{"id":"route-new-mixed","context":"new-development","ownership":"mixed","question":"How should a multi-owner new development make one water and green-space system?","primary_levers":["area-wide framework","development agreement","easements and access rights","cost-sharing","shared maintenance and monitoring agreement"],"decision_route":["map parcels and operators","define shared catchment and performance","allocate land, cost and risk","bind agreements before permits or disposal","appoint system steward"],"accountable_role":"Area-development lead with every affected owner and infrastructure operator","evidence_needed":["parcel and operator map","cross-boundary water routes","shared asset design","cost allocation","failure and overflow responsibility"],"caution":"A technically connected system can fail institutionally if ownership, access, liability and maintenance stop at parcel lines.","status":"proposal","source_ids":[]},{"id":"route-retrofit-public","context":"existing-retrofit","ownership":"public","question":"What can be changed in public infrastructure before a full renewal is due?","primary_levers":["opportunity register","pilot or retrofit budget","traffic-order and public-space redesign","maintenance adaptation","temporary test followed by capital decision"],"decision_route":["identify urgent need or low-regret opportunity","screen operational constraints","choose reversible pilot or permanent retrofit","fund and permit","monitor","scale, adapt or stop"],"accountable_role":"Operating asset owner, with BVD-led cross-office coordination where functions conflict","evidence_needed":["asset condition","current functions and users","utilities","safe overflow route","maintenance capacity","before-and-after baseline"],"caution":"Retrofitting outside the renewal cycle costs more and disrupts operations; use it where urgency or learning value justifies that premium.","status":"proposal","source_ids":[]},{"id":"route-retrofit-private","context":"existing-retrofit","ownership":"private","question":"How can existing private land contribute when no major project is planned?","primary_levers":["targeted grants","technical advice","co-financing","demonstration programme","voluntary agreement","utility or runoff incentive where legally available"],"decision_route":["identify high-benefit properties","offer a legible intervention package","agree contribution and maintenance","support delivery","verify continued function"],"accountable_role":"Programme owner in government or a delegated delivery partner; the property owner remains asset steward","evidence_needed":["property-scale need and opportunity","owner motivation","cost and co-benefits","access and maintenance","aggregate catchment value"],"caution":"Voluntary programmes can select for willing owners rather than highest-need places. Track who participates and who is left out.","status":"proposal","source_ids":[]},{"id":"route-retrofit-mixed","context":"existing-retrofit","ownership":"mixed","question":"How can a retrofit work when runoff, roots or access cross ownership boundaries?","primary_levers":["catchment partnership","easement","co-funding","joint operating agreement","coordinated pilot"],"decision_route":["map functional system across parcels","convene owners and operators","agree benefit and liability allocation","test intervention","formalise long-term stewardship"],"accountable_role":"Named convenor with authority to keep all owners and operators at the table","evidence_needed":["flow and dependency map","rights and access","benefit distribution","liability","maintenance hand-offs"],"caution":"Do not begin with construction if the party responsible for overflow, root damage or maintenance is unresolved.","status":"proposal","source_ids":[]},{"id":"route-renewal-public","context":"planned-renewal","ownership":"public","question":"What should happen when a public street, sewer, square or building is already being renewed?","primary_levers":["climate check at project initiation","no like-for-like replacement rule","joint capital planning","standard details","stage-gate evidence review"],"decision_route":["publish renewal pipeline","flag climate opportunity before scope freeze","run joint feasibility","include option in credit and design","verify at handover","record reasons if omitted"],"accountable_role":"Renewal project owner; portfolio board owns the cross-asset opportunity check","evidence_needed":["forward works pipeline","decision deadline","incremental cost","conflicts and synergies","whole-life maintenance","reasoned opt-out"],"caution":"The crucial data is often the decision window. A perfect map that arrives after scope and budget are fixed cannot influence the project.","status":"proposal","source_ids":[]},{"id":"route-renewal-private","context":"planned-renewal","ownership":"private","question":"How should sponge-city measures enter a private renovation?","primary_levers":["permit-triggered review where legally applicable","renovation grant","design guidance","financing condition","owner commitment and maintenance covenant"],"decision_route":["detect renovation trigger","identify applicable requirement and incentive","compare feasible measures","secure delivery and maintenance","verify completion"],"accountable_role":"Competent permit or incentive programme owner; private owner remains delivery and maintenance owner","evidence_needed":["renovation scope","legal trigger","roof and open-space capacity","water routing","cost and incentive additionality","maintenance plan"],"caution":"A renovation does not automatically authorise every desired condition. Separate mandatory, negotiated and incentivised measures.","status":"proposal","source_ids":[]},{"id":"route-renewal-mixed","context":"planned-renewal","ownership":"mixed","question":"How can public and private renovation cycles be synchronised?","primary_levers":["shared forward plan","coordination agreement","matched funding","temporary access rights","joint procurement or construction interface"],"decision_route":["compare renewal calendars","select a shared intervention window","align scope and budgets","contract interfaces and maintenance","deliver and evaluate as one system"],"accountable_role":"A named programme or area coordinator; each owner retains statutory and asset decisions","evidence_needed":["public and private project pipelines","critical dates","interface design","cost and benefit split","long-term operating model"],"caution":"The opportunity disappears if either side learns about the other project after procurement or permit approval.","status":"proposal","source_ids":[]}]};
+    const $ = (selector) => document.querySelector(selector);
+    const sources = new Map(DATA.sources.map(source => [source.id, source]));
+    const labels = {
+      "new-development": "New development",
+      "existing-retrofit": "Existing retrofit",
+      "planned-renewal": "Planned renewal",
+      public: "Public",
+      private: "Private",
+      mixed: "Mixed"
+    };
+    const state = { query: "", status: "", kind: "", context: "", ownership: "", routeContext: "new-development", routeOwnership: "public", matches: [] };
+
+    const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+    const normalise = value => String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+    const tokens = value => normalise(value).split(/\s+/).filter(word => word.length > 1);
+    const sourceLinks = ids => ids.map(id => sources.get(id)).filter(Boolean).map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.publisher)} ↗</a>`).join("");
+
+    const items = [
+      ...DATA.records.map(record => ({
+        ...record,
+        itemType: "record",
+        searchable: [record.title, record.answer, record.scope, record.kind, ...(record.tags || [])].join(" ")
+      })),
+      ...DATA.decision_routes.map(route => ({
+        ...route,
+        kind: "decision-route",
+        title: route.question,
+        answer: `Levers: ${route.primary_levers.join(", ")}. Accountable role: ${route.accountable_role}`,
+        scope: `${labels[route.context]} · ${labels[route.ownership]} ownership`,
+        itemType: "route",
+        searchable: [route.question, route.context, route.ownership, ...route.primary_levers, ...route.decision_route, route.accountable_role, ...route.evidence_needed, route.caution].join(" ")
+      })),
+      ...DATA.entities.map(entity => ({
+        ...entity,
+        kind: "entity",
+        title: entity.name,
+        answer: entity.summary,
+        status: "verified",
+        scope: entity.type,
+        itemType: "entity",
+        searchable: [entity.name, entity.summary, entity.type].join(" ")
+      }))
+    ];
+
+    function scoreItem(item, queryTokens) {
+      if (!queryTokens.length) return item.kind === "fact" ? 2 : item.kind === "open-question" ? 1 : 0;
+      const haystack = normalise(item.searchable);
+      let score = 0;
+      for (const token of queryTokens) {
+        if (haystack.includes(token)) score += normalise(item.title).includes(token) ? 5 : 2;
+      }
+      return score;
+    }
+
+    function cardHtml(item) {
+      const sourceHtml = sourceLinks(item.source_ids || []);
+      const extraBadges = item.itemType === "route" ? `<span class="badge neutral">${escapeHtml(labels[item.context])}</span><span class="badge neutral">${escapeHtml(labels[item.ownership])}</span>` : `<span class="badge neutral">${escapeHtml(item.kind.replaceAll("-", " "))}</span>`;
+      return `<article class="card" data-status="${escapeHtml(item.status)}">
+        <div class="card-top"><div class="badges"><span class="badge ${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>${extraBadges}</div></div>
+        <h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.answer)}</p>
+        <div class="scope"><b>Scope:</b> ${escapeHtml(item.scope)}</div>
+        ${sourceHtml ? `<div class="sources">${sourceHtml}</div>` : ""}
+      </article>`;
+    }
+
+    function runSearch() {
+      const queryTokens = tokens(state.query);
+      const ranked = items.map(item => ({ item, score: scoreItem(item, queryTokens) })).filter(({ item, score }) => {
+        if (queryTokens.length && score === 0) return false;
+        if (state.status && item.status !== state.status) return false;
+        if (state.kind && item.kind !== state.kind) return false;
+        if (state.context && item.context !== state.context) return false;
+        if (state.ownership && item.ownership !== state.ownership) return false;
+        return true;
+      }).sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title)).slice(0, queryTokens.length ? 12 : 8);
+
+      state.matches = ranked.map(entry => entry.item);
+      $("#result-count").textContent = `${ranked.length} result${ranked.length === 1 ? "" : "s"}${state.query ? ` for “${state.query}”` : " in the starting view"}`;
+      $("#results").innerHTML = ranked.length ? ranked.map(({ item }) => cardHtml(item)).join("") : `<div class="empty">No record matches all filters. Clear one filter or treat this as a new research question.</div>`;
+      updateBrief();
+    }
+
+    const contextOptions = ["new-development", "existing-retrofit", "planned-renewal"];
+    const ownershipOptions = ["public", "private", "mixed"];
+
+    function setupRouteControls() {
+      $("#context-buttons").innerHTML = contextOptions.map(value => `<button type="button" data-context="${value}">${escapeHtml(labels[value])}</button>`).join("");
+      $("#ownership-buttons").innerHTML = ownershipOptions.map(value => `<button type="button" data-ownership="${value}">${escapeHtml(labels[value])}</button>`).join("");
+      $("#context-buttons").addEventListener("click", event => { if (event.target.dataset.context) { state.routeContext = event.target.dataset.context; renderRoute(); } });
+      $("#ownership-buttons").addEventListener("click", event => { if (event.target.dataset.ownership) { state.routeOwnership = event.target.dataset.ownership; renderRoute(); } });
+      const matrixCells = ["", ...ownershipOptions, ...contextOptions.flatMap(context => [context, ...ownershipOptions.map(ownership => DATA.decision_routes.find(route => route.context === context && route.ownership === ownership))])];
+      $("#route-matrix").innerHTML = matrixCells.map((cell, index) => {
+        if (index === 0) return `<div class="head">Window \ Owner</div>`;
+        if (index < 4) return `<div class="head">${escapeHtml(labels[cell])}</div>`;
+        if (typeof cell === "string") return `<div class="rowhead">${escapeHtml(labels[cell])}</div>`;
+        return `<div><button type="button" data-route="${escapeHtml(cell.id)}">${escapeHtml(cell.primary_levers.slice(0, 2).join(" + "))}</button></div>`;
+      }).join("");
+      $("#route-matrix").addEventListener("click", event => {
+        const route = DATA.decision_routes.find(item => item.id === event.target.dataset.route);
+        if (route) { state.routeContext = route.context; state.routeOwnership = route.ownership; renderRoute(); $("#route-card").scrollIntoView({behavior:"smooth", block:"center"}); }
+      });
+    }
+
+    function renderRoute() {
+      document.querySelectorAll("[data-context]").forEach(button => button.classList.toggle("active", button.dataset.context === state.routeContext));
+      document.querySelectorAll("[data-ownership]").forEach(button => button.classList.toggle("active", button.dataset.ownership === state.routeOwnership));
+      const route = DATA.decision_routes.find(item => item.context === state.routeContext && item.ownership === state.routeOwnership);
+      $("#route-card").innerHTML = `<div class="kicker">${escapeHtml(labels[route.context])} · ${escapeHtml(labels[route.ownership])} ownership</div>
+        <h3>${escapeHtml(route.question)}</h3>
+        <h4>Available levers</h4><ul>${route.primary_levers.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+        <h4>Decision route</h4><ol>${route.decision_route.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+        <h4>Accountable role</h4><p>${escapeHtml(route.accountable_role)}</p>
+        <h4>Evidence needed</h4><p>${escapeHtml(route.evidence_needed.join(" · "))}</p>
+        <p class="caution"><b>Watch:</b> ${escapeHtml(route.caution)}</p>`;
+      updateBrief();
+    }
+
+    function renderHandoff() {
+      const compact = item => `<div class="compact-item"><b>${escapeHtml(item.title)}</b><span>${escapeHtml(item.answer)}</span></div>`;
+      $("#open-questions").innerHTML = DATA.records.filter(item => item.kind === "open-question" || item.status === "conflict").map(compact).join("");
+      $("#next-actions").innerHTML = DATA.records.filter(item => item.kind === "next-action").map(compact).join("");
+    }
+
+    function briefText() {
+      const route = DATA.decision_routes.find(item => item.context === state.routeContext && item.ownership === state.routeOwnership);
+      const evidence = state.matches.filter(item => item.itemType === "record").slice(0, 4);
+      return [
+        "SPONGE CITY · WORKING DECISION BRIEF",
+        `Generated from evidence-atlas/${DATA.schema_version.split("/")[1]} · ${DATA.updated}`,
+        "",
+        `DECISION CONTEXT\n${labels[route.context]} · ${labels[route.ownership]} ownership`,
+        "",
+        `QUESTION\n${route.question}`,
+        "",
+        `AVAILABLE LEVERS\n- ${route.primary_levers.join("\n- ")}`,
+        "",
+        `DECISION ROUTE\n${route.decision_route.map((step, index) => `${index + 1}. ${step}`).join("\n")}`,
+        "",
+        `ACCOUNTABLE ROLE\n${route.accountable_role}`,
+        "",
+        `EVIDENCE NEEDED\n- ${route.evidence_needed.join("\n- ")}`,
+        "",
+        evidence.length ? `RELEVANT ATLAS RECORDS\n${evidence.map(item => `- [${item.status.toUpperCase()}] ${item.title}: ${item.answer}`).join("\n")}` : "RELEVANT ATLAS RECORDS\nNo evidence record selected; run a query above.",
+        "",
+        `CAUTION\n${route.caution}`
+      ].join("\n");
+    }
+
+    function updateBrief() { if ($("#brief-text")) $("#brief-text").textContent = briefText(); }
+
+    $("#search-form").addEventListener("submit", event => { event.preventDefault(); state.query = $("#query").value.trim(); runSearch(); });
+    $(".examples").addEventListener("click", event => { if (event.target.dataset.query) { $("#query").value = event.target.dataset.query; state.query = event.target.dataset.query; runSearch(); } });
+    [["#status-filter", "status"], ["#kind-filter", "kind"], ["#context-filter", "context"], ["#ownership-filter", "ownership"]].forEach(([selector, key]) => $(selector).addEventListener("change", event => { state[key] = event.target.value; runSearch(); }));
+    $("#clear-search").addEventListener("click", () => { state.query = state.status = state.kind = state.context = state.ownership = ""; $("#query").value = ""; ["#status-filter", "#kind-filter", "#context-filter", "#ownership-filter"].forEach(selector => $(selector).value = ""); runSearch(); });
+    $("#copy-brief").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(briefText()); $("#copy-status").textContent = "Brief copied."; }
+      catch { $("#copy-status").textContent = "Clipboard unavailable here. Select the brief text and copy it manually."; }
+    });
+    $("#print-brief").addEventListener("click", () => window.print());
+
+    setupRouteControls();
+    renderRoute();
+    renderHandoff();
+    runSearch();
+  </script>
+</body>
+</html>

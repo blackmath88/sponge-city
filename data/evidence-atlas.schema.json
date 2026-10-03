@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blackmath88.github.io/sponge-city/data/evidence-atlas.schema.json",
+  "title": "Sponge City Evidence Atlas",
+  "type": "object",
+  "required": ["schema_version", "updated", "sources", "entities", "records", "decision_routes"],
+  "properties": {
+    "schema_version": { "const": "evidence-atlas/0.1" },
+    "updated": { "type": "string", "format": "date" },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entity" }
+    },
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/record" }
+    },
+    "decision_routes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/decisionRoute" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["id", "title", "publisher", "url", "accessed", "kind"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "accessed": { "type": "string", "format": "date" },
+        "kind": { "enum": ["primary", "official-context", "method-precedent"] },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "required": ["id", "type", "name", "summary", "source_ids"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "type": { "enum": ["place", "project", "organisation", "person", "indicator", "decision"] },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "source_ids": { "type": "array", "items": { "type": "string" } },
+        "related_entity_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "record": {
+      "type": "object",
+      "required": ["id", "kind", "title", "answer", "status", "scope", "tags", "source_ids", "entity_ids"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "kind": { "enum": ["fact", "interpretation", "boundary", "open-question", "next-action", "precedent"] },
+        "title": { "type": "string", "minLength": 1 },
+        "answer": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["verified", "inference", "unknown", "conflict", "proposal"] },
+        "scope": { "type": "string", "minLength": 1 },
+        "tags": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "source_ids": { "type": "array", "items": { "type": "string" } },
+        "entity_ids": { "type": "array", "items": { "type": "string" } },
+        "related_record_ids": { "type": "array", "items": { "type": "string" } },
+        "owner": { "type": "string" },
+        "due": { "type": "string" },
+        "question": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "decisionRoute": {
+      "type": "object",
+      "required": ["id", "context", "ownership", "question", "primary_levers", "decision_route", "accountable_role", "evidence_needed", "caution", "status", "source_ids"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "context": { "enum": ["new-development", "existing-retrofit", "planned-renewal"] },
+        "ownership": { "enum": ["public", "private", "mixed"] },
+        "question": { "type": "string", "minLength": 1 },
+        "primary_levers": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "decision_route": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+        "accountable_role": { "type": "string", "minLength": 1 },
+        "evidence_needed": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "caution": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["verified", "inference", "unknown", "conflict", "proposal"] },
+        "source_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}
