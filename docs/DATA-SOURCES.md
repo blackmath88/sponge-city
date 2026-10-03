@@ -2,6 +2,8 @@
 
 Status: research, 3 October 2026. Every dataset id, endpoint, field and licence below was checked by a live API call on that date unless marked *unverified*. Design principles for using these sources stay in [`adaptive-interface/DATA.md`](../adaptive-interface/DATA.md); this file is the verified catalogue behind it.
 
+How to fill the gaps listed below (deduce, detect, synthesise, measure, ask), with three pilots on live data: [GAP-FILLING.md](GAP-FILLING.md).
+
 ## Summary
 
 - **Four Basel-Stadt access points carry almost everything:** the open-data portal **data.bs.ch** (364 datasets, Opendatasoft API), the geoportal's **WMS / WFS** (1,976 WMS layers, 592 WFS feature types), a **STAC download API** (98 collections) and the **geodata shop** for heavy rasters.
