@@ -115,3 +115,67 @@ export function toStreetSlice(adaptive) {
     mechanisms
   };
 }
+
+// ---------- Sponge Street explainer stages (PR #2)
+//
+// The explainer keeps one stage index per track (its `state.st`). explainerStages() derives those
+// indices from a toStreetSlice() result, so the existing artwork can be driven by state instead of
+// by a frame number. Presentation only: it reads the slice, it does not touch effects.
+// Stages the state model cannot express yet (Roof garden, Rain barrel, Bigger pit) are never
+// returned; `stage: null` means the slice depends on unknown evidence (usually routing).
+export const EXPLAINER_TRACKS = {
+  roof: ["Bare", "Thin green", "Roof garden"],
+  pipe: ["To sewer", "Rain barrel", "Feeds the tree"],
+  walk: ["Sealed", "Open joints"],
+  tree: ["Grate pit", "Bigger pit", "Sponge trench"],
+  park: ["Cars", "Rain garden", "Joined to trench"],
+  road: ["To the drain", "Open kerb"],
+  store: ["Nothing", "Storage + overflow"]
+};
+
+export function explainerStages(slice) {
+  if (!slice) return null;
+  const byRole = role => slice.segments.filter(segment => segment.role === role && segment.present?.value !== false);
+  const flows = slice.routing.flows;
+  const routingUnknown = slice.routing.state === "unknown";
+
+  // Follow drainage through network nodes (downpipe, gully) until it reaches planting or the sewer.
+  const reachesPlanting = (id, seen = new Set()) => flows.some(flow => {
+    if (flow.from !== id || flow.mode === "overflow" || seen.has(flow.to)) return false;
+    if (flow.into === "planting") return true;
+    seen.add(flow.to);
+    return flow.into === "drain" && reachesPlanting(flow.to, seen);
+  });
+
+  const stage = (track, index, extra = {}) => ({ stage: index, label: index === null ? null : EXPLAINER_TRACKS[track][index], state: index === null ? "unknown" : "derived", ...extra });
+  // Any / all over a set of segments: the explainer shows one street, so "some" lights the stage and says so.
+  const some = (track, segments, test, onIndex, { needsRouting = false } = {}) => {
+    if (!segments.length) return stage(track, 0, { note: "no such element in this place" });
+    const results = segments.map(test);
+    // An edge an intervention added is known even when the rest of the routing is not.
+    if (needsRouting && routingUnknown && !results.some(Boolean)) return stage(track, null, { note: "drainage routing unknown" });
+    if (results.some(result => result === null) && !results.some(Boolean)) return stage(track, null, { note: "depends on unknown evidence" });
+    const hits = results.filter(Boolean).length;
+    return stage(track, hits ? onIndex : 0, hits && hits < segments.length ? { partial: true } : {});
+  };
+
+  const gardens = byRole("rain-garden").map(segment => segment.element_id);
+  const trenches = byRole("tree-trench").map(segment => segment.element_id);
+  const joined = flows.some(flow => (gardens.includes(flow.from) && trenches.includes(flow.to)) || (trenches.includes(flow.from) && gardens.includes(flow.to)));
+  const receivers = [...gardens, ...trenches];
+
+  const stages = {
+    roof: some("roof", byRole("building"), segment => segment.material === null ? null : segment.material === "green-roof", 1),
+    pipe: some("pipe", byRole("building"), segment => reachesPlanting(segment.element_id), 2, { needsRouting: true }),
+    walk: some("walk", byRole("sidewalk"), segment => segment.surface_class.value === null ? null : segment.surface_class.value !== "sealed", 1),
+    tree: stage("tree", trenches.length ? 2 : 0),
+    park: !gardens.length ? stage("park", 0)
+      : joined ? stage("park", 2)
+      : stage("park", 1, routingUnknown ? { note: "joined to trench? drainage routing unknown" } : {}),
+    road: some("road", byRole("road"), segment => reachesPlanting(segment.element_id), 1, { needsRouting: true }),
+    store: !receivers.length ? stage("store", 0)
+      : flows.some(flow => receivers.includes(flow.from) && flow.mode === "overflow") ? stage("store", 1)
+      : routingUnknown ? stage("store", null, { note: "drainage routing unknown" }) : stage("store", 0)
+  };
+  return { st: Object.fromEntries(Object.entries(stages).map(([track, value]) => [track, value.stage])), stages };
+}

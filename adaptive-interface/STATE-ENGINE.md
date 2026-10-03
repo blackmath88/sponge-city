@@ -47,7 +47,7 @@ intervention-catalog/0.1  ── legacy-catalogue-adapter.js ┘   (set-surface,
 
 Geometry (areas, parking counts), surfaces, routing and vegetation are all state, changed only by operations. The 0.1 catalogue is a compatibility input; `scenario-engine.applyIntervention` (PR #3 API) now runs PlaceModel → State → operations → State → PlaceModel. Researchers never write operations: recipes and design assumptions (20 m² depave, 12.5 m² per bay, 10 m² trench…) live in the compiler and are reported as `assumed`.
 
-Compiled today: depave, permeable parking, curb cut (routing only, needs a rain garden or tree trench first), tree trench / Baumrigole (substrate + young tree + paving drains in + overflow to old drain), rain garden, green roof. A knowledge record without a recipe is listed as not executable yet.
+Compiled today: depave, permeable parking, curb cut (routing only, needs a rain garden or tree trench first), tree trench / Baumrigole (substrate + young tree + paving drains in + overflow to old drain), rain garden, green roof. A knowledge record without a recipe gets status `no-recipe`: it is listed with its reason, has no Apply button, and applying it returns an error.
 
 ## Effects (V0 rules)
 
@@ -81,6 +81,20 @@ Place-level values are area-weighted over elements. Unknown inputs are bracketed
 | ABSORB / STORE / SLOW / SWEAT / SHADE / COOL | `mechanisms`: lit from effects (SLOW from routing), `null` when it depends on an unknown |
 
 It maps; it does not calculate effects, and it has no coordinates. The SVG renderer stays free to draw a fixed schematic.
+
+`explainerStages(toStreetSlice(view.adaptive))` turns the slice into the Sponge Street explainer's own stage indices (`st` = `{ roof, pipe, walk, tree, park, road, store }`, plus a label per track), so its existing SVG artwork can be driven by state:
+
+| Track | Stage from |
+|---|---|
+| roof: Bare / Thin green | building material `green-roof` (`partial` when only some roofs) |
+| pipe: To sewer / Feeds the tree | roof drainage reaching planting through the routing graph |
+| walk: Sealed / Open joints | sidewalk surface class |
+| tree: Grate pit / Sponge trench | a `tree-trench` element |
+| park: Cars / Rain garden / Joined to trench | a `rain-garden`; joined when an edge links it to a tree trench |
+| road: To the drain / Open kerb | road runoff reaching planting (curb cut) |
+| store: Nothing / Storage + overflow | an overflow edge from a rain garden or tree trench |
+
+Routing-dependent tracks are `null` (unknown) when routing is unknown, unless an intervention added the edge. Stages the state cannot express yet (Roof garden, Rain barrel, Bigger pit) are never returned. The explainer's illustrative percentages must not be shown for a real place.
 
 ## Not done on purpose
 

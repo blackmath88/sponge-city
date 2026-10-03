@@ -65,6 +65,11 @@ export function assessKnowledge(record, state) {
     status = "requires-investigation";
     reason = `Unknown: ${requirements.filter(item => item.result === "unknown").map(item => item.label).join(", ")}.`;
   }
+  // Knowledge without a recipe stays visible, but cannot be applied: say so instead of offering targets.
+  if (!executable) {
+    reason = `Knowledge only: no executable recipe yet. ${status === "candidate" ? "" : `Would be ${status}: ${reason}`}`.trim();
+    status = "no-recipe";
+  }
   return { id: record.id, status, reason, eligible_targets: targets.map(element => element.id), requirements, checks: [], executable };
 }
 

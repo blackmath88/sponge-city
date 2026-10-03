@@ -55,7 +55,10 @@
       ],
       "constraints": ["Needs a receiving element first", "De-icing salt and pollutants from roads"],
       "basel_examples": [],
-      "sources": []
+      "sources": [
+        { "label": "NACTO Urban Street Stormwater Guide: bioretention inlet design (curb inlets, slope, blockage)", "url": "https://nacto.org/publication/urban-street-stormwater-guide/stormwater-elements/bioretention-design-considerations/inlet-design" },
+        { "label": "Sustainable Technologies (STEP) LID SWM Planning and Design Guide: Inlets — curb cuts", "url": "https://wiki.sustainabletechnologies.ca/wiki/Inlets", "note": "\"Curb cuts are breaks along the length of a curb system to allow water to flow into a LID/BMP.\" Ontario guidance, not Swiss." }
+      ]
     },
     {
       "id": "tree-trench",
@@ -105,8 +108,8 @@
         { "label": "Ownership", "state_key": "context.ownership" }
       ],
       "constraints": ["Only flat or low-pitch roofs", "Private property"],
-      "basel_examples": [{ "label": "Basel requires green roofs on new flat roofs (Bau- und Planungsgesetz)", "note": "Placeholder reference; to be confirmed by the research stream." }],
-      "sources": []
+      "basel_examples": [{ "label": "Basel-Stadt: flat roofs must be greened (§ 72 BPG); mandatory from 10 m² roof area for new builds and renovations, extensive build-up", "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern", "note": "Stadtgärtnerei Basel-Stadt, 'Stadtnatur fördern'. Substrate ≥ 15 cm, ≥ 20 cm on one third of the roof. Checked 3 October 2026." }],
+      "sources": [{ "label": "Stadtgärtnerei Basel-Stadt: Flachdachbegrünung (2020, PDF)", "url": "https://media.bs.ch/original_file/5073ffa4807e9736b9eb5bcf95798d647ae3de4c/flachdachbegruenung-2020.pdf" }]
     }
   ]
 }

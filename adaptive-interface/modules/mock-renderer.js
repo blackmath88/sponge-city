@@ -128,7 +128,7 @@ function interventionPanel(view) {
       <p>${esc(item.summary)}</p>
       <p class="ai-mech">${item.mechanisms.map(m => `<span>${esc(m)}</span>`).join("")}</p>
       <p class="ai-note">${esc(item.reason)}</p>
-      ${item.eligible_targets.length && item.status !== "excluded" ? `<label>on <select data-target-for="${esc(item.id)}">${item.eligible_targets.map(id => `<option value="${esc(id)}">${esc(view.scenario.elements.find(el => el.id === id)?.label || id)}</option>`).join("")}</select></label>
+      ${item.eligible_targets.length && !["excluded", "no-recipe"].includes(item.status) ? `<label>on <select data-target-for="${esc(item.id)}">${item.eligible_targets.map(id => `<option value="${esc(id)}">${esc(view.scenario.elements.find(el => el.id === id)?.label || id)}</option>`).join("")}</select></label>
         <button type="button" data-apply="${esc(item.id)}">Apply</button>` : ""}
     </article>`).join("")}
     <p><button type="button" data-action="reset-scenario">Reset scenario</button> <button type="button" data-action="reset-all">Reset corrections too</button></p>

@@ -46,7 +46,7 @@ The shape `renderer.render({...})` will take once the 0.1 fields retire. Nested 
 | `effectDelta` | Per effect: `before`, `after`, `direction`, `assessment` (improves / worsens / same / unknown), `local` element changes |
 | `interventions`, `unknowns`, `errors` | As above; `unknowns` adds `routing` and `effect-result` scopes |
 
-Renderers display these values; they never calculate them. `modules/street-slice-adapter.js` maps the payload to Street Slice visual state (materials, underground, routing, sewer, trees, mechanisms) without stages.
+Renderers display these values; they never calculate them. `modules/street-slice-adapter.js` maps the payload to Street Slice visual state (materials, underground, routing, sewer, trees, mechanisms) without stages; `explainerStages(slice)` maps that onto the Sponge Street explainer's stage indices for reuse of its artwork. Intervention `status` may also be `no-recipe` (knowledge only): show it, offer no Apply.
 
 `source`, `baseline` and `scenario` are deep-frozen. Renderers read; they never mutate.
 

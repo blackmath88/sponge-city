@@ -14,7 +14,7 @@ import { createMockPlaceProvider } from "../modules/mock-place-provider.js";
 import { createMockInterventionProvider } from "../modules/mock-intervention-provider.js";
 import { createMockRenderer } from "../modules/mock-renderer.js";
 import { createTextRenderer } from "../modules/text-renderer.js";
-import { toStreetSlice } from "../modules/street-slice-adapter.js";
+import { toStreetSlice, explainerStages, EXPLAINER_TRACKS } from "../modules/street-slice-adapter.js";
 
 const json = async path => JSON.parse(await readFile(new URL(path, import.meta.url), "utf8"));
 const text = async path => readFile(new URL(path, import.meta.url), "utf8");
@@ -260,4 +260,59 @@ test("No sponge score, no °C, no runoff %, no rates in effect output", async ()
       if (result.state !== "derived") assert.equal(result.value, null);
     }
   }
+});
+
+test("S12. explainer stages are derived from state, and stay unknown where routing is unknown", async () => {
+  const stagesOf = view => explainerStages(toStreetSlice(view.adaptive));
+  const { app, last } = await assemble();
+  assert.deepEqual(stagesOf(last()).st, { roof: 0, pipe: 0, walk: 0, tree: 0, park: 0, road: 0, store: 0 }, "today: the grey street");
+  app.applyIntervention("green-roof", { targetId: "building-north" });
+  app.applyIntervention("rain-garden", { targetId: "parking-north" });
+  app.applyIntervention("tree-trench", { targetId: "sidewalk-north" });
+  app.applyIntervention("curb-cut", { targetId: "road" });
+  const { st, stages } = stagesOf(last());
+  assert.deepEqual(st, { roof: 1, pipe: 0, walk: 0, tree: 2, park: 1, road: 1, store: 1 });
+  assert.equal(stages.roof.partial, true, "one of two roofs is green");
+  for (const [track, value] of Object.entries(stages)) assert.equal(value.label, EXPLAINER_TRACKS[track][value.stage], track);
+
+  // Without routing evidence the routing-dependent tracks are unknown, not "To sewer".
+  const bare = await assemble({ routing: null });
+  const unknown = stagesOf(bare.last());
+  assert.equal(unknown.st.pipe, null);
+  assert.equal(unknown.st.road, null);
+  assert.equal(unknown.stages.pipe.state, "unknown");
+  assert.equal(unknown.st.roof, 0, "material tracks do not depend on routing");
+  // An edge added by an intervention is known even when the rest is not.
+  bare.app.applyIntervention("rain-garden", { targetId: "parking-north" });
+  bare.app.applyIntervention("curb-cut", { targetId: "road" });
+  assert.equal(stagesOf(bare.last()).st.road, 1);
+});
+
+test("S13. a knowledge record without a recipe is listed as no-recipe and cannot be applied", async () => {
+  const extra = { ...record("rain-garden"), id: "rainwater-harvesting", label: "Rainwater harvesting", category: "reuse", basel_examples: [], sources: [] };
+  assert.deepEqual(validateKnowledge({ ...knowledge, interventions: [...knowledge.interventions, extra] }), []);
+  const handlers = {};
+  const root = { innerHTML: "", addEventListener(type, fn) { handlers[type] = fn; }, querySelector: () => null };
+  const { app, last } = await assemble({ catalogue: { ...knowledge, interventions: [...knowledge.interventions, extra] }, renderer: createMockRenderer(root) });
+  const item = app.viewModel().interventions.find(entry => entry.id === "rainwater-harvesting");
+  assert.equal(item.status, "no-recipe");
+  assert.match(item.reason, /no executable recipe/);
+  assert.match(root.innerHTML, /data-state="no-recipe"/);
+  assert.ok(!root.innerHTML.includes('data-apply="rainwater-harvesting"'), "no Apply button without a recipe");
+  app.applyIntervention("rainwater-harvesting", { targetId: "parking-north" });
+  assert.equal(app.viewModel().applied.length, 0);
+  assert.ok(app.viewModel().errors.some(error => /no executable recipe/.test(error)));
+  assert.ok(knowledge.interventions.every(entry => app.viewModel().interventions.find(i => i.id === entry.id).status !== "no-recipe"), "all shipped records have recipes");
+  void last;
+});
+
+test("S14. Basel examples and sources are links, not placeholders", () => {
+  for (const entry of knowledge.interventions) {
+    for (const link of [...entry.basel_examples, ...entry.sources]) {
+      assert.match(link.url || "", /^https:\/\//, `${entry.id}: ${link.label}`);
+      assert.ok(!/placeholder|to be confirmed/i.test(`${link.label} ${link.note || ""}`), `${entry.id}: ${link.label}`);
+    }
+  }
+  assert.ok(record("curb-cut").sources.length >= 1, "curb cut is sourced");
+  assert.match(record("green-roof").basel_examples[0].label, /§ 72 BPG/);
 });

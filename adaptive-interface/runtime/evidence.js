@@ -11,7 +11,7 @@ export const SURFACES = ["sealed", "permeable", "planted", "water", "unknown"];
 
 export const MECHANISMS = ["ABSORB", "STORE", "SLOW", "SWEAT", "SHADE", "COOL"];
 
-export const INTERVENTION_STATUSES = ["candidate", "requires-investigation", "excluded", "not-applicable"];
+export const INTERVENTION_STATUSES = ["candidate", "requires-investigation", "excluded", "not-applicable", "no-recipe"];
 
 // Build an evidence value. Unknown and not-applicable never carry a value.
 export function ev(value, state, extra = {}) {
