@@ -2,6 +2,8 @@
 
 Status: research plus three small pilots on open Basel data, 3 October 2026. Companion to [DATA-SOURCES.md](DATA-SOURCES.md), which lists what is open; this file covers what is missing.
 
+The north-star charter that scores Basel against these gaps, and its map, are in [DATA-CHARTER.md](DATA-CHARTER.md).
+
 ## The gaps are a result
 
 Six inputs that sponge-city decisions depend on are not openly available for Basel:
@@ -91,8 +93,8 @@ Reproduce with [`pilots/tree_pit_canopy.py`](pilots/tree_pit_canopy.py).
 
 The groundwater statistics (`100180`) give terrain height and the 10-year maximum level per station. Their difference is the **shallowest depth to groundwater** over 10 years:
 
-- range 1.3 m (Lehenmattstrasse, near the Birs) to 20.6 m (Kornfeldstrasse);
-- median 10.5 m across 88 stations.
+- range 0.8 m (Lehenmattstrasse, near the Birs) to 20.8 m;
+- median 9.8 m across 81 stations (taking the shallowest of a station's sensors and statistic periods; a first count over all rows gave 88 rows, 1.3–20.6 m, median 10.5 m).
 
 Interpolated between stations and checked against the highest-groundwater contours (`ms:GN_IsohypseHoechsthochwasser`) and the 25 cm terrain model, this gives an infiltration screening layer. Shallow groundwater means caution; deep groundwater means room for infiltration. It is `derived`, never a permeability value.
 

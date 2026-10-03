@@ -1,0 +1,44 @@
+{
+  "id": "data-charter-map",
+  "title": "Sponge City Data Charter",
+  "question": "Which data should a city have to plan and evaluate sponge-city measures, which of it does Basel publish, and what can be inferred meanwhile?",
+  "summary": "A north-star charter of 25 data indicators, Basel's real status for each, and a map that keeps real data, our inferences and missing data visibly apart.",
+  "roles": [
+    "evidence",
+    "governance"
+  ],
+  "status": "prototype",
+  "page": "page.html",
+  "embeds": {
+    "CHARTER": {
+      "file": "data/data-charter.json"
+    },
+    "CHARTER_MAP": {
+      "file": "data/charter-map.json"
+    }
+  },
+  "live_sources": [
+    {
+      "name": "Geoportal Basel-Stadt WMS (land cover, sponge suitability, heat focus, climate analysis, hazards, protection zones, contaminated sites, soil)",
+      "url": "https://wms.geo.bs.ch/",
+      "credit": "Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)"
+    },
+    {
+      "name": "Gefährdungskarte Oberflächenabfluss",
+      "url": "https://map.geo.admin.ch/?layers=ch.bafu.gefaehrdungskarte-oberflaechenabfluss",
+      "credit": "© BAFU / geo.admin.ch"
+    },
+    {
+      "name": "swisstopo grey base map",
+      "url": "https://www.swisstopo.admin.ch/",
+      "credit": "© swisstopo"
+    }
+  ],
+  "smoke": "smoke.mjs",
+  "fetch": "fetch.mjs",
+  "docs": [
+    "docs/DATA-CHARTER.md",
+    "docs/DATA-SOURCES.md",
+    "docs/GAP-FILLING.md"
+  ]
+}

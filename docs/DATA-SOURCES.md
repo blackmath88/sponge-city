@@ -2,7 +2,7 @@
 
 Status: research, 3 October 2026. Every dataset id, endpoint, field and licence below was checked by a live API call on that date unless marked *unverified*. Design principles for using these sources stay in [`adaptive-interface/DATA.md`](../adaptive-interface/DATA.md); this file is the verified catalogue behind it.
 
-How to fill the gaps listed below (deduce, detect, synthesise, measure, ask), with three pilots on live data: [GAP-FILLING.md](GAP-FILLING.md).
+North-star charter and Basel scorecard: [DATA-CHARTER.md](DATA-CHARTER.md). How to fill the gaps listed below (deduce, detect, synthesise, measure, ask), with three pilots on live data: [GAP-FILLING.md](GAP-FILLING.md).
 
 ## Summary
 
