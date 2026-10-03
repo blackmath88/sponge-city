@@ -2,6 +2,7 @@
 //
 //   placeProvider.getPlace(selection)        → PlaceModel              (data / API team)
 //   interventionProvider.getCatalogue()      → InterventionCatalogue   (Basel research team)
+//     (or getInterventions(place), the name used in ORCHESTRATION.md; it receives the source place)
 //   renderer.render(viewModel)                                          (frontend team)
 //   renderer.connect?(actions)               ← user actions back into the orchestrator
 //
@@ -14,7 +15,7 @@ import { clone, freeze } from "./evidence.js";
 export class AdaptiveInterfaceOrchestrator {
   constructor({ placeProvider, interventionProvider, renderer, scenarioEngine = defaultEngine } = {}) {
     if (typeof placeProvider?.getPlace !== "function") throw new TypeError("placeProvider must implement getPlace(selection)");
-    if (typeof interventionProvider?.getCatalogue !== "function") throw new TypeError("interventionProvider must implement getCatalogue()");
+    if (typeof interventionProvider?.getCatalogue !== "function" && typeof interventionProvider?.getInterventions !== "function") throw new TypeError("interventionProvider must implement getCatalogue() or getInterventions(place)");
     if (typeof renderer?.render !== "function") throw new TypeError("renderer must implement render(viewModel)");
     this.placeProvider = placeProvider;
     this.interventionProvider = interventionProvider;
@@ -49,7 +50,9 @@ export class AdaptiveInterfaceOrchestrator {
       errors.push(`PlaceProvider failed: ${error.message}`);
     }
     try {
-      catalogue = await this.interventionProvider.getCatalogue();
+      catalogue = typeof this.interventionProvider.getCatalogue === "function"
+        ? await this.interventionProvider.getCatalogue()
+        : await this.interventionProvider.getInterventions(source);
       errors.push(...validateCatalogue(catalogue).map(error => `InterventionCatalogue: ${error}`));
     } catch (error) {
       errors.push(`InterventionProvider failed: ${error.message}`);
@@ -64,6 +67,9 @@ export class AdaptiveInterfaceOrchestrator {
     };
     return this.render();
   }
+
+  // Alias used in ORCHESTRATION.md.
+  open(selection) { return this.load(selection); }
 
   applyIntervention(interventionId, { targetId, params } = {}) {
     if (this.state.status !== "ready") return this.fail("Load a place first.");
@@ -150,3 +156,6 @@ export class AdaptiveInterfaceOrchestrator {
     return model;
   }
 }
+
+// Name used in ORCHESTRATION.md.
+export { AdaptiveInterfaceOrchestrator as AdaptiveInterface };

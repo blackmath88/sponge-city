@@ -198,6 +198,20 @@ test("Measure reports unknown presence honestly", () => {
   assert.equal(trees.known_part, 2);
 });
 
+test("ORCHESTRATION.md names work too: AdaptiveInterface, open(), getInterventions(place)", async () => {
+  const { AdaptiveInterface } = await import("../runtime/orchestrator.js");
+  const seen = [];
+  const renderer = recordingRenderer();
+  const app = new AdaptiveInterface({
+    placeProvider: createMockPlaceProvider(placeFixture),
+    interventionProvider: { async getInterventions(place) { seen.push(place.place_id); return catalogueFixture; } },
+    renderer
+  });
+  await app.open({ lon: 7.5, lat: 47.5, radius_m: 30 });
+  assert.equal(renderer.views.at(-1).status, "ready");
+  assert.deepEqual(seen, ["demo-street-fixture"], "catalogue provider receives the place");
+});
+
 test("Situation Map handoff round-trips", () => {
   const url = handoffUrl("adaptive-interface/demo/index.html", { lon: 7.57412, lat: 47.57351, radius_m: 25, place_profile_id: "point-7.57412-47.57351" });
   const { selection, errors } = parseSelection(new URL(url, "http://x/").searchParams);

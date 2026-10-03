@@ -2,6 +2,8 @@
 
 Status: working integration contract, 3 October 2026.
 
+> **Implemented:** the runnable prototype for this contract lives in `contracts/`, `runtime/`, `modules/`, `demo/` and `tests/`. See *Implementation* in [README.md](README.md). Names map as follows: `AdaptiveInterface` = `AdaptiveInterfaceOrchestrator`; `app.open()` = `app.load()`; `interventionProvider.getInterventions(place)` and `getCatalogue()` are both accepted; the scenario engine is optional (`scenarioEngine`, defaults to `runtime/scenario-engine.js`), whose functions are `applyIntervention`, `applyCorrections`, `computeEffects`, and reset is `resetScenario()` / `resetAll()` on the orchestrator.
+
 ## Why this exists
 
 Three parallel workstreams are moving at different speeds:
