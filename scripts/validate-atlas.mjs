@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const data = JSON.parse(await readFile(join(root, "data", "evidence-atlas.json"), "utf8"));
-const html = await readFile(join(root, "prototype", "evidence-atlas.html"), "utf8");
+const html = await readFile(join(root, "site", "evidence-atlas.html"), "utf8");
 const errors = [];
 
 const unique = (items, label) => {
@@ -42,7 +42,7 @@ for (const route of data.decision_routes) {
 }
 
 if (!html.includes(`"schema_version":"${data.schema_version}"`)) {
-  errors.push("Standalone HTML does not contain the current dataset. Run node scripts/build-atlas.mjs.");
+  errors.push("Standalone HTML does not contain the current dataset. Run make build.");
 }
 
 if (errors.length) {

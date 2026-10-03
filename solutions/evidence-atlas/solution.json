@@ -1,0 +1,24 @@
+{
+  "id": "evidence-atlas",
+  "title": "Evidence atlas",
+  "question": "What do we actually know about VoltaNord and Basel's sponge-city decisions, and what is still open?",
+  "summary": "Searchable facts, boundaries, open questions, actors, decision routes and the monitoring maturity ladder, each with sources and a status.",
+  "roles": [
+    "evidence",
+    "governance"
+  ],
+  "status": "prototype",
+  "page": "page.html",
+  "embeds": {
+    "ATLAS_DATA": {
+      "file": "data/evidence-atlas.json"
+    }
+  },
+  "live_sources": [],
+  "smoke": "smoke.mjs",
+  "fetch": null,
+  "docs": [
+    "docs/QUERYABLE-EVIDENCE-ATLAS.md",
+    "docs/MONITORING-DATA-STACK.md"
+  ]
+}

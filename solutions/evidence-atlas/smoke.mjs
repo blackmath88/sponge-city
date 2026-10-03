@@ -3,8 +3,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import vm from "node:vm";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const html = await readFile(join(root, "prototype", "evidence-atlas.html"), "utf8");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const html = await readFile(join(root, "site", "evidence-atlas.html"), "utf8");
 const match = html.match(/<script>\s*([\s\S]*?)\s*<\/script>/);
 if (!match) throw new Error("Atlas script not found.");
 

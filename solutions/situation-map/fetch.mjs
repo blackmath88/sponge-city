@@ -4,7 +4,7 @@ import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const api = "https://data.bs.ch/api/explore/v2.1/catalog/datasets";
 const fetchedAt = new Date();
 

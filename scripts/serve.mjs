@@ -9,7 +9,7 @@ const port = Number(process.env.PORT || 4173);
 const types = { ".html": "text/html; charset=utf-8", ".json": "application/json; charset=utf-8", ".md": "text/markdown; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 
 createServer(async (request, response) => {
-  const pathname = request.url === "/" ? "/prototype/evidence-atlas.html" : new URL(request.url, "http://localhost").pathname;
+  const pathname = request.url === "/" ? "/site/index.html" : new URL(request.url, "http://localhost").pathname;
   const relative = normalize(pathname).replace(/^[/\\]+/, "");
   const file = join(root, relative);
   if (!file.startsWith(root)) {
@@ -25,5 +25,5 @@ createServer(async (request, response) => {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found");
   }
 }).listen(port, "127.0.0.1", () => {
-  console.log(`Sponge City Evidence Atlas: http://127.0.0.1:${port}`);
+  console.log(`Sponge City solutions: http://127.0.0.1:${port}`);
 });

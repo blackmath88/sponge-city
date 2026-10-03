@@ -12,7 +12,7 @@ The group does not need another folder of reports. It needs a shared way to ask:
 - Who owns the evidence or the next decision?
 - What is still missing, and what should we ask next?
 
-The prototype in [`prototype/evidence-atlas.html`](../prototype/evidence-atlas.html) turns the first verified VoltaNord/ZHAW case into a guided, searchable evidence surface. It works as a standalone file without a server or AI service.
+The prototype in [`site/evidence-atlas.html`](../site/evidence-atlas.html) turns the first verified VoltaNord/ZHAW case into a guided, searchable evidence surface. It works as a standalone file without a server or AI service.
 
 Run `make run` for a local preview. Edit `data/evidence-atlas.json`, then run `make validate` to rebuild the standalone file and check all source, entity and record references.
 

@@ -3,14 +3,14 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import vm from "node:vm";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const html = await readFile(join(root, "prototype", "basel-map.html"), "utf8");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const html = await readFile(join(root, "site", "situation-map.html"), "utf8");
 const snapshot = JSON.parse(await readFile(join(root, "data", "basel-map.json"), "utf8"));
 const match = html.match(/<script id="map-logic">\s*([\s\S]*?)\s*<\/script>/);
 if (!match) throw new Error("Map logic script not found.");
 
 const context = vm.createContext({ console });
-vm.runInContext(`${match[1]}\nthis.api = { TREES, GENERA, LAYERS, KINDS, GROUPS, SOIL_WATER, STORIES, ATLAS, SNAPSHOT, modeClasses, ageClass, legendCounts, nearestStation, treesNear, search, recordById, perimetersAt, matchRunoffColour, tilePixel, buildPlaceProfile, encodeState, decodeState, darkColour, darkStyle };`, context, { filename: "basel-map.html" });
+vm.runInContext(`${match[1]}\nthis.api = { TREES, GENERA, LAYERS, KINDS, GROUPS, SOIL_WATER, STORIES, ATLAS, SNAPSHOT, modeClasses, ageClass, legendCounts, nearestStation, treesNear, search, recordById, perimetersAt, matchRunoffColour, tilePixel, buildPlaceProfile, encodeState, decodeState, darkColour, darkStyle };`, context, { filename: "situation-map.html" });
 const api = context.api;
 const fail = message => { throw new Error(message); };
 

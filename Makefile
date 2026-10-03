@@ -1,18 +1,20 @@
-.PHONY: build validate smoke run fetch
+.PHONY: build validate smoke run fetch new
 
 build:
-	node scripts/build-atlas.mjs
+	node scripts/build.mjs
 
 validate: build
 	node scripts/validate-atlas.mjs
 
 smoke: validate
-	node scripts/smoke-atlas.mjs
-	node scripts/smoke-map.mjs
+	node scripts/check.mjs
 
 run: build
-	node scripts/serve-atlas.mjs
+	node scripts/serve.mjs
 
 fetch:
-	node scripts/fetch-basel-data.mjs
+	node scripts/fetch.mjs
 	$(MAKE) smoke
+
+new:
+	node scripts/new-solution.mjs $(name) "$(title)"

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Sponge City Basel</title>
+  <style>
+    /*__SHARED_CSS__*/
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.5; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #4e9ac0; outline-offset: 2px; }
+    .bar { height: var(--bar); display: flex; align-items: center; gap: 16px; padding: 0 clamp(16px, 4vw, 56px); border-bottom: 1px solid var(--ink); }
+    .wordmark { font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .spacer { flex: 1; }
+    .tool { border: 1px solid var(--line); background: transparent; padding: 6px 10px; cursor: pointer; font: 12px/1 var(--mono); color: var(--muted); }
+    .tool:hover { color: var(--ink); border-color: var(--ink); }
+    main { max-width: 1240px; margin: 0 auto; padding: clamp(32px, 6vw, 80px) clamp(16px, 4vw, 56px) 80px; }
+    .eyebrow { font: 700 11px/1.2 var(--mono); letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    h1 { font: 500 clamp(40px, 7vw, 88px)/.92 var(--serif); letter-spacing: -.045em; margin: 0; max-width: 900px; }
+    :root[data-theme="dark"] h1 { font: 600 clamp(32px, 5vw, 60px)/1 var(--sans); letter-spacing: -.02em; }
+    .lead { font-size: clamp(17px, 2vw, 22px); max-width: 760px; margin: 26px 0 0; color: var(--muted); }
+    .lead b { color: var(--ink); font-weight: 600; }
+    .roles { display: flex; flex-wrap: wrap; gap: 8px; margin: 34px 0 0; padding: 14px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+    .role { font: 700 10px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border: 1px solid currentColor; }
+    .role[data-role="need"] { color: var(--red); }
+    .role[data-role="possibility"] { color: var(--green); }
+    .role[data-role="potential_effect"] { color: var(--blue); }
+    .role[data-role="evidence"] { color: var(--violet); }
+    .role[data-role="governance"] { color: var(--amber); }
+    .roles span.hint { font: 12px/1.6 var(--mono); color: var(--muted); margin-left: auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; margin-top: 28px; }
+    .card { background: var(--surface); border: 1px solid var(--line); padding: 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .status { font: 700 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .status::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--amber); vertical-align: 0; }
+    .status[data-status="alpha"]::before { background: var(--green); }
+    .status[data-status="idea"]::before { background: var(--line); }
+    .card h2 { font: 500 30px/1 var(--serif); letter-spacing: -.02em; margin: 0; }
+    :root[data-theme="dark"] .card h2 { font: 600 21px/1.2 var(--sans); }
+    .question { font: 500 18px/1.35 var(--serif); margin: 0; }
+    :root[data-theme="dark"] .question { font: 15px/1.45 var(--sans); }
+    .summary { margin: 0; color: var(--muted); font-size: 14px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; font: 12px/1.4 var(--mono); color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+    dt { color: var(--ink); }
+    dd { margin: 0; }
+    .open { margin-top: auto; align-self: flex-start; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); padding: 10px 16px; text-decoration: none; font-size: 14px; }
+    .open:hover { background: transparent; color: var(--ink); }
+    .add { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; border-top: 1px solid var(--ink); padding-top: 28px; }
+    .add h2 { font: 500 34px/1 var(--serif); letter-spacing: -.02em; margin: 0 0 10px; }
+    :root[data-theme="dark"] .add h2 { font: 600 22px/1.2 var(--sans); }
+    .add ol { margin: 0; padding-left: 20px; color: var(--muted); }
+    .add li { margin-bottom: 6px; }
+    code, pre { font: 13px/1.5 var(--mono); }
+    pre { background: var(--surface); border: 1px solid var(--line); padding: 14px; overflow-x: auto; margin: 0 0 12px; }
+    footer { margin-top: 48px; font: 12px/1.5 var(--mono); color: var(--muted); }
+    @media (max-width: 760px) { .add { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr; } .roles span.hint { margin-left: 0; width: 100%; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <span class="wordmark">Sponge City · Basel</span>
+    <span class="spacer"></span>
+    <button class="tool" type="button" id="theme">Control room</button>
+  </header>
+  <main>
+    <div class="eyebrow">Hack am Rhein 2026 · Make Basel a Sponge</div>
+    <h1>One canvas, several solutions.</h1>
+    <p class="lead">Each solution answers <b>one question</b>, reads the <b>shared evidence</b> and keeps <b>unknowns visible</b>. GIS calculates. Rules constrain. AI explains.</p>
+    <div class="roles" aria-label="Roles a solution can play">
+      <span class="role" data-role="need">Need</span>
+      <span class="role" data-role="possibility">Possibility</span>
+      <span class="role" data-role="potential_effect">Potential effect</span>
+      <span class="role" data-role="evidence">Evidence</span>
+      <span class="role" data-role="governance">Governance</span>
+      <span class="hint">Place Profile roles · a solution declares the ones it fills</span>
+    </div>
+    <section class="grid" id="grid" aria-label="Solutions"></section>
+    <section class="add">
+      <div>
+        <h2>Add a solution</h2>
+        <ol>
+          <li>Scaffold it: one folder, one manifest, one page, one test.</li>
+          <li>Declare the question it answers, its roles and the shared data it reads.</li>
+          <li>Cite atlas record and source IDs instead of copying evidence.</li>
+          <li>Keep unknowns as unknown; credit every live source.</li>
+        </ol>
+      </div>
+      <div>
+        <pre>make new name=my-solution
+make smoke</pre>
+        <p class="summary">Contract and conventions: <a href="../docs/SOLUTIONS.md">docs/SOLUTIONS.md</a>. Registry: <code>solutions/registry.json</code>.</p>
+      </div>
+    </section>
+    <footer id="footer"></footer>
+  </main>
+  <script>
+    const SOLUTIONS = /*__SOLUTIONS__*/ null;
+    const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+    const roleLabel = { need: "Need", possibility: "Possibility", potential_effect: "Potential effect", evidence: "Evidence", governance: "Governance" };
+    const date = iso => iso ? new Date(iso).toLocaleDateString("de-CH", { timeZone: "Europe/Zurich" }) : "–";
+
+    document.querySelector("#grid").innerHTML = SOLUTIONS.map(s => `
+      <article class="card">
+        <div class="card-top"><span class="status" data-status="${s.status}">${s.status}</span><div class="chips">${s.roles.map(r => `<span class="role" data-role="${r}">${roleLabel[r]}</span>`).join("")}</div></div>
+        <h2>${escapeHtml(s.title)}</h2>
+        <p class="question">${escapeHtml(s.question)}</p>
+        <p class="summary">${escapeHtml(s.summary)}</p>
+        <dl>
+          <dt>Data</dt><dd>${s.datasets.map(d => `${escapeHtml(d.file)} · ${date(d.date)}`).join("<br>") || "none"}</dd>
+          <dt>Live</dt><dd>${(s.live_sources || []).map(l => escapeHtml(l.credit)).join("<br>") || "none"}</dd>
+        </dl>
+        <a class="open" href="${s.href}">Open ${escapeHtml(s.title)} →</a>
+      </article>`).join("");
+    document.querySelector("#footer").textContent = `${SOLUTIONS.length} solutions · built from solutions/registry.json`;
+
+    const setTheme = theme => {
+      document.documentElement.dataset.theme = theme;
+      document.querySelector("#theme").textContent = theme === "dark" ? "Editorial" : "Control room";
+      try { localStorage.setItem("sponge-theme", theme); } catch {}
+    };
+    let saved = "light";
+    try { saved = localStorage.getItem("sponge-theme") || "light"; } catch {}
+    setTheme(saved);
+    document.querySelector("#theme").addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+  </script>
+</body>
+</html>

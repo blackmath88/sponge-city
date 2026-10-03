@@ -1,0 +1,52 @@
+{
+  "id": "situation-map",
+  "title": "Basel situation map",
+  "question": "What do we know about this place, and what don't we?",
+  "summary": "Heat, runoff, trees, climate stations and planning perimeters on swisstopo maps; a place lens that reads every layer at a point and exports a Place Profile with unknowns kept.",
+  "roles": [
+    "need",
+    "possibility"
+  ],
+  "status": "prototype",
+  "page": "page.html",
+  "embeds": {
+    "MAP_DATA": {
+      "file": "data/basel-map.json"
+    },
+    "ATLAS_DATA": {
+      "file": "data/evidence-atlas.json",
+      "pick": [
+        "records",
+        "sources"
+      ]
+    }
+  },
+  "live_sources": [
+    {
+      "name": "swisstopo base maps and building heights",
+      "url": "https://www.swisstopo.admin.ch/",
+      "credit": "© swisstopo"
+    },
+    {
+      "name": "Klimaanalyse and heat focus areas (WMS)",
+      "url": "https://wms.geo.bs.ch/",
+      "credit": "Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)"
+    },
+    {
+      "name": "Gefährdungskarte Oberflächenabfluss",
+      "url": "https://map.geo.admin.ch/?layers=ch.bafu.gefaehrdungskarte-oberflaechenabfluss",
+      "credit": "© BAFU / geo.admin.ch"
+    },
+    {
+      "name": "meteoblue Smart Climate, latest reading",
+      "url": "https://data.bs.ch/explore/dataset/100009/",
+      "credit": "meteoblue AG via data.bs.ch (CC BY 4.0)"
+    }
+  ],
+  "smoke": "smoke.mjs",
+  "fetch": "fetch.mjs",
+  "docs": [
+    "docs/PRECEDENT-QTREES-BERLIN.md",
+    "docs/DECISION-CANVAS.md"
+  ]
+}
