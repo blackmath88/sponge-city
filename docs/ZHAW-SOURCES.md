@@ -1,6 +1,6 @@
 # ZHAW / VoltaNord public-source check
 
-Search date: **2026-10-03**. Scope: public code, data, measurement concepts and sensor schemas related to the ZHAW IUNR (Wädenswil) monitoring of the Basel VoltaNord sponge-city pilots.
+Search date: **2026-10-03**. Corrected the same day: an earlier version said the 74640 measurement concept was already designed; the page says it is still to be developed. Scope: public code, data, measurement concepts and sensor schemas related to the ZHAW IUNR (Wädenswil) monitoring of the Basel VoltaNord sponge-city pilots.
 
 Claim tags: **[confirmed]** read directly at the cited source · **[inferred]** reasonable reading, not stated by the source · **[unknown]** not determinable from public material.
 
@@ -9,7 +9,7 @@ Claim tags: **[confirmed]** read directly at the cited source · **[inferred]** 
 - **No public code, sensor schema, processing pipeline or dataset exists for VoltaNord (ZHAW 80788) or its predecessor (74640).** [confirmed for every source listed under "Not found"; absence elsewhere is unknown]
 - No ZHAW or IUNR GitHub organisation works on urban hydrology, trees or sponge cities. Searches found no GitHub account officially linked to any team member, so step 3 (personal accounts) did not apply. [confirmed]
 - The closest public material from the same team is **method-level**: two CC BY 4.0 conference presentations on Zenodo about structurally stable tree substrates and sponge-city vegetation systems (Wädenswil and Zurich field trials). There are also a few ZHAW digitalcollection entries, mostly with no full text or an unspecified licence. [confirmed]
-- The 74640 project page says a **measurement concept was designed for three street locations** in Basel. This is the most relevant missing artefact, and it is not published. [confirmed that it is mentioned; its content is unknown]
+- The 74640 project covered the vegetation building blocks of **Therwilerstrasse, Lysbüchelstrasse and Weinlagerstrasse**, and says a measurement concept *is to be developed* after the design phase (*soll … erarbeitet werden*). Whether that concept became the 80788 protocol is not public. [confirmed wording; link to 80788 unknown]
 - Basel open data (data.bs.ch, CC BY 4.0) covers parts of the Place Profile, such as trees, canopy, land cover, groundwater and climate. None of it is VoltaNord monitoring data. [confirmed]
 
 ## Findings
@@ -36,11 +36,11 @@ Already recorded in `data/evidence-atlas.json` as `project-voltanord-monitoring`
 | URL | <https://www.zhaw.ch/de/forschung/projekt/74640> |
 | Owner | ZHAW, IUNR. Client: Basel-Stadt, Bau- und Verkehrsdepartement, Stadtgärtnerei [confirmed] |
 | Verification | Official ZHAW research database [confirmed] |
-| Contents | Sep–Dec 2024, completed. Lead Axel Heinrich, deputy Doris Tausendpfund, team Bertschy and Stevanovic. Evaluated existing sponge-city components and developed improved vegetation elements: draining, resource-efficient, structurally stable substrates plus site-appropriate vegetation. **"A measurement concept was designed to document effectiveness at three street locations."** [confirmed] |
-| Code / data / protocol | None linked. The measurement concept is not published. [confirmed] |
+| Contents | Sep–Dec 2024, completed. Lead Axel Heinrich, deputy Doris Tausendpfund, team Bertschy and Stevanovic. Evaluated the city's existing sponge-city components and developed vegetation building blocks for **Therwilerstrasse, Lysbüchelstrasse and Weinlagerstrasse**: draining, resource-efficient, structurally stable substrates plus site-appropriate vegetation. To document the effect, *"soll nach der Konzipierung ein Messkonzept erarbeitet werden"* (a measurement concept is to be developed after the design). [confirmed, wording re-checked] |
+| Code / data / protocol | None linked. No measurement concept is published. [confirmed] |
 | Licence | Not stated [confirmed] |
 | Last activity | Project ended 12/2024 [confirmed] |
-| Place Profile relevance | **possibility** → the substrate/vegetation specs would define the requirements of a "connected tree trench" candidate. The three-street measurement concept is probably the predecessor of the 80788 protocol [inferred]. Whether the three streets are in VoltaNord is [unknown]. |
+| Place Profile relevance | **possibility** → the substrate/vegetation specs would define the requirements of a "connected tree trench" candidate. The announced measurement concept is probably what became the 80788 protocol [inferred]. Lysbüchelstrasse and Weinlagerstrasse lie in the VoltaNord area [confirmed on the swisstopo base map]; Therwilerstrasse is elsewhere in Basel. |
 
 ### F3 — Zenodo: EFUF 2023 presentation "Structurally stable substrates for sustainable green infrastructure and stormwater management: a field trial with urban trees in Wädenswil"
 
@@ -152,12 +152,12 @@ Full write-up: [PRECEDENT-QTREES-BERLIN.md](PRECEDENT-QTREES-BERLIN.md).
 
 1. The protocol, sensor types, site list, baselines, cadence, data dictionary and data rights for VoltaNord are not public anywhere we can reach. [confirmed]
 2. 80788 started only in May 2026 and 81151 in July 2026. First data or reports are unlikely before at least one vegetation season has passed [inferred].
-3. The most useful existing artefact is the **74640 measurement concept for three Basel streets** (2024). It belongs to the client (Stadtgärtnerei) and ZHAW. Ask for it explicitly, along with the 80788 indicator dictionary.
+3. The most useful artefacts to ask for are the **74640 design outputs for Therwiler-, Lysbüchel- and Weinlagerstrasse** (2024) and whatever measurement concept followed. They belong to the client (Stadtgärtnerei) and ZHAW. Ask for them explicitly, along with the 80788 indicator dictionary.
 
 Suggested ask (keep it short, through the official project contact on the ZHAW 80788 page and, in parallel, Stadtgärtnerei as client):
 
 - Can the hackathon team see the indicator list, units and measurement cadence (no raw data needed)?
-- Are the 74640 three-street measurement concept and the 80788 site list shareable, and under what terms?
+- Did the 80788 protocol grow out of the measurement concept announced in 74640, and are it and the 80788 site list shareable, and under what terms?
 - Is there a planned publication route (Zenodo, digitalcollection, data.bs.ch) and timeline?
 - Would they review how our Place Profile maps their four indicators (see the F1 row)?
 

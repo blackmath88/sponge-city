@@ -19,7 +19,12 @@ const unique = (items, label) => {
 const sourceIds = unique(data.sources, "source");
 const entityIds = unique(data.entities, "entity");
 const recordIds = unique(data.records, "record");
+const maturityIds = unique(data.maturity_levels, "maturity level");
 unique(data.decision_routes, "decision route");
+
+if (maturityIds.size !== 4) errors.push(`Expected four maturity levels, found ${maturityIds.size}`);
+const maturityOrders = data.maturity_levels.map(level => level.order).sort((a, b) => a - b);
+if (maturityOrders.join(",") !== "1,2,3,4") errors.push(`Maturity orders must be 1,2,3,4; found ${maturityOrders.join(",")}`);
 
 for (const entity of data.entities) {
   for (const id of entity.source_ids) if (!sourceIds.has(id)) errors.push(`${entity.id}: unknown source ${id}`);
@@ -45,4 +50,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Atlas valid: ${data.records.length} records, ${data.decision_routes.length} decision routes, ${data.sources.length} sources.`);
+console.log(`Atlas valid: ${data.records.length} records, ${data.maturity_levels.length} maturity levels, ${data.decision_routes.length} decision routes, ${data.sources.length} sources.`);

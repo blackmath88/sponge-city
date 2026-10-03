@@ -3,9 +3,9 @@
   "$id": "https://blackmath88.github.io/sponge-city/data/evidence-atlas.schema.json",
   "title": "Sponge City Evidence Atlas",
   "type": "object",
-  "required": ["schema_version", "updated", "sources", "entities", "records", "decision_routes"],
+  "required": ["schema_version", "updated", "sources", "entities", "records", "maturity_levels", "decision_routes"],
   "properties": {
-    "schema_version": { "const": "evidence-atlas/0.1" },
+    "schema_version": { "const": "evidence-atlas/0.2" },
     "updated": { "type": "string", "format": "date" },
     "sources": {
       "type": "array",
@@ -18,6 +18,11 @@
     "records": {
       "type": "array",
       "items": { "$ref": "#/$defs/record" }
+    },
+    "maturity_levels": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "$ref": "#/$defs/maturityLevel" }
     },
     "decision_routes": {
       "type": "array",
@@ -45,7 +50,7 @@
       "required": ["id", "type", "name", "summary", "source_ids"],
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-        "type": { "enum": ["place", "project", "organisation", "person", "indicator", "decision"] },
+        "type": { "enum": ["place", "project", "organisation", "person", "indicator", "decision", "dataset"] },
         "name": { "type": "string", "minLength": 1 },
         "summary": { "type": "string", "minLength": 1 },
         "source_ids": { "type": "array", "items": { "type": "string" } },
@@ -70,6 +75,21 @@
         "owner": { "type": "string" },
         "due": { "type": "string" },
         "question": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "maturityLevel": {
+      "type": "object",
+      "required": ["id", "order", "name", "question", "evidence_required", "can_support", "cannot_support", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "order": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "question": { "type": "string", "minLength": 1 },
+        "evidence_required": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "can_support": { "type": "string", "minLength": 1 },
+        "cannot_support": { "type": "string", "minLength": 1 },
+        "status": { "const": "proposal" }
       },
       "additionalProperties": false
     },

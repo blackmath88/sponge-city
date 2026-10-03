@@ -45,6 +45,15 @@ if (!element("#results").innerHTML.includes("How should sponge-city measures ent
   throw new Error("Private-renovation query did not retrieve its decision route.");
 }
 
+vm.runInContext("state.query = 'Basel open datasets'; runSearch();", context);
+if (!element("#results").innerHTML.includes("Which Basel open datasets can the Canvas use now?")) {
+  throw new Error("Open-data query did not retrieve the verified dataset record.");
+}
+
+if ((element("#maturity-levels").innerHTML.match(/class="maturity-card"/g) || []).length !== 4) {
+  throw new Error("Evidence maturity ladder did not render four levels.");
+}
+
 vm.runInContext("state.routeContext = 'planned-renewal'; state.routeOwnership = 'private'; renderRoute();", context);
 if (!element("#route-card").innerHTML.includes("permit-triggered review where legally applicable")) {
   throw new Error("Private-renovation route did not render its permit and incentive levers.");
