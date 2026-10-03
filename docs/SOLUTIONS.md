@@ -61,5 +61,6 @@ scripts/                   build, check, fetch, scaffold, serve
 |---|---|---|
 | `evidence-atlas` | What do we actually know about VoltaNord and Basel's sponge-city decisions, and what is still open? | evidence, governance |
 | `situation-map` | What do we know about this place, and what don't we? | need, possibility |
+| `sponge-street` | How does an old European street become a connected sponge, one intervention at a time? | possibility, potential_effect, governance |
 
 Old links under `prototype/` redirect to `site/`.

@@ -1,0 +1,22 @@
+{
+  "id": "sponge-street",
+  "title": "Sponge Street",
+  "question": "How does an old European street become a connected sponge, one intervention at a time?",
+  "summary": "A public-facing cross-section with twelve states, a free intervention catalog and visible dependencies. It explains directional effects and trade-offs; it is not a hydraulic, thermal or site-suitability model.",
+  "roles": [
+    "possibility",
+    "potential_effect",
+    "governance"
+  ],
+  "status": "prototype",
+  "page": "page.html",
+  "embeds": {},
+  "live_sources": [],
+  "smoke": "smoke.mjs",
+  "fetch": null,
+  "docs": [
+    "docs/DECISION-CANVAS.md",
+    "docs/RESEARCH.md",
+    "docs/GOVERNANCE-AND-MEASUREMENT.md"
+  ]
+}

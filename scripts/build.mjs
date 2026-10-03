@@ -44,7 +44,11 @@ await writeFile(join(root, "site", "index.html"), hub);
 console.log(`Built site/index.html with ${hubEntries.length} solutions`);
 
 // Old prototype/ links keep working through small redirect pages.
-const legacy = { "prototype/evidence-atlas.html": "evidence-atlas.html", "prototype/basel-map.html": "situation-map.html" };
+const legacy = {
+  "prototype/evidence-atlas.html": "evidence-atlas.html",
+  "prototype/basel-map.html": "situation-map.html",
+  "prototype/sponge-street.html": "sponge-street.html"
+};
 await mkdir(join(root, "prototype"), { recursive: true });
 for (const [path, target] of Object.entries(legacy)) {
   await writeFile(join(root, path), `<!doctype html>
