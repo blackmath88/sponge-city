@@ -85,5 +85,8 @@ DEM-derived slope, flow accumulation and Topographic Wetness Index may provide t
 - Read FOEN runoff-map technical limitations and distinguish surface runoff from river flooding and sewer capacity.
 - Check whether canopy years are comparable and which trees the inventory covers.
 - Validate proposed interventions with local planning constraints and identify missing feasibility data.
+- Reconstruct the real Basel decision process and data hand-offs; see [Governance and measurement](GOVERNANCE-AND-MEASUREMENT.md).
+- Locate or confirm the status of the first Stadtklimakonzept indicator/controlling report scheduled for 31 July 2025.
+- Obtain the VoltaNord monitoring protocol and publication schedule before designing a parallel measurement system.
 
 The strongest working contribution is **evidence → typed place profile → compatibility and unknowns → inspectable decision canvas**. This is a design direction supported by the research leads, not a demonstrated claim of uniqueness.
