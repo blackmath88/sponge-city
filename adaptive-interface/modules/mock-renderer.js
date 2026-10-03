@@ -1,6 +1,8 @@
 // MOCK renderer: deliberately neutral and disposable. The frontend team replaces it with the
 // educational Sponge Street renderer. It knows only the view model (contracts/renderer-contract.md):
 // no Basel datasets, no WMS, no API schemas, no calculations — only layout for drawing.
+// Qualitative effects come precomputed in view.adaptive; the Street Slice adapter only maps them to visuals.
+import { toStreetSlice } from "./street-slice-adapter.js";
 
 const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
 const fmt = (value, unit = "") => value?.state === "unknown" ? `unknown${Number.isFinite(value.known_part) && value.known_part ? ` (≥ ${value.known_part}${unit ? " " + unit : ""} known)` : ""}`
@@ -142,11 +144,36 @@ function effectsPanel(view) {
   </section>`;
 }
 
+const levelText = value => value?.state === "derived" ? value.value : value?.state === "not-applicable" ? "n/a" : "unknown";
+
+function stateEffectsPanel(view) {
+  const adaptive = view.adaptive;
+  if (!adaptive?.scenario) return "";
+  const slice = toStreetSlice(adaptive);
+  const rows = Object.entries(adaptive.effectDelta.changes).filter(([, change]) => change.direction !== "not-applicable");
+  const routing = adaptive.scenarioState.routing;
+  return `<section class="ai-panel ai-wide"><h2>Effects under a scenario <span class="ai-note">qualitative, state-driven</span></h2>
+    <p class="ai-scenarios">${adaptive.scenarios.map(item => `<button type="button" data-scenario="${esc(item.id)}" aria-pressed="${item.id === adaptive.scenario.id}">${esc(item.label)}</button>`).join(" ")}</p>
+    <p class="ai-note">${esc(adaptive.scenario.description || "")} Routing: ${chip(routing.state)} ${esc(routing.note || "")}</p>
+    <p class="ai-mech">${Object.entries(slice.mechanisms).filter(([, m]) => m.relevant).map(([name, m]) => `<span data-lit="${m.scenario === null ? "unknown" : m.scenario}" title="${esc(m.driven_by)}">${esc(name)}${m.scenario === null ? " ?" : m.scenario && !m.today ? " +" : ""}</span>`).join("")}</p>
+    <table class="ai-table"><thead><tr><th>Effect</th><th>Today</th><th>Scenario</th><th>Change</th><th>Where it changes</th></tr></thead><tbody>
+    ${rows.map(([id, change]) => {
+      const result = adaptive.scenarioEffects.effects[id];
+      return `<tr><td>${esc(change.label)}</td><td>${esc(levelText(change.before))}</td><td>${esc(levelText(change.after))}</td><td>${chip(change.assessment)}</td>
+        <td>${change.local.length ? change.local.map(item => `${esc(view.scenario.elements.find(el => el.id === item.element_id)?.label || item.element_id)}: ${esc(levelText(item.before))} → ${esc(levelText(item.after))}`).join("<br>") : "—"}
+        ${result.state === "unknown" ? `<div class="ai-note">${esc(result.reason)}</div>` : ""}
+        <div class="ai-note">${result.drivers.length} drivers</div></td></tr>`;
+    }).join("")}
+    </tbody></table>
+    <p class="ai-note">Levels, not numbers: no score, no °C, no runoff %. Place-level values bracket unknown inputs; if an unknown could change the level, the result stays unknown.</p>
+  </section>`;
+}
+
 function unknownPanel(view) {
-  const groups = [["context", "About the place"], ["element", "About elements"], ["effect", "Not modelled in this prototype"]];
+  const groups = [["context", "About the place"], ["element", "About elements"], ["routing", "About drainage"], ["effect-result", "Effects that depend on unknowns"], ["effect", "Not modelled in this prototype"]];
   return `<section class="ai-panel"><h2>Unknowns</h2>
     ${groups.map(([scope, title]) => {
-      const items = view.unknowns.filter(item => item.scope === scope);
+      const items = (view.adaptive?.unknowns || view.unknowns).filter(item => item.scope === scope);
       return items.length ? `<h3>${title}</h3><ul class="ai-list">${items.map(item => `<li>${esc(item.label)}${item.note ? ` <span class="ai-note">${esc(item.note)}</span>` : ""}</li>`).join("")}</ul>` : "";
     }).join("")}
   </section>`;
@@ -168,7 +195,8 @@ export function createMockRenderer(root) {
   root.addEventListener("click", event => {
     const el = event.target.closest("button");
     if (!el || !actions) return;
-    if (el.dataset.apply) actions.applyIntervention(el.dataset.apply, { targetId: root.querySelector(`[data-target-for="${el.dataset.apply}"]`)?.value });
+    if (el.dataset.scenario) actions.setScenario(el.dataset.scenario);
+    else if (el.dataset.apply) actions.applyIntervention(el.dataset.apply, { targetId: root.querySelector(`[data-target-for="${el.dataset.apply}"]`)?.value });
     else if (el.dataset.undo) actions.undoCorrection(el.dataset.undo);
     else if (el.dataset.action === "reset-scenario") actions.resetScenario();
     else if (el.dataset.action === "reset-all") actions.resetAll();
@@ -196,7 +224,7 @@ export function createMockRenderer(root) {
           <p class="ai-note">Selection ${view.selection ? `${esc(view.selection.lat)}, ${esc(view.selection.lon)} · r ${esc(view.selection.radius_m)} m${view.selection.from ? ` · from ${esc(view.selection.from)}` : ""}` : "none (demo default)"}</p></header>
         <div class="ai-compare">${sceneSvg(view.baseline, "Today", new Set())}${sceneSvg(view.scenario, view.applied.length ? "Scenario" : "Scenario (no change yet)", changedElementIds(view.baseline, view.scenario))}</div>
         <p class="ai-legend"><span><i style="background:#9b9b97"></i>sealed</span><span><i style="background:#c9cdc4"></i>permeable</span><span><i style="background:#8fbf86"></i>planted</span><span><i class="ai-hatch"></i>unknown</span><span><i class="ai-ring"></i>changed</span></p>
-        <div class="ai-grid">${interventionPanel(view)}${effectsPanel(view)}${correctionPanel(view)}${unknownPanel(view)}</div>`;
+        <div class="ai-grid">${stateEffectsPanel(view)}${interventionPanel(view)}${effectsPanel(view)}${correctionPanel(view)}${unknownPanel(view)}</div>`;
     }
   };
 }

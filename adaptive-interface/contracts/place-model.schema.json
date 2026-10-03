@@ -22,6 +22,15 @@
       "description": "Place-level evidence such as heat_focus_area, surface_runoff_hazard, groundwater_protection_zone, infiltration_capacity, utilities, ownership, traffic_load, access_requirements, slope, soil_water. Interventions reference these keys.",
       "additionalProperties": { "$ref": "#/$defs/evidence" }
     },
+    "routing": {
+      "type": "object",
+      "description": "OPTIONAL, additive in 0.1. Drainage evidence: where water goes. Omit it if you do not know: the engine then treats routing as unknown and never invents sewer connections.",
+      "properties": {
+        "nodes": { "type": "array", "items": { "type": "object", "required": ["id", "type"], "properties": { "id": { "type": "string" }, "type": { "enum": ["gully", "downpipe", "sewer", "overflow"] }, "label": { "type": "string" }, "state": { "$ref": "#/$defs/state" }, "source_id": { "type": "string" } } } },
+        "connections": { "type": "array", "items": { "type": "object", "required": ["from", "to", "mode", "state"], "properties": { "from": { "type": "string" }, "to": { "type": "string" }, "mode": { "enum": ["surface-runoff", "roof-drainage", "pipe", "overflow"] }, "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected"] }, "source_id": { "type": "string" }, "note": { "type": "string" } } } }
+      }
+    },
+    "applied": { "type": "array", "description": "Scenario places only: interventions applied, with their assumptions." },
     "provenance": {
       "type": "array",
       "minItems": 1,
@@ -72,7 +81,7 @@
       "required": ["id", "type", "label", "presence", "surface", "area_m2"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
-        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "water", "tram", "entrance", "fixed-area", "unknown-area"] },
+        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "water", "tram", "entrance", "fixed-area", "unknown-area"] },
         "label": { "type": "string" },
         "presence": { "$ref": "#/$defs/evidence", "description": "true / false; unknown when a source is uncertain the element exists" },
         "surface": { "$ref": "#/$defs/evidence", "description": "sealed | permeable | planted | water | unknown(state); not-applicable for point elements" },

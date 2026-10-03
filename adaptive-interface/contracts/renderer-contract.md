@@ -1,4 +1,4 @@
-# Renderer contract (adaptive-view/0.1)
+# Renderer contract (adaptive-view/0.2, 0.1-compatible)
 
 A renderer turns the orchestrator's view model into pixels. It is the frontend team's seam: the mock renderer in `modules/mock-renderer.js` is disposable, and the educational Sponge Street renderer should replace it wholesale.
 
@@ -17,7 +17,7 @@ const renderer = {
 
 | Field | Type | Meaning |
 |---|---|---|
-| `contract` | `"adaptive-view/0.1"` | Version of this contract |
+| `contract` | `"adaptive-view/0.2"` | Version of this contract. Every 0.1 field below is unchanged; 0.2 adds `adaptive` |
 | `status` | `idle` · `loading` · `ready` · `error` | Lifecycle |
 | `selection` | `{ lon, lat, radius_m, from, place_profile_id }` or `null` | What the user picked upstream |
 | `source` | PlaceModel | Provider output, never changed |
@@ -31,6 +31,22 @@ const renderer = {
 | `effects` | array | Per metric: `{ id, label, unit, baseline, scenario, change }`, each an evidence value |
 | `unknowns` | array | `{ scope: context·element·effect, key, label, note }` |
 | `errors` | string[] | Show them; never swallow |
+| `adaptive` | object or `null` | **0.2:** the state / effect payload below |
+
+### `view.adaptive` (0.2)
+
+The shape `renderer.render({...})` will take once the 0.1 fields retire. Nested so the 0.1 name `scenario` (the scenario *PlaceModel*) keeps its meaning.
+
+| Field | Meaning |
+|---|---|
+| `place` | PlaceModel after corrections (= `baseline`) |
+| `baselineState`, `scenarioState` | StateModel 0.2 before / after interventions (deep-frozen) |
+| `scenario` | The external condition (`heavy-rain`, `hot-day`, `hot-drought`); `scenarios` lists them for a toggle |
+| `baselineEffects`, `scenarioEffects` | EffectResult under that scenario (`contracts/effect-result.schema.json`) |
+| `effectDelta` | Per effect: `before`, `after`, `direction`, `assessment` (improves / worsens / same / unknown), `local` element changes |
+| `interventions`, `unknowns`, `errors` | As above; `unknowns` adds `routing` and `effect-result` scopes |
+
+Renderers display these values; they never calculate them. `modules/street-slice-adapter.js` maps the payload to Street Slice visual state (materials, underground, routing, sewer, trees, mechanisms) without stages.
 
 `source`, `baseline` and `scenario` are deep-frozen. Renderers read; they never mutate.
 
@@ -44,6 +60,7 @@ PlaceModel fields a renderer needs: `elements[].type` (semantic vocabulary), `su
 | `correct({ element_id, property, value, reason })` | "Does this look right?" — `property` is `surface`, `presence`, `area_m2` or `count`; `value: null` means "not sure" (unknown). Recorded as `user-corrected` with `replaces` |
 | `correct({ action: "add-element", element, reason })` | Adds an element the source missed (e.g. a tree) |
 | `undoCorrection(id)` | Removes one correction |
+| `setScenario(id)` | Switch rain / heat scenario. Keeps place, corrections and interventions |
 | `resetScenario()` | SCENARIO = TODAY |
 | `resetAll()` | Also drops corrections: TODAY = source |
 | `load(selection)` | Loads another place |
@@ -56,7 +73,7 @@ A correction restarts the scenario, because interventions were chosen on the old
 2. **No calculations.** Effects, statuses and eligibility come from the view model. Layout maths for drawing is fine.
 3. **Show evidence state.** Every value carries `state`: observed, modelled, derived, assumed, user-corrected, unknown, not-applicable. A renderer must make unknown visible and must not draw it as zero, sealed, safe or feasible.
 4. **TODAY and SCENARIO side by side or toggled**, with changed elements distinguishable (`origin: "intervention:<id>"`, or compare by id).
-5. **Effects are geometry only.** Show `change.assumptions` where present. Do not add cooling, runoff or storage numbers; they are listed in `unknowns` as not modelled.
+5. **No numbers we do not have.** `effects` are geometry; `adaptive` effects are qualitative levels with drivers. Show `change.assumptions` where present. Do not add cooling °C, runoff % or storage volumes; they stay listed in `unknowns` as not modelled.
 
 ## Mapping to the Sponge Street explainer
 

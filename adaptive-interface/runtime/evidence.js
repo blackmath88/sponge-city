@@ -3,7 +3,9 @@
 
 export const EVIDENCE_STATES = ["observed", "modelled", "derived", "assumed", "user-corrected", "unknown", "not-applicable"];
 
-export const ELEMENT_TYPES = ["building", "road", "sidewalk", "parking", "tree", "vegetation", "water", "tram", "entrance", "fixed-area", "unknown-area"];
+export const ELEMENT_TYPES = ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "water", "tram", "entrance", "fixed-area", "unknown-area"];
+
+export const LEVEL_VALUES = ["none", "low", "medium-low", "medium", "medium-high", "high"];
 
 export const SURFACES = ["sealed", "permeable", "planted", "water", "unknown"];
 

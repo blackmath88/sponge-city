@@ -16,6 +16,14 @@ export function renderText(view) {
   for (const item of view.interventions) lines.push(`  ${item.id.padEnd(18)} ${item.status.padEnd(23)} ${item.reason}`);
   lines.push("", "EFFECTS (today → scenario, change)");
   for (const effect of view.effects) lines.push(`  ${effect.label.padEnd(16)} ${show(effect.baseline).padStart(8)} → ${show(effect.scenario).padStart(8)}  Δ ${show(effect.change)} [${effect.change.state}]`);
+  if (view.adaptive?.scenario) {
+    lines.push("", `EFFECTS UNDER ${view.adaptive.scenario.label.toUpperCase()} (today → scenario)`);
+    const level = value => value.state === "derived" ? value.value : value.state;
+    for (const change of Object.values(view.adaptive.effectDelta.changes)) {
+      if (change.direction !== "not-applicable") lines.push(`  ${change.label.padEnd(30)} ${level(change.before).padStart(8)} → ${level(change.after).padEnd(8)} ${change.assessment}`);
+    }
+    lines.push(`  routing: ${view.adaptive.scenarioState.routing.state}`);
+  }
   lines.push("", "UNKNOWNS");
   for (const item of view.unknowns) lines.push(`  ${item.scope}: ${item.label}`);
   return lines.join("\n");

@@ -1,0 +1,19 @@
+{
+  "schema_version": "scenario-catalogue/0.1",
+  "catalogue_id": "prototype-scenarios",
+  "note": "Qualitative external conditions. They correspond to the Street Slice's rain / heat modes. Values are scenario assumptions, not forecasts.",
+  "scenarios": [
+    { "id": "heavy-rain", "label": "Heavy rain",
+      "description": "A short, intense summer downpour on normally moist ground.",
+      "rain": { "intensity": "high", "duration": "short", "antecedent_moisture": "normal" },
+      "heat": null },
+    { "id": "hot-day", "label": "Hot summer day",
+      "description": "Strong sun and high air temperature; soils hold a normal amount of water.",
+      "rain": null,
+      "heat": { "solar_exposure": "high", "air_temperature": "high", "soil_moisture": "normal" } },
+    { "id": "hot-drought", "label": "Hot day in a drought",
+      "description": "The same heat, after weeks without rain: little water is left in the soil.",
+      "rain": null,
+      "heat": { "solar_exposure": "high", "air_temperature": "high", "soil_moisture": "low" } }
+  ]
+}

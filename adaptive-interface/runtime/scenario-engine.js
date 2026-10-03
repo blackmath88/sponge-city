@@ -1,10 +1,14 @@
-// Scenario engine: pure functions over PlaceModel + InterventionCatalogue.
+// Scenario engine (PlaceModel 0.1 side): corrections, the 0.1 intervention API and geometry metrics.
 // GIS calculates, rules constrain: nothing here guesses, calls a model or touches the DOM.
 //
-//   source ──applyCorrections──▶ baseline ──applyInterventions──▶ scenario
+//   source ──applyCorrections──▶ baseline ──(state path)──▶ scenario
 //
+// Qualitative water/heat effects live in effect-engine.js; this file only measures geometry.
 // Inputs are never mutated; every function returns new objects.
-import { ev, unknown, isKnown, clone } from "./evidence.js";
+import { ev, isKnown, clone } from "./evidence.js";
+import { evaluateIntervention, compileLegacyIntervention } from "./legacy-catalogue-adapter.js";
+import { placeToState, stateToPlace } from "./place-to-state.js";
+import { applyExecutable } from "./state-ops.js";
 
 // ---------- Corrections: "Does this look right?"
 
@@ -49,114 +53,23 @@ export function applyCorrections(source, corrections = []) {
   return { place, errors };
 }
 
-// ---------- Intervention status (candidate / requires-investigation / excluded / not-applicable)
-
-function contextResult(place, rule) {
-  const value = place.context?.[rule.context_key];
-  if (!isKnown(value)) return { result: "unknown", value: value ?? unknown("not provided") };
-  if (Array.isArray(rule.fail_if_in) && rule.fail_if_in.includes(value.value)) return { result: "fail", value };
-  if (Array.isArray(rule.pass_if_in) && !rule.pass_if_in.includes(value.value)) return { result: "fail", value };
-  return { result: "pass", value };
-}
-
-export function eligibleTargets(place, intervention) {
-  const surfaces = intervention.target.surfaces;
-  return place.elements.filter(element =>
-    element.presence?.value === true &&
-    !element.fixed &&
-    intervention.target.types.includes(element.type) &&
-    (!surfaces || (isKnown(element.surface) && surfaces.includes(element.surface.value))));
-}
-
-export function evaluateIntervention(place, intervention) {
-  const targets = eligibleTargets(place, intervention);
-  const requirements = intervention.requirements.map(rule => ({ id: rule.id, label: rule.label, ...contextResult(place, rule) }));
-  const checks = intervention.checks.map(rule => {
-    const outcome = contextResult(place, rule);
-    return { id: rule.id, label: rule.label, ...outcome, result: outcome.result === "unknown" ? "unknown" : outcome.result === "fail" ? "fail" : "known" };
-  });
-  let status = "candidate";
-  let reason = "All requirements and checks are known and pass.";
-  if (!targets.length) {
-    status = "not-applicable";
-    reason = `No ${intervention.target.types.join(" / ")} element${intervention.target.surfaces ? ` with ${intervention.target.surfaces.join(" / ")} surface` : ""} in this place.`;
-  } else if (requirements.some(item => item.result === "fail") || checks.some(item => item.result === "fail")) {
-    status = "excluded";
-    reason = [...requirements, ...checks].filter(item => item.result === "fail").map(item => item.label).join("; ");
-  } else if ([...requirements, ...checks].some(item => item.result === "unknown")) {
-    status = "requires-investigation";
-    reason = `Unknown: ${[...requirements, ...checks].filter(item => item.result === "unknown").map(item => item.label).join(", ")}.`;
-  }
-  return { id: intervention.id, status, reason, eligible_targets: targets.map(element => element.id), requirements, checks };
-}
+// ---------- Interventions: one execution path
+//
+// Status rules for the 0.1 catalogue live in legacy-catalogue-adapter.js. Applying an intervention
+// always goes PlaceModel → State → operations → State → PlaceModel, the same path the knowledge
+// compiler uses. These two functions are kept for callers of PR #3's API.
+export { eligibleTargets, evaluateIntervention } from "./legacy-catalogue-adapter.js";
 
 export function evaluateCatalogue(place, catalogue) {
   return catalogue.interventions.map(intervention => evaluateIntervention(place, intervention));
 }
 
-// ---------- Transforms
-
-function paramValue(intervention, name, overrides) {
-  const param = intervention.params?.[name];
-  if (!param) return null;
-  return { value: overrides?.[name] ?? param.default, note: param.note || "" };
-}
-
 // Applies one intervention to one target element. Returns { place, error } and never mutates its input.
-export function applyIntervention(place, intervention, { targetId, params } = {}) {
-  const evaluation = evaluateIntervention(place, intervention);
-  if (evaluation.status === "not-applicable" || evaluation.status === "excluded") {
-    return { place, error: `${intervention.label}: ${evaluation.status} (${evaluation.reason})` };
-  }
-  const id = targetId || evaluation.eligible_targets[0];
-  if (!evaluation.eligible_targets.includes(id)) return { place, error: `${intervention.label}: "${id}" is not an eligible target` };
-
-  const next = clone(place);
-  const target = next.elements.find(element => element.id === id);
-  const tag = `intervention:${intervention.id}`;
-  const serial = next.elements.filter(element => element.origin === tag).length + 1;
-  const assumptions = [];
-  let carved = null;
-
-  for (const op of intervention.transform) {
-    if (op.when_target_type && op.when_target_type !== target.type) continue;
-    if (op.op === "set-surface") {
-      target.surface = ev(op.to, "derived", { method: tag, replaces: target.surface });
-    } else if (op.op === "carve") {
-      const area = paramValue(intervention, op.area_param, params);
-      if (!isKnown(target.area_m2)) return { place, error: `${intervention.label}: area of "${target.label}" is unknown. Correct it first.` };
-      if (area.value > target.area_m2.value) return { place, error: `${intervention.label}: ${area.value} m² is more than "${target.label}" has (${target.area_m2.value} m²)` };
-      assumptions.push({ text: `${area.value} m² design area (${area.note})`, affects: ["sealed_area_m2", "permeable_area_m2", "planted_area_m2"] });
-      target.area_m2 = ev(target.area_m2.value - area.value, "derived", { method: tag, replaces: target.area_m2 });
-      carved = area.value;
-      next.elements.push({
-        id: `${intervention.id}-${serial}-${op.new_element.type}`, type: op.new_element.type, label: op.new_element.label,
-        tags: op.new_element.tags || [], layout: { ...target.layout, inserted_from: target.id }, origin: tag,
-        presence: ev(true, "assumed", { method: tag }),
-        surface: ev(op.new_element.surface, "assumed", { method: tag }),
-        area_m2: ev(area.value, "assumed", { method: tag, note: area.note })
-      });
-    } else if (op.op === "add") {
-      next.elements.push({
-        id: `${intervention.id}-${serial}-${op.new_element.type}`, type: op.new_element.type, label: op.new_element.label,
-        tags: op.new_element.tags || [], layout: { ...target.layout, inserted_from: target.id }, origin: tag,
-        presence: ev(true, "assumed", { method: tag }),
-        surface: ev(null, "not-applicable"), area_m2: ev(null, "not-applicable")
-      });
-    } else if (op.op === "reduce-count") {
-      const per = paramValue(intervention, op.area_per_unit_param, params);
-      if (carved === null || !per) continue;
-      if (!isKnown(target.count)) {
-        target.count = ev(null, "unknown", { replaces: target.count, note: "count was unknown before the change" });
-        continue;
-      }
-      const removed = Math.min(target.count.value, Math.ceil(carved / per.value));
-      assumptions.push({ text: `${per.value} m² per ${target.type === "parking" ? "parking bay" : "unit"} (${per.note})`, affects: ["parking_spaces"] });
-      target.count = ev(target.count.value - removed, "derived", { method: tag, replaces: target.count });
-    }
-  }
-  next.applied = [...(next.applied || []), { intervention_id: intervention.id, target_id: id, status: evaluation.status, assumptions }];
-  return { place: next, error: null };
+export function applyIntervention(place, intervention, { targetId, params, surfaces = null } = {}) {
+  const state = placeToState(place, { surfaces });
+  const executable = compileLegacyIntervention(intervention, state, { targetId, params, surfaces });
+  if (executable.error) return { place, error: executable.error };
+  return { place: stateToPlace(applyExecutable(state, executable)), error: null };
 }
 
 export function applyInterventions(baseline, catalogue, applied = []) {

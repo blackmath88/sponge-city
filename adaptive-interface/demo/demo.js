@@ -9,19 +9,27 @@ import { createTextRenderer } from "../modules/text-renderer.js";
 
 const loadJson = async path => (await fetch(new URL(path, import.meta.url))).json();
 
-const [placeFixture, catalogue] = await Promise.all([
+const params = new URLSearchParams(location.search);
+const useLegacyCatalogue = params.get("catalogue") === "legacy";
+
+const [placeFixture, catalogue, surfaces, scenarios, routingAssumptions] = await Promise.all([
   loadJson("../examples/demo-place.json"),
-  loadJson("../examples/demo-interventions.json")
+  loadJson(useLegacyCatalogue ? "../examples/demo-interventions.json" : "../catalogues/intervention-knowledge.json"),
+  loadJson("../catalogues/surfaces.json"),
+  loadJson("../catalogues/scenarios.json"),
+  loadJson("../examples/demo-routing.json")   // DEMO ONLY: assumed drainage; a real PlaceModel brings place.routing or nothing
 ]);
 
-const params = new URLSearchParams(location.search);
 const root = document.querySelector("#app");
 const useText = params.get("renderer") === "text";
 
 const app = new AdaptiveInterfaceOrchestrator({
   placeProvider: createMockPlaceProvider(placeFixture),          // → real Basel PlaceProvider
-  interventionProvider: createMockInterventionProvider(catalogue), // → Basel research catalogue
-  renderer: useText ? createTextRenderer(root.appendChild(document.createElement("pre"))) : createMockRenderer(root) // → educational renderer
+  interventionProvider: createMockInterventionProvider(catalogue), // → Basel research knowledge (or ?catalogue=legacy for PR #3's 0.1 catalogue)
+  renderer: useText ? createTextRenderer(root.appendChild(document.createElement("pre"))) : createMockRenderer(root), // → educational Street Slice renderer
+  surfaces,                 // surface archetypes (assumed defaults)
+  scenarios,                // heavy-rain / hot-day / hot-drought
+  routingAssumptions        // explicit, demo-only, every edge "assumed"
 });
 
 const { selection, errors } = parseSelection(params);

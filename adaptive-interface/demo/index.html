@@ -36,6 +36,14 @@
     .ai-list { margin: 0; padding-left: 18px; font-size: 13px; }
     .ai-intervention { border-top: 1px solid var(--line, #ddd); padding: 8px 0; font-size: 14px; }
     .ai-intervention p { margin: 4px 0; }
+    .ai-wide { grid-column: 1 / -1; }
+    .ai-scenarios button[aria-pressed="true"] { font-weight: 700; background: var(--ink, #13271f); color: var(--paper, #f2f0e8); }
+    .ai-mech span[data-lit="true"] { background: #0d6b4c; color: #fff; }
+    .ai-mech span[data-lit="false"] { opacity: .45; }
+    .ai-mech span[data-lit="unknown"] { color: #b96a16; border-style: dashed; }
+    .ai-chip[data-state="improves"] { color: #0d6b4c; }
+    .ai-chip[data-state="worsens"] { color: #a33c32; }
+    .ai-chip[data-state="same"] { color: #777; }
     .ai-mech span { font: 700 10px/1 var(--mono, monospace); border: 1px solid currentColor; padding: 2px 5px; margin-right: 4px; }
     .ai-chip { font: 700 10px/1 var(--mono, monospace); text-transform: uppercase; letter-spacing: .05em; padding: 2px 5px; border: 1px solid currentColor; white-space: nowrap; }
     .ai-chip[data-state="observed"] { color: #0d6b4c; }
