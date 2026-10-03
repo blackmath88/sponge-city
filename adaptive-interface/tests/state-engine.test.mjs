@@ -48,9 +48,9 @@ const sewerRouting = {
 };
 const tree = (id, canopy = "medium") => ({ id, type: "tree", label: id, presence: { value: true, state: "observed" }, surface: { value: null, state: "not-applicable" }, area_m2: { value: null, state: "not-applicable" }, canopy });
 
-async function assemble({ catalogue = knowledge, renderer = { views: [], render(view) { this.views.push(view); } }, routing = routingAssumptions } = {}) {
+async function assemble({ catalogue = knowledge, renderer = { views: [], render(view) { this.views.push(view); } }, routing = routingAssumptions, place = placeFixture } = {}) {
   const app = new AdaptiveInterfaceOrchestrator({
-    placeProvider: createMockPlaceProvider(placeFixture),
+    placeProvider: createMockPlaceProvider(place),
     interventionProvider: createMockInterventionProvider(catalogue),
     renderer, surfaces, scenarios: scenarioCatalogue, routingAssumptions: routing
   });
@@ -265,7 +265,8 @@ test("No sponge score, no °C, no runoff %, no rates in effect output", async ()
 test("S12. explainer stages are derived from state, and stay unknown where routing is unknown", async () => {
   const stagesOf = view => explainerStages(toStreetSlice(view.adaptive));
   const { app, last } = await assemble();
-  assert.deepEqual(stagesOf(last()).st, { roof: 0, pipe: 0, walk: 0, tree: 0, park: 0, road: 0, store: 0 }, "today: the grey street");
+  // The fixture's trees do not say how big their pits are, so the tree track is unknown (null), not "Grate pit".
+  assert.deepEqual(stagesOf(last()).st, { roof: 0, pipe: 0, walk: 0, tree: null, park: 0, road: 0, store: 0 }, "today: the grey street");
   app.applyIntervention("green-roof", { targetId: "building-north" });
   app.applyIntervention("rain-garden", { targetId: "parking-north" });
   app.applyIntervention("tree-trench", { targetId: "sidewalk-north" });
@@ -315,4 +316,168 @@ test("S14. Basel examples and sources are links, not placeholders", () => {
   }
   assert.ok(record("curb-cut").sources.length >= 1, "curb cut is sourced");
   assert.match(record("green-roof").basel_examples[0].label, /§ 72 BPG/);
+});
+
+// ---------- Placement provenance, roof systems, rain barrels, tree pits (S15–S24)
+
+const stagesOf = view => explainerStages(toStreetSlice(view.adaptive));
+// Synthetic fixture edits, for tests only (not researched Basel data).
+const withElements = (edit) => ({ ...placeFixture, elements: placeFixture.elements.map(element => edit(structuredClone(element)) ?? element) });
+const extraElement = element => ({ ...placeFixture, elements: [...placeFixture.elements, element] });
+const observed = value => ({ value, state: "observed", source_id: "fixture:demo-street" });
+// Synthetic knowledge record so the compiler's rain-barrel recipe can be exercised. NOT a catalogue entry.
+const syntheticBarrel = { id: "rain-barrel", label: "Rain barrel (test fixture)", category: "reuse", description: "Synthetic test record.", mechanisms: ["STORE"], applies_to: { element_types: ["building"] }, requirements: [], constraints: [], basel_examples: [], sources: [] };
+
+test("S15. a rain garden that replaces parking activates the parking track", async () => {
+  const { app, last } = await assemble();
+  app.applyIntervention("rain-garden", { targetId: "parking-north" });
+  const garden = last().adaptive.scenarioState.elements.find(element => element.type === "rain-garden");
+  assert.deepEqual([garden.placement.surface.value, garden.placement.mode.value], ["parking", "replaces"]);
+  const segment = toStreetSlice(last().adaptive).segments.find(item => item.element_id === garden.id);
+  assert.equal(segment.placement.surface.value, "parking");
+  const { st, stages } = stagesOf(last());
+  assert.equal(st.park, 1);
+  assert.deepEqual(stages.park.derived_from, [garden.id]);
+  app.applyIntervention("tree-trench", { targetId: "parking-north" });
+  assert.equal(stagesOf(last()).st.park, 2, "a trench on the same parking overflows into the garden: joined");
+});
+
+test("S16. a sidewalk rain garden does not activate the parking track", async () => {
+  const { app, last } = await assemble();
+  app.applyIntervention("rain-garden", { targetId: "sidewalk-north" });
+  const { st, stages } = stagesOf(last());
+  assert.equal(st.park, 0, "parking was not converted");
+  assert.match(stages.park.note, /not on parking/);
+  assert.equal(st.store, 1, "it is still storage with an overflow");
+});
+
+test("S17. a rain garden with unknown (legacy) placement is unknown, not a parking conversion", async () => {
+  const place = extraElement({ id: "garden-legacy", type: "rain-garden", label: "Rain garden (provider, no placement)", presence: observed(true), surface: observed("planted"), area_m2: observed(12) });
+  assert.deepEqual(validatePlaceModel(place), []);
+  const { last } = await assemble({ place });
+  assert.equal(last().adaptive.baselineState.elements.find(item => item.id === "garden-legacy").placement, undefined, "missing placement stays missing");
+  const { st, stages } = stagesOf(last());
+  assert.equal(st.park, null);
+  assert.equal(stages.park.state, "unknown");
+  assert.match(stages.park.note, /placement unknown/);
+  // The legacy 0.1 catalogue's rain garden (vegetation tagged rain-garden) carries placement through the same recipe path.
+  const legacy = await assemble({ catalogue: legacyCatalogue });
+  legacy.app.applyIntervention("tree-rain-garden", { targetId: "parking-north" });
+  assert.equal(stagesOf(legacy.last()).st.park, 1);
+  const legacySidewalk = await assemble({ catalogue: legacyCatalogue });
+  legacySidewalk.app.applyIntervention("tree-rain-garden", { targetId: "sidewalk-north" });
+  assert.equal(stagesOf(legacySidewalk.last()).st.park, 0);
+  // A provider that does say where it is gets used, and an invalid value is rejected.
+  const placed = extraElement({ id: "garden-p", type: "rain-garden", label: "Rain garden", presence: observed(true), surface: observed("planted"), area_m2: observed(12), placement: { surface: observed("parking"), mode: observed("replaces") } });
+  assert.equal(stagesOf((await assemble({ place: placed })).last()).st.park, 1);
+  const bad = extraElement({ id: "garden-b", type: "rain-garden", label: "Rain garden", presence: observed(true), surface: observed("planted"), area_m2: observed(12), placement: { surface: observed("carpark"), mode: observed("replaces") } });
+  assert.ok(validatePlaceModel(bad).some(error => /placement.surface/.test(error)));
+});
+
+test("S18. a roof garden (intensive) reaches the Roof garden stage; roof_system is validated", async () => {
+  const { app, last } = await assemble();
+  app.applyIntervention("green-roof", { targetId: "building-north", params: { roof_system: "intensive" } });
+  app.applyIntervention("green-roof", { targetId: "building-south", params: { roof_system: "intensive" } });
+  assert.equal(last().adaptive.scenarioState.elements.find(item => item.id === "building-north").surface.material.value, "roof-garden");
+  const { st, stages } = stagesOf(last());
+  assert.equal(st.roof, 2);
+  assert.equal(stages.roof.label, "Roof garden");
+  const before = last().applied.length;
+  app.applyIntervention("green-roof", { targetId: "building-north", params: { roof_system: "sky-forest" } });
+  assert.equal(last().applied.length, before);
+});
+
+test("S19. a rain barrel reaches the Rain barrel downpipe stage, and is not underground storage", async () => {
+  const catalogue = { ...knowledge, interventions: [...knowledge.interventions, syntheticBarrel] };
+  const { app, last } = await assemble({ catalogue });
+  const sewerBefore = last().adaptive.scenarioEffects.effects.sewer_load_tendency.value;
+  app.applyIntervention("rain-barrel", { targetId: "building-north" });
+  const slice = toStreetSlice(last().adaptive);
+  assert.equal(slice.rain_barrels.length, 1);
+  assert.deepEqual(slice.rain_barrels[0].receives_from, ["downpipe-north"]);
+  assert.deepEqual([slice.rain_barrels[0].placement.surface.value, slice.rain_barrels[0].placement.mode.value], ["roof", "adjacent"]);
+  const { st, stages } = explainerStages(slice);
+  assert.equal(st.pipe, 1);
+  assert.equal(stages.pipe.partial, true, "only one of two buildings");
+  assert.equal(st.store, 0, "a barrel is not underground storage");
+  assert.equal(last().adaptive.scenarioEffects.effects.sewer_load_tendency.value, sewerBefore, "no barrel volume or attenuation is claimed");
+  // Without routing the barrel exists, but what feeds it is unknown.
+  const bare = await assemble({ catalogue, routing: null });
+  bare.app.applyIntervention("rain-barrel", { targetId: "building-north" });
+  const unknown = toStreetSlice(bare.last().adaptive);
+  assert.deepEqual(unknown.rain_barrels[0].receives_from, []);
+  assert.equal(explainerStages(unknown).st.pipe, null);
+});
+
+test("S20. an enlarged tree pit reaches Bigger pit", async () => {
+  const place = withElements(element => { if (element.type === "tree") { element.pit = observed("standard"); return element; } });
+  const { app, last } = await assemble({ place });
+  assert.equal(record("enlarged-tree-pit").applies_to.element_types[0], "tree");
+  app.applyIntervention("enlarged-tree-pit", { targetId: "tree-1" });
+  assert.equal(last().adaptive.scenarioState.elements.find(item => item.id === "tree-1").vegetation.pit.value, "enlarged");
+  const { st, stages } = stagesOf(last());
+  assert.equal(st.tree, 1);
+  assert.equal(stages.tree.label, "Bigger pit");
+  assert.equal(stages.tree.partial, true, "two trees keep standard pits");
+});
+
+test("S21. standard tree pits do not claim Bigger pit; unknown pits stay unknown", async () => {
+  const place = withElements(element => { if (element.type === "tree") { element.pit = observed("standard"); return element; } });
+  assert.equal(stagesOf((await assemble({ place })).last()).st.tree, 0);
+  assert.equal(stagesOf((await assemble()).last()).st.tree, null, "fixture trees have no pit evidence");
+  const bad = withElements(element => { if (element.id === "tree-1") { element.pit = observed("huge"); return element; } });
+  assert.ok(validatePlaceModel(bad).some(error => /pit/.test(error)));
+});
+
+test("S22. mixed roof states stay partial and honest", async () => {
+  const roofs = async (north, south, place) => {
+    const { app, last } = await assemble(place ? { place } : {});
+    for (const [id, system] of [["building-north", north], ["building-south", south]]) if (system) app.applyIntervention("green-roof", { targetId: id, params: { roof_system: system } });
+    return stagesOf(last()).stages.roof;
+  };
+  assert.deepEqual([(await roofs()).stage, (await roofs()).partial], [0, undefined], "all unchanged");
+  const some = await roofs("extensive");
+  assert.deepEqual([some.stage, some.partial], [1, true], "some standard green roofs");
+  const all = await roofs("extensive", "extensive");
+  assert.deepEqual([all.stage, all.partial, all.mixed], [1, undefined, undefined], "all standard");
+  const mixed = await roofs("extensive", "intensive");
+  assert.deepEqual([mixed.stage, mixed.mixed], [1, true], "standard + roof garden: the weaker stage, flagged mixed");
+  assert.match(mixed.note, /Roof garden/);
+  const gardens = await roofs("intensive", "intensive");
+  assert.deepEqual([gardens.stage, gardens.partial, gardens.mixed], [2, undefined, undefined], "all roof gardens");
+  const unknownPlace = withElements(element => { if (element.type === "building") { element.surface = { value: null, state: "unknown" }; return element; } });
+  const unknown = await roofs(null, null, unknownPlace);
+  assert.deepEqual([unknown.stage, unknown.state], [null, "unknown"], "unknown roof material is not 'Bare'");
+});
+
+test("S23. the shipped catalogue still validates; every record is executable; no-recipe still fails", async () => {
+  assert.deepEqual(validateKnowledge(knowledge), []);
+  for (const id of ["depave", "permeable-parking", "curb-cut", "tree-trench", "rain-garden", "green-roof", "enlarged-tree-pit"]) assert.ok(record(id), id);
+  const { app } = await assemble();
+  for (const item of app.viewModel().interventions) assert.notEqual(item.status, "no-recipe", item.id);
+  assert.ok(!knowledge.interventions.some(item => item.id === "rain-barrel"), "no unsourced rain-barrel record is shipped");
+  const { app: withExtra } = await assemble({ catalogue: { ...knowledge, interventions: [...knowledge.interventions, { ...syntheticBarrel, id: "cistern" }] } });
+  assert.equal(withExtra.viewModel().interventions.find(item => item.id === "cistern").status, "no-recipe");
+  withExtra.applyIntervention("cistern", { targetId: "building-north" });
+  assert.ok(withExtra.viewModel().errors.some(error => /no executable recipe/.test(error)));
+});
+
+test("S24. recipe → state → PlaceModel → state round-trip keeps placement, roof system and tree pit", async () => {
+  const place = withElements(element => { if (element.type === "tree") { element.pit = observed("standard"); return element; } });
+  const state = placeToState(place, { surfaces, routingAssumptions });
+  const steps = [["rain-garden", "parking-north", null], ["green-roof", "building-north", { roof_system: "intensive" }], ["enlarged-tree-pit", "tree-2", null]];
+  let next = state;
+  for (const [id, target, params] of steps) {
+    const executable = compileIntervention(record(id), next, target, { params, surfaces });
+    assert.ok(!executable.error, executable.error);
+    next = applyExecutable(next, executable);
+  }
+  assert.deepEqual(validateStateModel(next), []);
+  const back = placeToState(stateToPlace(next), { surfaces, routingAssumptions });
+  const garden = back.elements.find(item => item.type === "rain-garden");
+  assert.deepEqual([garden.placement.surface.value, garden.placement.mode.value], ["parking", "replaces"]);
+  assert.equal(back.elements.find(item => item.id === "building-north").surface.material.value, "roof-garden");
+  assert.equal(back.elements.find(item => item.id === "tree-2").vegetation.pit.value, "enlarged");
+  assert.equal(back.elements.find(item => item.id === "tree-1").vegetation.pit.value, "standard");
+  assert.deepEqual(validatePlaceModel(stateToPlace(next)), []);
 });

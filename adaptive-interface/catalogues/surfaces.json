@@ -37,6 +37,9 @@
     { "id": "green-roof", "label": "Green roof", "surface_class": "planted",
       "properties": { "sealed_fraction": "low", "permeability": "medium", "vegetation_fraction": "medium", "depression_storage": "medium", "albedo": "medium" },
       "subsurface": { "storage_capacity": "medium", "rootable_volume": "low" } },
+    { "id": "roof-garden", "label": "Roof garden (intensive green roof)", "surface_class": "planted",
+      "properties": { "sealed_fraction": "low", "permeability": "medium", "vegetation_fraction": "high", "depression_storage": "high", "albedo": "medium" },
+      "subsurface": { "storage_capacity": "high", "rootable_volume": "medium" } },
     { "id": "water", "label": "Open water", "surface_class": "water",
       "properties": { "sealed_fraction": "none", "permeability": "low", "vegetation_fraction": "none", "depression_storage": "high", "albedo": "low" },
       "subsurface": { "storage_capacity": "high", "rootable_volume": "none" } }

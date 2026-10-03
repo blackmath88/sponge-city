@@ -3,7 +3,10 @@
 
 export const EVIDENCE_STATES = ["observed", "modelled", "derived", "assumed", "user-corrected", "unknown", "not-applicable"];
 
-export const ELEMENT_TYPES = ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "water", "tram", "entrance", "fixed-area", "unknown-area"];
+export const TREE_PITS = ["standard", "enlarged", "trench"];
+export const PLACEMENT_SURFACES = ["parking", "sidewalk", "road", "roof", "green", "parcel", "unknown"];
+export const PLACEMENT_MODES = ["replaces", "occupies", "adjacent", "unknown"];
+export const ELEMENT_TYPES = ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "rain-barrel", "water", "tram", "entrance", "fixed-area", "unknown-area"];
 
 export const LEVEL_VALUES = ["none", "low", "medium-low", "medium", "medium-high", "high"];
 

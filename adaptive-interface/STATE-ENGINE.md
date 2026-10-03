@@ -47,7 +47,7 @@ intervention-catalog/0.1  ── legacy-catalogue-adapter.js ┘   (set-surface,
 
 Geometry (areas, parking counts), surfaces, routing and vegetation are all state, changed only by operations. The 0.1 catalogue is a compatibility input; `scenario-engine.applyIntervention` (PR #3 API) now runs PlaceModel → State → operations → State → PlaceModel. Researchers never write operations: recipes and design assumptions (20 m² depave, 12.5 m² per bay, 10 m² trench…) live in the compiler and are reported as `assumed`.
 
-Compiled today: depave, permeable parking, curb cut (routing only, needs a rain garden or tree trench first), tree trench / Baumrigole (substrate + young tree + paving drains in + overflow to old drain), rain garden, green roof. A knowledge record without a recipe gets status `no-recipe`: it is listed with its reason, has no Apply button, and applying it returns an error.
+Compiled today: depave, permeable parking, curb cut (routing only, needs a rain garden or tree trench first), tree trench / Baumrigole (substrate + young tree + paving drains in + overflow to old drain), rain garden, green roof (extensive or roof garden), enlarged tree pit; a rain-barrel recipe waits for a sourced record. A knowledge record without a recipe gets status `no-recipe`: it is listed with its reason, has no Apply button, and applying it returns an error.
 
 ## Effects (V0 rules)
 
@@ -82,19 +82,26 @@ Place-level values are area-weighted over elements. Unknown inputs are bracketed
 
 It maps; it does not calculate effects, and it has no coordinates. The SVG renderer stays free to draw a fixed schematic.
 
-`explainerStages(toStreetSlice(view.adaptive))` turns the slice into the Sponge Street explainer's own stage indices (`st` = `{ roof, pipe, walk, tree, park, road, store }`, plus a label per track), so its existing SVG artwork can be driven by state:
+`explainerStages(toStreetSlice(view.adaptive))` turns the slice into the Sponge Street explainer's own stage indices (`st` = `{ roof, pipe, walk, tree, park, road, store }`, a number or `null`). Full mapping, partial and unknown rules: [`contracts/renderer-contract.md`](contracts/renderer-contract.md#explainer-stages).
 
-| Track | Stage from |
-|---|---|
-| roof: Bare / Thin green | building material `green-roof` (`partial` when only some roofs) |
-| pipe: To sewer / Feeds the tree | roof drainage reaching planting through the routing graph |
-| walk: Sealed / Open joints | sidewalk surface class |
-| tree: Grate pit / Sponge trench | a `tree-trench` element |
-| park: Cars / Rain garden / Joined to trench | a `rain-garden`; joined when an edge links it to a tree trench |
-| road: To the drain / Open kerb | road runoff reaching planting (curb cut) |
-| store: Nothing / Storage + overflow | an overflow edge from a rain garden or tree trench |
+### Street-world facts behind the stages (canonical, renderer-neutral)
 
-Routing-dependent tracks are `null` (unknown) when routing is unknown, unless an intervention added the edge. Stages the state cannot express yet (Roof garden, Rain barrel, Bigger pit) are never returned. The explainer's illustrative percentages must not be shown for a real place.
+The state says what exists; only the adapter knows about stage numbers.
+
+| Fact | Where it lives | Values | Set by |
+|---|---|---|---|
+| Placement provenance | `element.placement = { surface, mode }` (evidence each) | surface: `parking · sidewalk · road · roof · green · parcel · unknown`; mode: `replaces · occupies · adjacent · unknown` | recipes that carve an element out of a target (`replaces`, surface from the target's type); a rain barrel (`roof`, `adjacent`); a PlaceModel may carry it. **Missing = unknown placement**, never inferred from labels, layout or titles |
+| Roof system | `surface.material` = archetype id | `sealed-roof` (none) · `green-roof` (extensive) · `roof-garden` (intensive) | `green-roof` recipe, `params.roof_system: "extensive" \| "intensive"` (validated; default extensive). A PlaceModel may name `material` |
+| Rain barrel | element `type: "rain-barrel"`, `kind: "point"`; routing `downpipe → barrel (pipe) → old destination (overflow)` | exists; what feeds it is the routing edge (none when routing is unknown) | compiler recipe `rain-barrel`; a PlaceModel may list one |
+| Tree pit / root space | `vegetation.pit` (evidence) | `standard · enlarged · trench`; unknown when not given | PlaceModel `pit` on a tree; `enlarged-tree-pit` recipe; `tree-trench` gives its new tree `trench` |
+
+Honesty rules:
+
+- A rain barrel is **building-scale storage, not underground storage**: it is not a storing area, so the effect engine claims no volume or attenuation for it, and it does not light the explainer's *Storage + overflow* track.
+- The roof garden archetype's qualitative defaults (more vegetation and storage than extensive) follow the Stadtgärtnerei Basel-Stadt text linked in the green-roof record; they are `assumed`, not measured.
+- Enlarging a tree pit sets the pit fact only. The paving it takes is not modelled (stated as an assumption).
+- The demo fixture's trees carry no pit evidence, so the tree track is **unknown** until a provider says `standard` (it used to be drawn as *Grate pit* by default).
+- There is **no rain-barrel knowledge record**: no Basel source was found. The recipe exists so research can add one; tests use a synthetic record that is never shipped.
 
 ## Not done on purpose
 

@@ -78,6 +78,22 @@
       "sources": [{ "label": "ZHAW project 74640: vegetation building blocks for Basel streets", "url": "https://www.zhaw.ch/de/forschung/projekt/74640" }]
     },
     {
+      "id": "enlarged-tree-pit",
+      "label": "Enlarged tree pit (larger Baumrabatte)",
+      "category": "vegetation",
+      "description": "Give an existing street tree a larger planted pit and more root space, without building a connected trench.",
+      "mechanisms": ["SWEAT", "SHADE"],
+      "applies_to": { "element_types": ["tree"] },
+      "state_changes": ["the tree pit becomes larger (more root space)", "the paving around the tree shrinks", "routing unchanged"],
+      "requirements": [
+        { "label": "Underground utilities", "state_key": "context.utilities" },
+        { "label": "Driveways and access next to the tree" }
+      ],
+      "constraints": ["Utility lines and driveways close to the tree", "Often combined with replacing the tree"],
+      "basel_examples": [{ "label": "Basel: Stadtgärtnerei and Tiefbauamt enlarge the tree pits (Baumrabatten) of the Engelgasse and replant 50 young trees (2016)", "url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse", "note": "Media release: the old pits gave too little root space; utilities and driveways limited where pits could grow. Checked 3 October 2026." }],
+      "sources": [{ "label": "Stadt Bern: Arbeitshilfe Wurzelraum für Strassenbäume (root space and tree-pit scenarios)", "url": "https://www.bern.ch/themen/planen-und-bauen/bern-baut/arbeitshilfen/wurzelraum-fuer-baeume-im-strassenraum/anhang/arbeitshilfe-wurzelraum-fur-strassenbaume-version.pdf", "note": "Bern guidance, not Basel." }]
+    },
+    {
       "id": "rain-garden",
       "label": "Rain garden",
       "category": "storage-infiltration",
@@ -99,7 +115,7 @@
       "id": "green-roof",
       "label": "Green roof",
       "category": "vegetation",
-      "description": "Planted substrate on a flat roof. Holds back and evaporates part of the rain; roof drainage stays connected.",
+      "description": "Planted substrate on a flat roof. Holds back and evaporates part of the rain; roof drainage stays connected. Extensive by default; a roof garden (intensive, deeper substrate) where the roof structure allows it.",
       "mechanisms": ["STORE", "SLOW", "SWEAT", "COOL"],
       "applies_to": { "element_types": ["building"], "surface_classes": ["sealed"] },
       "state_changes": ["roof surface becomes green roof", "storage and vegetation rise", "downpipe routing unchanged"],

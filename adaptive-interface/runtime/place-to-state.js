@@ -64,7 +64,7 @@ function contextSubsurface(context, type) {
 
 // One PlaceModel element → one StateModel element. `options.archetype` overrides the default choice.
 export function elementToState(element, context, surfaces, { archetype = null, vegetation = null, surfaceOverrides = {}, subsurfaceOverrides = {} } = {}) {
-  const { surface: surfaceClass, ...rest } = clone(element);
+  const { surface: surfaceClass, pit, material, ...rest } = clone(element);
   const classEv = surfaceClass ?? ev(null, "unknown");
   if (classEv.state === "not-applicable") {
     const out = { ...rest, kind: "point", surface: { class: classEv } };
@@ -73,12 +73,16 @@ export function elementToState(element, context, surfaces, { archetype = null, v
         canopy_area: ev("medium", "assumed", { note: "established street tree; canopy not in the PlaceModel" }),
         health: ev(null, "unknown"),
         rooted_in: null,
+        // Tree pit / root space: standard | enlarged | trench. PlaceModel 0.1 may carry it as `pit`.
+        pit: pit ?? ev(null, "unknown", { note: "tree pit not in the PlaceModel" }),
         ...clone(vegetation || {})
       };
     }
     return out;
   }
-  const archetypeId = archetype || (isKnown(classEv) ? archetypeFor(element.type, classEv.value) : null);
+  // A PlaceModel may name the archetype (`material`), e.g. a roof garden rather than the default green roof.
+  const named = isKnown(material) && surfaces?.archetypes?.some(item => item.id === material.value) ? material : null;
+  const archetypeId = archetype || named?.value || (isKnown(classEv) ? archetypeFor(element.type, classEv.value) : null);
   const defaults = archetypeId
     ? archetypeState(archetypeId, surfaces)
     : { surface: Object.fromEntries(SURFACE_KEYS.map(key => [key, ev(null, "unknown", { note: "surface unknown" })])), subsurface: Object.fromEntries(SUBSURFACE_DEFAULT_KEYS.map(key => [key, ev(null, "unknown", { note: "surface unknown" })])) };
@@ -87,7 +91,7 @@ export function elementToState(element, context, surfaces, { archetype = null, v
     kind: "area",
     surface: {
       class: classEv,
-      material: archetypeId ? ev(archetypeId, "assumed", { method: "archetype default for surface class" }) : ev(null, "unknown", { note: "surface unknown" }),
+      material: named && !archetype ? clone(named) : archetypeId ? ev(archetypeId, "assumed", { method: "archetype default for surface class" }) : ev(null, "unknown", { note: "surface unknown" }),
       ...defaults.surface,
       ...clone(surfaceOverrides)
     },
@@ -158,7 +162,10 @@ export function stateToPlace(state) {
     ...clone(state.meta),
     elements: state.elements.filter(element => element.kind !== "network").map(element => {
       const { kind, surface, subsurface, vegetation, ...rest } = element;
-      return { ...clone(rest), surface: clone(surface.class) };
+      const out = { ...clone(rest), surface: clone(surface.class) };
+      if (vegetation?.pit && vegetation.pit.state !== "unknown") out.pit = clone(vegetation.pit);
+      if (surface.material && surface.material.method !== "archetype default for surface class" && isKnown(surface.material)) out.material = clone(surface.material);
+      return out;
     }),
     context: clone(state.context)
   };

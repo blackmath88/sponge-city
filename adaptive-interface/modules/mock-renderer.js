@@ -2,7 +2,7 @@
 // educational Sponge Street renderer. It knows only the view model (contracts/renderer-contract.md):
 // no Basel datasets, no WMS, no API schemas, no calculations — only layout for drawing.
 // Qualitative effects come precomputed in view.adaptive; the Street Slice adapter only maps them to visuals.
-import { toStreetSlice } from "./street-slice-adapter.js";
+import { toStreetSlice, explainerStages } from "./street-slice-adapter.js";
 
 const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
 const fmt = (value, unit = "") => value?.state === "unknown" ? `unknown${Number.isFinite(value.known_part) && value.known_part ? ` (≥ ${value.known_part}${unit ? " " + unit : ""} known)` : ""}`
@@ -150,12 +150,14 @@ function stateEffectsPanel(view) {
   const adaptive = view.adaptive;
   if (!adaptive?.scenario) return "";
   const slice = toStreetSlice(adaptive);
+  const stages = explainerStages(slice).stages;
   const rows = Object.entries(adaptive.effectDelta.changes).filter(([, change]) => change.direction !== "not-applicable");
   const routing = adaptive.scenarioState.routing;
   return `<section class="ai-panel ai-wide"><h2>Effects under a scenario <span class="ai-note">qualitative, state-driven</span></h2>
     <p class="ai-scenarios">${adaptive.scenarios.map(item => `<button type="button" data-scenario="${esc(item.id)}" aria-pressed="${item.id === adaptive.scenario.id}">${esc(item.label)}</button>`).join(" ")}</p>
     <p class="ai-note">${esc(adaptive.scenario.description || "")} Routing: ${chip(routing.state)} ${esc(routing.note || "")}</p>
     <p class="ai-mech">${Object.entries(slice.mechanisms).filter(([, m]) => m.relevant).map(([name, m]) => `<span data-lit="${m.scenario === null ? "unknown" : m.scenario}" title="${esc(m.driven_by)}">${esc(name)}${m.scenario === null ? " ?" : m.scenario && !m.today ? " +" : ""}</span>`).join("")}</p>
+    <p class="ai-note ai-stages">Street Slice: ${Object.entries(stages).map(([track, item]) => `<span data-track="${esc(track)}" title="${esc(item.note || "")}">${esc(track)} ${item.stage === null ? chip("unknown") : `<strong>${esc(item.label)}</strong>${item.partial ? " (some)" : ""}${item.mixed ? " (mixed)" : ""}`}</span>`).join(" · ")}</p>
     <table class="ai-table"><thead><tr><th>Effect</th><th>Today</th><th>Scenario</th><th>Change</th><th>Where it changes</th></tr></thead><tbody>
     ${rows.map(([id, change]) => {
       const result = adaptive.scenarioEffects.effects[id];

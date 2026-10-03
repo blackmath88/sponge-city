@@ -92,3 +92,24 @@ Its stage ladders (e.g. parking: cars → rain garden → joined to trench) can 
 ## Proven replaceable
 
 `modules/text-renderer.js` is a second renderer (plain text). `demo/index.html?renderer=text` swaps it in without touching the orchestrator, and test 7 does the same in Node.
+
+
+## Explainer stages
+
+`explainerStages(toStreetSlice(view.adaptive))` → `{ st, stages }`. `st[track]` is the explainer's stage index or **`null` = unknown** (never "no intervention"). `stages[track]` adds `label`, `state` (`derived` / `unknown`), `derived_from` (element ids), and when relevant `partial`, `mixed`, `unknown_elements`, `note`. Pure: reads the slice, mutates nothing, applies no recipe, calls nothing.
+
+| Track | 0 | 1 | 2 | From (state fact) |
+|---|---|---|---|---|
+| roof | Bare | Thin green | Roof garden | building `surface.material`: `green-roof` → 1, `roof-garden` → 2, other known → 0, unknown → null |
+| pipe | To sewer | Rain barrel | Feeds the tree | roof water traced through downpipe / gully nodes and rain barrels (a barrel's overflow is followed): reaches a planted receiver → 2, passes a barrel → 1; no edges and routing unknown → null |
+| walk | Sealed | Open joints | | sidewalk surface class not sealed → 1 |
+| tree | Grate pit | Bigger pit | Sponge trench | tree `rooted_in` a tree trench or `pit: trench` → 2, `pit: enlarged` → 1, `pit: standard` → 0, pit unknown → null |
+| park | Cars | Rain garden | Joined to trench | only rain gardens whose `placement` is `{ surface: parking, mode: replaces }`; → 2 when such a garden shares an edge with a tree trench. Gardens elsewhere → 0 with a note; only unknown-placement gardens → null |
+| road | To the drain | Open kerb | | road runoff reaches a planted receiver (curb cut) → 1; routing unknown → null |
+| store | Nothing | Storage + overflow | | a rain garden or tree trench with an overflow edge → 1. Rain barrels never count |
+
+**Several elements, one artwork stage.** The stage is the weakest non-zero level found (what is true wherever something changed). `partial: true` when other elements are below it or unknown; `mixed: true` (with a note) when some are above it, e.g. one extensive green roof and one roof garden shows *Thin green*, mixed. The stronger stage is never drawn for a mixed street. No element of that kind → 0 with a note.
+
+**Why a sidewalk rain garden is not parking removal.** The parking artwork shows bays turned into a garden. Only `placement.surface = parking` with `mode = replaces` says that happened. A garden carved from the sidewalk keeps every bay; a provider garden without placement could be anywhere, so the track says unknown instead of claiming lost parking.
+
+**Artwork limits that remain.** One stage per track: mixed or partial streets are flagged, not drawn. *Feeds the tree* through a barrel (barrel overflow into a trench) is a valid state but no current recipe produces it. *Roof garden* needs `params.roof_system: "intensive"`; the mock renderer has no control for it yet.

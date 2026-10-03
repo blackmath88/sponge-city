@@ -1,7 +1,7 @@
 // Lightweight runtime validation of the two data contracts.
 // Mirrors contracts/place-model.schema.json and contracts/intervention-catalog.schema.json,
 // plus rules JSON Schema cannot express (unknown never carries a value, ids unique, refs resolve).
-import { EVIDENCE_STATES, ELEMENT_TYPES, SURFACES, MECHANISMS, LEVEL_VALUES } from "./evidence.js";
+import { EVIDENCE_STATES, ELEMENT_TYPES, SURFACES, MECHANISMS, LEVEL_VALUES, TREE_PITS, PLACEMENT_SURFACES, PLACEMENT_MODES } from "./evidence.js";
 
 export const PLACE_SCHEMA_VERSION = "adaptive-place/0.1";
 export const CATALOGUE_SCHEMA_VERSION = "intervention-catalog/0.1";
@@ -47,6 +47,7 @@ export function validatePlaceModel(place) {
     if (!ELEMENT_TYPES.includes(element.type)) errors.push(`${path}: invalid type "${element.type}"`);
     for (const key of ["presence", "surface", "area_m2"]) checkEvidence(element[key], `${path}.${key}`, errors);
     checkEvidence(element.count, `${path}.count`, errors, { allowMissing: true });
+    checkSemantics(element, path, errors);
     if (element.surface && element.surface.value !== null && !SURFACES.includes(element.surface.value)) errors.push(`${path}.surface: invalid surface "${element.surface.value}"`);
     if (element.area_m2?.value !== null && element.area_m2?.value !== undefined && !(element.area_m2.value >= 0)) errors.push(`${path}.area_m2: must be ≥ 0`);
     for (const key of ["presence", "surface", "area_m2", "count"]) {
@@ -104,6 +105,24 @@ const KNOWLEDGE_FIELDS = ["id", "label", "category", "description", "mechanisms"
 // Things that belong to renderers or to the internal executor, never to researcher-facing knowledge.
 export const FORBIDDEN_KNOWLEDGE_FIELDS = ["layout", "band", "svg", "x", "y", "color", "colour", "icon", "stage", "position", "transform", "operations", "op", "target", "params"];
 
+// Placement provenance and tree pit: optional, typed, unknown allowed. Shared by PlaceModel and StateModel.
+function checkSemantics(element, path, errors) {
+  const known = value => value && !["unknown", "not-applicable"].includes(value.state);
+  if (element.placement !== undefined) {
+    const { surface, mode } = element.placement || {};
+    checkEvidence(surface, `${path}.placement.surface`, errors);
+    checkEvidence(mode, `${path}.placement.mode`, errors);
+    if (known(surface) && !PLACEMENT_SURFACES.includes(surface.value)) errors.push(`${path}.placement.surface: one of ${PLACEMENT_SURFACES.join(", ")}`);
+    if (known(mode) && !PLACEMENT_MODES.includes(mode.value)) errors.push(`${path}.placement.mode: one of ${PLACEMENT_MODES.join(", ")}`);
+  }
+  const pit = element.vegetation?.pit ?? element.pit;
+  if (pit !== undefined) {
+    if (element.type !== "tree") errors.push(`${path}: only trees have a pit`);
+    checkEvidence(pit, `${path}.pit`, errors);
+    if (known(pit) && !TREE_PITS.includes(pit.value)) errors.push(`${path}.pit: one of ${TREE_PITS.join(", ")}`);
+  }
+}
+
 export function validateStateModel(state) {
   const errors = [];
   if (!state || typeof state !== "object") return ["state: not an object"];
@@ -126,6 +145,7 @@ export function validateStateModel(state) {
         checkEvidence(value, `${path}.${group}.${key}`, errors);
       }
     }
+    checkSemantics(element, path, errors);
   }
   for (const [i, edge] of (state.connections || []).entries()) {
     const path = `connections[${i}](${edge.from}→${edge.to})`;

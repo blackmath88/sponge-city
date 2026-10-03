@@ -55,6 +55,12 @@
         "origin": { "type": "string" },
         "fixed": { "type": "boolean" },
         "layout": { "type": "object", "description": "Carried through for 0.1 renderers. The engine never reads it." },
+        "placement": {
+          "type": "object",
+          "description": "Placement provenance: which surface this element occupies or replaces (parking | sidewalk | road | roof | green | parcel | unknown) and how (replaces | occupies | adjacent | unknown). Set by recipes that know it; missing means unknown. Never a renderer stage.",
+          "required": ["surface", "mode"],
+          "properties": { "surface": { "$ref": "#/$defs/evidence" }, "mode": { "$ref": "#/$defs/evidence" } }
+        },
         "surface": {
           "type": "object",
           "description": "Surface state. `class` is the PlaceModel 0.1 surface; the rest are archetype defaults (assumed) unless evidence replaces them.",
@@ -86,7 +92,8 @@
           "properties": {
             "canopy_area": { "$ref": "#/$defs/levelEvidence" },
             "health": { "$ref": "#/$defs/evidence" },
-            "rooted_in": { "type": ["string", "null"], "description": "Element id of the bed/trench the tree grows in" }
+            "rooted_in": { "type": ["string", "null"], "description": "Element id of the bed/trench the tree grows in" },
+            "pit": { "$ref": "#/$defs/evidence", "description": "Tree pit / root space: standard | enlarged | trench; unknown when the PlaceModel does not say" }
           }
         }
       }

@@ -76,12 +76,21 @@
         "replaces": { "description": "The evidence value this one replaced (user-corrected or scenario change)." }
       }
     },
+    "placement": {
+      "type": "object",
+      "description": "Optional placement provenance: which surface the element occupies or replaces, and how. Missing = unknown placement (never inferred).",
+      "required": ["surface", "mode"],
+      "properties": {
+        "surface": { "allOf": [{ "$ref": "#/$defs/evidence" }], "properties": { "value": { "enum": ["parking", "sidewalk", "road", "roof", "green", "parcel", "unknown", null] } } },
+        "mode": { "allOf": [{ "$ref": "#/$defs/evidence" }], "properties": { "value": { "enum": ["replaces", "occupies", "adjacent", "unknown", null] } } }
+      }
+    },
     "element": {
       "type": "object",
       "required": ["id", "type", "label", "presence", "surface", "area_m2"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
-        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "water", "tram", "entrance", "fixed-area", "unknown-area"] },
+        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "rain-barrel", "water", "tram", "entrance", "fixed-area", "unknown-area"] },
         "label": { "type": "string" },
         "presence": { "$ref": "#/$defs/evidence", "description": "true / false; unknown when a source is uncertain the element exists" },
         "surface": { "$ref": "#/$defs/evidence", "description": "sealed | permeable | planted | water | unknown(state); not-applicable for point elements" },
@@ -101,7 +110,10 @@
             "inserted_from": { "type": "string" }
           }
         },
-        "geometry_ref": { "type": "string", "description": "Opaque reference to provider geometry, never parsed by renderers." }
+        "geometry_ref": { "type": "string", "description": "Opaque reference to provider geometry, never parsed by renderers." },
+        "placement": { "$ref": "#/$defs/placement" },
+        "material": { "allOf": [{ "$ref": "#/$defs/evidence" }], "description": "Optional surface archetype id (catalogues/surfaces.json), e.g. roof-garden. Omit to use the default for the surface class." },
+        "pit": { "allOf": [{ "$ref": "#/$defs/evidence" }], "description": "Trees only: standard | enlarged | trench (tree pit / root space). Omit when not known." }
       }
     }
   }

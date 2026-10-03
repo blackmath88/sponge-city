@@ -79,10 +79,24 @@ export function setSurfaceOp(target, archetypeId, surfaceClass, tag, surfaces, {
   };
 }
 
+// Placement provenance: which kind of surface a new element occupies or replaces, and how.
+// Canonical street-world fact (renderer-neutral). Only recipes that genuinely know it set it;
+// an element without `placement` is "unknown placement", never an inferred conversion.
+const SURFACE_OF_TYPE = { parking: "parking", sidewalk: "sidewalk", "fixed-area": "sidewalk", entrance: "sidewalk", road: "road", tram: "road", building: "roof", vegetation: "green" };
+
+export function placementFrom(parent, mode, tag) {
+  const surface = SURFACE_OF_TYPE[parent.type];
+  return {
+    surface: surface ? ev(surface, "derived", { method: tag, note: `from target ${parent.id}` }) : ev(null, "unknown", { note: `no placement surface for element type "${parent.type}"` }),
+    mode: ev(mode, "derived", { method: tag })
+  };
+}
+
 // A new element placed next to / inside its parent. Everything about it is assumed.
-export function newElement(state, parent, { id, type, label, tags = [], tag, surfaceClass = null, area = null, archetype = null, surfaces, vegetation = null, surfaceOverrides, subsurfaceOverrides }) {
+export function newElement(state, parent, { id, type, label, tags = [], tag, surfaceClass = null, area = null, archetype = null, surfaces, vegetation = null, surfaceOverrides, subsurfaceOverrides, placement = null }) {
   const placeShape = {
     id, type, label, tags, layout: { ...(parent.layout || {}), inserted_from: parent.id }, origin: tag,
+    ...(placement ? { placement } : {}),
     presence: ev(true, "assumed", { method: tag }),
     surface: surfaceClass ? ev(surfaceClass, "assumed", { method: tag }) : ev(null, "not-applicable"),
     area_m2: area ? ev(area.value, "assumed", { method: tag, note: area.note }) : ev(null, "not-applicable")
@@ -94,7 +108,7 @@ export function newElement(state, parent, { id, type, label, tags = [], tag, sur
 export function carveOps(state, target, { area, tag, ...spec }) {
   if (!isKnown(target.area_m2)) return { error: `area of "${target.label}" is unknown. Correct it first.` };
   if (area.value > target.area_m2.value) return { error: `${area.value} m² is more than "${target.label}" has (${target.area_m2.value} m²)` };
-  const element = newElement(state, target, { ...spec, area, tag });
+  const element = newElement(state, target, { ...spec, area, tag, placement: placementFrom(target, "replaces", tag) });
   return {
     element,
     operations: [

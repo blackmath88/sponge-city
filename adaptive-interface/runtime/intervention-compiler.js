@@ -6,7 +6,7 @@
 // A knowledge record without a recipe is still listed, as "knowledge only — not executable yet".
 import { ev, isKnown } from "./evidence.js";
 import { connectionsFrom } from "./state-graph.js";
-import { setSurfaceOp, carveOps, reduceCountOps, newElement, redirectOps, nextSerial } from "./state-ops.js";
+import { setSurfaceOp, carveOps, reduceCountOps, newElement, redirectOps, nextSerial, placementFrom } from "./state-ops.js";
 
 // Design assumptions. Always reported as "assumed" in the applied step.
 const DESIGN = {
@@ -30,8 +30,9 @@ const lookup = (state, key) => {
 
 export function knowledgeTargets(state, record) {
   const { element_types: types = [], surface_classes: classes = null } = record.applies_to || {};
+  // Areas, plus trees (points) for records that act on a tree itself, e.g. its pit.
   return state.elements.filter(element =>
-    element.kind === "area" && element.presence?.value === true && !element.fixed && types.includes(element.type) &&
+    (element.kind === "area" || element.type === "tree") && element.presence?.value === true && !element.fixed && types.includes(element.type) &&
     (!classes || (isKnown(element.surface.class) && classes.includes(element.surface.class.value))));
 }
 
@@ -73,6 +74,8 @@ export function assessKnowledge(record, state) {
   return { id: record.id, status, reason, eligible_targets: targets.map(element => element.id), requirements, checks: [], executable };
 }
 
+const ROOF_SYSTEMS = { extensive: "green-roof", intensive: "roof-garden" };
+
 // ---------- Recipes: knowledge id → (state, target, context) → { operations, assumptions } | { error }
 
 function carveAndConnect(ctx, { type, label, surfaceClass, archetype, surfaceOverrides, withTree }) {
@@ -85,7 +88,7 @@ function carveAndConnect(ctx, { type, label, surfaceClass, archetype, surfaceOve
   if (withTree) {
     operations.push({ op: "add-element", element: newElement(state, target, {
       id: `${record.id}-${serial}-tree`, type: "tree", label: "New tree (scenario)", tag, surfaces,
-      vegetation: { canopy_area: ev("low", "assumed", { note: "young tree; canopy grows over years" }), rooted_in: carve.element.id }
+      vegetation: { canopy_area: ev("low", "assumed", { note: "young tree; canopy grows over years" }), rooted_in: carve.element.id, pit: ev("trench", "derived", { method: tag }) }
     }) });
   }
   // The remaining paving drains into the new element; its old drain becomes the overflow.
@@ -120,8 +123,42 @@ const RECIPES = {
   "permeable-parking"({ target, tag, surfaces }) {
     return { operations: [setSurfaceOp(target, "permeable-paving", "permeable", tag, surfaces)], assumptions: [] };
   },
-  "green-roof"({ target, tag, surfaces }) {
-    return { operations: [setSurfaceOp(target, "green-roof", "planted", tag, surfaces)], assumptions: [{ text: "roof drainage stays connected to the downpipe", affects: ["routing"] }] };
+  // params.roof_system: "extensive" (default) or "intensive" (roof garden). The roof system is the
+  // canonical fact (surface material); renderers decide what to draw for it.
+  "green-roof"({ target, tag, surfaces, params }) {
+    const system = params?.roof_system ?? "extensive";
+    if (!ROOF_SYSTEMS[system]) return { error: `roof_system must be one of ${Object.keys(ROOF_SYSTEMS).join(", ")}` };
+    const assumptions = [{ text: "roof drainage stays connected to the downpipe", affects: ["routing"] }];
+    if (system === "intensive") assumptions.push({ text: "roof garden: deeper substrate, needs the roof structure to carry it (see requirements)", affects: ["storage_potential", "evapotranspiration_potential"] });
+    return { operations: [setSurfaceOp(target, ROOF_SYSTEMS[system], "planted", tag, surfaces)], assumptions };
+  },
+  // Enlarged tree pit (larger Baumrabatte / root space) for an existing tree. Sets the pit fact only;
+  // the paving it takes is not modelled, and no volume is claimed.
+  "enlarged-tree-pit"({ target, tag }) {
+    const pit = target.vegetation?.pit;
+    if (pit?.value === "enlarged" || pit?.value === "trench") return { error: `${target.label} already has a ${pit.value === "trench" ? "tree trench" : "larger pit"}` };
+    return {
+      operations: [{ op: "set-property", target: target.id, path: "vegetation.pit", value: ev("enlarged", "derived", { method: tag, replaces: pit ?? null }) }],
+      assumptions: [{ text: "pit enlarged into the surrounding paving; the paving area it takes is not modelled", affects: ["sealed_area_m2"] }]
+    };
+  },
+  // Rain barrel at a building's downpipe: roof water passes through it, its overflow goes where the
+  // downpipe went. Building-scale storage, NOT underground storage; no volume is claimed and the
+  // effect engine does not count it as attenuation (it is a point, not a storing area).
+  "rain-barrel"({ state, target, tag, serial, record, surfaces }) {
+    const id = `${record.id}-${serial}-rain-barrel`;
+    const element = newElement(state, target, { id, type: "rain-barrel", label: "Rain barrel", tag, surfaces, placement: placementFrom(target, "adjacent", tag) });
+    const operations = [{ op: "add-element", element }];
+    const downpipe = connectionsFrom(state, target.id).map(edge => state.elements.find(item => item.id === edge.to)).find(node => node?.type === "downpipe");
+    if (!downpipe) return { operations, assumptions: [{ text: `which downpipe feeds the barrel is unknown (no roof drainage routing for ${target.label})`, affects: ["routing"] }] };
+    const onward = connectionsFrom(state, downpipe.id);
+    for (const [i, old] of onward.entries()) {
+      if (i === 0) operations.push({ op: "replace-connection", from: old, to: { from: downpipe.id, to: id, medium: "rainwater", mode: "pipe", state: "assumed", method: tag } });
+      else operations.push({ op: "remove-connection", edge: old });
+    }
+    if (!onward.length) operations.push({ op: "add-connection", edge: { from: downpipe.id, to: id, medium: "rainwater", mode: "pipe", state: "assumed", method: tag } });
+    for (const to of new Set(onward.map(edge => edge.to))) operations.push({ op: "add-connection", edge: { from: id, to, medium: "rainwater", mode: "overflow", state: "assumed", method: tag } });
+    return { operations, assumptions: [{ text: `${downpipe.label} feeds the barrel; overflow goes where the downpipe went`, affects: ["routing"] }] };
   },
   "rain-garden"(ctx) {
     return carveAndConnect(ctx, {
