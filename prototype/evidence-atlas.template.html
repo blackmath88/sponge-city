@@ -135,6 +135,16 @@
     .claim-step p { color: var(--muted); font-size: 14px; }
     .claim-step:nth-child(3) { background: var(--green); color: white; }
     .claim-step:nth-child(3) .number, .claim-step:nth-child(3) p { color: white; }
+    .maturity-intro { margin: 46px 0 16px; max-width: 760px; }
+    .maturity-intro h3 { font: 500 30px/1.08 var(--serif); margin-bottom: 8px; }
+    .maturity-intro p { color: var(--muted); margin: 0; }
+    .maturity-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: var(--line); gap: 1px; }
+    .maturity-card { background: var(--surface); padding: 20px; min-height: 310px; }
+    .maturity-card .level { font: 700 11px/1 var(--mono); color: var(--violet); text-transform: uppercase; letter-spacing: .09em; }
+    .maturity-card h3 { margin: 12px 0 18px; }
+    .maturity-card h4 { font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; margin: 18px 0 5px; }
+    .maturity-card p { font-size: 13px; margin: 0; color: var(--muted); }
+    .maturity-card .cannot { color: var(--red); }
 
     .route-tool { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 28px; }
     .route-controls { border: 1px solid var(--line); background: var(--surface); padding: 22px; }
@@ -181,7 +191,7 @@
       .shell { display: block; }
       .rail { display: none; }
       .section-head, .route-tool, .brief { grid-template-columns: 1fr; }
-      .claim-grid { grid-template-columns: repeat(2, 1fr); }
+      .claim-grid, .maturity-grid { grid-template-columns: repeat(2, 1fr); }
       .brief-actions { border-left: 0; border-top: 1px solid var(--ink); }
       .filters { grid-template-columns: repeat(2, 1fr); }
       .matrix { grid-template-columns: 130px repeat(3, 1fr); overflow-x: auto; }
@@ -194,7 +204,7 @@
       section { padding: 62px 18px; }
       .search-row { grid-template-columns: 1fr; }
       .search-row button { padding: 12px; }
-      .filters, .claim-grid, .handoff-grid { grid-template-columns: 1fr; }
+      .filters, .claim-grid, .maturity-grid, .handoff-grid { grid-template-columns: 1fr; }
       .route-tool { grid-template-columns: 1fr; }
       .matrix { display: none; }
       .footer { flex-direction: column; }
@@ -259,12 +269,13 @@
             <button class="chip" data-query="What can VoltaNord validate?">What can VoltaNord validate?</button>
             <button class="chip" data-query="Who leads the scientific work?">Who leads the scientific work?</button>
             <button class="chip" data-query="What is still unknown about the protocol?">What is still unknown?</button>
+            <button class="chip" data-query="Which Basel open datasets can the Canvas use now?">Which data can we use now?</button>
             <button class="chip" data-query="private renovation incentive permit">Private renovation?</button>
             <button class="chip" data-query="public infrastructure renewal">Public renewal?</button>
           </div>
           <div class="filters">
             <div class="filter"><label for="status-filter">Evidence status</label><select id="status-filter"><option value="">All statuses</option><option>verified</option><option>inference</option><option>unknown</option><option>conflict</option><option>proposal</option></select></div>
-            <div class="filter"><label for="kind-filter">Record type</label><select id="kind-filter"><option value="">All record types</option><option value="fact">fact</option><option value="interpretation">interpretation</option><option value="boundary">boundary</option><option value="open-question">open question</option><option value="next-action">next action</option><option value="precedent">precedent</option><option value="decision-route">decision route</option><option value="entity">actor / entity</option></select></div>
+            <div class="filter"><label for="kind-filter">Record type</label><select id="kind-filter"><option value="">All record types</option><option value="fact">fact</option><option value="interpretation">interpretation</option><option value="boundary">boundary</option><option value="open-question">open question</option><option value="next-action">next action</option><option value="precedent">precedent</option><option value="maturity-level">maturity level</option><option value="decision-route">decision route</option><option value="entity">actor / entity</option></select></div>
             <div class="filter"><label for="context-filter">Intervention window</label><select id="context-filter"><option value="">Any window</option><option value="new-development">new development</option><option value="existing-retrofit">retrofit now</option><option value="planned-renewal">planned renovation / renewal</option></select></div>
             <div class="filter"><label for="ownership-filter">Ownership</label><select id="ownership-filter"><option value="">Any ownership</option><option value="public">public</option><option value="private">private</option><option value="mixed">mixed</option></select></div>
           </div>
@@ -284,6 +295,8 @@
           <article class="claim-step"><div class="number">3</div><h3>Effect observed</h3><p>Monitoring records what happened at an implemented place. This is VoltaNord’s ground-truth role for the four published indicators.</p></article>
           <article class="claim-step"><div class="number">4</div><h3>Transfer assessed</h3><p>A named reviewer checks whether design, soil, weather, operation and maintenance are comparable elsewhere.</p></article>
         </div>
+        <div class="maturity-intro"><h3>Evidence maturity is a separate ladder.</h3><p>A claim can mature only when the evidence needed for the decision matures. Each level below says both what becomes possible and what remains unsafe to claim.</p></div>
+        <div id="maturity-levels" class="maturity-grid"></div>
       </section>
 
       <section id="routes">
@@ -360,6 +373,16 @@
         scope: `${labels[route.context]} · ${labels[route.ownership]} ownership`,
         itemType: "route",
         searchable: [route.question, route.context, route.ownership, ...route.primary_levers, ...route.decision_route, route.accountable_role, ...route.evidence_needed, route.caution].join(" ")
+      })),
+      ...DATA.maturity_levels.map(level => ({
+        ...level,
+        kind: "maturity-level",
+        title: `${level.order}. ${level.name}`,
+        answer: `${level.can_support} Cannot support: ${level.cannot_support}`,
+        scope: level.question,
+        source_ids: [],
+        itemType: "maturity",
+        searchable: [level.name, level.question, ...level.evidence_required, level.can_support, level.cannot_support].join(" ")
       })),
       ...DATA.entities.map(entity => ({
         ...entity,
@@ -452,6 +475,15 @@
       $("#next-actions").innerHTML = DATA.records.filter(item => item.kind === "next-action").map(compact).join("");
     }
 
+    function renderMaturity() {
+      $("#maturity-levels").innerHTML = [...DATA.maturity_levels].sort((a, b) => a.order - b.order).map(level => `<article class="maturity-card">
+        <div class="level">Level ${level.order}</div><h3>${escapeHtml(level.name)}</h3>
+        <h4>Decision question</h4><p>${escapeHtml(level.question)}</p>
+        <h4>Can support</h4><p>${escapeHtml(level.can_support)}</p>
+        <h4>Cannot support</h4><p class="cannot">${escapeHtml(level.cannot_support)}</p>
+      </article>`).join("");
+    }
+
     function briefText() {
       const route = DATA.decision_routes.find(item => item.context === state.routeContext && item.ownership === state.routeOwnership);
       const evidence = state.matches.filter(item => item.itemType === "record").slice(0, 4);
@@ -490,6 +522,7 @@
     $("#print-brief").addEventListener("click", () => window.print());
 
     setupRouteControls();
+    renderMaturity();
     renderRoute();
     renderHandoff();
     runSearch();

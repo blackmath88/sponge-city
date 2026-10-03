@@ -1,5 +1,5 @@
 {
-  "schema_version": "evidence-atlas/0.1",
+  "schema_version": "evidence-atlas/0.2",
   "updated": "2026-10-03",
   "sources": [
     {
@@ -46,6 +46,69 @@
       "accessed": "2026-10-03",
       "kind": "method-precedent",
       "note": "A separate ZHAW project using sensors and plant assessments with interactive, near-real-time communication. It is not evidence of the VoltaNord method."
+    },
+    {
+      "id": "zhaw-basel-vegetation-74640",
+      "title": "Entwicklung und wissenschaftliche Begleitung Schwammstadt-Vegetationsbausteine für Basel-Stadt",
+      "publisher": "ZHAW",
+      "url": "https://www.zhaw.ch/de/forschung/projekt/74640",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Official predecessor-project page covering vegetation-system design, named streets and the intention to develop a measurement concept."
+    },
+    {
+      "id": "basel-resolution-p251765",
+      "title": "Regierungsratsbeschluss P251765",
+      "publisher": "Kanton Basel-Stadt",
+      "url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Official decision register entry: BVD-led, non-parliamentary expenditure decision taken on 18 November 2025."
+    },
+    {
+      "id": "basel-voltanord-area-2018",
+      "title": "Vorschau auf die Grossratssitzung vom 16. und 17. Mai 2018",
+      "publisher": "Kanton Basel-Stadt",
+      "url": "https://www.bs.ch/medienmitteilungen/grosser-rat/2018-vorschau-auf-die-grossratssitzung-vom-16-und-17-mai-2018",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Official planning context that describes the VoltaNord planning perimeter as 11.6 hectares."
+    },
+    {
+      "id": "basel-data-smart-climate-100009",
+      "title": "Luftklima Smart Regio Basel",
+      "publisher": "Open Data Basel-Stadt",
+      "url": "https://data.bs.ch/explore/dataset/100009/",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Hourly updated raw air-temperature and precipitation observations from the Smart Climate network."
+    },
+    {
+      "id": "basel-data-smart-climate-sites-100082",
+      "title": "Standorte der Smart Climate Luftklimasensoren",
+      "publisher": "Open Data Basel-Stadt",
+      "url": "https://data.bs.ch/explore/dataset/100082/",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Station locations associated with dataset 100009."
+    },
+    {
+      "id": "basel-data-groundwater-stats-100180",
+      "title": "Grundwasserstände: langjährige Statistik",
+      "publisher": "Open Data Basel-Stadt",
+      "url": "https://data.bs.ch/explore/dataset/100180/",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Long-term minimum, maximum and mean groundwater levels, generally aggregated over ten-year periods."
+    },
+    {
+      "id": "basel-data-land-cover-100477",
+      "title": "Bodenbedeckung",
+      "publisher": "Open Data Basel-Stadt",
+      "url": "https://data.bs.ch/explore/dataset/100477/",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Polygon land-cover classification including buildings, water, sealed, wooded and humus-covered surfaces."
     }
   ],
   "entities": [
@@ -54,8 +117,8 @@
       "type": "place",
       "name": "VoltaNord",
       "summary": "A developing Basel neighbourhood and pilot area for sponge-city street elements.",
-      "source_ids": ["basel-voltanord-overview"],
-      "related_entity_ids": ["project-voltanord-monitoring"]
+      "source_ids": ["basel-voltanord-overview", "basel-voltanord-area-2018"],
+      "related_entity_ids": ["project-voltanord-monitoring", "project-basel-vegetation-modules-2024"]
     },
     {
       "id": "project-voltanord-monitoring",
@@ -63,7 +126,7 @@
       "name": "VoltaNord sponge-city monitoring",
       "summary": "A ZHAW monitoring project commissioned for the implemented sponge-city elements in the VoltaNord perimeter.",
       "source_ids": ["zhaw-voltanord-80788", "basel-government-monitoring-decision-2025"],
-      "related_entity_ids": ["place-voltanord", "org-zhaw-iunr", "org-stadtgaertnerei-basel"]
+      "related_entity_ids": ["place-voltanord", "org-zhaw-iunr", "org-stadtgaertnerei-basel", "project-basel-vegetation-modules-2024"]
     },
     {
       "id": "org-zhaw-iunr",
@@ -102,7 +165,7 @@
       "type": "person",
       "name": "Frieder Kaiser",
       "summary": "Stadtgärtnerei contact named in the Basel government monitoring decision.",
-      "source_ids": ["basel-government-monitoring-decision-2025"],
+      "source_ids": ["basel-government-monitoring-decision-2025", "basel-resolution-p251765"],
       "related_entity_ids": ["org-stadtgaertnerei-basel", "project-voltanord-monitoring"]
     },
     {
@@ -142,8 +205,56 @@
       "type": "decision",
       "name": "Monitoring expenditure approval",
       "summary": "The Basel-Stadt government approved CHF 280,000 for scientific monitoring in November 2025.",
-      "source_ids": ["basel-government-monitoring-decision-2025"],
+      "source_ids": ["basel-government-monitoring-decision-2025", "basel-resolution-p251765"],
       "related_entity_ids": ["project-voltanord-monitoring"]
+    },
+    {
+      "id": "project-basel-vegetation-modules-2024",
+      "type": "project",
+      "name": "Basel sponge-city vegetation modules",
+      "summary": "The 2024 ZHAW design project reviewed Basel's vegetation building blocks, developed street-specific planting and substrate proposals, and anticipated a measurement concept.",
+      "source_ids": ["zhaw-basel-vegetation-74640"],
+      "related_entity_ids": ["place-voltanord", "project-voltanord-monitoring", "org-zhaw-iunr", "org-stadtgaertnerei-basel", "person-axel-heinrich"]
+    },
+    {
+      "id": "person-axel-heinrich",
+      "type": "person",
+      "name": "Axel Heinrich",
+      "summary": "Lead of the 2024 vegetation-module project and a listed member of the 2026 VoltaNord monitoring team.",
+      "source_ids": ["zhaw-basel-vegetation-74640", "zhaw-voltanord-80788"],
+      "related_entity_ids": ["project-basel-vegetation-modules-2024", "project-voltanord-monitoring", "org-zhaw-iunr"]
+    },
+    {
+      "id": "dataset-smart-climate-100009",
+      "type": "dataset",
+      "name": "Smart Climate observations (100009)",
+      "summary": "Hourly raw air-temperature and precipitation observations that can describe local weather context but do not identify intervention effects by themselves.",
+      "source_ids": ["basel-data-smart-climate-100009"],
+      "related_entity_ids": ["dataset-smart-climate-sites-100082", "place-voltanord"]
+    },
+    {
+      "id": "dataset-smart-climate-sites-100082",
+      "type": "dataset",
+      "name": "Smart Climate station locations (100082)",
+      "summary": "Sensor coordinates for assessing spatial coverage of the Smart Climate observation dataset.",
+      "source_ids": ["basel-data-smart-climate-sites-100082"],
+      "related_entity_ids": ["dataset-smart-climate-100009", "place-voltanord"]
+    },
+    {
+      "id": "dataset-groundwater-100180",
+      "type": "dataset",
+      "name": "Long-term groundwater statistics (100180)",
+      "summary": "Long-term groundwater-level statistics useful for screening hydrogeological context, not event-scale facility performance.",
+      "source_ids": ["basel-data-groundwater-stats-100180"],
+      "related_entity_ids": ["place-voltanord"]
+    },
+    {
+      "id": "dataset-land-cover-100477",
+      "type": "dataset",
+      "name": "Basel land cover (100477)",
+      "summary": "Polygon surface classes that can support imperviousness and opportunity screening after classification and quality checks.",
+      "source_ids": ["basel-data-land-cover-100477"],
+      "related_entity_ids": ["place-voltanord"]
     }
   ],
   "records": [
@@ -191,7 +302,7 @@
       "status": "verified",
       "scope": "Government expenditure decision and stated policy intent",
       "tags": ["budget", "280000", "funding", "regierungsrat", "transfer", "citywide"],
-      "source_ids": ["basel-government-monitoring-decision-2025"],
+      "source_ids": ["basel-government-monitoring-decision-2025", "basel-resolution-p251765"],
       "entity_ids": ["decision-monitoring-funding-2025", "project-voltanord-monitoring"],
       "related_record_ids": ["boundary-transferability"]
     },
@@ -204,7 +315,7 @@
       "scope": "Team listed on the ZHAW project page",
       "tags": ["who", "team", "contact", "lead", "zhaw", "scientific"],
       "source_ids": ["zhaw-voltanord-80788"],
-      "entity_ids": ["person-stefan-stevanovic", "person-doris-tausendpfund", "org-zhaw-iunr"],
+      "entity_ids": ["person-stefan-stevanovic", "person-doris-tausendpfund", "person-axel-heinrich", "org-zhaw-iunr"],
       "related_record_ids": ["action-request-protocol"]
     },
     {
@@ -307,11 +418,11 @@
       "id": "action-request-protocol",
       "kind": "next-action",
       "title": "Request a 60-minute evidence hand-off with ZHAW and Stadtgärtnerei",
-      "answer": "Ask for the protocol, indicator definitions, site and comparator design, measurement cadence, first reporting milestone, data fields, licences, confidentiality limits and named contact for future updates. Resolve the 2031/2034 date discrepancy in the same meeting.",
+      "answer": "Ask whether the 2026 protocol derives from the measurement concept anticipated in project 74640. Request the indicator definitions, monitored elements and ownership, site and comparator design, methods, cadence, first reporting milestone, data fields, licences, confidentiality limits and named contact for updates. Resolve the five-year/2034 date discrepancy in the same meeting.",
       "status": "proposal",
       "scope": "Immediate research action",
       "tags": ["next step", "meeting", "protocol", "zhaw", "stadtgärtnerei", "handoff"],
-      "source_ids": ["zhaw-voltanord-80788", "basel-government-monitoring-decision-2025"],
+      "source_ids": ["zhaw-voltanord-80788", "zhaw-basel-vegetation-74640", "basel-government-monitoring-decision-2025", "basel-resolution-p251765"],
       "entity_ids": ["person-stefan-stevanovic", "person-frieder-kaiser", "project-voltanord-monitoring"],
       "related_record_ids": ["question-protocol", "conflict-project-end"],
       "owner": "Working group lead",
@@ -364,6 +475,134 @@
       "source_ids": [],
       "entity_ids": [],
       "related_record_ids": ["question-decision-use"]
+    },
+    {
+      "id": "fact-vegetation-project-2024",
+      "kind": "fact",
+      "title": "What came before the VoltaNord monitoring project?",
+      "answer": "From September to December 2024, ZHAW reviewed Basel's sponge-city vegetation building blocks and developed proposals for Therwilerstrasse, Lysbüchelstrasse and Weinlagerstrasse. The work covered draining, resource-saving and structurally stable substrates plus site-appropriate planting. Its public page says a measurement concept should follow.",
+      "status": "verified",
+      "scope": "Public scope of ZHAW project 74640; completed design phase",
+      "tags": ["precursor", "design", "substrate", "vegetation", "therwilerstrasse", "lysbüchelstrasse", "weinlagerstrasse", "measurement concept"],
+      "source_ids": ["zhaw-basel-vegetation-74640"],
+      "entity_ids": ["project-basel-vegetation-modules-2024", "person-axel-heinrich", "org-zhaw-iunr", "org-stadtgaertnerei-basel"],
+      "related_record_ids": ["interpret-design-monitoring-chain", "question-protocol"]
+    },
+    {
+      "id": "interpret-design-monitoring-chain",
+      "kind": "interpretation",
+      "title": "Do the 2024 design project and 2026 monitoring form one evidence chain?",
+      "answer": "They form a plausible design-to-observation chain: project 74640 documented design work and anticipated a measurement concept; project 80788 now monitors four indicator areas. The public pages do not prove contractual continuity or show that the final protocol implements the earlier concept, so that link still needs confirmation.",
+      "status": "inference",
+      "scope": "Relationship inferred from two official ZHAW project pages",
+      "tags": ["design", "monitoring", "evidence chain", "project 74640", "project 80788", "protocol"],
+      "source_ids": ["zhaw-basel-vegetation-74640", "zhaw-voltanord-80788"],
+      "entity_ids": ["project-basel-vegetation-modules-2024", "project-voltanord-monitoring"],
+      "related_record_ids": ["fact-vegetation-project-2024", "action-request-protocol"]
+    },
+    {
+      "id": "fact-resolution-p251765",
+      "kind": "fact",
+      "title": "Which formal decision authorised the monitoring expenditure?",
+      "answer": "The official decision register identifies Regierungsratsbeschluss P251765, decided on 18 November 2025. It is listed as a BVD-led, non-parliamentary expenditure decision for scientific monitoring of the VoltaNord sponge-city pilot streets.",
+      "status": "verified",
+      "scope": "Formal decision identity and administrative classification",
+      "tags": ["p251765", "regierungsrat", "bvd", "decision", "expenditure", "non-parliamentary"],
+      "source_ids": ["basel-resolution-p251765", "basel-government-monitoring-decision-2025"],
+      "entity_ids": ["decision-monitoring-funding-2025", "project-voltanord-monitoring"],
+      "related_record_ids": ["fact-budget-purpose"]
+    },
+    {
+      "id": "fact-voltanord-scale",
+      "kind": "fact",
+      "title": "What is the scale and development context of VoltaNord?",
+      "answer": "Official Basel sources describe an 11.6-hectare planning area with several landowners and an intended future mix of roughly 1,500–2,000 residents and 2,000–2,500 workplaces. That makes ownership and decision responsibility element-specific rather than neighbourhood-wide.",
+      "status": "verified",
+      "scope": "Official area-development context; not the footprint of monitored elements",
+      "tags": ["voltanord", "11.6 hectares", "residents", "workplaces", "development", "ownership"],
+      "source_ids": ["basel-voltanord-area-2018", "basel-voltanord-overview"],
+      "entity_ids": ["place-voltanord"],
+      "related_record_ids": ["question-voltanord-ownership"]
+    },
+    {
+      "id": "fact-open-screening-data",
+      "kind": "fact",
+      "title": "Which Basel open datasets can the Canvas use now?",
+      "answer": "Four immediately useful official sources are: hourly raw Smart Climate air-temperature and precipitation observations (100009), their station locations (100082), long-term groundwater-level statistics (100180), and polygon land-cover classes (100477). Together they support weather context, coverage checks and spatial screening.",
+      "status": "verified",
+      "scope": "Dataset existence, content and screening use; fitness for a particular analysis still requires QA",
+      "tags": ["open data", "temperature", "precipitation", "sensor locations", "groundwater", "land cover", "screening", "datasets"],
+      "source_ids": ["basel-data-smart-climate-100009", "basel-data-smart-climate-sites-100082", "basel-data-groundwater-stats-100180", "basel-data-land-cover-100477"],
+      "entity_ids": ["dataset-smart-climate-100009", "dataset-smart-climate-sites-100082", "dataset-groundwater-100180", "dataset-land-cover-100477"],
+      "related_record_ids": ["boundary-open-data-not-effect", "action-assess-data-fitness"]
+    },
+    {
+      "id": "boundary-open-data-not-effect",
+      "kind": "boundary",
+      "title": "Can the available open datasets prove a sponge-city intervention worked?",
+      "answer": "No. They can describe weather and spatial context or help prioritise sites, but they do not identify the implemented element, baseline, comparator, maintenance condition or causal effect. Intervention claims need protocol-linked field observations and, for some decisions, a calibrated model.",
+      "status": "inference",
+      "scope": "Analytical boundary of the four catalogued Basel datasets",
+      "tags": ["open data", "causality", "effect", "screening", "baseline", "comparator", "monitoring", "model"],
+      "source_ids": ["basel-data-smart-climate-100009", "basel-data-groundwater-stats-100180", "basel-data-land-cover-100477", "zhaw-voltanord-80788"],
+      "entity_ids": ["dataset-smart-climate-100009", "dataset-groundwater-100180", "dataset-land-cover-100477", "project-voltanord-monitoring"],
+      "related_record_ids": ["fact-open-screening-data", "interpret-screening-validation-loop"]
+    },
+    {
+      "id": "action-assess-data-fitness",
+      "kind": "next-action",
+      "title": "Create a one-page fitness check for each screening dataset",
+      "answer": "Record spatial and temporal resolution, update cadence, missingness, validation status, licence, responsible publisher, join keys and the decisions each dataset can and cannot support. Do this before deriving imperviousness, heat or groundwater constraints.",
+      "status": "proposal",
+      "scope": "Immediate data-engineering and governance action",
+      "tags": ["data fitness", "quality", "resolution", "licence", "join key", "screening", "next step"],
+      "source_ids": ["basel-data-smart-climate-100009", "basel-data-smart-climate-sites-100082", "basel-data-groundwater-stats-100180", "basel-data-land-cover-100477"],
+      "entity_ids": ["dataset-smart-climate-100009", "dataset-smart-climate-sites-100082", "dataset-groundwater-100180", "dataset-land-cover-100477"],
+      "related_record_ids": ["fact-open-screening-data", "boundary-open-data-not-effect"],
+      "owner": "Data workstream",
+      "due": "Before calculating the first candidate-site score"
+    }
+  ],
+  "maturity_levels": [
+    {
+      "id": "maturity-screening",
+      "order": 1,
+      "name": "Screening data only",
+      "question": "Where might action be needed and physically plausible?",
+      "evidence_required": ["documented spatial layers", "known resolution and date", "explicit unknowns and exclusion rules"],
+      "can_support": "Prioritising places for investigation and stating an expected mechanism.",
+      "cannot_support": "A site-design decision or a claim that an intervention caused an effect.",
+      "status": "proposal"
+    },
+    {
+      "id": "maturity-point-tested",
+      "order": 2,
+      "name": "Point tested",
+      "question": "Do local field checks support the key feasibility assumptions?",
+      "evidence_required": ["georeferenced field tests", "method and date", "soil, infiltration and utility constraints where relevant"],
+      "can_support": "Rejecting or advancing a candidate and refining the intervention concept.",
+      "cannot_support": "Long-term performance across seasons or extreme events.",
+      "status": "proposal"
+    },
+    {
+      "id": "maturity-monitored",
+      "order": 3,
+      "name": "Monitored",
+      "question": "How does an implemented element behave through time?",
+      "evidence_required": ["protocol-linked observations", "baseline or comparator logic", "quality control", "maintenance and event context"],
+      "can_support": "Observed site performance for named indicators under documented conditions.",
+      "cannot_support": "Automatic transfer to a different site or network-wide outcomes.",
+      "status": "proposal"
+    },
+    {
+      "id": "maturity-model-calibrated",
+      "order": 4,
+      "name": "Model calibrated",
+      "question": "Can observations constrain a model used for scenarios beyond the monitored point?",
+      "evidence_required": ["defined model purpose", "calibration and validation events", "uncertainty and sensitivity analysis", "versioned inputs and parameters"],
+      "can_support": "Scenario comparison and system-scale estimates within a declared validity domain.",
+      "cannot_support": "Certainty outside the calibrated conditions or replacement of accountable judgement.",
+      "status": "proposal"
     }
   ],
   "decision_routes": [

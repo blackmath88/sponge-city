@@ -39,7 +39,9 @@ The basic unit is a record, not a document. Each record carries:
 - searchable tags and related records;
 - optional ownership and timing for an action.
 
-Sources, people, organisations, projects, places, indicators and decisions have stable IDs. This makes the information usable by a static interface now and by a database, API or retrieval system later.
+Sources, people, organisations, projects, places, datasets, indicators and decisions have stable IDs. This makes the information usable by a static interface now and by a database, API or retrieval system later.
+
+The canonical dataset also contains a four-level evidence-maturity model: **screening data only → point tested → monitored → model calibrated**. Each level declares both what it can support and what it cannot. See [Monitoring and data stack](MONITORING-DATA-STACK.md) for the full architecture and evidence triage.
 
 `decision_routes` stores the nine combinations of intervention window and ownership. Each route names the available levers, decision sequence, accountable role, evidence needed and a caution. They are currently proposals to test with Basel practitioners—not verified descriptions of legal authority.
 
@@ -70,7 +72,11 @@ For a Hack Apertus implementation, conventional software should own the atlas, f
 
 ## What the public check established
 
-The official ZHAW project page confirms the commissioning relationship, May 2026 start, four indicator areas and research team. The Basel-Stadt government decision confirms CHF 280,000 and a five-year scientific evaluation aimed at possible citywide application.
+The official ZHAW monitoring page confirms the commissioning relationship, May 2026 start, four indicator areas and research team. A separate official ZHAW page establishes a 2024 predecessor design project for three Basel streets and says that a measurement concept should follow. The public pages make this a plausible design-to-monitoring chain, but do not prove that the final protocol implements the earlier concept.
+
+The Basel-Stadt government bulletin confirms CHF 280,000 and a five-year scientific evaluation aimed at possible citywide application. The formal decision register identifies the authorisation as P251765, decided on 18 November 2025 under BVD leadership.
+
+Four Basel datasets are now indexed as screening inputs: Smart Climate observations (100009), their station locations (100082), long-term groundwater statistics (100180) and land cover (100477). They can support context and prioritisation, but not a causal intervention-effect claim without protocol-linked field evidence.
 
 The checked public pages do not expose the protocol, exact components and sites, baselines or controls, measurement methods and cadence, quality rules, raw-data access, reporting milestones, reuse rights or decision thresholds.
 
@@ -91,5 +97,6 @@ The first shared governance action should be a short **VoltaNord learning agreem
 - Replace the seed record set with protocol-level fields after the ZHAW/Stadtgärtnerei hand-off.
 - Add the governance actors and decision gates already mapped in this repository.
 - Connect a candidate-site claim from the Decision Canvas to its relevant VoltaNord indicator.
+- Add fitness metadata for each screening dataset: resolution, currency, missingness, QA, licence and permitted decision use.
 - Add a simple review workflow: proposed → reviewed → accepted/superseded.
 - Publish as a small static site only after the group has agreed who maintains records and resolves conflicts.

@@ -10,6 +10,7 @@ Turn overlapping heat, surface-runoff and urban-form evidence into specific plac
 - [Sponge-city research and technical landscape](docs/RESEARCH.md): planning foundations, candidate open-source precedents and reuse strategy.
 - [Governance and measurement](docs/GOVERNANCE-AND-MEASUREMENT.md): the second map—how Basel decides, who can influence it, which evidence is missing and how outcomes could be measured.
 - [Queryable evidence atlas](docs/QUERYABLE-EVIDENCE-ATLAS.md): evidence model, claim ladder and group-access design, seeded with the VoltaNord/ZHAW monitoring case.
+- [Monitoring and data stack](docs/MONITORING-DATA-STACK.md): verified 2024→2026 Basel evidence chain, usable open data, maturity ladder and research-dump triage.
 - [Open the standalone prototype](prototype/evidence-atlas.html): search verified facts, boundaries, open questions, actors and next actions without an AI service.
 
 ## Run the evidence atlas
