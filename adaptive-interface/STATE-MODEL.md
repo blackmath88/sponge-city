@@ -1,6 +1,6 @@
 # Adaptive Interface — State Model
 
-Status: working architecture, 3 October 2026. Implemented as a first qualitative slice; see *State engine* in [README.md](README.md).
+Status: working architecture, 3 October 2026. Implemented as a first qualitative slice; see [STATE-ENGINE.md](STATE-ENGINE.md).
 
 ## Why this exists
 

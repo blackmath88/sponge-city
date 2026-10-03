@@ -1,7 +1,7 @@
 // Lightweight runtime validation of the two data contracts.
 // Mirrors contracts/place-model.schema.json and contracts/intervention-catalog.schema.json,
 // plus rules JSON Schema cannot express (unknown never carries a value, ids unique, refs resolve).
-import { EVIDENCE_STATES, ELEMENT_TYPES, SURFACES, MECHANISMS } from "./evidence.js";
+import { EVIDENCE_STATES, ELEMENT_TYPES, SURFACES, MECHANISMS, LEVEL_VALUES } from "./evidence.js";
 
 export const PLACE_SCHEMA_VERSION = "adaptive-place/0.1";
 export const CATALOGUE_SCHEMA_VERSION = "intervention-catalog/0.1";
@@ -55,6 +55,15 @@ export function validatePlaceModel(place) {
     }
   }
   for (const [key, value] of Object.entries(place.context || {})) checkEvidence(value, `context.${key}`, errors);
+  // Optional routing evidence. Absent = unknown routing; an edge must never claim to be unknown.
+  if (place.routing !== undefined) {
+    const nodes = new Set([...ids, ...(place.routing?.nodes || []).map(node => node.id)]);
+    for (const [i, edge] of (place.routing?.connections || []).entries()) {
+      const path = `routing.connections[${i}]`;
+      if (!nodes.has(edge.from) || !nodes.has(edge.to)) errors.push(`${path}: ${edge.from}→${edge.to} must join elements or routing nodes`);
+      if (!EVIDENCE_STATES.includes(edge.state) || ["unknown", "not-applicable"].includes(edge.state)) errors.push(`${path}: state must be a known evidence state (leave unknown edges out)`);
+    }
+  }
   return errors;
 }
 
@@ -86,69 +95,78 @@ export function validateCatalogue(catalogue) {
   return errors;
 }
 
-// ---------- intervention-knowledge/0.1 (researcher-facing)
+// ---------- StateModel 0.2, scenarios, intervention knowledge 0.1
 
+export const STATE_VERSION = "adaptive-state/0.2";
 export const KNOWLEDGE_SCHEMA_VERSION = "intervention-knowledge/0.1";
-export const KNOWLEDGE_CATEGORIES = ["surface", "routing", "storage-infiltration", "vegetation", "reuse"];
-// Keys that belong to renderers or to the internal execution DSL, never to research records.
-export const FORBIDDEN_KNOWLEDGE_KEYS = ["layout", "band", "svg", "x", "y", "width", "height", "color", "colour", "style", "icon", "render", "renderer", "stage", "transform", "operations", "op", "ops", "params", "target"];
-const KNOWLEDGE_KEYS = ["id", "label", "category", "description", "mechanisms", "applies_to", "requirements", "constraints", "basel_examples", "sources", "note"];
-const STATE_ELEMENT_TYPES = [...ELEMENT_TYPES, "rain-garden", "tree-trench", "gully", "downpipe", "sewer", "ground"];
+const CONNECTION_MODES = ["surface-runoff", "roof-drainage", "pipe", "overflow"];
+const KNOWLEDGE_FIELDS = ["id", "label", "category", "description", "mechanisms", "applies_to", "state_changes", "requirements", "constraints", "basel_examples", "sources", "notes"];
+// Things that belong to renderers or to the internal executor, never to researcher-facing knowledge.
+export const FORBIDDEN_KNOWLEDGE_FIELDS = ["layout", "band", "svg", "x", "y", "color", "colour", "icon", "stage", "position", "transform", "operations", "op", "target", "params"];
 
-function findForbidden(value, path, found) {
-  if (Array.isArray(value)) value.forEach((item, i) => findForbidden(item, `${path}[${i}]`, found));
-  else if (value && typeof value === "object") {
-    for (const [key, inner] of Object.entries(value)) {
-      if (FORBIDDEN_KNOWLEDGE_KEYS.includes(key)) found.push(`${path}.${key}`);
-      findForbidden(inner, `${path}.${key}`, found);
+export function validateStateModel(state) {
+  const errors = [];
+  if (!state || typeof state !== "object") return ["state: not an object"];
+  if (state.schema_version !== STATE_VERSION) errors.push(`schema_version must be ${STATE_VERSION}`);
+  if (!Array.isArray(state.elements)) return [...errors, "elements must be an array"];
+  if (!Array.isArray(state.connections)) errors.push("connections must be an array");
+  if (!state.routing || !EVIDENCE_STATES.includes(state.routing.state)) errors.push("routing.state must be an evidence state");
+  const ids = new Set();
+  for (const [i, element] of state.elements.entries()) {
+    const path = `elements[${i}](${element.id})`;
+    if (ids.has(element.id)) errors.push(`${path}: duplicate id`);
+    ids.add(element.id);
+    if (!["area", "point", "network"].includes(element.kind)) errors.push(`${path}: kind must be area, point or network`);
+    checkEvidence(element.presence, `${path}.presence`, errors);
+    if (element.kind === "network") continue;
+    checkEvidence(element.surface?.class, `${path}.surface.class`, errors);
+    for (const group of ["surface", "subsurface", "vegetation"]) {
+      for (const [key, value] of Object.entries(element[group] || {})) {
+        if (key === "rooted_in") continue;
+        checkEvidence(value, `${path}.${group}.${key}`, errors);
+      }
     }
   }
-  return found;
-}
-
-export function validateKnowledge(knowledge) {
-  const errors = [];
-  if (!knowledge || typeof knowledge !== "object") return ["knowledge: not an object"];
-  if (knowledge.schema_version !== KNOWLEDGE_SCHEMA_VERSION) errors.push(`schema_version must be ${KNOWLEDGE_SCHEMA_VERSION}`);
-  if (!Array.isArray(knowledge.interventions) || !knowledge.interventions.length) errors.push("interventions must be a non-empty array");
-  const ids = new Set();
-  for (const [i, item] of (knowledge.interventions || []).entries()) {
-    const path = `interventions[${i}]${item?.id ? `(${item.id})` : ""}`;
-    if (!/^[a-z0-9-]+$/.test(item.id || "")) errors.push(`${path}: id must be kebab-case`);
-    if (ids.has(item.id)) errors.push(`${path}: duplicate id`);
-    ids.add(item.id);
-    for (const key of ["label", "description"]) if (!item[key]) errors.push(`${path}: ${key} missing`);
-    if (!KNOWLEDGE_CATEGORIES.includes(item.category)) errors.push(`${path}: category must be one of ${KNOWLEDGE_CATEGORIES.join(", ")}`);
-    if (!Array.isArray(item.mechanisms) || item.mechanisms.some(m => !MECHANISMS.includes(m))) errors.push(`${path}: mechanisms must be from ${MECHANISMS.join(", ")}`);
-    if (!Array.isArray(item.applies_to) || !item.applies_to.length || item.applies_to.some(t => !STATE_ELEMENT_TYPES.includes(t))) errors.push(`${path}: applies_to must list element types`);
-    for (const key of ["requirements", "constraints"]) {
-      if (!Array.isArray(item[key])) errors.push(`${path}: ${key} must be an array`);
-      for (const rule of item[key] || []) if (!rule.id || !rule.label) errors.push(`${path}.${key}: each needs id and label`);
-    }
-    for (const key of ["basel_examples", "sources"]) if (!Array.isArray(item[key])) errors.push(`${path}: ${key} must be an array`);
-    for (const key of Object.keys(item)) if (!KNOWLEDGE_KEYS.includes(key)) errors.push(`${path}: unexpected field "${key}"`);
-    for (const hit of findForbidden(item, path, [])) errors.push(`${hit}: renderer / execution field not allowed in knowledge`);
+  for (const [i, edge] of (state.connections || []).entries()) {
+    const path = `connections[${i}](${edge.from}→${edge.to})`;
+    if (!ids.has(edge.from)) errors.push(`${path}: from "${edge.from}" is not an element`);
+    if (!ids.has(edge.to)) errors.push(`${path}: to "${edge.to}" is not an element`);
+    if (!CONNECTION_MODES.includes(edge.mode)) errors.push(`${path}: mode must be one of ${CONNECTION_MODES.join(", ")}`);
+    if (!EVIDENCE_STATES.includes(edge.state) || edge.state === "unknown" || edge.state === "not-applicable") errors.push(`${path}: a connection is evidence; unknown routing is the absence of an edge`);
   }
   return errors;
 }
 
-// ---------- adaptive-state/0.2 (internal; light checks used in tests)
-
-export function validateState(state) {
+export function validateScenario(scenario) {
   const errors = [];
-  if (state?.schema_version !== "adaptive-state/0.2") errors.push("schema_version must be adaptive-state/0.2");
-  const ids = new Set(state.elements.map(el => el.id));
-  for (const el of state.elements) {
-    if (!STATE_ELEMENT_TYPES.includes(el.type)) errors.push(`${el.id}: invalid type ${el.type}`);
-    checkEvidence(el.presence, `${el.id}.presence`, errors);
-    checkEvidence(el.area_m2, `${el.id}.area_m2`, errors);
-    for (const group of ["surface", "subsurface", "vegetation", "thermal"]) {
-      for (const [key, value] of Object.entries(el[group] || {})) checkEvidence(value, `${el.id}.${group}.${key}`, errors);
+  if (!scenario?.id) errors.push("scenario id missing");
+  if (!scenario?.rain && !scenario?.heat) errors.push(`${scenario?.id}: needs rain or heat conditions`);
+  if (scenario?.rain && !LEVEL_VALUES.includes(scenario.rain.intensity)) errors.push(`${scenario.id}.rain.intensity: qualitative level required`);
+  if (scenario?.heat && !LEVEL_VALUES.includes(scenario.heat.solar_exposure)) errors.push(`${scenario.id}.heat.solar_exposure: qualitative level required`);
+  if (scenario?.heat && !["low", "normal", "high"].includes(scenario.heat.soil_moisture)) errors.push(`${scenario.id}.heat.soil_moisture: low, normal or high`);
+  return errors;
+}
+
+export function validateKnowledge(catalogue) {
+  const errors = [];
+  if (!catalogue || typeof catalogue !== "object") return ["knowledge: not an object"];
+  if (catalogue.schema_version !== KNOWLEDGE_SCHEMA_VERSION) errors.push(`schema_version must be ${KNOWLEDGE_SCHEMA_VERSION}`);
+  if (!Array.isArray(catalogue.interventions) || !catalogue.interventions.length) errors.push("interventions must be a non-empty array");
+  const ids = new Set();
+  for (const [i, item] of (catalogue.interventions || []).entries()) {
+    const path = `interventions[${i}]${item?.id ? `(${item.id})` : ""}`;
+    if (!item.id) errors.push(`${path}: id missing`);
+    if (ids.has(item.id)) errors.push(`${path}: duplicate id`);
+    ids.add(item.id);
+    for (const key of ["label", "category", "description"]) if (!item[key]) errors.push(`${path}: ${key} missing`);
+    for (const key of Object.keys(item)) {
+      if (FORBIDDEN_KNOWLEDGE_FIELDS.includes(key)) errors.push(`${path}: "${key}" is a renderer/execution field, not knowledge`);
+      else if (!KNOWLEDGE_FIELDS.includes(key)) errors.push(`${path}: unknown field "${key}"`);
     }
-  }
-  for (const edge of state.connections) {
-    if (!ids.has(edge.from) || !ids.has(edge.to)) errors.push(`connection ${edge.from}→${edge.to}: unknown endpoint`);
-    if (!["surface-runoff", "roof-runoff", "pipe", "overflow", "infiltration"].includes(edge.mode)) errors.push(`connection ${edge.from}→${edge.to}: invalid mode ${edge.mode}`);
+    if (!Array.isArray(item.mechanisms) || item.mechanisms.some(m => !MECHANISMS.includes(m))) errors.push(`${path}: mechanisms must be from ${MECHANISMS.join(", ")}`);
+    if (!item.applies_to || !Array.isArray(item.applies_to.element_types) || !item.applies_to.element_types.every(t => ELEMENT_TYPES.includes(t))) errors.push(`${path}: applies_to.element_types must be element types`);
+    for (const rule of item.requirements || []) if (!rule.label) errors.push(`${path}: every requirement needs a label`);
+    for (const key of ["requirements", "constraints", "basel_examples", "sources"]) if (!Array.isArray(item[key])) errors.push(`${path}: ${key} must be an array`);
   }
   return errors;
 }

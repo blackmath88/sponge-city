@@ -1,6 +1,6 @@
 # Adaptive Interface — Build Plan: State → Intervention → Effect → Renderer
 
-Status: proposed next implementation slice. **Implemented on `feat/adaptive-interface-orchestration` (PR #3)**: phases 1–6 in code, phase 7 as the Street Slice adapter seam (`modules/street-slice-adapter.js`), phase 8 works with the mock provider. See *State engine* in [README.md](README.md).
+Status: proposed next implementation slice. **Implemented on `feat/adaptive-interface-orchestration` (PR #3)**: phases 1–6 in code, phase 7 as the Street Slice adapter seam (`modules/street-slice-adapter.js`), phase 8 works with the mock provider. See [STATE-ENGINE.md](STATE-ENGINE.md).
 
 ## Objective
 

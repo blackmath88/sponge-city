@@ -263,10 +263,13 @@ The current integration contract is documented in [ORCHESTRATION.md](ORCHESTRATI
 Status: runnable with mocks, 3 October 2026. **Every module is a mock**; the point is the seams, not the content.
 
 ```text
-selection ─▶ PlaceProvider ─▶ PlaceModel ─▶ (corrections) ─▶ baseline ─▶ InterventionCatalogue ─▶ ScenarioEngine ─▶ scenario ─▶ Renderer
-             modules/mock-     contracts/                     runtime/                 modules/mock-            runtime/               modules/mock-
-             place-provider    place-model                    orchestrator             intervention-provider    scenario-engine        renderer
+selection ─▶ PlaceProvider ─▶ PlaceModel 0.1 ─▶ (corrections) ─▶ placeToState ─▶ baselineState ──┐
+                                                                                                 │  + Scenario ─▶ Effect Engine ─▶ effects ─┐
+             Intervention Knowledge ─▶ compiler ─▶ state operations ─▶ applyStateOperations ─▶ scenarioState ─┘                          ├─▶ effectDelta ─▶ Renderer
+             (legacy 0.1 catalogue ─▶ compatibility adapter ─▶ same operations)                                                         ┘
 ```
+
+**A place has a state. An intervention changes that state. Effects emerge from the resulting state under a scenario.** The state engine slice is described in [STATE-ENGINE.md](STATE-ENGINE.md).
 
 Run it: `make run`, then open <http://127.0.0.1:4173/adaptive-interface/demo/> (ES modules do not load from `file://`). `?renderer=text` swaps in a second renderer. From the Situation Map, the place lens has **Open in Sponge View**.
 
@@ -277,7 +280,7 @@ Test it: `make test-adaptive` (also part of `make smoke`). No dependencies.
 | Team | Delivers | Contract | Replaces |
 |---|---|---|---|
 | **Data / API** | `{ async getPlace(selection) }` returning a `PlaceModel` | [`contracts/place-model.schema.json`](contracts/place-model.schema.json) | `modules/mock-place-provider.js` + `examples/demo-place.json` |
-| **Basel research** | An `InterventionCatalogue` (JSON) | [`contracts/intervention-catalog.schema.json`](contracts/intervention-catalog.schema.json) | `examples/demo-interventions.json` (loaded by `modules/mock-intervention-provider.js`) |
+| **Basel research** | Intervention knowledge (JSON): what, why, mechanisms, requirements, constraints, examples, sources. No operations, no layout | [`contracts/intervention-knowledge.schema.json`](contracts/intervention-knowledge.schema.json) | `catalogues/intervention-knowledge.json` (the 0.1 `examples/demo-interventions.json` still works via `?catalogue=legacy`) |
 | **Frontend** | `{ render(view), connect?(actions) }` | [`contracts/renderer-contract.md`](contracts/renderer-contract.md) | `modules/mock-renderer.js` |
 | **Situation Map** | A URL with `lat`, `lon`, `radius` | [`contracts/handoff.md`](contracts/handoff.md) | — (link already in the place lens) |
 | **Orchestration** | Connects them, validates, keeps state | `runtime/orchestrator.js` | — |
@@ -285,7 +288,7 @@ Test it: `make test-adaptive` (also part of `make smoke`). No dependencies.
 Assembly is one call, in [`demo/demo.js`](demo/demo.js), the only file that names implementations:
 
 ```js
-const app = new AdaptiveInterfaceOrchestrator({ placeProvider, interventionProvider, renderer });
+const app = new AdaptiveInterfaceOrchestrator({ placeProvider, interventionProvider, renderer, surfaces, scenarios, routingAssumptions });
 await app.load(selection);
 ```
 
@@ -295,11 +298,27 @@ await app.load(selection);
 |---|---|---|
 | `contracts/place-model.schema.json` | PlaceModel `adaptive-place/0.1` | contract |
 | `contracts/intervention-catalog.schema.json` | Catalogue `intervention-catalog/0.1` | contract |
-| `contracts/renderer-contract.md` | View model `adaptive-view/0.1` and actions | contract |
+| `contracts/renderer-contract.md` | View model `adaptive-view/0.2` (0.1 fields kept) and actions | contract |
+| `contracts/state-model.schema.json` | StateModel `adaptive-state/0.2` (internal) | contract |
+| `contracts/scenario.schema.json` | Scenario catalogue | contract |
+| `contracts/effect-result.schema.json` | EffectResult + EffectDelta | contract |
+| `contracts/intervention-knowledge.schema.json` | Researcher-facing knowledge `intervention-knowledge/0.1` | contract |
+| `catalogues/surfaces.json` | Surface archetypes, qualitative defaults (assumed) | prototype data |
+| `catalogues/scenarios.json` | heavy-rain, hot-day, hot-drought | prototype data |
+| `catalogues/intervention-knowledge.json` | Six interventions as knowledge records | **mock** |
+| `runtime/place-to-state.js` | PlaceModel 0.1 ⇄ StateModel adapter | stable |
+| `runtime/state-graph.js` | Water-routing graph helpers | stable |
+| `runtime/state-ops.js` | `applyStateOperations`: the one execution path | stable |
+| `runtime/intervention-compiler.js` | Knowledge + state + target → operations (recipes, design assumptions) | prototype |
+| `runtime/legacy-catalogue-adapter.js` | 0.1 catalogue → the same operations | compatibility |
+| `runtime/interventions.js` | One interface over both catalogue formats | stable |
+| `runtime/effect-engine.js` | Qualitative effects with drivers, comparison | V0 rules |
+| `modules/street-slice-adapter.js` | State + effects + scenario → Street Slice visual state | seam |
+| `examples/demo-routing.json` | Demo-only drainage assumptions, every edge `assumed` | **fixture** |
 | `contracts/handoff.md` | Situation Map → Adaptive Interface URL | contract |
 | `runtime/evidence.js` | Evidence states and vocabularies | stable |
 | `runtime/validate.js` | Runtime checks of both data contracts | stable |
-| `runtime/scenario-engine.js` | Pure functions: corrections, status, transforms, geometry effects, unknowns | stable |
+| `runtime/scenario-engine.js` | Corrections, PR #3 intervention API (now on the state path), geometry metrics, unknowns | stable |
 | `runtime/orchestrator.js` | Wires modules, owns state, never imports a mock | stable |
 | `runtime/selection.js` | Parses and builds the handoff URL | stable |
 | `modules/mock-place-provider.js` | Returns the demo fixture for any selection | **mock** |
@@ -309,7 +328,8 @@ await app.load(selection);
 | `examples/demo-place.json` | Invented Basel-like street, labelled as such | **fixture** |
 | `examples/demo-interventions.json` | Depave, permeable parking, tree + rain garden; rules marked `placeholder` | **fixture** |
 | `demo/` | Composition root and page | demo |
-| `tests/adaptive-interface.test.mjs` | Architectural invariants | test |
+| `tests/adaptive-interface.test.mjs` | Architectural invariants (PR #3) | test |
+| `tests/state-engine.test.mjs` | State → intervention → effects invariants | test |
 
 ### Rules the engine enforces
 
@@ -317,50 +337,7 @@ await app.load(selection);
 - **Corrections are evidence.** A correction becomes `state: "user-corrected"` with `replaces` holding the original value. "Not sure" is recorded as unknown.
 - **Unknown stays unknown.** The validator rejects an unknown with a value. Totals become `unknown` (with the known part shown) while any relevant surface is unknown. Effects are computed from changed elements only, so a known change still shows.
 - **Status, not feasibility.** Each intervention is `candidate`, `requires-investigation`, `excluded` or `not-applicable` from the PlaceModel's context and the catalogue's rules. With unknown utilities, nothing is ever a candidate.
-- **Geometry-only effects.** Sealed, permeable and planted area, parking spaces and trees. Design areas are `assumed` and shown next to the effect. Runoff, storage, infiltration and cooling are listed as **not modelled**.
+- **Geometry effects** (0.1). Sealed, permeable and planted area, parking spaces and trees. Design areas are `assumed` and shown next to the effect.
+- **Qualitative effects** (state engine). Runoff, sewer load, storage, infiltration, soil water, shade, evapotranspiration and surface heating as low / medium / high / unknown, each with drivers. No score, no °C, no runoff %, no rates: those stay listed as **not modelled**.
+- **Routing is evidence.** Without `place.routing` drainage is unknown; the demo injects `examples/demo-routing.json` explicitly, every edge `assumed`.
 - **No AI in the loop.** Nothing in `runtime/` calls a model.
-
----
-
-## State engine (next slice)
-
-Status: runnable with mocks. Conceptual centre:
-
-> **A place has a state. An intervention changes that state. Effects emerge from the resulting state under a scenario.**
-
-```text
-PlaceModel 0.1 ──placeToState──▶ StateModel 0.2 ─┬─ evaluateState(·, scenario) ─▶ baselineEffects ─┐
-                                                 │                                                  ├─ compareEffects ─▶ effectDelta ─▶ renderer
-intervention knowledge ──compileIntervention──▶ operations ─▶ applyStateOperations ─▶ scenarioState ─▶ scenarioEffects ─┘
-```
-
-| Path | Role |
-|---|---|
-| `contracts/state-model.schema.json` | StateModel `adaptive-state/0.2`: elements with surface, subsurface, vegetation, thermal drivers; typed routing `connections`; evidence on every value |
-| `contracts/scenario.schema.json` | Scenarios `adaptive-scenarios/0.1` |
-| `contracts/effect-result.schema.json` | Effects `adaptive-effects/0.1`: low / medium / high / unknown / not-applicable with drivers |
-| `contracts/intervention-knowledge.schema.json` | Researcher-facing `intervention-knowledge/0.1`; no renderer, layout or execution fields (`additionalProperties: false`) |
-| `catalogues/surfaces.json` | 12 surface archetypes (the 11 requested plus `sealed-roof`) with qualitative defaults, all `assumed` |
-| `catalogues/scenarios.json` | `heavy-rain`, `hot-day`, `hot-drought` |
-| `catalogues/intervention-knowledge.json` | depave, permeable parking, curb cut, tree trench (Baumrigole), rain garden, green roof |
-| `runtime/place-to-state.js` | Compatibility adapter PlaceModel 0.1 → StateModel 0.2 |
-| `runtime/state-model.js` | `connectionsFrom`, `connectionsTo`, `replaceConnection`, `downstreamPaths`, `applyStateOperations` (internal `intervention-execution/0.2`) |
-| `runtime/effect-engine.js` | `evaluateState`, `compareEffects`; the V0 rules and their thresholds are in `RULES` |
-| `runtime/intervention-compiler.js` | `evaluateKnowledge`, `compileIntervention`; internal recipe library |
-| `runtime/state-geometry.js` | Geometry effects on state (same shape as PR #3's) |
-| `modules/mock-knowledge-provider.js` | **mock**: serves the knowledge catalogue |
-| `modules/street-slice-adapter.js` | Seam: state + effects + scenario → Street Slice visual tokens |
-| `tests/state-engine.test.mjs` | 14 tests for the state layer |
-
-How the engine stays honest:
-
-- **Unknown as an interval.** Where an input is unknown, the engine computes the best and worst case. Same category → `derived`; different → `unknown` with the inputs it depends on. In the demo, the unknown tram surface makes runoff unknown once interventions bring the sealed share near a threshold; correcting it in "Does this look right?" resolves it.
-- **Routing is state.** A curb cut is one `replace-connection`, no material change, and it lowers sewer load.
-- **Assumed defaults stay visible.** Archetype properties, drainage routing (PlaceModel 0.1 has none), tree canopy and design areas are `assumed`. A provider that sends `connections` gets them used as `observed`.
-- **Thresholds are prototype assumptions**, written into each result's `rule`. They are not calibrated.
-
-### Compatibility
-
-- `placeProvider.getPlace(selection)` and PlaceModel 0.1 are unchanged. The data team may optionally add `connections`.
-- The PR #3 executable catalogue still runs: pass `interventionProvider` instead of `knowledgeProvider` (demo: `?mode=execution-0.1`). PR #3's 15 tests are untouched and pass.
-- adaptive-view/0.2 is a superset of 0.1 (`contracts/renderer-contract.md`).

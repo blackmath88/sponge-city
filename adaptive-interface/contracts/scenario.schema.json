@@ -1,54 +1,42 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/scenario.schema.json",
-  "title": "Scenario catalogue (adaptive-scenarios/0.1)",
-  "description": "External conditions under which a state is evaluated. Qualitative archetypes; no rainfall depths or temperatures. A scenario has rain or heat (or both, later).",
+  "title": "Scenario catalogue (scenario-catalogue/0.1)",
+  "description": "External conditions under which a state is evaluated. Kept separate from the place (baseline) and from interventions. Qualitative only; values are scenario assumptions, not forecasts. See catalogues/scenarios.json.",
   "type": "object",
   "required": ["schema_version", "scenarios"],
   "properties": {
-    "schema_version": { "const": "adaptive-scenarios/0.1" },
+    "schema_version": { "const": "scenario-catalogue/0.1" },
+    "catalogue_id": { "type": "string" },
     "note": { "type": "string" },
     "scenarios": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scenario" } }
   },
   "$defs": {
-    "level": { "enum": ["low", "normal", "medium", "high"] },
+    "level": { "enum": ["low", "medium", "high"] },
     "scenario": {
       "type": "object",
       "required": ["id", "label", "rain", "heat"],
-      "additionalProperties": false,
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "id": { "type": "string" },
         "label": { "type": "string" },
         "description": { "type": "string" },
         "rain": {
-          "oneOf": [
-            { "type": "null" },
-            {
-              "type": "object",
-              "required": ["intensity", "duration", "antecedent_moisture"],
-              "additionalProperties": false,
-              "properties": {
-                "intensity": { "$ref": "#/$defs/level" },
-                "duration": { "enum": ["short", "long"] },
-                "antecedent_moisture": { "$ref": "#/$defs/level" }
-              }
-            }
-          ]
+          "type": ["object", "null"],
+          "required": ["intensity"],
+          "properties": {
+            "intensity": { "$ref": "#/$defs/level" },
+            "duration": { "enum": ["short", "long"] },
+            "antecedent_moisture": { "enum": ["low", "normal", "high"] }
+          }
         },
         "heat": {
-          "oneOf": [
-            { "type": "null" },
-            {
-              "type": "object",
-              "required": ["solar_exposure", "air_temperature", "drought_stress"],
-              "additionalProperties": false,
-              "properties": {
-                "solar_exposure": { "$ref": "#/$defs/level" },
-                "air_temperature": { "$ref": "#/$defs/level" },
-                "drought_stress": { "$ref": "#/$defs/level" }
-              }
-            }
-          ]
+          "type": ["object", "null"],
+          "required": ["solar_exposure", "soil_moisture"],
+          "properties": {
+            "solar_exposure": { "$ref": "#/$defs/level" },
+            "air_temperature": { "$ref": "#/$defs/level" },
+            "soil_moisture": { "enum": ["low", "normal", "high"] }
+          }
         }
       }
     }

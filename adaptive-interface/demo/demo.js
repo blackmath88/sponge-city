@@ -1,45 +1,42 @@
 // Composition root: the ONLY place that chooses implementations.
-// Swap a module here (or via ?renderer=text / ?mode=execution-0.1) and nothing else changes.
+// Swap a module here (or via ?renderer=text) and nothing else changes.
 import { AdaptiveInterfaceOrchestrator } from "../runtime/orchestrator.js";
 import { parseSelection } from "../runtime/selection.js";
 import { createMockPlaceProvider } from "../modules/mock-place-provider.js";
-import { createMockKnowledgeProvider } from "../modules/mock-knowledge-provider.js";
 import { createMockInterventionProvider } from "../modules/mock-intervention-provider.js";
 import { createMockRenderer } from "../modules/mock-renderer.js";
 import { createTextRenderer } from "../modules/text-renderer.js";
 
 const loadJson = async path => (await fetch(new URL(path, import.meta.url))).json();
 
-const [placeFixture, knowledge, catalogue, surfaces, scenarios] = await Promise.all([
+const params = new URLSearchParams(location.search);
+const useLegacyCatalogue = params.get("catalogue") === "legacy";
+
+const [placeFixture, catalogue, surfaces, scenarios, routingAssumptions] = await Promise.all([
   loadJson("../examples/demo-place.json"),
-  loadJson("../catalogues/intervention-knowledge.json"),
-  loadJson("../examples/demo-interventions.json"),
+  loadJson(useLegacyCatalogue ? "../examples/demo-interventions.json" : "../catalogues/intervention-knowledge.json"),
   loadJson("../catalogues/surfaces.json"),
-  loadJson("../catalogues/scenarios.json")
+  loadJson("../catalogues/scenarios.json"),
+  loadJson("../examples/demo-routing.json")   // DEMO ONLY: assumed drainage; a real PlaceModel brings place.routing or nothing
 ]);
 
-const params = new URLSearchParams(location.search);
 const root = document.querySelector("#app");
 const useText = params.get("renderer") === "text";
-const legacy = params.get("mode") === "execution-0.1";
 
 const app = new AdaptiveInterfaceOrchestrator({
-  placeProvider: createMockPlaceProvider(placeFixture),                    // → real Basel PlaceProvider (PlaceModel 0.1)
-  ...(legacy
-    ? { interventionProvider: createMockInterventionProvider(catalogue) }  // PR #3 executable catalogue
-    : { knowledgeProvider: createMockKnowledgeProvider(knowledge) }),      // → Basel research knowledge
-  catalogues: { surfaces, scenarios },                                     // state-layer data
-  renderer: useText ? createTextRenderer(root.appendChild(document.createElement("pre"))) : createMockRenderer(root) // → educational renderer
+  placeProvider: createMockPlaceProvider(placeFixture),          // → real Basel PlaceProvider
+  interventionProvider: createMockInterventionProvider(catalogue), // → Basel research knowledge (or ?catalogue=legacy for PR #3's 0.1 catalogue)
+  renderer: useText ? createTextRenderer(root.appendChild(document.createElement("pre"))) : createMockRenderer(root), // → educational Street Slice renderer
+  surfaces,                 // surface archetypes (assumed defaults)
+  scenarios,                // heavy-rain / hot-day / hot-drought
+  routingAssumptions        // explicit, demo-only, every edge "assumed"
 });
 
 const { selection, errors } = parseSelection(params);
 const model = await app.load(selection || placeFixture.selection);
 if (errors.length) app.fail(`Selection ignored: ${errors.join("; ")}`);
 
-const toggle = (key, value) => { const p = new URLSearchParams(params); p.get(key) === value ? p.delete(key) : p.set(key, value); return `?${p}`; };
-document.querySelector("#renderer-switch").href = toggle("renderer", "text");
+document.querySelector("#renderer-switch").href = `?${(() => { const p = new URLSearchParams(params); useText ? p.delete("renderer") : p.set("renderer", "text"); return p; })()}`;
 document.querySelector("#renderer-switch").textContent = useText ? "Switch to schematic renderer" : "Switch to text renderer";
-document.querySelector("#mode-switch").href = toggle("mode", "execution-0.1");
-document.querySelector("#mode-switch").textContent = legacy ? "State + knowledge path" : "PR #3 execution path";
 window.adaptiveInterface = app; // for poking around in the console
-console.info("Adaptive interface ready", model.mode, model.status);
+console.info("Adaptive interface ready", model.status);

@@ -1,133 +1,175 @@
-// placeToState: the compatibility layer between the data team's PlaceModel 0.1 and the StateModel 0.2.
-// The data team keeps delivering PlaceModel 0.1; everything below is internal and may evolve.
+// State adapter: PlaceModel 0.1 (the data team's contract) → StateModel 0.2 (the engine's view).
 //
-// What the adapter adds, and how it labels it:
-//   surface archetype      assumed  (PlaceModel only says sealed / permeable / planted)
-//   sealed_fraction        derived  from the PlaceModel surface where that is known
-//   other surface props    assumed  archetype defaults (catalogues/surfaces.json)
-//   subsurface             copied from PlaceModel context (unknown stays unknown) or archetype defaults (assumed)
-//   tree canopy            assumed  "medium" for an existing tree (no canopy data in 0.1)
-//   water routing          observed if the PlaceModel carries `connections`, else assumed conventional drainage
+// The data/API side keeps delivering PlaceModel 0.1. This adapter adds what the engine needs:
+//   - surface archetype + qualitative surface properties (all "assumed" defaults),
+//   - per-element subsurface state (site context such as infiltration capacity, copied with its evidence),
+//   - vegetation state for trees,
+//   - the water-routing graph — ONLY from place.routing (provider evidence) or explicitly injected
+//     routing assumptions (demo). Missing routing stays unknown; it never becomes a sewer connection.
+//
+// stateToPlace() projects a StateModel back to PlaceModel 0.1, so 0.1 renderers and geometry
+// metrics keep working on states produced by interventions.
 import { ev, clone, isKnown } from "./evidence.js";
-import { STATE_SCHEMA_VERSION, surfaceFromArchetype, archetypeById, edgeId } from "./state-model.js";
+import { NETWORK_TYPES } from "./state-graph.js";
 
-const ARCHETYPE_RULES = {
-  sealed: { building: "sealed-roof", road: "asphalt", parking: "asphalt", tram: "asphalt", sidewalk: "sealed-paving", "fixed-area": "sealed-paving", default: "concrete" },
-  permeable: { default: "permeable-paving" },
-  planted: { tram: "grass", default: "planted-soil" },
-  water: { default: "water" }
-};
-const SEALED_FROM_PLACE = { sealed: "high", permeable: "medium", planted: "none", water: "none" };
-const DRAINED_TYPES = ["road", "parking", "sidewalk", "tram", "fixed-area", "unknown-area"];
-const POINT_TYPES = ["tree", "entrance"];
+export const STATE_SCHEMA_VERSION = "adaptive-state/0.2";
+export const SURFACE_KEYS = ["sealed_fraction", "permeability", "vegetation_fraction", "depression_storage", "albedo"];
+const SUBSURFACE_DEFAULT_KEYS = ["storage_capacity", "rootable_volume"];
 
-const copyEvidence = (value, fallbackNote) => value ? clone(value) : ev(null, "unknown", { note: fallbackNote });
-const archetypeFor = (type, surface) => {
-  const rules = ARCHETYPE_RULES[surface];
-  return rules ? rules[type] || rules.default : null;
+// Place context key → per-element subsurface property. The evidence (including unknown) is copied as-is.
+const CONTEXT_TO_SUBSURFACE = {
+  infiltration_capacity: "infiltration_capacity",
+  soil_water: "soil_water_available",
+  utilities: "utility_conflict",
+  groundwater_protection_zone: "groundwater_constraint"
 };
 
-function surfaceState(element, surfaces) {
-  if (POINT_TYPES.includes(element.type) || element.surface?.state === "not-applicable") return null;
-  if (!isKnown(element.surface)) return surfaceFromArchetype(surfaces, null);
-  const archetypeId = archetypeFor(element.type, element.surface.value);
-  const derivedSealed = ev(SEALED_FROM_PLACE[element.surface.value], "derived", { drivers: [`place:${element.id}.surface`], method: `PlaceModel surface "${element.surface.value}" (${element.surface.state})` });
-  return surfaceFromArchetype(surfaces, archetypeId, { method: `assumed from PlaceModel surface "${element.surface.value}" + type ${element.type}`, derivedSealed });
+// Which archetype stands in for a 0.1 surface class on a given element type. The choice is an assumption.
+const ARCHETYPE_BY_CLASS = {
+  sealed: { building: "sealed-roof", road: "asphalt", parking: "asphalt", tram: "concrete", "fixed-area": "concrete", "*": "sealed-paving" },
+  permeable: { tram: "gravel", "*": "permeable-paving" },
+  planted: { building: "green-roof", tram: "grass", "tree-trench": "tree-bed", "*": "planted-soil" },
+  water: { "*": "water" }
+};
+
+export function archetypeFor(type, surfaceClass) {
+  const table = ARCHETYPE_BY_CLASS[surfaceClass];
+  return table ? (table[type] || table["*"]) : null;
 }
 
-function subsurfaceState(element, context, surfaces, surface) {
-  if (element.type === "entrance") return null;
-  const defaults = surface?.archetype?.value ? archetypeById(surfaces, surface.archetype.value).properties : null;
-  const assumed = value => value ? ev(value, "assumed", { source_id: "catalogue:surfaces" }) : ev(null, "unknown");
-  const roof = element.type === "building";
+export const findArchetype = (surfaces, id) => surfaces?.archetypes?.find(item => item.id === id) || null;
+
+// Surface + subsurface defaults for an archetype. Values are "assumed"; unknown if there is no catalogue.
+export function archetypeState(archetypeId, surfaces, extra = {}) {
+  const archetype = findArchetype(surfaces, archetypeId);
+  const from = { from: `archetype:${archetypeId}`, ...extra };
+  const pick = (group, key) => archetype?.[group]?.[key] !== undefined
+    ? ev(archetype[group][key], "assumed", from)
+    : ev(null, "unknown", { note: surfaces ? `archetype "${archetypeId}" not in catalogue` : "no surface catalogue loaded" });
   return {
-    infiltration_capacity: roof ? ev(null, "not-applicable", { note: "roof; water leaves through the downpipe" }) : copyEvidence(context.infiltration_capacity, "not in PlaceModel"),
-    storage_capacity: element.type === "tree" ? ev("low", "assumed", { note: "grate-sized tree pit assumed" }) : assumed(defaults?.storage_capacity),
-    rootable_volume: element.type === "tree" ? ev("low", "assumed", { note: "grate-sized tree pit assumed" }) : assumed(defaults?.rootable_volume),
-    utility_conflict: copyEvidence(context.utilities, "not in PlaceModel"),
-    groundwater_constraint: roof ? ev(null, "not-applicable") : copyEvidence(context.groundwater_protection_zone, "not in PlaceModel")
+    surface: Object.fromEntries(SURFACE_KEYS.map(key => [key, pick("properties", key)])),
+    subsurface: Object.fromEntries(SUBSURFACE_DEFAULT_KEYS.map(key => [key, pick("subsurface", key)]))
   };
 }
 
-function vegetationState(element, context, surface) {
-  const soilWater = copyEvidence(context.soil_water, "no soil-water data");
-  if (element.type === "tree") {
-    return { canopy: element.presence?.value === false ? ev("none", "user-corrected", { replaces: null }) : ev("medium", "assumed", { note: "existing street tree; no canopy data in PlaceModel 0.1" }), soil_water_available: soilWater };
+function contextSubsurface(context, type) {
+  const out = {};
+  for (const [contextKey, key] of Object.entries(CONTEXT_TO_SUBSURFACE)) {
+    if (type === "building") { out[key] = ev(null, "not-applicable", { note: "roof, not ground" }); continue; }
+    const value = context?.[contextKey];
+    out[key] = value ? { ...clone(value), from: `context.${contextKey}` } : ev(null, "unknown", { note: `context.${contextKey} not in PlaceModel` });
   }
-  if (surface && ["high", "medium", "low"].includes(surface.vegetation_fraction?.value)) return { canopy: ev("none", "assumed"), soil_water_available: soilWater };
-  return null;
+  return out;
 }
 
-function node(id, type, label, note) {
-  return { id, type, label, origin: "adapter", presence: ev(true, "assumed", { note }), area_m2: ev(null, "not-applicable"), surface: null, subsurface: null, vegetation: null };
-}
-
-function assumedRouting(elements, place) {
-  const nodes = [node("sewer", "sewer", "Combined sewer", "conventional drainage assumed"), node("ground", "ground", "Ground / subsoil", "always present")];
-  const connections = [];
-  const edge = (from, to, mode, note) => connections.push({ id: edgeId({ from, to }), from, to, medium: "rainwater", mode, state: "assumed", note });
-  for (const element of elements) {
-    if (element.presence?.value === false) continue;
-    if (element.type === "building") {
-      nodes.push(node(`downpipe:${element.id}`, "downpipe", `Downpipe, ${element.label}`, "assumed for every building"));
-      edge(element.id, `downpipe:${element.id}`, "roof-runoff", "roof drains through a downpipe (assumed)");
-      edge(`downpipe:${element.id}`, "sewer", "pipe", "downpipe connected to sewer (assumed)");
-    } else if (DRAINED_TYPES.includes(element.type)) {
-      const permeable = ["medium", "low", "none"].includes(element.surface?.sealed_fraction?.value) && element.surface.sealed_fraction.value !== "high";
-      if (permeable) edge(element.id, "ground", "infiltration", "permeable surface infiltrates (assumed)");
-      nodes.push(node(`gully:${element.id}`, "gully", `Gully, ${element.label}`, "assumed for every drained surface"));
-      edge(element.id, `gully:${element.id}`, permeable ? "overflow" : "surface-runoff", "surface drains to a gully (assumed)");
-      edge(`gully:${element.id}`, "sewer", "pipe", "gully connected to sewer (assumed)");
-    } else if (element.surface && ["planted", "water"].includes(archetypeClass(element))) {
-      edge(element.id, "ground", "infiltration", "planted surface infiltrates (assumed)");
+// One PlaceModel element → one StateModel element. `options.archetype` overrides the default choice.
+export function elementToState(element, context, surfaces, { archetype = null, vegetation = null, surfaceOverrides = {}, subsurfaceOverrides = {} } = {}) {
+  const { surface: surfaceClass, ...rest } = clone(element);
+  const classEv = surfaceClass ?? ev(null, "unknown");
+  if (classEv.state === "not-applicable") {
+    const out = { ...rest, kind: "point", surface: { class: classEv } };
+    if (element.type === "tree") {
+      out.vegetation = {
+        canopy_area: ev("medium", "assumed", { note: "established street tree; canopy not in the PlaceModel" }),
+        health: ev(null, "unknown"),
+        rooted_in: null,
+        ...clone(vegetation || {})
+      };
     }
+    return out;
   }
-  return { nodes, connections };
+  const archetypeId = archetype || (isKnown(classEv) ? archetypeFor(element.type, classEv.value) : null);
+  const defaults = archetypeId
+    ? archetypeState(archetypeId, surfaces)
+    : { surface: Object.fromEntries(SURFACE_KEYS.map(key => [key, ev(null, "unknown", { note: "surface unknown" })])), subsurface: Object.fromEntries(SUBSURFACE_DEFAULT_KEYS.map(key => [key, ev(null, "unknown", { note: "surface unknown" })])) };
+  return {
+    ...rest,
+    kind: "area",
+    surface: {
+      class: classEv,
+      material: archetypeId ? ev(archetypeId, "assumed", { method: "archetype default for surface class" }) : ev(null, "unknown", { note: "surface unknown" }),
+      ...defaults.surface,
+      ...clone(surfaceOverrides)
+    },
+    subsurface: { ...contextSubsurface(context, element.type), ...defaults.subsurface, ...clone(subsurfaceOverrides) }
+  };
 }
 
-function archetypeClass(element) {
-  const value = element.surface?.vegetation_fraction?.value;
-  return ["high", "medium"].includes(value) ? "planted" : null;
+function networkNode(node, state, extra = {}) {
+  return { id: node.id, type: node.type, label: node.label || node.type, kind: "network", presence: ev(true, state, extra) };
 }
 
-export function placeToState(place, { surfaces } = {}) {
-  if (!surfaces) throw new Error("placeToState needs the surface archetype catalogue");
-  const context = place.context || {};
-  const elements = place.elements.map(element => {
-    const surface = surfaceState(element, surfaces);
-    return {
-      id: element.id, type: element.type, label: element.label,
-      ...(element.layout ? { layout: clone(element.layout) } : {}),
-      ...(element.origin ? { origin: element.origin } : {}),
-      ...(element.fixed ? { fixed: true } : {}),
-      ...(element.tags ? { tags: [...element.tags] } : {}),
-      presence: clone(element.presence),
-      area_m2: clone(element.area_m2),
-      ...(element.count ? { count: clone(element.count) } : {}),
-      surface,
-      subsurface: subsurfaceState(element, context, surfaces, surface),
-      vegetation: vegetationState(element, context, surface),
-      thermal: surface ? { albedo: clone(surface.albedo), shade_fraction: ev(null, "unknown", { note: "no canopy geometry to intersect" }) } : null
-    };
-  });
-  let nodes = [];
-  let connections = [];
-  if (Array.isArray(place.connections) && place.connections.length) {
-    connections = place.connections.map(item => ({ medium: "rainwater", state: "observed", ...clone(item), id: edgeId(item) }));
-    const known = new Set(elements.map(element => element.id));
-    for (const id of new Set(connections.flatMap(item => [item.from, item.to]))) if (!known.has(id)) nodes.push(node(id, id.startsWith("sewer") ? "sewer" : id.startsWith("downpipe") ? "downpipe" : id === "ground" ? "ground" : "gully", id, "named in PlaceModel connections"));
-  } else {
-    ({ nodes, connections } = assumedRouting(elements, place));
+// place.routing is optional in PlaceModel 0.1: { nodes: [{ id, type, label, state? }], connections: [{ from, to, mode, state, source_id? }] }
+// routingAssumptions (examples/demo-routing.json) are injected by the composition root, never by default.
+export function placeToState(place, { surfaces = null, routingAssumptions = null } = {}) {
+  const { elements = [], context = {}, routing = null, applied = [], schema_version, place_id, label, ...meta } = clone(place);
+  const stateElements = elements.map(element => elementToState(element, context, surfaces));
+  const ids = new Set(stateElements.map(element => element.id));
+  const connections = [];
+  const sources = [];
+
+  if (routing?.connections?.length) {
+    for (const node of routing.nodes || []) {
+      if (ids.has(node.id)) continue;
+      stateElements.push(networkNode(node, node.state || "observed", node.source_id ? { source_id: node.source_id } : {}));
+      ids.add(node.id);
+    }
+    for (const edge of routing.connections) connections.push({ medium: "rainwater", ...edge, state: edge.state || "observed", origin: "place" });
+    sources.push("place");
   }
+  if (routingAssumptions) {
+    const tag = `assumption:${routingAssumptions.id || "routing"}`;
+    const supplied = new Set(connections.map(edge => edge.from));
+    for (const node of routingAssumptions.nodes || []) {
+      if (ids.has(node.id)) continue;
+      stateElements.push(networkNode(node, "assumed", { source_id: tag }));
+      ids.add(node.id);
+    }
+    for (const edge of routingAssumptions.connections || []) {
+      // Provider evidence wins; assumptions only fill elements the provider said nothing about.
+      if (supplied.has(edge.from) || !ids.has(edge.from) || !ids.has(edge.to)) continue;
+      connections.push({ medium: "rainwater", ...edge, state: "assumed", source_id: tag, origin: "assumption" });
+    }
+    sources.push("assumption");
+  }
+  const routingState = !sources.length
+    ? { state: "unknown", sources: [], note: "The PlaceModel has no routing evidence: where water goes is unknown." }
+    : { state: sources.includes("place") ? "observed" : "assumed", sources, note: sources.includes("assumption") ? routingAssumptions.note || "Routing assumptions injected for the demo." : "" };
+
   return {
     schema_version: STATE_SCHEMA_VERSION,
-    place_id: place.place_id,
-    label: place.label,
-    ...(place.fixture ? { fixture: true } : {}),
-    ...(place.schematic ? { schematic: clone(place.schematic) } : {}),
-    elements: [...elements, ...nodes],
+    place_id,
+    label,
+    meta,
+    context,
+    elements: stateElements,
     connections,
-    context: clone(context),
-    provenance: [...clone(place.provenance || []), { id: "adapter:place-to-state", kind: "adapter", label: "placeToState", note: "Archetypes, subsurface defaults, tree canopy and drainage routing are prototype assumptions unless the PlaceModel provides them." }]
+    routing: routingState,
+    applied
   };
 }
+
+// StateModel → PlaceModel 0.1 projection (network nodes and state-only properties dropped).
+export function stateToPlace(state) {
+  const place = {
+    schema_version: "adaptive-place/0.1",
+    place_id: state.place_id,
+    label: state.label,
+    ...clone(state.meta),
+    elements: state.elements.filter(element => element.kind !== "network").map(element => {
+      const { kind, surface, subsurface, vegetation, ...rest } = element;
+      return { ...clone(rest), surface: clone(surface.class) };
+    }),
+    context: clone(state.context)
+  };
+  if (state.routing.sources.includes("place")) {
+    place.routing = {
+      nodes: state.elements.filter(element => element.kind === "network").map(node => ({ id: node.id, type: node.type, label: node.label, state: node.presence.state })),
+      connections: state.connections.filter(edge => edge.origin !== "assumption").map(({ origin, ...edge }) => clone(edge))
+    };
+  }
+  if (state.applied.length) place.applied = clone(state.applied);
+  return place;
+}
+
+export const isNetwork = element => element.kind === "network" || NETWORK_TYPES.includes(element.type);

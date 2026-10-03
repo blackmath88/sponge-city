@@ -1,270 +1,286 @@
-// Effect engine V0: qualitative rules over StateModel + Scenario. Pure functions only.
+// Effect engine V0: qualitative, rule-based, pure.
 //
-//   Effect(state, scenario) → adaptive-effects/0.1
+//   evaluateState(state, scenario) → EffectResult (adaptive-effects/0.1)
+//   compareEffects(before, after)  → EffectDelta
 //
-// Outputs are low / medium / high / unknown / not-applicable, each with drivers and the rule used.
-// Unknown inputs are carried as intervals: the engine evaluates the best and worst case; if both land in
-// the same category the result is derived, otherwise it is unknown and says what it depends on.
-// No rainfall depths, runoff percentages, infiltration rates or temperatures are produced.
-import { connectionsTo, downstreamPaths, elementById, RECEIVER_TYPES } from "./state-model.js";
+// Effects are not properties of interventions: they emerge from STATE under a SCENARIO.
+// Values are low / medium / high, or state "unknown" / "not-applicable" with value null.
+// No Sponge Score, no °C, no runoff %, no infiltration rates. Every result lists its drivers
+// (state property paths, routing edges, scenario conditions) and a per-element breakdown, so local
+// effects can be exposed later without changing the model.
 import { isKnown } from "./evidence.js";
+import { connectionsFrom, connectionsTo, edgeLabel } from "./state-graph.js";
 
 export const EFFECT_SCHEMA_VERSION = "adaptive-effects/0.1";
-export const EFFECT_KEYS = ["runoff_tendency", "sewer_load_tendency", "storage_potential", "infiltration_potential", "soil_water_availability", "shade", "evapotranspiration_potential", "surface_heating_tendency"];
-const OUT = ["low", "low", "medium", "high"];
-const LEVEL = { none: 0, low: 1, "medium-low": 1, medium: 2, "medium-high": 2, high: 3 };
+export const LEVELS = ["low", "medium", "high"];
 
-// Category thresholds of the V0 rules. Prototype assumptions, visible and testable; not calibrated.
-export const RULES = {
-  runoff_tendency: { thresholds: [0.3, 0.6], text: "Area share of runoff-generating surfaces (sealed high = 1, medium = 0.5). ≥ 30 % medium, ≥ 60 % high." },
-  sewer_load_tendency: { thresholds: [0.3, 0.6], text: "Runoff-generating share whose routing reaches the sewer; via a receiver it counts 0.5 (storage medium) or 0.25 (storage high)." },
-  storage_potential: { thresholds: [0.03, 0.1], text: "Area share with storage capacity (high = 1, medium = 0.5). ≥ 3 % medium, ≥ 10 % high." },
-  infiltration_potential: { thresholds: [0.1, 0.3], text: "Area share that is permeable AND has known infiltration capacity. Unknown infiltration keeps the result unknown." },
-  soil_water_availability: { text: "Scenario soil moisture (rain normal → medium, heat normal → medium, drought → low); one level up where runoff is routed into vegetation." },
-  shade: { thresholds: [2, 5], text: "Tree canopy points (low 1, medium 2, high 3) per 1000 m² of open ground. < 2 low, < 5 medium, ≥ 5 high." },
-  evapotranspiration_potential: { thresholds: [0.05, 0.15], text: "min(vegetation level, soil-water level). Vegetation level is the higher of planted area share (≥ 5 % medium, ≥ 15 % high) and canopy level." },
-  surface_heating_tendency: { thresholds: [0.3, 0.6], text: "Sealed area share (as runoff), one level lower if shade is high, one lower if evapotranspiration is high." }
-};
+export const EFFECTS = [
+  { id: "runoff_tendency", label: "Runoff tendency", needs: "rain", desirable: "lower" },
+  { id: "sewer_load_tendency", label: "Sewer load tendency", needs: "rain", desirable: "lower" },
+  { id: "storage_potential", label: "Storage potential", needs: "rain", desirable: "higher" },
+  { id: "infiltration_potential", label: "Infiltration potential", needs: "rain", desirable: "higher" },
+  { id: "soil_water_availability", label: "Soil water for plants", needs: "heat", desirable: "higher" },
+  { id: "shade", label: "Shade", needs: "heat", desirable: "higher" },
+  { id: "evapotranspiration_potential", label: "Evapotranspiration potential", needs: "heat", desirable: "higher" },
+  { id: "surface_heating_tendency", label: "Surface heating tendency", needs: "heat", desirable: "lower" }
+];
 
-// ---------- intervals of numbers
-const I = (lo, hi = lo) => ({ lo, hi });
-const add = (a, b) => I(a.lo + b.lo, a.hi + b.hi);
-const scale = (a, k) => I(a.lo * k, a.hi * k);
-const mul = (a, b) => I(Math.min(a.lo * b.lo, a.lo * b.hi, a.hi * b.lo, a.hi * b.hi), Math.max(a.lo * b.lo, a.lo * b.hi, a.hi * b.lo, a.hi * b.hi));
-const UNKNOWN_UNIT = I(0, 1);
+// ---------- Small qualitative algebra
 
-function level(evidence, weights) {
-  if (!evidence || evidence.state === "unknown" || evidence.value === null || evidence.value === undefined) return null;
-  return weights[evidence.value] ?? null;
-}
-function weightInterval(evidence, weights, reasons, path) {
-  const w = level(evidence, weights);
-  if (w === null) { reasons.push(path); return UNKNOWN_UNIT; }
-  return I(w);
-}
+const SCORE = { none: 0, low: 1, "medium-low": 1.5, medium: 2, "medium-high": 2.5, high: 3 };
+const level = value => (SCORE[value] ?? 0) <= 1 ? "low" : SCORE[value] < 2.5 ? "medium" : "high";
+const bucket = score => score < 1.67 ? "low" : score < 2.34 ? "medium" : "high";
+const lower = (value, steps = 1) => LEVELS[Math.max(0, LEVELS.indexOf(value) - steps)];
+const raise = (value, steps = 1) => LEVELS[Math.min(2, LEVELS.indexOf(value) + steps)];
+const minLevel = (a, b) => LEVELS[Math.min(LEVELS.indexOf(a), LEVELS.indexOf(b))];
+// Scenario soil moisture and surface albedo are read through explicit tables, not arithmetic.
+const MOISTURE = { low: "low", normal: "medium", high: "high" };
+const HEATING_BY_ALBEDO = { low: "high", "medium-low": "high", medium: "medium", "medium-high": "low", high: "low" };
 
-function categorise(share, [t1, t2]) {
-  return share >= t2 ? 3 : share >= t1 ? 2 : 1;
-}
-function result(levelInterval, { drivers, reasons, rule, unknownNote }) {
-  const uniq = list => [...new Set(list)];
-  if (levelInterval.lo === levelInterval.hi) return { value: OUT[levelInterval.lo], state: "derived", drivers: uniq(drivers), rule };
-  return { value: null, state: "unknown", drivers: uniq(drivers), rule, reason: unknownNote || `Depends on unknown: ${uniq(reasons).join(", ")}` };
-}
+const derived = (value, drivers, extra = {}) => ({ value, state: "derived", drivers: [...new Set(drivers)], ...extra });
+const unknownResult = (reason, drivers = []) => ({ value: null, state: "unknown", drivers: [...new Set(drivers)], reason });
 const notApplicable = reason => ({ value: null, state: "not-applicable", drivers: [], reason });
 
-// ---------- state views
-const present = el => el.presence?.value === true ? 1 : el.presence?.state === "unknown" ? null : 0;
-const surfaceElements = state => state.elements.filter(el => el.surface && present(el) !== 0);
-const isRoof = el => el.type === "building";
+const read = (element, path) => {
+  const [group, key] = path.split(".");
+  return { evidence: element[group]?.[key], driver: `${element.id}.${path}` };
+};
 
-// Weighted share of known-area surfaces, as an interval. weightOf returns an interval in [0,1].
-function weightedShare(state, weightOf, { exclude = () => false } = {}) {
-  let total = 0;
-  let part = I(0);
-  const drivers = [];
-  const reasons = [];
-  for (const el of surfaceElements(state)) {
-    if (exclude(el)) continue;
-    if (el.area_m2?.state === "not-applicable") continue;
-    if (!isKnown(el.area_m2)) { reasons.push(`${el.id}.area_m2`); continue; }
-    const area = el.area_m2.value;
-    let w = weightOf(el, reasons, drivers);
-    if (present(el) === null) { reasons.push(`${el.id}.presence`); w = I(0, w.hi); }
-    total += area;
-    part = add(part, scale(w, area));
-  }
-  if (!total) return { share: I(0), drivers, reasons, total };
-  const missingArea = reasons.some(r => r.endsWith(".area_m2"));
-  return { share: missingArea ? I(0, 1) : scale(part, 1 / total), drivers, reasons, total };
-}
-const levelOf = (share, thresholds) => I(categorise(share.lo, thresholds), categorise(share.hi, thresholds));
+const isPresent = element => element.presence?.value === true || element.presence?.state === "unknown";
+const vegetated = element => element.type === "tree" || ["low", "medium", "high"].includes(element.surface?.vegetation_fraction?.value);
 
-const SEALED_W = { none: 0, low: 0, medium: 0.5, high: 1 };
-const STORAGE_W = { low: 0, medium: 0.5, high: 1 };
-const PERM_W = { low: 0, medium: 0.5, high: 1 };
-const VEG_W = { none: 0, low: 0.25, medium: 0.5, high: 1 };
-const CANOPY_P = { none: 0, low: 1, medium: 2, high: 3 };
+// ---------- Per-element rules
 
-function generation(el, reasons, drivers) {
-  const w = weightInterval(el.surface.sealed_fraction, SEALED_W, reasons, `${el.id}.surface.sealed_fraction`);
-  if (w.hi > 0) drivers.push(`${el.id}.surface.sealed_fraction`);
-  return w;
+function runoff(element) {
+  const sealed = read(element, "surface.sealed_fraction");
+  if (!isKnown(sealed.evidence)) return unknownResult(`surface of ${element.label} unknown`, [sealed.driver]);
+  if (sealed.evidence.value === "high") return derived("high", [sealed.driver]);
+  if (sealed.evidence.value === "medium") return derived("medium", [sealed.driver]);
+  const permeability = read(element, "surface.permeability");
+  if (!isKnown(permeability.evidence)) return unknownResult(`permeability of ${element.label} unknown`, [sealed.driver, permeability.driver]);
+  return derived(permeability.evidence.value === "low" && element.surface.material?.value !== "water" ? "medium" : "low", [sealed.driver, permeability.driver]);
 }
 
-// Fraction of an element's runoff that reaches the sewer without passing a receiver.
-function sewerFraction(state, el, reasons, drivers) {
-  const paths = downstreamPaths(state, el.id).filter(path => path.some(edge => ["surface-runoff", "roof-runoff", "pipe", "overflow"].includes(edge.mode)));
-  if (!paths.length) {
-    if (!state.connections.some(edge => edge.from === el.id)) { reasons.push(`${el.id}.routing`); return UNKNOWN_UNIT; }
-    return I(0);
+function storage(element) {
+  const pond = read(element, "surface.depression_storage");
+  const below = read(element, "subsurface.storage_capacity");
+  const known = [pond, below].filter(item => isKnown(item.evidence));
+  if (known.length < 2) {
+    if (known.some(item => item.evidence.value === "high")) return derived("high", known.map(item => item.driver));
+    return unknownResult(`storage of ${element.label} unknown`, [pond.driver, below.driver]);
   }
-  let best = null;
-  for (const path of paths) {
-    if (path.at(-1).to !== "sewer") continue;
-    if (path.some(edge => edge.state === "unknown")) { reasons.push(`connection:${path.find(edge => edge.state === "unknown").id}`); return UNKNOWN_UNIT; }
-    let f = I(1);
-    for (const edge of path) {
-      const node = elementById(state, edge.to);
-      if (node && RECEIVER_TYPES.includes(node.type)) {
-        const s = level(node.subsurface?.storage_capacity, { low: 1, medium: 0.5, high: 0.25 });
-        f = s === null ? (reasons.push(`${node.id}.subsurface.storage_capacity`), I(0.25, 1)) : I(s);
-        drivers.push(`${node.id}.subsurface.storage_capacity`);
-        break;
-      }
+  return derived(level(SCORE[pond.evidence.value] >= SCORE[below.evidence.value] ? pond.evidence.value : below.evidence.value), [pond.driver, below.driver]);
+}
+
+function infiltration(element) {
+  const capacity = read(element, "subsurface.infiltration_capacity");
+  if (capacity.evidence?.state === "not-applicable") return notApplicable(`${element.label} is not on the ground`);
+  const permeability = read(element, "surface.permeability");
+  if (!isKnown(permeability.evidence)) return unknownResult(`permeability of ${element.label} unknown`, [permeability.driver]);
+  if (permeability.evidence.value === "low") return derived("low", [permeability.driver]);
+  if (!isKnown(capacity.evidence)) return unknownResult(`infiltration capacity of the ground under ${element.label} unknown`, [permeability.driver, capacity.driver]);
+  return derived(minLevel(level(permeability.evidence.value), level(capacity.evidence.value)), [permeability.driver, capacity.driver]);
+}
+
+// Follow routing edges from an element to the sewer. Storage elements on the way attenuate.
+function sewerPath(state, id, ctx, seen = new Set()) {
+  if (seen.has(id)) return { reach: "unknown", drivers: [], reason: "routing loop" };
+  seen.add(id);
+  const edges = connectionsFrom(state, id);
+  const element = state.elements.find(item => item.id === id);
+  if (!edges.length) return { reach: "unknown", drivers: [], reason: `where water from ${element?.label || id} goes is unknown` };
+  const branches = edges.map(edge => {
+    const to = state.elements.find(item => item.id === edge.to);
+    const drivers = [edgeLabel(edge)];
+    if (!to) return { reach: "unknown", drivers, reason: `unknown routing target ${edge.to}` };
+    if (to.type === "sewer") return { reach: 0, drivers };
+    let steps = 0;
+    if (to.kind === "area") {
+      const held = ctx.memo("storage_potential", to);
+      if (held.state !== "derived") return { reach: "unknown", drivers: [...drivers, ...held.drivers], reason: held.reason };
+      steps = held.value === "low" ? 0 : 1;
+      drivers.push(...held.drivers);
     }
-    path.forEach(edge => drivers.push(`connection:${edge.id}`));
-    best = best ? I(Math.max(best.lo, f.lo), Math.max(best.hi, f.hi)) : f;
+    const next = sewerPath(state, to.id, ctx, new Set(seen));
+    if (next.reach === "none") return { reach: "none", drivers: [...drivers, ...next.drivers] };
+    if (next.reach === "unknown") return { reach: "unknown", drivers: [...drivers, ...next.drivers], reason: next.reason };
+    return { reach: next.reach + steps, drivers: [...drivers, ...next.drivers] };
+  });
+  const known = branches.filter(item => item.reach !== "unknown");
+  const unknowns = branches.filter(item => item.reach === "unknown");
+  const worst = known.length ? Math.min(...known.map(item => item.reach)) : null;
+  const drivers = branches.flatMap(item => item.drivers);
+  if (unknowns.length && worst !== 0) return { reach: "unknown", drivers, reason: unknowns[0].reason };
+  return { reach: worst, drivers };
+}
+
+function sewerLoad(element, ctx) {
+  const own = ctx.memo("runoff_tendency", element);
+  if (own.state !== "derived") return unknownResult(own.reason, own.drivers);
+  if (own.value === "low") return derived("low", own.drivers, { note: "little runoff, routing does not matter" });
+  const path = sewerPath(ctx.state, element.id, ctx);
+  if (path.reach === "unknown") return unknownResult(path.reason, [...own.drivers, ...path.drivers]);
+  return derived(lower(own.value, path.reach), [...own.drivers, ...path.drivers]);
+}
+
+function soilWater(element, ctx) {
+  if (!vegetated(element)) return notApplicable(`${element.label} has no vegetation`);
+  if (element.type === "tree" && element.vegetation?.rooted_in) {
+    const bed = ctx.state.elements.find(item => item.id === element.vegetation.rooted_in);
+    if (bed) return ctx.memo("soil_water_availability", bed);
   }
-  return best || I(0);
+  const drivers = [`scenario:${ctx.scenario.id}.heat.soil_moisture`];
+  const base = MOISTURE[ctx.scenario.heat.soil_moisture];
+  if (!base) return unknownResult(`scenario soil moisture "${ctx.scenario.heat.soil_moisture}" not understood`, drivers);
+  const inflow = connectionsTo(ctx.state, element.id).filter(edge => edge.mode !== "overflow");
+  if (inflow.length) return derived(raise(base), [...drivers, ...inflow.map(edgeLabel)]);
+  if (element.type === "tree") return derived(base, drivers, { note: "tree pit size not known" });
+  const held = read(element, "subsurface.storage_capacity");
+  if (!isKnown(held.evidence)) return base === "high" ? derived(base, drivers) : unknownResult(`storage below ${element.label} unknown`, [...drivers, held.driver]);
+  return derived(held.evidence.value === "high" ? raise(base) : base, [...drivers, held.driver]);
 }
 
-// ---------- the eight effects
-
-function runoff(state, scenario) {
-  if (!scenario.rain) return notApplicable("No rain in this scenario.");
-  const { share, drivers, reasons } = weightedShare(state, generation);
-  return result(levelOf(share, RULES.runoff_tendency.thresholds), { drivers, reasons, rule: RULES.runoff_tendency.text });
+function evapotranspiration(element, ctx) {
+  const plant = element.type === "tree" ? read(element, "vegetation.canopy_area") : read(element, "surface.vegetation_fraction");
+  if (!isKnown(plant.evidence)) return unknownResult(`vegetation of ${element.label} unknown`, [plant.driver]);
+  if (plant.evidence.value === "none") return derived("low", [plant.driver]);
+  const water = ctx.memo("soil_water_availability", element);
+  if (water.state !== "derived") return unknownResult(water.reason, [plant.driver, ...water.drivers]);
+  return derived(minLevel(level(plant.evidence.value), water.value), [plant.driver, ...water.drivers]);
 }
 
-function sewerLoad(state, scenario) {
-  if (!scenario.rain) return notApplicable("No rain in this scenario.");
-  const { share, drivers, reasons } = weightedShare(state, (el, r, d) => {
-    const g = generation(el, r, d);
-    return g.hi === 0 ? g : mul(g, sewerFraction(state, el, r, d));
-  });
-  return result(levelOf(share, RULES.sewer_load_tendency.thresholds), { drivers, reasons, rule: RULES.sewer_load_tendency.text });
-}
-
-function storage(state, scenario) {
-  if (!scenario.rain) return notApplicable("No rain in this scenario.");
-  const { share, drivers, reasons } = weightedShare(state, (el, r, d) => {
-    const w = weightInterval(el.subsurface?.storage_capacity, STORAGE_W, r, `${el.id}.subsurface.storage_capacity`);
-    if (w.hi > 0) d.push(`${el.id}.subsurface.storage_capacity`);
-    return w;
-  });
-  return result(levelOf(share, RULES.storage_potential.thresholds), { drivers, reasons, rule: RULES.storage_potential.text });
-}
-
-function infiltration(state, scenario) {
-  if (!scenario.rain) return notApplicable("No rain in this scenario.");
-  const { share, drivers, reasons } = weightedShare(state, (el, r, d) => {
-    const p = weightInterval(el.surface.permeability, PERM_W, r, `${el.id}.surface.permeability`);
-    if (p.hi === 0) return p;
-    d.push(`${el.id}.surface.permeability`);
-    const capacity = weightInterval(el.subsurface?.infiltration_capacity, { low: 0, medium: 0.5, high: 1 }, r, `${el.id}.subsurface.infiltration_capacity`);
-    d.push(`${el.id}.subsurface.infiltration_capacity`);
-    return mul(p, capacity);
-  }, { exclude: isRoof });
-  return result(levelOf(share, RULES.infiltration_potential.thresholds), { drivers, reasons, rule: RULES.infiltration_potential.text });
-}
-
-const vegetated = state => state.elements.filter(el => el.vegetation && present(el) !== 0 && (el.type === "tree" || (level(el.surface?.vegetation_fraction, VEG_W) ?? 0) > 0));
-
-function soilWaterLevel(state, scenario) {
-  const veg = vegetated(state);
-  if (!veg.length) return { na: true };
-  const drivers = [`scenario:${scenario.id}`];
-  let base;
-  if (scenario.rain) base = scenario.rain.antecedent_moisture === "high" ? 3 : scenario.rain.antecedent_moisture === "low" ? 1 : 2;
-  else base = scenario.heat?.drought_stress === "high" ? 1 : 2;
-  const fed = veg.filter(el => connectionsTo(state, el.id).some(edge => ["surface-runoff", "roof-runoff", "pipe"].includes(edge.mode)));
-  fed.forEach(el => connectionsTo(state, el.id).forEach(edge => drivers.push(`connection:${edge.id}`)));
-  return { interval: I(Math.min(3, base + (fed.length ? 1 : 0))), drivers };
-}
-
-function soilWater(state, scenario) {
-  const s = soilWaterLevel(state, scenario);
-  if (s.na) return notApplicable("No vegetation in this place.");
-  const out = result(s.interval, { drivers: s.drivers, reasons: [], rule: RULES.soil_water_availability.text });
-  return { ...out, note: "Scenario tendency; no soil water is measured in Basel." };
-}
-
-function canopyLevel(state) {
-  let points = I(0);
-  const drivers = [];
-  const reasons = [];
-  for (const tree of state.elements.filter(el => el.type === "tree" && present(el) !== 0)) {
-    let p = weightInterval(tree.vegetation?.canopy, CANOPY_P, reasons, `${tree.id}.vegetation.canopy`);
-    if (tree.vegetation?.canopy?.state === "unknown") p = I(0, 3);
-    if (present(tree) === null) { reasons.push(`${tree.id}.presence`); p = I(0, p.hi); }
-    if (p.hi > 0) drivers.push(`${tree.id}.vegetation.canopy`);
-    points = add(points, p);
+function surfaceHeating(element, ctx) {
+  if (element.surface.material?.value === "water") return derived("low", [`${element.id}.surface.material`]);
+  if (vegetated(element) && element.surface.vegetation_fraction?.value !== "low") {
+    const et = ctx.memo("evapotranspiration_potential", element);
+    if (et.state !== "derived") return unknownResult(et.reason, et.drivers);
+    return derived(et.value === "low" ? "medium" : "low", et.drivers);
   }
-  const open = surfaceElements(state).filter(el => !isRoof(el) && el.area_m2?.value).reduce((sum, el) => sum + el.area_m2.value, 0);
-  const density = open ? scale(points, 1000 / open) : I(0);
-  return { interval: levelOf(density, RULES.shade.thresholds), drivers, reasons };
+  const albedo = read(element, "surface.albedo");
+  if (!isKnown(albedo.evidence)) return unknownResult(`surface of ${element.label} unknown`, [albedo.driver]);
+  return derived(HEATING_BY_ALBEDO[albedo.evidence.value] || "medium", [albedo.driver, `scenario:${ctx.scenario.id}.heat.solar_exposure`]);
 }
 
-function shade(state, scenario) {
-  if (!scenario.heat) return notApplicable("Shade matters in the heat scenarios.");
-  const c = canopyLevel(state);
-  return result(c.interval, { ...c, rule: RULES.shade.text });
+function canopy(element) {
+  const value = read(element, "vegetation.canopy_area");
+  if (!isKnown(value.evidence)) return unknownResult(`canopy of ${element.label} unknown`, [value.driver]);
+  return derived(level(value.evidence.value), [value.driver]);
 }
 
-function evapotranspiration(state, scenario) {
-  if (!scenario.heat) return notApplicable("Evapotranspiration is evaluated in the heat scenarios.");
-  const planted = weightedShare(state, (el, r, d) => {
-    const w = weightInterval(el.surface.vegetation_fraction, VEG_W, r, `${el.id}.surface.vegetation_fraction`);
-    if (w.hi > 0) d.push(`${el.id}.surface.vegetation_fraction`);
-    return w;
-  }, { exclude: isRoof });
-  const plantedLevel = I(planted.share.hi === 0 ? 1 : categorise(planted.share.lo, RULES.evapotranspiration_potential.thresholds), planted.share.hi === 0 ? 1 : categorise(planted.share.hi, RULES.evapotranspiration_potential.thresholds));
-  const roofs = state.elements.filter(el => isRoof(el) && (level(el.surface?.vegetation_fraction, VEG_W) ?? 0) > 0);
-  const canopy = canopyLevel(state);
-  const veg = I(Math.max(plantedLevel.lo, canopy.interval.lo, roofs.length ? 2 : 1), Math.max(plantedLevel.hi, canopy.interval.hi, roofs.length ? 2 : 1));
-  const water = soilWaterLevel(state, scenario);
-  if (water.na) return { value: "low", state: "derived", drivers: [], rule: RULES.evapotranspiration_potential.text, note: "No vegetation." };
-  const et = I(Math.min(veg.lo, water.interval.lo), Math.min(veg.hi, water.interval.hi));
-  return result(et, {
-    drivers: [...planted.drivers, ...canopy.drivers, ...roofs.map(el => `${el.id}.surface.vegetation_fraction`), ...water.drivers],
-    reasons: [...planted.reasons, ...canopy.reasons], rule: RULES.evapotranspiration_potential.text
+const ELEMENT_RULES = {
+  runoff_tendency: { applies: element => element.kind === "area", rule: runoff },
+  storage_potential: { applies: element => element.kind === "area", rule: storage },
+  infiltration_potential: { applies: element => element.kind === "area", rule: infiltration },
+  sewer_load_tendency: { applies: element => element.kind === "area", rule: sewerLoad },
+  soil_water_availability: { applies: element => element.kind === "area" || element.type === "tree", rule: soilWater },
+  evapotranspiration_potential: { applies: element => element.kind === "area" || element.type === "tree", rule: evapotranspiration },
+  surface_heating_tendency: { applies: element => element.kind === "area", rule: surfaceHeating },
+  shade: { applies: element => element.type === "tree", rule: canopy }
+};
+
+// ---------- Place-level aggregation
+
+// Area-weighted over area elements. Unknown inputs are bracketed (as low and as high); if both
+// brackets land in the same level the result is derived, otherwise it stays unknown.
+function aggregateByArea(entries) {
+  const items = entries.filter(({ element, result }) => element.kind === "area" && result.state !== "not-applicable");
+  if (!items.length) return notApplicable("no element this applies to");
+  const knownAreas = items.map(({ element }) => element.area_m2).filter(isKnown).map(area => area.value);
+  const maxArea = knownAreas.reduce((sum, value) => sum + value, 0) || 1;
+  const uncertain = [];
+  const rows = items.map(({ element, result }) => {
+    const area = isKnown(element.area_m2) ? element.area_m2.value : null;
+    const weights = area === null ? [0, maxArea] : element.presence?.state === "unknown" ? [0, area] : [area, area];
+    const scores = result.state === "derived" ? [SCORE[result.value], SCORE[result.value]] : [1, 3];
+    if (area === null || weights[0] !== weights[1] || scores[0] !== scores[1]) uncertain.push(element.id);
+    return { weights, scores };
   });
+  const mean = (scoreIndex, weightIndex) => {
+    const total = rows.reduce((sum, row) => sum + row.weights[weightIndex], 0);
+    return total ? rows.reduce((sum, row) => sum + row.weights[weightIndex] * row.scores[scoreIndex], 0) / total : null;
+  };
+  const lows = [mean(0, 0), mean(0, 1)].filter(value => value !== null);
+  const highs = [mean(1, 0), mean(1, 1)].filter(value => value !== null);
+  const drivers = items.flatMap(({ result }) => result.drivers);
+  if (!lows.length) return unknownResult("no element with a known area", drivers);
+  const low = bucket(Math.min(...lows));
+  const high = bucket(Math.max(...highs));
+  if (low !== high) {
+    const reasons = items.filter(({ result }) => result.state === "unknown").map(({ result }) => result.reason);
+    return { ...unknownResult(`depends on unknown inputs: ${[...new Set(reasons.length ? reasons : uncertain)].join("; ")}`, drivers), unknown_inputs: uncertain };
+  }
+  return derived(low, drivers, uncertain.length ? { unknown_inputs: uncertain, note: "unknown inputs could not change the level" } : {});
 }
 
-function surfaceHeating(state, scenario, effects) {
-  if (!scenario.heat) return notApplicable("Surface heating is evaluated in the heat scenarios.");
-  const { share, drivers, reasons } = weightedShare(state, generation);
-  let lv = levelOf(share, RULES.surface_heating_tendency.thresholds);
-  const shadeHigh = effects.shade.value === "high";
-  const etHigh = effects.evapotranspiration_potential.value === "high";
-  const down = (shadeHigh ? 1 : 0) + (etHigh ? 1 : 0);
-  if (effects.shade.state === "unknown" || effects.evapotranspiration_potential.state === "unknown") lv = I(Math.max(1, lv.lo - 2), lv.hi);
-  else lv = I(Math.max(1, lv.lo - down), Math.max(1, lv.hi - down));
-  return result(lv, { drivers: [...drivers, ...(shadeHigh ? ["effect:shade"] : []), ...(etHigh ? ["effect:evapotranspiration_potential"] : [])], reasons, rule: RULES.surface_heating_tendency.text });
+// Shade: V0 counts canopy classes of present trees (low 1, medium 2, high 3).
+// Thresholds are prototype placeholders: 0–1 low, 2–5 medium, 6+ high. No geometry is used.
+function aggregateCanopy(entries, scenario) {
+  const items = entries.filter(({ result }) => result.state !== "not-applicable");
+  const drivers = [...items.flatMap(({ result }) => result.drivers), `scenario:${scenario.id}.heat.solar_exposure`];
+  let low = 0;
+  let high = 0;
+  const uncertain = [];
+  for (const { element, result } of items) {
+    const score = result.state === "derived" ? SCORE[result.value] : null;
+    if (element.presence?.state === "unknown" || score === null) {
+      uncertain.push(element.id);
+      high += score ?? 3;
+    } else { low += score; high += score; }
+  }
+  const toLevel = sum => sum <= 1 ? "low" : sum < 6 ? "medium" : "high";
+  if (toLevel(low) !== toLevel(high)) return { ...unknownResult(`depends on trees whose presence or canopy is unknown: ${uncertain.join(", ")}`, drivers), unknown_inputs: uncertain };
+  return derived(toLevel(low), drivers, uncertain.length ? { unknown_inputs: uncertain } : {});
 }
+
+// ---------- Entry points
 
 export function evaluateState(state, scenario) {
-  const effects = {
-    runoff_tendency: runoff(state, scenario),
-    sewer_load_tendency: sewerLoad(state, scenario),
-    storage_potential: storage(state, scenario),
-    infiltration_potential: infiltration(state, scenario),
-    soil_water_availability: soilWater(state, scenario),
-    shade: shade(state, scenario),
-    evapotranspiration_potential: evapotranspiration(state, scenario)
+  const cache = new Map();
+  const ctx = { state, scenario };
+  ctx.memo = (effectId, element) => {
+    const key = `${effectId}:${element.id}`;
+    if (!cache.has(key)) {
+      cache.set(key, unknownResult("circular dependency"));
+      const spec = ELEMENT_RULES[effectId];
+      cache.set(key, spec.applies(element) ? spec.rule(element, ctx) : notApplicable("does not apply"));
+    }
+    return cache.get(key);
   };
-  effects.surface_heating_tendency = surfaceHeating(state, scenario, effects);
-  return { schema_version: EFFECT_SCHEMA_VERSION, scenario_id: scenario.id, effects };
-}
-
-const RANK = { low: 1, medium: 2, high: 3 };
-export function compareEffects(before, after) {
-  const changes = {};
-  for (const key of EFFECT_KEYS) {
-    const a = before.effects[key];
-    const b = after.effects[key];
-    let direction;
-    if (a.state === "not-applicable" && b.state === "not-applicable") direction = "not-applicable";
-    else if (a.state === "unknown" || b.state === "unknown") direction = "unknown";
-    else direction = RANK[b.value] > RANK[a.value] ? "up" : RANK[b.value] < RANK[a.value] ? "down" : "same";
-    changes[key] = { before: a.value, after: b.value, direction, before_state: a.state, after_state: b.state };
+  const effects = {};
+  for (const def of EFFECTS) {
+    if (!scenario?.[def.needs]) {
+      effects[def.id] = { ...notApplicable(`not relevant under ${scenario?.label || "this scenario"}`), by_element: {} };
+      continue;
+    }
+    const spec = ELEMENT_RULES[def.id];
+    const entries = state.elements.filter(element => isPresent(element) && spec.applies(element)).map(element => ({ element, result: ctx.memo(def.id, element) }));
+    const place = def.id === "shade" ? aggregateCanopy(entries, scenario) : aggregateByArea(entries);
+    effects[def.id] = { ...place, by_element: Object.fromEntries(entries.map(({ element, result }) => [element.id, result])) };
   }
-  return { scenario_id: after.scenario_id, changes };
+  return { schema_version: EFFECT_SCHEMA_VERSION, scenario_id: scenario?.id ?? null, place_id: state.place_id, effects };
 }
 
-// Labels for renderers; explanatory only.
-export const EFFECT_LABELS = {
-  runoff_tendency: "Runoff", sewer_load_tendency: "Sewer load", storage_potential: "Storage", infiltration_potential: "Infiltration",
-  soil_water_availability: "Soil water", shade: "Shade", evapotranspiration_potential: "Evapotranspiration", surface_heating_tendency: "Surface heating"
-};
+export function compareEffects(before, after) {
+  if (before.scenario_id !== after.scenario_id) throw new Error("compareEffects needs two results under the same scenario");
+  const changes = {};
+  for (const def of EFFECTS) {
+    const b = before.effects[def.id];
+    const a = after.effects[def.id];
+    let direction = "unknown";
+    if (b.state === "not-applicable" && a.state === "not-applicable") direction = "not-applicable";
+    else if (b.state === "derived" && a.state === "derived") direction = SCORE[a.value] > SCORE[b.value] ? "up" : SCORE[a.value] < SCORE[b.value] ? "down" : "same";
+    const good = def.desirable === "lower" ? "down" : "up";
+    const assessment = direction === "same" || direction === "unknown" || direction === "not-applicable" ? direction : direction === good ? "improves" : "worsens";
+    const ids = [...new Set([...Object.keys(b.by_element || {}), ...Object.keys(a.by_element || {})])];
+    const local = ids.map(id => ({ element_id: id, before: pick(b.by_element?.[id]), after: pick(a.by_element?.[id]) }))
+      .filter(item => item.before.value !== item.after.value || item.before.state !== item.after.state);
+    changes[def.id] = { label: def.label, desirable: def.desirable, before: pick(b), after: pick(a), direction, assessment, local };
+  }
+  return { schema_version: "adaptive-effect-delta/0.1", scenario_id: after.scenario_id, changes };
+}
+
+const pick = result => result ? { value: result.value, state: result.state } : { value: null, state: "not-applicable" };
+
+export const effectUnknowns = result => Object.entries(result?.effects || {})
+  .filter(([, effect]) => effect.state === "unknown")
+  .map(([id, effect]) => ({ scope: "effect-result", key: id, label: EFFECTS.find(def => def.id === id).label, note: effect.reason }));

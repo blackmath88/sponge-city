@@ -1,27 +1,19 @@
 {
-  "schema_version": "adaptive-scenarios/0.1",
-  "note": "Qualitative archetypes of external conditions. They correspond to the Street Slice rain / heat modes. No rainfall depths or temperatures are implied.",
+  "schema_version": "scenario-catalogue/0.1",
+  "catalogue_id": "prototype-scenarios",
+  "note": "Qualitative external conditions. They correspond to the Street Slice's rain / heat modes. Values are scenario assumptions, not forecasts.",
   "scenarios": [
-    {
-      "id": "heavy-rain",
-      "label": "Heavy rain",
-      "description": "A short, intense summer storm on normally moist ground.",
+    { "id": "heavy-rain", "label": "Heavy rain",
+      "description": "A short, intense summer downpour on normally moist ground.",
       "rain": { "intensity": "high", "duration": "short", "antecedent_moisture": "normal" },
-      "heat": null
-    },
-    {
-      "id": "hot-day",
-      "label": "Hot day",
-      "description": "A sunny summer afternoon with normal soil moisture.",
+      "heat": null },
+    { "id": "hot-day", "label": "Hot summer day",
+      "description": "Strong sun and high air temperature; soils hold a normal amount of water.",
       "rain": null,
-      "heat": { "solar_exposure": "high", "air_temperature": "high", "drought_stress": "normal" }
-    },
-    {
-      "id": "hot-drought",
-      "label": "Hot drought",
-      "description": "The same heat after weeks without rain: little water left in the soil.",
+      "heat": { "solar_exposure": "high", "air_temperature": "high", "soil_moisture": "normal" } },
+    { "id": "hot-drought", "label": "Hot day in a drought",
+      "description": "The same heat, after weeks without rain: little water is left in the soil.",
       "rain": null,
-      "heat": { "solar_exposure": "high", "air_temperature": "high", "drought_stress": "high" }
-    }
+      "heat": { "solar_exposure": "high", "air_temperature": "high", "soil_moisture": "low" } }
   ]
 }
