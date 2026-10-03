@@ -31,5 +31,5 @@ if (!mapTemplate.includes(mapMarker) || !mapTemplate.includes(atlasMarker)) {
 const mapOutputPath = join(root, "prototype", "basel-map.html");
 await writeFile(mapOutputPath, mapTemplate
   .replace(mapMarker, () => JSON.stringify(JSON.parse(mapSnapshot)))
-  .replace(atlasMarker, () => JSON.stringify({ records: data.records })));
+  .replace(atlasMarker, () => JSON.stringify({ records: data.records, sources: data.sources })));
 console.log(`Built ${mapOutputPath}`);

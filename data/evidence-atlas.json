@@ -163,6 +163,33 @@
       "accessed": "2026-10-03",
       "kind": "official-context",
       "note": "Contains the legally binding development plans BP 226A 'Areal VoltaNord' and BP 226B 'VoltaNord 2. Stufe' (in force since 16 June 2026). CC BY 4.0."
+    },
+    {
+      "id": "geo-bs-klimaanalyse",
+      "title": "Klimaanalyse Basel-Stadt (WMS layers KL_Lufttemperatur, KL_HumanbioklimaSituation, 2030 scenario)",
+      "publisher": "Kanton Basel-Stadt",
+      "url": "https://wms.geo.bs.ch/?SERVICE=WMS&REQUEST=GetCapabilities",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Modelled night air temperature (04:00) and daytime heat stress PET (14:00), current and 2030. The WMS exposes no values or class breaks, so the map shows them as relative colour only. Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)."
+    },
+    {
+      "id": "geo-bs-fokusgebiete",
+      "title": "Fokusgebiete Stadtklimakonzept (WMS ch.bs.fokusgebiet_hitzeentwicklung_fgsk)",
+      "publisher": "Kanton Basel-Stadt",
+      "url": "https://wms.geo.bs.ch/?SERVICE=WMS&REQUEST=GetCapabilities",
+      "accessed": "2026-10-03",
+      "kind": "primary",
+      "note": "Areas most affected by urban heat islands, based on the 2019 climate analysis; classes Fokus / Verbessern / Erhalten / übriges Gebiet, queryable per point. Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)."
+    },
+    {
+      "id": "bafu-oberflaechenabfluss",
+      "title": "Gefährdungskarte Oberflächenabfluss",
+      "publisher": "Bundesamt für Umwelt BAFU (geo.admin.ch)",
+      "url": "https://map.geo.admin.ch/?layers=ch.bafu.gefaehrdungskarte-oberflaechenabfluss",
+      "accessed": "2026-10-03",
+      "kind": "official-context",
+      "note": "Modelled surface-runoff flow depth for rare to very rare events (return period >100 years), data status 22.05.2018. Not verified in the field; must not be used at scales finer than 1:12,500; not legally binding."
     }
   ],
   "entities": [
@@ -682,6 +709,18 @@
       "source_ids": ["data-bs-zoning-overlays-100234", "zhaw-voltanord-80788"],
       "entity_ids": ["place-voltanord", "project-voltanord-monitoring"],
       "related_record_ids": ["question-protocol", "question-74640-streets"]
+    },
+    {
+      "id": "fact-basel-heat-runoff-layers",
+      "kind": "fact",
+      "title": "Which Basel heat and runoff layers can the map show?",
+      "answer": "Basel's WMS publishes the 2019 climate analysis (night air temperature, daytime heat stress PET, 2030 scenario) and the Stadtklimakonzept heat focus areas. The federal runoff hazard map shows modelled flow depth for rare events. Heat focus classes can be queried per point. The climate rasters expose no values, and the runoff map must stay at 1:12,500 or coarser.",
+      "status": "verified",
+      "scope": "Service capabilities checked 3 October 2026",
+      "tags": ["heat", "climate analysis", "runoff", "need", "wms", "map"],
+      "source_ids": ["geo-bs-klimaanalyse", "geo-bs-fokusgebiete", "bafu-oberflaechenabfluss"],
+      "entity_ids": ["place-voltanord"],
+      "related_record_ids": ["fact-basel-open-data-context"]
     }
   ],
   "decision_routes": [

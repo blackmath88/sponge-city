@@ -24,11 +24,20 @@ make run
 
 Then visit <http://127.0.0.1:4173>. Edit the canonical records in `data/evidence-atlas.json`; `make build` regenerates the standalone file, `make validate` checks references and IDs, and `make smoke` exercises search, route selection and brief generation.
 
-## Basel tree map
+## Basel situation map
 
-Open `prototype/basel-map.html` directly (or `make run`, then <http://127.0.0.1:4173/prototype/basel-map.html>). It shows all 32,378 trees in the Basel and Riehen tree register on swisstopo base maps, coloured by age, setting or genus, with active meteoblue climate stations and the VoltaNord development-plan perimeter. Each tree card lists register facts, the nearest station's air temperature and rainfall (refreshable live) and an explicit **unknown** for soil water: Basel publishes no soil-water sensor data, so the map shows no water status. The interaction patterns are adapted from Berlin's [Baumblick](docs/PRECEDENT-QTREES-BERLIN.md) (MIT); no Baumblick code is copied.
+Open `prototype/basel-map.html` directly (or `make run`, then <http://127.0.0.1:4173/prototype/basel-map.html>). One map, layers grouped by **need, possibility, observations, planning and unknown**, each labelled observed, modelled, derived, planning or unknown:
 
-Data is a committed snapshot in `data/basel-map.json` (data.bs.ch, CC BY 4.0). `make fetch` refreshes it and re-runs the checks; `make smoke` also tests the map logic.
+- **Need:** Basel climate analysis (night air temperature, daytime heat stress, 2030 scenario; relative colours only, as the service publishes no values), Stadtklimakonzept heat focus areas, and the federal surface-runoff hazard map (hidden beyond 1:12,500 as BAFU requires).
+- **Possibility:** all 32,378 register trees (colour by age, setting or genus) and 3D buildings with generalised swisstopo heights.
+- **Observations and planning:** meteoblue stations with live refresh; VoltaNord development-plan perimeters.
+- **Unknown:** soil water, infiltration, utilities and ownership are listed but never drawn.
+
+Click any empty spot for the **place lens**: it reads every layer at that point (heat focus class from Basel's WMS, runoff class from the official tile colour, trees within 25 m, nearest station, planning perimeter) and exports a `place-profile/draft-0` JSON in which unknowns stay unknown. Keys: `/` search, `3` 3D view, `T` control-room theme, `L` lens at map centre, `Esc` close. The URL keeps view, layers, theme and selection, so any state can be shared as a link.
+
+Interaction patterns are adapted from Berlin's [Baumblick](docs/PRECEDENT-QTREES-BERLIN.md) and from public "god's eye view" globes (layer registry, provenance per layer, shareable state); no code is copied. Environmental and planning layers only: no cameras, vehicles or people tracking.
+
+Trees, stations and plans come from a committed snapshot in `data/basel-map.json` (data.bs.ch, CC BY 4.0); `make fetch` refreshes it. Heat, runoff and basemaps load live from geo.bs.ch, geo.admin.ch and swisstopo («Quelle: Geodaten Kanton Basel-Stadt», © BAFU, © swisstopo). `make smoke` tests the map logic.
 
 ## Working principle
 
