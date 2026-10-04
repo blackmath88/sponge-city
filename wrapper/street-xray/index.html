@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Street X-Ray: an evidence-first sponge-city decision gate for one Basel street." />
+  <title>Street X-Ray · SpongeSquad</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink:#202a25; --muted:#6f7a73; --soft:#919b94; --line:#dfe5df;
+      --paper:#fff; --ground:#f3f5f1; --green:#246b4e; --green-2:#dceade;
+      --blue:#39747c; --blue-2:#e0edef; --amber:#9a6a35; --amber-2:#f4e9d8;
+      --red:#a95442; --dark:#16241d; --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+      --sans:Inter,"Helvetica Neue",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-width:320px;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:14px}
+    button,a,input{font:inherit}
+    button,a{touch-action:manipulation}
+    a{color:inherit}
+    button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid rgba(36,107,78,.28);outline-offset:2px}
+    .top{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:30}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:12px;font-weight:700}
+    .brand-mark{width:33px;height:33px;border-radius:9px;background:var(--green);color:#fff;display:grid;place-items:center;font:700 11px var(--mono)}
+    .crumb{font:10px var(--mono);color:var(--muted)}
+    .crumb span{color:#bdc5bf;padding:0 7px}
+    .stage{font:10px var(--mono);color:var(--green);border:1px solid #cfe0d2;background:#edf5ef;border-radius:20px;padding:7px 10px}
+    main{max-width:1580px;margin:0 auto;padding:0 28px 70px}
+    .intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:70px;align-items:end;padding:64px 0 38px}
+    .eyebrow{font:600 10px var(--mono);letter-spacing:1.25px;color:var(--green);text-transform:uppercase}
+    h1{font-size:clamp(44px,6.2vw,86px);line-height:.96;letter-spacing:-.065em;margin:15px 0 22px;max-width:920px}
+    h1 em{font-style:normal;font-weight:400;color:#6c8475}
+    .lede{font-size:16px;line-height:1.65;color:var(--muted);max-width:720px;margin:0}
+    .premise{background:var(--dark);color:#eef3ef;border-radius:10px;padding:25px;min-height:180px;position:relative;overflow:hidden}
+    .premise:after{content:"?";position:absolute;right:16px;bottom:-31px;color:rgba(255,255,255,.06);font:700 160px/1 var(--mono)}
+    .premise small{font:10px var(--mono);color:#8fb09c;letter-spacing:.7px}
+    .premise blockquote{font-size:20px;line-height:1.35;letter-spacing:-.02em;margin:20px 0 12px;max-width:420px}
+    .premise p{font-size:11px;line-height:1.55;color:#9dafaa;margin:0;max-width:430px}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.55fr);border:1px solid var(--line);background:#fff;border-radius:11px;overflow:hidden;box-shadow:0 20px 60px rgba(35,57,44,.08)}
+    .map-column{min-width:0;border-right:1px solid var(--line)}
+    .map-head{min-height:80px;padding:17px 20px;display:flex;gap:20px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .location small{display:block;font:9px var(--mono);color:var(--soft);text-transform:uppercase;letter-spacing:.9px;margin-bottom:6px}
+    .location b{font-size:15px}
+    .location span{color:var(--muted);font-size:11px;margin-left:8px}
+    .layer-tabs{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+    .layer-tab{border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 11px;font:600 10px var(--mono);color:var(--muted);cursor:pointer}
+    .layer-tab:hover{background:#f6f8f5}
+    .layer-tab[aria-selected="true"]{color:#fff;border-color:var(--green);background:var(--green)}
+    .layer-tab[data-layer="derived"][aria-selected="true"]{background:var(--blue);border-color:var(--blue)}
+    .layer-tab[data-layer="ask"][aria-selected="true"]{background:var(--amber);border-color:var(--amber)}
+    .map-stage{position:relative;background:#e9ede7;min-height:590px;overflow:hidden}
+    .map-stage svg{display:block;width:100%;height:auto;min-height:590px}
+    .map-caption{position:absolute;left:18px;bottom:18px;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid rgba(210,220,212,.9);padding:9px 11px;border-radius:7px;font:9px/1.45 var(--mono);color:var(--muted);max-width:430px}
+    .map-caption:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);flex:none}
+    .map-caption.derived:before{background:var(--blue)} .map-caption.ask:before{background:var(--amber)}
+    .rain-control{position:absolute;right:17px;bottom:17px;border:0;background:var(--dark);color:#fff;border-radius:7px;padding:10px 13px;font-size:11px;font-weight:700;cursor:pointer}
+    .rain-control:hover{background:#284437}
+    .map-layer{opacity:0;pointer-events:none;transition:opacity .25s ease}
+    .map-layer.active{opacity:1;pointer-events:auto}
+    .base-label{font:600 10px var(--mono);fill:#5e6c63;letter-spacing:.06em}
+    .tiny-label{font:500 8px var(--mono);fill:#6e7b73}
+    .object-label{font:600 9px var(--mono);fill:#fff}
+    .flow-path{stroke-dasharray:7 6}
+    .raining .flow-path{animation:flow .7s linear infinite}
+    .raining .rain-drop{animation:fall .8s ease-in infinite}
+    .rain-drop:nth-child(2){animation-delay:.2s}.rain-drop:nth-child(3){animation-delay:.4s}.rain-drop:nth-child(4){animation-delay:.6s}
+    @keyframes flow{to{stroke-dashoffset:-26}}
+    @keyframes fall{0%{transform:translateY(-15px);opacity:0}30%{opacity:1}100%{transform:translateY(45px);opacity:0}}
+    .evidence-panel{display:flex;flex-direction:column;min-height:670px}
+    .panel-head{padding:23px;border-bottom:1px solid var(--line)}
+    .panel-kicker{font:600 9px var(--mono);color:var(--green);letter-spacing:.9px;text-transform:uppercase}
+    .panel-head h2{font-size:23px;line-height:1.15;letter-spacing:-.04em;margin:10px 0 9px}
+    .panel-head p{font-size:11px;line-height:1.55;color:var(--muted);margin:0}
+    .claim-list{display:grid;overflow:auto;max-height:430px}
+    .claim{width:100%;border:0;border-bottom:1px solid var(--line);background:#fff;padding:16px 20px;text-align:left;cursor:pointer;display:grid;grid-template-columns:9px 1fr auto;gap:11px;align-items:start}
+    .claim:hover,.claim.active{background:#f6f8f5}
+    .claim-dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:4px}
+    .claim[data-layer="derived"] .claim-dot{background:var(--blue)}
+    .claim[data-layer="ask"] .claim-dot{background:var(--amber);border-radius:1px}
+    .claim-title{display:block;font-size:12px;font-weight:700;line-height:1.3;margin-bottom:5px}
+    .claim-meta{display:block;font:9px var(--mono);color:var(--soft);line-height:1.45;text-transform:uppercase}
+    .claim-value{font:700 12px var(--mono);color:var(--green);white-space:nowrap}
+    .claim[data-layer="derived"] .claim-value{color:var(--blue)}
+    .claim[data-layer="ask"] .claim-value{color:var(--amber)}
+    .claim-detail{padding:19px 21px;background:#f8faf7;margin-top:auto;border-top:1px solid var(--line)}
+    .claim-detail .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+    .badge{font:600 8px var(--mono);text-transform:uppercase;letter-spacing:.35px;border:1px solid #cbd6cd;border-radius:3px;padding:4px 6px;background:#fff;color:#5f6f65}
+    .badge.derived,.badge.modelled{border-style:dashed;color:var(--blue)}
+    .badge.assumed{font-style:italic;color:#7d6849}.badge.unknown{border-style:dotted;color:var(--amber)}
+    .claim-detail p{font-size:10px;line-height:1.55;color:var(--muted);margin:8px 0}
+    .claim-detail strong{color:var(--ink)}
+    .source-link{font:600 9px var(--mono);color:var(--green)}
+    .decision{margin:30px 0 0;display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+    .decision-title{padding:28px;border-right:1px solid var(--line);background:#fafbf9}
+    .decision-title h2{font-size:31px;line-height:1.05;letter-spacing:-.045em;margin:13px 0 15px}
+    .decision-title p{font-size:12px;line-height:1.65;color:var(--muted)}
+    .status-pill{display:inline-flex;gap:7px;align-items:center;font:600 9px var(--mono);text-transform:uppercase;color:var(--amber);border:1px solid #e5d3b9;background:#fbf5ea;border-radius:20px;padding:7px 9px}
+    .status-pill:before{content:"";width:7px;height:7px;background:currentColor;border-radius:50%}
+    .status-pill.candidate{color:var(--green);background:#edf5ef;border-color:#cfe0d2}
+    .scenario-box{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}
+    .scenario-number{display:flex;align-items:baseline;gap:6px;font:700 34px var(--mono);color:var(--blue)}
+    .scenario-number small{font:600 10px var(--mono);color:var(--muted)}
+    .range{width:100%;accent-color:var(--blue);margin-top:12px}
+    .scenario-box p{font-size:9px;line-height:1.5;margin:7px 0 0}
+    .checks{padding:28px}
+    .checks-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:20px}
+    .checks-head h3{font-size:18px;margin:0 0 6px}.checks-head p{font-size:10px;color:var(--muted);line-height:1.5;margin:0;max-width:520px}
+    .check-list{display:grid;gap:8px}
+    .unlock{border:1px solid var(--line);border-radius:7px;padding:14px 15px;display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;background:#fff;cursor:pointer;text-align:left}
+    .unlock:hover{border-color:#b4c4b8}.unlock.on{background:#f0f6f1;border-color:#b9d1bf}
+    .unlock-icon{width:33px;height:33px;display:grid;place-items:center;border-radius:50%;background:var(--amber-2);color:var(--amber);font:700 13px var(--mono)}
+    .unlock.on .unlock-icon{background:var(--green-2);color:var(--green)}
+    .unlock b{display:block;font-size:12px;margin-bottom:4px}.unlock small{display:block;font-size:9px;line-height:1.4;color:var(--muted)}
+    .unlock-state{font:600 8px var(--mono);text-transform:uppercase;color:var(--amber)}.unlock.on .unlock-state{color:var(--green)}
+    .decision-note{margin-top:14px;padding:12px 14px;background:#f6f8f5;border-left:3px solid var(--amber);font-size:10px;line-height:1.55;color:var(--muted)}
+    .decision-note.ready{border-color:var(--green)}
+    .street-switch{display:flex;gap:4px;margin-top:8px}.street-switch a{font:600 8px var(--mono);text-transform:uppercase;letter-spacing:.6px;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:4px 8px;text-decoration:none}.street-switch a[aria-current="page"]{color:var(--dark);border-color:var(--dark)}
+    .unlock.no{background:#fbf3ec;border-color:#e5d3b9}.unlock.no .unlock-icon{background:#f3e3d0;color:var(--amber)}.unlock.no .unlock-state{color:var(--amber)}
+    .futures{margin-top:14px;display:grid;gap:4px}.futures h4{font:600 9px var(--mono);text-transform:uppercase;letter-spacing:.8px;color:var(--soft);margin:0 0 4px}
+    .future{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:10px;padding:7px 10px;border:1px solid var(--line);border-radius:6px}.future small{display:block;color:var(--muted);font-size:9px;margin-top:2px}
+    .future b{font-weight:600}.future .state{font:600 8px var(--mono);text-transform:uppercase;align-self:center;color:var(--amber)}.future.candidate .state{color:var(--green)}.future.excluded{opacity:.6}.future.excluded .state{color:var(--muted)}
+    .passport{margin:30px 0 0;background:var(--dark);color:#edf2ee;border-radius:10px;padding:30px}
+    .passport-head{display:flex;justify-content:space-between;gap:24px;align-items:start;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:24px}
+    .passport h2{font-size:31px;letter-spacing:-.04em;margin:10px 0 7px}.passport-head p{color:#9bada2;margin:0;font-size:11px}
+    .passport-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .action{border:1px solid rgba(255,255,255,.2);color:#fff;background:transparent;border-radius:6px;padding:9px 11px;font-size:10px;font-weight:700;text-decoration:none;cursor:pointer}
+    .action.primary{background:#e8f0e9;color:var(--dark);border-color:#e8f0e9}
+    .passport-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:22px}
+    .passport-cell{padding:8px 21px 8px 0;border-right:1px solid rgba(255,255,255,.11);margin-right:21px;min-height:120px}
+    .passport-cell:last-child{border:0;margin:0}
+    .passport-cell small{font:8px var(--mono);color:#8fa497;text-transform:uppercase;letter-spacing:.7px}
+    .passport-cell b{display:block;font-size:13px;margin:10px 0 8px}.passport-cell p,.passport-cell li{font-size:10px;line-height:1.55;color:#aab9b0}
+    .passport-cell ul{padding-left:15px;margin:0}
+    .integrity{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:20px;color:#8fa497;font:9px/1.5 var(--mono)}
+    .integrity strong{color:#dce8df}
+    .loading{min-height:700px;display:grid;place-items:center;font:11px var(--mono);color:var(--muted)}
+    footer{display:flex;justify-content:space-between;gap:20px;padding:24px 0;color:var(--soft);font:9px var(--mono)}
+    @media(max-width:1050px){.intro{grid-template-columns:1fr;gap:25px}.workspace{grid-template-columns:1fr}.map-column{border:0;border-bottom:1px solid var(--line)}.evidence-panel{min-height:0}.claim-list{max-height:none}.decision{grid-template-columns:1fr}.decision-title{border:0;border-bottom:1px solid var(--line)}.passport-grid{grid-template-columns:repeat(2,1fr);row-gap:25px}.passport-cell:nth-child(2){border:0}.passport-cell:nth-child(3){padding-top:10px}}
+    @media(max-width:680px){.top{padding:0 14px}.crumb{display:none}main{padding:0 15px 45px}.intro{padding:40px 0 28px}h1{font-size:48px}.premise{min-height:0}.map-head{align-items:flex-start;flex-direction:column}.layer-tabs{justify-content:flex-start}.map-stage,.map-stage svg{min-height:460px}.map-stage svg{width:145%;transform:translateX(-20%)}.rain-control{right:10px;bottom:10px}.map-caption{left:10px;bottom:57px;right:10px}.checks,.decision-title,.passport{padding:21px}.unlock{grid-template-columns:34px 1fr}.unlock-state{grid-column:2}.passport-head{display:block}.passport-actions{justify-content:flex-start;margin-top:18px}.passport-grid{grid-template-columns:1fr}.passport-cell,.passport-cell:nth-child(2){border:0;border-bottom:1px solid rgba(255,255,255,.11);margin:0;padding:18px 0}.integrity{display:block}.integrity span{display:block;margin-top:7px}footer{display:block}footer span{display:block;margin-top:7px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}}
+    @media print{body{background:#fff}.top,.intro,.rain-control,.layer-tabs,.checks,.passport-actions,footer{display:none!important}main{max-width:none;padding:0}.workspace,.decision,.passport{box-shadow:none;border-radius:0;break-inside:avoid;margin:0 0 18px}.workspace{grid-template-columns:1.2fr .8fr}.map-stage,.map-stage svg{min-height:430px}.evidence-panel{min-height:0}.claim-list{max-height:none}.claim{padding:8px 12px}.claim-detail{display:none}.passport{background:#fff;color:#111;border:2px solid #222}.passport h2,.passport-cell b{color:#111}.passport-head p,.passport-cell p,.passport-cell li,.integrity{color:#444}.passport-cell small{color:#555}.passport-cell{border-color:#ccc}.integrity{border-color:#ccc}}
+  </style>
+<script>if(new URLSearchParams(location.search).get("embedded")==="1")document.documentElement.dataset.embedded="true";</script>
+<style>html[data-embedded=true] .top,html[data-embedded=true] main>.intro,html[data-embedded=true] .street-switch,html[data-embedded=true] main>footer{display:none}html[data-embedded=true] main{max-width:none;padding:0}html[data-embedded=true] .workspace{border:0;border-radius:0}</style>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../../index.html"><span class="brand-mark">BS</span><span>Basel / Sponge</span></a>
+    <div class="crumb">Shared workspace <span>/</span> Wrapper <span>/</span> Street X-Ray</div>
+    <span class="stage">03 · Inspect</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <div class="eyebrow">One street · one consequential question</div>
+        <h1>This edge looks usable.<br><em>Is it buildable?</em></h1>
+        <p class="lede">Street X-Ray turns a promising map signal into an evidence gate. It shows what Basel’s open records support, what computation can only suggest, and what must be unlocked before anyone recommends a sponge-city intervention.</p>
+      </div>
+      <aside class="premise">
+        <small>THE PRODUCTIVE TENSION</small>
+        <blockquote>Rain is visible until it reaches the kerb. Then the decisive system disappears underground.</blockquote>
+        <p>We make that boundary explicit instead of letting a plausible visual become a false recommendation.</p>
+      </aside>
+    </section>
+
+    <section id="app" class="loading" aria-live="polite">Loading the evidence profile…</section>
+    <footer><span>SpongeSquad · Hack am Rhein 2026</span><span>Screening support, not engineering design</span></footer>
+  </main>
+
+  <template id="app-template">
+    <div>
+      <section class="workspace" aria-label="Street evidence workspace">
+        <div class="map-column">
+          <header class="map-head">
+            <div class="location"><small data-site-status>Study point · illustrative segment</small><b data-site-name></b><span data-site-length></span><nav class="street-switch" aria-label="Street"></nav></div>
+            <div class="layer-tabs" role="tablist" aria-label="Evidence layers"></div>
+          </header>
+          <div class="map-stage" id="map-stage">
+            <svg viewBox="0 0 960 590" role="img" aria-labelledby="map-title map-desc">
+              <title id="map-title">Schematic Street X-Ray of a Klybeckstrasse study segment</title>
+              <desc id="map-desc">A diagram separates contextual open evidence, screening hypotheses and underground questions for an illustrative street segment.</desc>
+              <defs>
+                <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#d9dfd8" stroke-width="1"/></pattern>
+                <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V9" stroke="#b6844d" stroke-width="2" opacity=".35"/></pattern>
+                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#23382d" flood-opacity=".17"/></filter>
+                <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#39747c"/></marker>
+                <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#9a6a35"/></marker>
+              </defs>
+              <rect width="960" height="590" fill="#e9ede7"/><rect width="960" height="590" fill="url(#grid)" opacity=".8"/>
+              <g opacity=".72">
+                <path d="M-30 126L215 60L402 116L630 53L1010 136V0H-30Z" fill="#d8ded6"/>
+                <path d="M-20 482L190 422L362 463L548 417L756 463L990 402V620H-20Z" fill="#d8ded6"/>
+              </g>
+              <g transform="rotate(-7 480 290)">
+                <rect x="-40" y="171" width="1040" height="232" rx="4" fill="#c9cfca"/>
+                <rect x="-40" y="190" width="1040" height="46" fill="#dfe3dd"/>
+                <rect x="-40" y="337" width="1040" height="46" fill="#dfe3dd"/>
+                <rect x="-40" y="238" width="1040" height="97" fill="#8f9792"/>
+                <path d="M-20 286H980" stroke="#eef0ed" stroke-width="3" stroke-dasharray="28 22" opacity=".8"/>
+                <path d="M-20 236H980M-20 337H980" stroke="#727d76" stroke-width="2"/>
+                <text x="760" y="226" class="base-label" id="seg-label">ILLUSTRATIVE 160 M SEGMENT</text>
+              </g>
+              <g opacity=".84">
+                <path d="M80 94h150v83H80zM248 82h118v96H248zM630 77h118v86H630zM767 92h150v87H767z" fill="#f6f7f4" stroke="#c3cbc4"/>
+                <path d="M40 441h160v91H40zM219 430h134v112H219zM670 423h115v109H670zM803 437h130v92H803z" fill="#f6f7f4" stroke="#c3cbc4"/>
+              </g>
+
+              <g class="map-layer" data-map-layer="known">
+                <g filter="url(#shadow)">
+                  <circle cx="263" cy="208" r="13" fill="#fff" stroke="#246b4e" stroke-width="3"/><circle cx="263" cy="208" r="6" fill="#4c936c"/>
+                  <circle cx="330" cy="200" r="13" fill="#fff" stroke="#246b4e" stroke-width="3"/><circle cx="330" cy="200" r="6" fill="#4c936c"/>
+                  <circle cx="621" cy="366" r="13" fill="#fff" stroke="#246b4e" stroke-width="3"/><circle cx="621" cy="366" r="6" fill="#4c936c"/>
+                  <circle cx="690" cy="357" r="13" fill="#fff" stroke="#246b4e" stroke-width="3"/><circle cx="690" cy="357" r="6" fill="#4c936c"/>
+                </g>
+                <path d="M185 156C250 120 340 126 390 166" fill="none" stroke="#246b4e" stroke-width="2" stroke-dasharray="4 5"/>
+                <g transform="translate(101 123)"><rect width="154" height="35" rx="5" fill="#246b4e"/><text x="12" y="15" class="object-label" id="tree-label">16 TREE RECORDS</text><text x="12" y="27" class="object-label" opacity=".7" id="tree-sub">within 100 m · not all drawn</text></g>
+                <g transform="translate(706 474)"><circle r="48" fill="#fff" stroke="#246b4e" stroke-width="2"/><text x="0" y="-5" text-anchor="middle" class="base-label" id="gw-label">GW 0813</text><text x="0" y="10" text-anchor="middle" class="tiny-label" id="gw-sub">222 m away</text></g>
+              </g>
+
+              <g class="map-layer" data-map-layer="derived">
+                <path d="M157 360L756 286L770 327L171 402Z" fill="rgba(57,116,124,.18)" stroke="#39747c" stroke-width="3" stroke-dasharray="8 6"/>
+                <text x="423" y="357" class="base-label" fill="#39747c" id="strip-label">≈ CANDIDATE EDGE STRIP · 384 M² SCENARIO</text>
+                <path class="flow-path" d="M216 270C365 279 503 292 650 305" fill="none" stroke="#39747c" stroke-width="5" marker-end="url(#arrow-blue)"/>
+                <path class="flow-path" d="M650 305C692 311 724 318 750 331" fill="none" stroke="#39747c" stroke-width="5" marker-end="url(#arrow-blue)"/>
+                <circle class="rain-drop" cx="270" cy="148" r="4" fill="#4d93b8"/><circle class="rain-drop" cx="420" cy="142" r="4" fill="#4d93b8"/><circle class="rain-drop" cx="578" cy="133" r="4" fill="#4d93b8"/><circle class="rain-drop" cx="720" cy="137" r="4" fill="#4d93b8"/>
+                <g transform="translate(166 231)"><rect width="166" height="37" rx="5" fill="#39747c"/><text x="11" y="15" class="object-label">≈ FLOW HYPOTHESIS</text><text x="11" y="28" class="object-label" opacity=".7">not terrain-validated</text></g>
+              </g>
+
+              <g class="map-layer" data-map-layer="ask">
+                <path d="M156 360L758 285L772 329L171 403Z" fill="url(#hatch)" stroke="#9a6a35" stroke-width="2" stroke-dasharray="5 6"/>
+                <g transform="translate(252 329)"><circle r="25" fill="#9a6a35"/><text text-anchor="middle" y="8" font-family="var(--mono)" font-size="25" font-weight="700" fill="#fff">?</text><text x="37" y="-3" class="base-label">UTILITIES</text><text x="37" y="11" class="tiny-label">depth + clearance gated</text></g>
+                <g transform="translate(522 297)"><circle r="25" fill="#9a6a35"/><text text-anchor="middle" y="8" font-family="var(--mono)" font-size="25" font-weight="700" fill="#fff">?</text><text x="37" y="-3" class="base-label">DRAINAGE</text><text x="37" y="11" class="tiny-label">destination + capacity gated</text></g>
+                <path d="M730 315v89" stroke="#9a6a35" stroke-width="4" stroke-dasharray="5 6" marker-end="url(#arrow-amber)"/>
+                <g transform="translate(663 427)"><rect width="195" height="42" rx="5" fill="#9a6a35"/><text x="12" y="17" class="object-label">WHERE DOES WATER GO?</text><text x="12" y="31" class="object-label" opacity=".72">open evidence stops here</text></g>
+              </g>
+            </svg>
+            <div class="map-caption" id="map-caption"></div>
+            <button class="rain-control" id="rain-control" type="button" aria-pressed="false">Trace the rain</button>
+          </div>
+        </div>
+        <aside class="evidence-panel">
+          <div class="panel-head"><span class="panel-kicker" id="layer-kicker"></span><h2 id="layer-question"></h2><p id="layer-summary"></p></div>
+          <div class="claim-list" id="claim-list"></div>
+          <div class="claim-detail" id="claim-detail" aria-live="polite"></div>
+        </aside>
+      </section>
+
+      <section class="decision" id="decision">
+        <div class="decision-title">
+          <div class="eyebrow">Candidate intervention</div>
+          <h2 data-intervention-name></h2>
+          <span class="status-pill" id="status-pill">Requires investigation</span>
+          <p data-intervention-why></p>
+          <div class="scenario-box">
+            <small class="eyebrow">Transparent scenario · not performance</small>
+            <div class="scenario-number"><span id="rain-volume">7.68</span><small>m³ falling on the drawn footprint</small></div>
+            <input class="range" id="rainfall" type="range" min="5" max="50" step="5" value="20" aria-label="Scenario rainfall depth in millimetres" />
+            <p><b id="rainfall-label">20 mm rain</b> × <span id="footprint-label">384</span> m² assumed footprint. This does not predict retention, infiltration or flood reduction.</p>
+          </div>
+        </div>
+        <div class="checks">
+          <div class="checks-head"><div><h3>What changes the decision?</h3><p>Use these controls as a review rehearsal. Click to cycle through the answers a gatekeeper could give. They do not create evidence; the engine's rules show how each answer would move the intervention.</p></div><span class="eyebrow" id="check-count">0 / 3 answered</span></div>
+          <div class="check-list" id="check-list"></div>
+          <div class="decision-note" id="decision-note" aria-live="polite"></div>
+          <div class="futures" id="futures"><h4>Three futures · engine rules</h4></div>
+        </div>
+      </section>
+
+      <section class="passport" id="passport">
+        <header class="passport-head">
+          <div><div class="eyebrow">Evidence Passport · v0</div><h2 data-site-name></h2><p>One inspectable handoff: what supports screening, what remains a hypothesis, and what action unlocks the next decision.</p></div>
+          <div class="passport-actions"><button class="action" id="print" type="button">Print passport</button><a class="action primary" id="street-lab-link" href="/wrapper/street-workspace/">Open illustrative Street Lab →</a></div>
+        </header>
+        <div class="passport-grid">
+          <article class="passport-cell"><small>Known now</small><b>Context, not site proof</b><ul id="passport-known"></ul></article>
+          <article class="passport-cell"><small>Derived / assumed</small><b>Useful only for the question</b><ul id="passport-derived"></ul></article>
+          <article class="passport-cell"><small>Decision blocked by</small><b id="passport-blocked-title">Decisive unknowns</b><ul id="passport-blocked"></ul></article>
+          <article class="passport-cell"><small>Next verified action</small><b>Unlock before design</b><p id="next-action">Request the gated records and commission a local infiltration check. Keep the concept at “requires investigation”.</p></article>
+        </div>
+        <div class="integrity"><strong>Verdict: promising for concept development, not ready for design.</strong><span data-boundary></span></div>
+      </section>
+    </div>
+  </template>
+
+  <script type="module">
+    import { assessFacts, INTERVENTIONS } from './engine/src/profile.js';
+    const STREETS = {
+      klybeck: { label: 'Klybeck · illustrative', url: './data/street-evidence-profile.v0.json' },
+      kanonengasse: { label: 'Kanonengasse · computed', url: './engine/data/kanonengasse.page.json' },
+    };
+    const FUTURE_LABELS = { 'tree-trench':'Tree trench', 'infiltrating-rain-garden':'Infiltrating rain garden', 'lined-bioretention':'Lined bioretention', 'unseal-and-plant':'Unseal and plant', 'no-dig-cooling':'No-dig cooling' };
+    const FACT_LABELS = { dig_deep:'deep digging', dig_shallow:'shallow digging', infiltration:'infiltration', overflow_route:'overflow route', protection_zone:'groundwater protection' };
+    const streetKey = STREETS[new URLSearchParams(location.search).get('street')] ? new URLSearchParams(location.search).get('street') : 'klybeck';
+    const answers = new Map();
+    const app = document.querySelector('#app');
+    const template = document.querySelector('#app-template');
+    const evidenceLabels = { observed:'observed', derived:'derived', modelled:'modelled', assumed:'≈ assumed', unknown:'unknown' };
+    let profile;
+    let activeLayer = location.hash.replace('#','') || 'known';
+
+    try {
+      profile = await fetch(STREETS[streetKey].url).then(response => {
+        if (!response.ok) throw new Error(`Profile request failed: ${response.status}`);
+        return response.json();
+      });
+      app.className = '';
+      app.replaceChildren(template.content.cloneNode(true));
+      boot();
+    } catch (error) {
+      app.textContent = 'The evidence profile could not be loaded. Serve this folder over HTTP and try again.';
+      console.error(error);
+    }
+
+    function boot(){
+      document.querySelectorAll('[data-site-name]').forEach(node => node.textContent = profile.site.name);
+      const computed = profile.site.identity_status.startsWith('computed');
+      document.querySelector('[data-site-status]').textContent = computed ? 'Computed street · picked by rule' : 'Study point · illustrative segment';
+      document.querySelector('[data-site-length]').textContent = `· ${profile.site.length_m} m ${computed ? 'street' : 'demo segment'}`;
+      document.querySelector('.street-switch').append(...Object.entries(STREETS).map(([key, street]) => {
+        const link = document.createElement('a'); link.href = `?street=${key}`; link.textContent = street.label;
+        if (key === streetKey) link.setAttribute('aria-current', 'page');
+        return link;
+      }));
+      fillSchematic(computed);
+      fillPassport();
+      document.querySelector('[data-boundary]').textContent = profile.site.boundary;
+      document.querySelector('[data-intervention-name]').textContent = profile.intervention.name;
+      document.querySelector('[data-intervention-why]').textContent = profile.intervention.why;
+      buildTabs();
+      buildChecks();
+      buildStreetLabLink();
+      setLayer(profile.layers.some(layer => layer.id === activeLayer) ? activeLayer : 'known');
+      document.querySelector('#rain-control').addEventListener('click', toggleRain);
+      document.querySelector('#rainfall').addEventListener('input', updateRainfall);
+      document.querySelector('#print').addEventListener('click', () => window.print());
+    }
+
+    function buildTabs(){
+      const tabs = document.querySelector('.layer-tabs');
+      for(const layer of profile.layers){
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'layer-tab'; button.dataset.layer = layer.id;
+        button.setAttribute('role','tab'); button.textContent = layer.short_label;
+        button.addEventListener('click',()=>setLayer(layer.id));
+        tabs.append(button);
+      }
+    }
+
+    function setLayer(id){
+      activeLayer = id;
+      const layer = profile.layers.find(item => item.id === id);
+      history.replaceState(null,'',`#${id}`);
+      document.querySelectorAll('.layer-tab').forEach(tab => tab.setAttribute('aria-selected',String(tab.dataset.layer === id)));
+      document.querySelectorAll('[data-map-layer]').forEach(group => group.classList.toggle('active',group.dataset.mapLayer === id));
+      document.querySelector('#layer-kicker').textContent = layer.label;
+      document.querySelector('#layer-question').textContent = layer.question;
+      document.querySelector('#layer-summary').textContent = layer.summary;
+      const caption = document.querySelector('#map-caption');
+      caption.className = `map-caption ${id}`; caption.textContent = layer.summary;
+      const claims = profile.claims.filter(claim => claim.layer === id);
+      const list = document.querySelector('#claim-list'); list.replaceChildren();
+      claims.forEach((claim,index) => {
+        const button = document.createElement('button');
+        button.type='button'; button.className='claim'; button.dataset.layer=id;
+        button.innerHTML = `<span class="claim-dot"></span><span><span class="claim-title">${escapeHtml(claim.title)}</span><span class="claim-meta">${escapeHtml(evidenceLabels[claim.evidence_class])} · ${escapeHtml(claim.origin)} · ${escapeHtml(claim.validation)}</span></span><span class="claim-value">${escapeHtml(claim.value)}</span>`;
+        button.addEventListener('click',()=>showClaim(claim,button)); list.append(button);
+        if(index===0) showClaim(claim,button);
+      });
+    }
+
+    function showClaim(claim,button){
+      document.querySelectorAll('.claim').forEach(item=>item.classList.toggle('active',item===button));
+      const detail = document.querySelector('#claim-detail');
+      const source = claim.source_url ? `<a class="source-link" href="${claim.source_url}" target="_blank" rel="noreferrer">${escapeHtml(claim.source)} ↗</a>` : `<span class="source-link">${escapeHtml(claim.source)}</span>`;
+      const action = claim.unlock_action ? `<p><strong>Unlock:</strong> ${escapeHtml(claim.unlock_action)}</p>` : '';
+      const gatekeeper = claim.gatekeeper ? `<p><strong>Gatekeeper:</strong> ${escapeHtml(claim.gatekeeper)}</p>` : '';
+      detail.innerHTML = `<div class="badges"><span class="badge ${claim.evidence_class}">${escapeHtml(evidenceLabels[claim.evidence_class])}</span><span class="badge">${escapeHtml(claim.access_state)}</span><span class="badge">use · ${escapeHtml(claim.permitted_use.join(' + ') || 'none')}</span></div><p><strong>Method:</strong> ${escapeHtml(claim.method || 'No method: evidence is unavailable.')}</p><p><strong>Limit:</strong> ${escapeHtml(claim.limitation)}</p>${gatekeeper}${action}${source}`;
+    }
+
+    function fillSchematic(computed){
+      const snap=profile.snapshot, gw=snap.nearest_groundwater_station, area=profile.intervention.scenario.footprint_m2;
+      document.querySelector('#map-title').textContent=`Schematic Street X-Ray of ${profile.site.name}`;
+      document.querySelector('#seg-label').textContent=computed?`GENERIC SCHEMATIC · ${profile.site.length_m} M STREET`:`ILLUSTRATIVE ${profile.site.length_m} M SEGMENT`;
+      document.querySelector('#tree-label').textContent=`${snap.tree_count} TREE RECORD${snap.tree_count===1?'':'S'}`;
+      document.querySelector('#tree-sub').textContent=`${snap.tree_scope ?? `within ${snap.tree_radius_m} m`} · not all drawn`;
+      document.querySelector('#gw-label').textContent=gw.id?`GW ${gw.id.padStart(4,'0')}`:'GW STATION';
+      document.querySelector('#gw-sub').textContent=`${gw.distance_m} m away`;
+      document.querySelector('#strip-label').textContent=computed?`≈ ASSUMED ${area} M² ELEMENT · NOT DRAWN TO SCALE`:`≈ CANDIDATE EDGE STRIP · ${area} M² SCENARIO`;
+      document.querySelector('#footprint-label').textContent=area;
+      const rain=document.querySelector('#rainfall'); rain.value=profile.intervention.scenario.rainfall_mm; updateRainfall({target:rain});
+    }
+
+    function fillPassport(){
+      const item=text=>{const li=document.createElement('li'); li.textContent=text; return li;};
+      const byLayer=layer=>profile.claims.filter(claim=>claim.layer===layer);
+      document.querySelector('#passport-known').replaceChildren(...byLayer('known').slice(0,4).map(claim=>item(`${claim.title} ${claim.value}`)));
+      document.querySelector('#passport-derived').replaceChildren(...byLayer('derived').slice(0,3).map(claim=>item(`${claim.title}: ${claim.value} ${claim.unit}`)), item('Explain and screen only'));
+      const blocked=profile.intervention.blocking_claims.map(id=>profile.claims.find(claim=>claim.id===id));
+      document.querySelector('#passport-blocked-title').textContent=`${blocked.length} decisive unknowns`;
+      document.querySelector('#passport-blocked').replaceChildren(...blocked.map(claim=>item(claim.title)));
+    }
+
+    function buildChecks(){
+      const list=document.querySelector('#check-list');
+      for(const id of profile.intervention.blocking_claims){
+        const claim=profile.claims.find(item=>item.id===id);
+        const button=document.createElement('button'); button.type='button'; button.className='unlock'; button.dataset.id=id;
+        button.setAttribute('aria-pressed','false');
+        button.innerHTML=`<span class="unlock-icon">?</span><span><b>${escapeHtml(claim.title)}</b><small>${escapeHtml(claim.unlock_action)}</small></span><span class="unlock-state">Not answered</span>`;
+        button.addEventListener('click',()=>cycleCheck(button,id)); list.append(button);
+      }
+      updateDecision();
+    }
+
+    // Each click moves to the next declared answer, then back to "not answered".
+    function cycleCheck(button,id){
+      const options=profile.engine.checks[id].options;
+      const next=answers.has(id)?options.indexOf(answers.get(id))+1:0;
+      if(next>=options.length) answers.delete(id); else answers.set(id,options[next]);
+      const answer=answers.get(id), positive=answer===options[0];
+      button.classList.toggle('on',positive); button.classList.toggle('no',Boolean(answer)&&!positive);
+      button.setAttribute('aria-pressed',String(Boolean(answer)));
+      button.querySelector('.unlock-icon').textContent=answer?(positive?'✓':'✕'):'?';
+      button.querySelector('.unlock-state').textContent=answer?`Rehearsed: ${answer}`:'Not answered';
+      updateDecision();
+    }
+
+    function updateDecision(){
+      const total=profile.intervention.blocking_claims.length;
+      document.querySelector('#check-count').textContent=`${answers.size} / ${total} answered`;
+      const facts=Object.fromEntries([...answers].map(([id,answer])=>[profile.engine.checks[id].fact,answer]));
+      const results=assessFacts(profile.engine.facts,facts);
+      const tracked=results.filter(result=>profile.engine.interventions.includes(result.id));
+      const candidates=tracked.filter(result=>result.state==='candidate');
+      const state=candidates.length?'candidate':tracked.every(result=>result.state==='excluded')?'excluded':'requires-investigation';
+      const pill=document.querySelector('#status-pill'), note=document.querySelector('#decision-note'), next=document.querySelector('#next-action');
+      pill.textContent={candidate:'Candidate for concept design',excluded:'Excluded under these answers','requires-investigation':'Requires investigation'}[state];
+      pill.classList.toggle('candidate',state==='candidate');
+      note.classList.toggle('ready',state==='candidate');
+      const open=profile.intervention.blocking_claims.filter(id=>!answers.has(id)).map(id=>profile.claims.find(item=>item.id===id).title.toLowerCase());
+      if(state==='candidate'){
+        note.textContent=`In this rehearsal, ${candidates.map(result=>FUTURE_LABELS[result.id].toLowerCase()).join(' and ')} could advance to site-specific design—but only with the actual records and test results attached.`;
+        next.textContent='Attach the verified records and measurements, then pass a bounded site brief to concept design.';
+      }else if(state==='excluded'){
+        note.textContent=`Under these rehearsed answers the concept is set aside (${tracked.flatMap(result=>result.blocking).map(fact=>FACT_LABELS[fact]).join(', ')}). See which future still works below.`;
+        next.textContent='Switch to a future the answers still allow; keep the request record for the next street.';
+      }else{
+        note.textContent=`Still open: ${open.join('; ') || tracked.flatMap(result=>result.unresolved).map(fact=>FACT_LABELS[fact]).join(', ')}. The current evidence supports screening and a verification request, not design.`;
+        next.textContent='Request the gated records and commission a local infiltration check. Keep the concept at “requires investigation”.';
+      }
+      const futures=document.querySelector('#futures'); futures.querySelectorAll('.future').forEach(node=>node.remove());
+      for(const result of results){
+        const row=document.createElement('div'); row.className=`future ${result.state}`;
+        const why=result.blocking.length?`blocked by ${result.blocking.map(fact=>FACT_LABELS[fact]).join(', ')}`:result.unresolved.length?`open: ${result.unresolved.map(fact=>FACT_LABELS[fact]).join(', ')}`:result.permitted_decision;
+        row.innerHTML=`<span><b>${escapeHtml(FUTURE_LABELS[result.id])}</b> · ${escapeHtml(INTERVENTIONS.find(item=>item.id===result.id).family)}<small>${escapeHtml(why)}</small></span><span class="state">${escapeHtml(result.state.replace('-',' '))}</span>`;
+        futures.append(row);
+      }
+    }
+
+    function updateRainfall(event){
+      const mm=Number(event.target.value), area=profile.intervention.scenario.footprint_m2;
+      document.querySelector('#rain-volume').textContent=(mm/1000*area).toFixed(2);
+      document.querySelector('#rainfall-label').textContent=`${mm} mm rain`;
+    }
+
+    function toggleRain(){
+      const stage=document.querySelector('#map-stage'), button=document.querySelector('#rain-control');
+      const running=stage.classList.toggle('raining'); button.setAttribute('aria-pressed',String(running)); button.textContent=running?'Pause rain':'Trace the rain';
+      if(activeLayer!=='derived') setLayer('derived');
+    }
+
+    function buildStreetLabLink(){
+      const payload={version:1,site:{id:profile.site.id,name:profile.site.name,district:profile.site.district,coordinates:profile.site.coordinates,indicators:{sources:[`Street X-Ray ${profile.schema_version}`,'Basel-Stadt tree cadastre 100052','Basel-Stadt groundwater statistics 100180'],missingData:profile.intervention.blocking_claims.map(id=>profile.claims.find(claim=>claim.id===id).title)},constraints:['Street section and intervention footprint are illustrative','No utility, drainage or local infiltration evidence is attached'],directions:[profile.intervention.name]},provenance:{classification:'illustrative',source:'Street X-Ray evidence passport',note:'Carries candidate identity and questions only; it does not create street geometry or hydraulic facts.'}};
+      const bytes=new TextEncoder().encode(JSON.stringify(payload)); let binary=''; bytes.forEach(byte=>binary+=String.fromCharCode(byte));
+      const encoded=btoa(binary).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');
+      document.querySelector('#street-lab-link').href=`../street-workspace/?site=${encoded}`;
+    }
+
+    function escapeHtml(value){return String(value).replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));}
+  </script>
+</body>
+</html>

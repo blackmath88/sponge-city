@@ -1,0 +1,11 @@
+{
+  "name": "achim-connected-case",
+  "private": true,
+  "type": "module",
+  "description": "Connected-case contract, build and tests. No dependencies.",
+  "scripts": {
+    "build": "node --experimental-strip-types --no-warnings scripts/build-case.mjs",
+    "check": "node --experimental-strip-types --no-warnings scripts/build-case.mjs --check",
+    "test": "node --experimental-strip-types --no-warnings --test tests/connected-case.test.mjs"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "sponge-data-charter-map",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "fetch": "node scripts/fetch.mjs && npm test",
+    "test": "npm run build && node scripts/smoke.mjs"
+  }
+}

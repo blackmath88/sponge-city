@@ -1,0 +1,4477 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592043168092146,
+          47.56623314248648
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332140",
+        "ba_baumnr": "BS018421",
+        "ba_art": "Acer platanoides \"Cleveland\" (Kegelförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Cleveland\"",
+        "baumart_deutsch": "Kegelförmiger Spitz-Ahorn",
+        "timeposition": "1980-03-01",
+        "ba_baumalter": 56,
+        "ba_standjahr": 47,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56623314248648&lon=7.592043168092146&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592425126430154,
+          47.56752355914153
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.333607",
+        "ba_baumnr": "BS031109",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1968-03-08",
+        "ba_baumalter": 68,
+        "ba_standjahr": 59,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56752355914153&lon=7.592425126430154&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592118095530037,
+          47.56632815226691
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.334098",
+        "ba_baumnr": "BS016800",
+        "ba_art": "Acer platanoides (Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides",
+        "baumart_deutsch": "Spitz-Ahorn",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56632815226691&lon=7.592118095530037&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592338266288815,
+          47.56743875519514
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.325386",
+        "ba_baumnr": "BS016130",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "2003-01-01",
+        "ba_baumalter": 33,
+        "ba_standjahr": 24,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56743875519514&lon=7.592338266288815&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592456572536994,
+          47.56703173311283
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.326465",
+        "ba_baumnr": "BS016125",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56703173311283&lon=7.592456572536994&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592466621617474,
+          47.567383265624464
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328359",
+        "ba_baumnr": "BS016827",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567383265624464&lon=7.592466621617474&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59279279042693,
+          47.567681569444055
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328431",
+        "ba_baumnr": "BS016866",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567681569444055&lon=7.59279279042693&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5926701809081765,
+          47.56708487361483
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.323012",
+        "ba_baumnr": "BS016845",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56708487361483&lon=7.5926701809081765&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592850243817064,
+          47.56752261974432
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.325708",
+        "ba_baumnr": "BS016850",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1944-01-01",
+        "ba_baumalter": 92,
+        "ba_standjahr": 83,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56752261974432&lon=7.592850243817064&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592611291788948,
+          47.56688423898529
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.326118",
+        "ba_baumnr": "BS016838",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1983-01-01",
+        "ba_baumalter": 53,
+        "ba_standjahr": 44,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56688423898529&lon=7.592611291788948&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59272664212062,
+          47.56631057611529
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.326773",
+        "ba_baumnr": "BS016787",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "2009-01-01",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56631057611529&lon=7.59272664212062&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59231773902416,
+          47.56750932884204
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.326965",
+        "ba_baumnr": "BS016831",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1998-01-01",
+        "ba_baumalter": 38,
+        "ba_standjahr": 29,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56750932884204&lon=7.59231773902416&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5934659370597775,
+          47.56705957228373
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327931",
+        "ba_baumnr": "BS016857",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56705957228373&lon=7.5934659370597775&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5920513765543225,
+          47.56600983599654
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331615",
+        "ba_baumnr": "BS018226",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56600983599654&lon=7.5920513765543225&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592339401756872,
+          47.56810091477554
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331619",
+        "ba_baumnr": "BS016907",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 77,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56810091477554&lon=7.592339401756872&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592103158971586,
+          47.568565678543386
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.333063",
+        "ba_baumnr": "BS016910",
+        "ba_art": "Aesculus hippocastanum (Gemeine Rosskastanie)",
+        "baumart_lateinisch": "Aesculus hippocastanum",
+        "baumart_deutsch": "Gemeine Rosskastanie",
+        "timeposition": "1970-03-01",
+        "ba_baumalter": 66,
+        "ba_standjahr": 57,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsiring",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568565678543386&lon=7.592103158971586&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592159289395408,
+          47.56637426269778
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.342811",
+        "ba_baumnr": "BS037094",
+        "ba_art": "Acer platanoides \"Cleveland\" (Kegelförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Cleveland\"",
+        "baumart_deutsch": "Kegelförmiger Spitz-Ahorn",
+        "timeposition": "2013-09-24",
+        "ba_baumalter": 23,
+        "ba_standjahr": 14,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56637426269778&lon=7.592159289395408&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59284080268795,
+          47.566098794289694
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.319866",
+        "ba_baumnr": "BS016359",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "2003-01-01",
+        "ba_baumalter": 33,
+        "ba_standjahr": 24,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566098794289694&lon=7.59284080268795&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592999632621383,
+          47.565811711846486
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.317743",
+        "ba_baumnr": "BS017869",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565811711846486&lon=7.592999632621383&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5930271115806365,
+          47.5676816010715
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.316711",
+        "ba_baumnr": "BS016869",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5676816010715&lon=7.5930271115806365&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592570385519901,
+          47.56702572796507
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318288",
+        "ba_baumnr": "BS016836",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56702572796507&lon=7.592570385519901&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5906825601560906,
+          47.5669540526242
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311320",
+        "ba_baumnr": "BS046873",
+        "ba_art": "Quercus x hispanica \"Fulhamensis\" (Spanische Eiche \"Fulhamensis\")",
+        "baumart_lateinisch": "Quercus x hispanica \"Fulhamensis\"",
+        "baumart_deutsch": "Spanische Eiche \"Fulhamensis\"",
+        "timeposition": "2024-11-05",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5669540526242&lon=7.5906825601560906&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592551372014778,
+          47.56709574205595
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.315541",
+        "ba_baumnr": "BS016123",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1995-01-01",
+        "ba_baumalter": 41,
+        "ba_standjahr": 32,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56709574205595&lon=7.592551372014778&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592907518089181,
+          47.56777089596929
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.316898",
+        "ba_baumnr": "BS016867",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1984-01-01",
+        "ba_baumalter": 52,
+        "ba_standjahr": 43,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56777089596929&lon=7.592907518089181&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593194929298464,
+          47.567527946152204
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.316930",
+        "ba_baumnr": "BS016852",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567527946152204&lon=7.593194929298464&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592632607301498,
+          47.56681074127501
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.317087",
+        "ba_baumnr": "BS016839",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56681074127501&lon=7.592632607301498&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592766180216439,
+          47.56623865515242
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318455",
+        "ba_baumnr": "BS016788",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "2003-01-01",
+        "ba_baumalter": 33,
+        "ba_standjahr": 24,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56623865515242&lon=7.592766180216439&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59348572266379,
+          47.56699044739089
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324490",
+        "ba_baumnr": "BS016858",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56699044739089&lon=7.59348572266379&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592487027145746,
+          47.56731203556814
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324263",
+        "ba_baumnr": "BS016828",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56731203556814&lon=7.592487027145746&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592906176048301,
+          47.56619347444528
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324679",
+        "ba_baumnr": "BS016780",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1998-01-01",
+        "ba_baumalter": 38,
+        "ba_standjahr": 29,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56619347444528&lon=7.592906176048301&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592316641170295,
+          47.565410469795566
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331668",
+        "ba_baumnr": "BS018241",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565410469795566&lon=7.592316641170295&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.590528504035477,
+          47.56745340382765
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311283",
+        "ba_baumnr": "BS046870",
+        "ba_art": "Quercus x hispanica \"Fulhamensis\" (Spanische Eiche \"Fulhamensis\")",
+        "baumart_lateinisch": "Quercus x hispanica \"Fulhamensis\"",
+        "baumart_deutsch": "Spanische Eiche \"Fulhamensis\"",
+        "timeposition": "2024-11-05",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56745340382765&lon=7.590528504035477&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592897744973545,
+          47.56669724091217
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311574",
+        "ba_baumnr": "BS045029",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2022-11-07",
+        "ba_baumalter": 13,
+        "ba_standjahr": 4,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Wettsteinallee",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56669724091217&lon=7.592897744973545&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591995791084025,
+          47.56866073032315
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.329281",
+        "ba_baumnr": "BS016983",
+        "ba_art": "Aesculus hippocastanum (Gemeine Rosskastanie)",
+        "baumart_lateinisch": "Aesculus hippocastanum",
+        "baumart_deutsch": "Gemeine Rosskastanie",
+        "timeposition": "1960-01-03",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsiring",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56866073032315&lon=7.591995791084025&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59244576582589,
+          47.567455053878774
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.336608",
+        "ba_baumnr": "BS016826",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2010-03-24",
+        "ba_baumalter": 26,
+        "ba_standjahr": 17,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567455053878774&lon=7.59244576582589&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592477386649344,
+          47.56695937829716
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.336673",
+        "ba_baumnr": "BS033139",
+        "ba_art": "Fraxinus ornus \"Obelisk\" (Blumen-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus \"Obelisk\"",
+        "baumart_deutsch": "Blumen-Esche",
+        "timeposition": "2009-03-25",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56695937829716&lon=7.592477386649344&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5922980605825,
+          47.56758858028443
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.336762",
+        "ba_baumnr": "BS033140",
+        "ba_art": "Fraxinus ornus (Blumen-Esche / Manna-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus",
+        "baumart_deutsch": "Blumen-Esche / Manna-Esche",
+        "timeposition": "2009-03-25",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56758858028443&lon=7.5922980605825&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592337670012125,
+          47.568537992748574
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337777",
+        "ba_baumnr": "BS033138",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2009-04-01",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568537992748574&lon=7.592337670012125&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5934677158746,
+          47.567411763245666
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340670",
+        "ba_baumnr": "BS016880",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567411763245666&lon=7.5934677158746&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592999733268507,
+          47.566715210213076
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340675",
+        "ba_baumnr": "BS016794",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566715210213076&lon=7.592999733268507&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592401981886614,
+          47.56722517870415
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340677",
+        "ba_baumnr": "BS016834",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1985-01-01",
+        "ba_baumalter": 51,
+        "ba_standjahr": 42,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56722517870415&lon=7.592401981886614&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593596709110983,
+          47.56696755481767
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340686",
+        "ba_baumnr": "BS016885",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56696755481767&lon=7.593596709110983&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593202793840891,
+          47.568224821460475
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337975",
+        "ba_baumnr": "BS043853",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": "2018-04-02",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568224821460475&lon=7.593202793840891&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593081918190807,
+          47.56822493671644
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.338002",
+        "ba_baumnr": "BS043852",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": "2018-04-02",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56822493671644&lon=7.593081918190807&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593639073003384,
+          47.56682560485157
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340660",
+        "ba_baumnr": "BS017875",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1985-03-01",
+        "ba_baumalter": 51,
+        "ba_standjahr": 42,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56682560485157&lon=7.593639073003384&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593539652667559,
+          47.56680890980666
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340663",
+        "ba_baumnr": "BS016797",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1980-03-01",
+        "ba_baumalter": 56,
+        "ba_standjahr": 47,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56680890980666&lon=7.593539652667559&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59163921857136,
+          47.56628128608399
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311736",
+        "ba_baumnr": "BS037150",
+        "ba_art": "Cladrastis lutea (Kentucky-Gelbholz)",
+        "baumart_lateinisch": "Cladrastis lutea",
+        "baumart_deutsch": "Kentucky-Gelbholz",
+        "timeposition": "2013-11-11",
+        "ba_baumalter": 22,
+        "ba_standjahr": 13,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56628128608399&lon=7.59163921857136&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593535711966573,
+          47.567177395993816
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340699",
+        "ba_baumnr": "BS016882",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-03-01",
+        "ba_baumalter": 46,
+        "ba_standjahr": 37,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567177395993816&lon=7.593535711966573&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592634214162284,
+          47.56721120169359
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340703",
+        "ba_baumnr": "BS016846",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-11-13",
+        "ba_baumalter": 50,
+        "ba_standjahr": 36,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56721120169359&lon=7.592634214162284&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593305780919968,
+          47.56785257058588
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340733",
+        "ba_baumnr": "BS018223",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56785257058588&lon=7.593305780919968&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592364185890271,
+          47.56774104422103
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.312456",
+        "ba_baumnr": "BS016822",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2003-11-13",
+        "ba_baumalter": 32,
+        "ba_standjahr": 23,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56774104422103&lon=7.592364185890271&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592790310496902,
+          47.56667998023314
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332678",
+        "ba_baumnr": "BS044210",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2021-03-01",
+        "ba_baumalter": 15,
+        "ba_standjahr": 6,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56667998023314&lon=7.592790310496902&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592866784893606,
+          47.56626558413078
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340165",
+        "ba_baumnr": "BS033141",
+        "ba_art": "Fraxinus ornus (Blumen-Esche / Manna-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus",
+        "baumart_deutsch": "Blumen-Esche / Manna-Esche",
+        "timeposition": "2009-04-22",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56626558413078&lon=7.592866784893606&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5923393824027166,
+          47.56824652276409
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.310929",
+        "ba_baumnr": "BS045890",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2023-11-01",
+        "ba_baumalter": 12,
+        "ba_standjahr": 3,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56824652276409&lon=7.5923393824027166&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592590565540342,
+          47.566954732014985
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.323103",
+        "ba_baumnr": "BS016837",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1983-01-01",
+        "ba_baumalter": 53,
+        "ba_standjahr": 44,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566954732014985&lon=7.592590565540342&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592618395538637,
+          47.567402950297115
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.323150",
+        "ba_baumnr": "BS016848",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567402950297115&lon=7.592618395538637&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592257705616068,
+          47.567723556951115
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.323179",
+        "ba_baumnr": "BS016829",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567723556951115&lon=7.592257705616068&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592004105855416,
+          47.568751807533985
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.34852",
+        "ba_baumnr": "BS018509",
+        "ba_art": "Cydonia oblonga (Echte Quitte)",
+        "baumart_lateinisch": "Cydonia oblonga",
+        "baumart_deutsch": "Echte Quitte",
+        "timeposition": null,
+        "ba_baumalter": null,
+        "ba_standjahr": null,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsiring",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568751807533985&lon=7.592004105855416&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5929846550310724,
+          47.566050163793825
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324830",
+        "ba_baumnr": "BS016778",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1983-01-01",
+        "ba_baumalter": 53,
+        "ba_standjahr": 44,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566050163793825&lon=7.5929846550310724&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592381178706294,
+          47.567296787007535
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324882",
+        "ba_baumnr": "BS016833",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1998-01-01",
+        "ba_baumalter": 38,
+        "ba_standjahr": 29,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567296787007535&lon=7.592381178706294&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5931402111603745,
+          47.56576630523346
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.325297",
+        "ba_baumnr": "BS016774",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56576630523346&lon=7.5931402111603745&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592338489894763,
+          47.56831963370531
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.325626",
+        "ba_baumnr": "BS018034",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2008-01-01",
+        "ba_baumalter": 28,
+        "ba_standjahr": 19,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56831963370531&lon=7.592338489894763&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592339682404741,
+          47.568027606774
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.326557",
+        "ba_baumnr": "BS016906",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568027606774&lon=7.592339682404741&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592338340165064,
+          47.5683922580055
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.321470",
+        "ba_baumnr": "BS016908",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1958-01-01",
+        "ba_baumalter": 78,
+        "ba_standjahr": 69,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5683922580055&lon=7.592338340165064&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5925884311306735,
+          47.567767594454956
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.334136",
+        "ba_baumnr": "BS031106",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2008-03-13",
+        "ba_baumalter": 28,
+        "ba_standjahr": 19,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567767594454956&lon=7.5925884311306735&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593990492619208,
+          47.56621486025133
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.310542",
+        "ba_baumnr": "BS041832",
+        "ba_art": "Fraxinus angustifolia \"Raywood\" (Schmalblättrige Purpur-Esche)",
+        "baumart_lateinisch": "Fraxinus angustifolia \"Raywood\"",
+        "baumart_deutsch": "Schmalblättrige Purpur-Esche",
+        "timeposition": "2017-10-30",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Privatbäume gepflegt durch STG",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56621486025133&lon=7.593990492619208&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593202848081821,
+          47.56837667097395
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331978",
+        "ba_baumnr": "BS016890",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": "1920-03-01",
+        "ba_baumalter": 116,
+        "ba_standjahr": 107,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56837667097395&lon=7.593202848081821&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5920989016711165,
+          47.565900940615116
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332086",
+        "ba_baumnr": "BS018227",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565900940615116&lon=7.5920989016711165&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593152863893758,
+          47.56768180317969
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.330791",
+        "ba_baumnr": "BS016872",
+        "ba_art": "Tilia cordata (Winter-Linde)",
+        "baumart_lateinisch": "Tilia cordata",
+        "baumart_deutsch": "Winter-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56768180317969&lon=7.593152863893758&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592178849756897,
+          47.5657226250611
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331774",
+        "ba_baumnr": "BS018229",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5657226250611&lon=7.592178849756897&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591993019073677,
+          47.56614112194197
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331834",
+        "ba_baumnr": "BS018224",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56614112194197&lon=7.591993019073677&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592235629962576,
+          47.56559305887734
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332325",
+        "ba_baumnr": "BS018231",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56559305887734&lon=7.592235629962576&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.590581190379543,
+          47.56728875046054
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311370",
+        "ba_baumnr": "BS046872",
+        "ba_art": "Quercus x hispanica \"Fulhamensis\" (Spanische Eiche \"Fulhamensis\")",
+        "baumart_lateinisch": "Quercus x hispanica \"Fulhamensis\"",
+        "baumart_deutsch": "Spanische Eiche \"Fulhamensis\"",
+        "timeposition": "2024-11-05",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56728875046054&lon=7.590581190379543&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591172302403899,
+          47.56534608503118
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311226",
+        "ba_baumnr": "BS046869",
+        "ba_art": "Quercus x hispanica \"Wageningen\" (Spanische Eiche)",
+        "baumart_lateinisch": "Quercus x hispanica \"Wageningen\"",
+        "baumart_deutsch": "Spanische Eiche",
+        "timeposition": "2024-11-04",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56534608503118&lon=7.591172302403899&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591130867264066,
+          47.56549408571301
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311239",
+        "ba_baumnr": "BS046867",
+        "ba_art": "Quercus x hispanica \"Wageningen\" (Spanische Eiche)",
+        "baumart_lateinisch": "Quercus x hispanica \"Wageningen\"",
+        "baumart_deutsch": "Spanische Eiche",
+        "timeposition": "2024-11-04",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56549408571301&lon=7.591130867264066&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592652814823543,
+          47.56674012300753
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327532",
+        "ba_baumnr": "BS016840",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56674012300753&lon=7.592652814823543&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5926884003685595,
+          47.566380480759804
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327182",
+        "ba_baumnr": "BS016786",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1973-01-01",
+        "ba_baumalter": 63,
+        "ba_standjahr": 54,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566380480759804&lon=7.5926884003685595&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592277694443012,
+          47.56765515151169
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327201",
+        "ba_baumnr": "BS016830",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56765515151169&lon=7.592277694443012&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593506020677666,
+          47.566919325210236
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.329245",
+        "ba_baumnr": "BS016859",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566919325210236&lon=7.593506020677666&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592336762487323,
+          47.568462788655324
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.329250",
+        "ba_baumnr": "BS018035",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2003-01-01",
+        "ba_baumalter": 33,
+        "ba_standjahr": 24,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568462788655324&lon=7.592336762487323&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593286749092602,
+          47.56768205731688
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.316055",
+        "ba_baumnr": "BS016874",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56768205731688&lon=7.593286749092602&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59315365346787,
+          47.56777095667289
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318592",
+        "ba_baumnr": "BS016871",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56777095667289&lon=7.59315365346787&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592909013160798,
+          47.567681244797726
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318764",
+        "ba_baumnr": "BS016868",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567681244797726&lon=7.592909013160798&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592945277091834,
+          47.56612217456182
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318906",
+        "ba_baumnr": "BS016779",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1988-01-01",
+        "ba_baumalter": 48,
+        "ba_standjahr": 39,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56612217456182&lon=7.592945277091834&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5923383951263785,
+          47.568697548954724
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318134",
+        "ba_baumnr": "BS017860",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1998-01-01",
+        "ba_baumalter": 38,
+        "ba_standjahr": 29,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568697548954724&lon=7.5923383951263785&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593395437418922,
+          47.56729675785678
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.317784",
+        "ba_baumnr": "BS016855",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56729675785678&lon=7.593395437418922&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59217563334203,
+          47.56866138395492
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.317645",
+        "ba_baumnr": "BS016982",
+        "ba_art": "Styphnolobium japonicum (Japanischer Pagodenbaum)",
+        "baumart_lateinisch": "Styphnolobium japonicum",
+        "baumart_deutsch": "Japanischer Pagodenbaum",
+        "timeposition": "1998-01-01",
+        "ba_baumalter": 39,
+        "ba_standjahr": 29,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Bläsiring",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56866138395492&lon=7.59217563334203&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592613064300415,
+          47.567291507405784
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.319021",
+        "ba_baumnr": "BS016847",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567291507405784&lon=7.592613064300415&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593101242222726,
+          47.56583715533223
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.319834",
+        "ba_baumnr": "BS016775",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56583715533223&lon=7.593101242222726&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59306220811826,
+          47.565908482168645
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.312494",
+        "ba_baumnr": "BS016776",
+        "ba_art": "Fraxinus ornus \"Obelisk\" (Blumen-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus \"Obelisk\"",
+        "baumart_deutsch": "Blumen-Esche",
+        "timeposition": "2003-11-13",
+        "ba_baumalter": 32,
+        "ba_standjahr": 23,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565908482168645&lon=7.59306220811826&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591902953576154,
+          47.56619780180686
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.312193",
+        "ba_baumnr": "BS037152",
+        "ba_art": "Cladrastis lutea (Kentucky-Gelbholz)",
+        "baumart_lateinisch": "Cladrastis lutea",
+        "baumart_deutsch": "Kentucky-Gelbholz",
+        "timeposition": "2013-11-11",
+        "ba_baumalter": 22,
+        "ba_standjahr": 13,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56619780180686&lon=7.591902953576154&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592340344640252,
+          47.567957598954585
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.314520",
+        "ba_baumnr": "BS044064",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2020-12-07",
+        "ba_baumalter": 15,
+        "ba_standjahr": 6,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567957598954585&lon=7.592340344640252&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592562038010434,
+          47.56757806911265
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.343548",
+        "ba_baumnr": "BS045813",
+        "ba_art": "Carpinus betulus (Gewöhnliche Hain- oder Weissbuche)",
+        "baumart_lateinisch": "Carpinus betulus",
+        "baumart_deutsch": "Gewöhnliche Hain- oder Weissbuche",
+        "timeposition": "2000-10-01",
+        "ba_baumalter": 36,
+        "ba_standjahr": 27,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56757806911265&lon=7.592562038010434&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5927502240576885,
+          47.56647916788315
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.312861",
+        "ba_baumnr": "BS045124",
+        "ba_art": "Fraxinus ornus \"Obelisk\" (Blumen-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus \"Obelisk\"",
+        "baumart_deutsch": "Blumen-Esche",
+        "timeposition": "2022-11-18",
+        "ba_baumalter": 13,
+        "ba_standjahr": 4,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56647916788315&lon=7.5927502240576885&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592604018027967,
+          47.56761983437134
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.343612",
+        "ba_baumnr": "BS045812",
+        "ba_art": "Acer campestre (Feld-Ahorn)",
+        "baumart_lateinisch": "Acer campestre",
+        "baumart_deutsch": "Feld-Ahorn",
+        "timeposition": "2000-10-01",
+        "ba_baumalter": 36,
+        "ba_standjahr": 27,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56761983437134&lon=7.592604018027967&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592694129920068,
+          47.56700298129499
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337093",
+        "ba_baumnr": "BS016844",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1940-03-27",
+        "ba_baumalter": 96,
+        "ba_standjahr": 87,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56700298129499&lon=7.592694129920068&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593385815644002,
+          47.567690775634034
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340666",
+        "ba_baumnr": "BS016876",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567690775634034&lon=7.593385815644002&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593556397885329,
+          47.567107145682655
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340678",
+        "ba_baumnr": "BS016883",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567107145682655&lon=7.593556397885329&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59311586449119,
+          47.56673450973623
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340682",
+        "ba_baumnr": "BS016122",
+        "ba_art": "Tilia cordata (Winter-Linde)",
+        "baumart_lateinisch": "Tilia cordata",
+        "baumart_deutsch": "Winter-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56673450973623&lon=7.59311586449119&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593447729716689,
+          47.567480528643
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340683",
+        "ba_baumnr": "BS016879",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567480528643&lon=7.593447729716689&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592714642680585,
+          47.566932227712634
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340685",
+        "ba_baumnr": "BS016843",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-03-27",
+        "ba_baumalter": 46,
+        "ba_standjahr": 37,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566932227712634&lon=7.592714642680585&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592678417523173,
+          47.566660324028135
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.335128",
+        "ba_baumnr": "BS042773",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2019-03-17",
+        "ba_baumalter": 17,
+        "ba_standjahr": 8,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566660324028135&lon=7.592678417523173&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592360453544483,
+          47.56736781960551
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.335676",
+        "ba_baumnr": "BS034923",
+        "ba_art": "Fraxinus ornus \"Obelisk\" (Blumen-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus \"Obelisk\"",
+        "baumart_deutsch": "Blumen-Esche",
+        "timeposition": "2012-03-19",
+        "ba_baumalter": 24,
+        "ba_standjahr": 15,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56736781960551&lon=7.592360453544483&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59200894176045,
+          47.56853855164732
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337753",
+        "ba_baumnr": "BS043753",
+        "ba_art": "Taxus baccata (Gewöhnliche oder Europäische Eibe)",
+        "baumart_lateinisch": "Taxus baccata",
+        "baumart_deutsch": "Gewöhnliche oder Europäische Eibe",
+        "timeposition": "2000-04-01",
+        "ba_baumalter": 36,
+        "ba_standjahr": 27,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsianlage",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56853855164732&lon=7.59200894176045&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59273514386299,
+          47.566862085711875
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340702",
+        "ba_baumnr": "BS016842",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-03-01",
+        "ba_baumalter": 46,
+        "ba_standjahr": 37,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566862085711875&lon=7.59273514386299&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5921498316418985,
+          47.56578855116779
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332607",
+        "ba_baumnr": "BS018228",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56578855116779&lon=7.5921498316418985&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592154304003619,
+          47.568365438493124
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332876",
+        "ba_baumnr": "BS016912",
+        "ba_art": "Acer saccharinum (Silber-Ahorn)",
+        "baumart_lateinisch": "Acer saccharinum",
+        "baumart_deutsch": "Silber-Ahorn",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsiring",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568365438493124&lon=7.592154304003619&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592343344002991,
+          47.56535282989459
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332652",
+        "ba_baumnr": "BS018240",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56535282989459&lon=7.592343344002991&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593026133773534,
+          47.56777083784955
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328498",
+        "ba_baumnr": "BS016870",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56777083784955&lon=7.593026133773534&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592557021684565,
+          47.56668618839875
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328006",
+        "ba_baumnr": "BS016129",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56668618839875&lon=7.592557021684565&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592205922294741,
+          47.565659435595315
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.330435",
+        "ba_baumnr": "BS018230",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565659435595315&lon=7.592205922294741&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593350103348675,
+          47.56677637052363
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332069",
+        "ba_baumnr": "BS016795",
+        "ba_art": "Tilia tomentosa \"Petiolaris\" (Hänge-Silber-Linde)",
+        "baumart_lateinisch": "Tilia tomentosa \"Petiolaris\"",
+        "baumart_deutsch": "Hänge-Silber-Linde",
+        "timeposition": "1940-03-01",
+        "ba_baumalter": 98,
+        "ba_standjahr": 87,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56677637052363&lon=7.593350103348675&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592370030541537,
+          47.56528955095349
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.330794",
+        "ba_baumnr": "BS018239",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56528955095349&lon=7.592370030541537&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593276030337712,
+          47.567771055197795
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332414",
+        "ba_baumnr": "BS016873",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567771055197795&lon=7.593276030337712&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593023491319776,
+          47.56597928693478
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331775",
+        "ba_baumnr": "BS016777",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1970-03-01",
+        "ba_baumalter": 71,
+        "ba_standjahr": 57,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56597928693478&lon=7.593023491319776&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593426993039456,
+          47.56755170534335
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340672",
+        "ba_baumnr": "BS016878",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 87,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56755170534335&lon=7.593426993039456&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5934872921456344,
+          47.567343726877375
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340673",
+        "ba_baumnr": "BS016881",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567343726877375&lon=7.5934872921456344&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593617060304214,
+          47.56689649550195
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340680",
+        "ba_baumnr": "BS016886",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56689649550195&lon=7.593617060304214&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592497853370098,
+          47.56689099915048
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340687",
+        "ba_baumnr": "BS016127",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1985-01-01",
+        "ba_baumalter": 51,
+        "ba_standjahr": 42,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56689099915048&lon=7.592497853370098&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592518468820881,
+          47.566818914396904
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327445",
+        "ba_baumnr": "BS016128",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566818914396904&lon=7.592518468820881&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593083240090686,
+          47.56845220569217
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318265",
+        "ba_baumnr": "BS016892",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": null,
+        "ba_baumalter": 116,
+        "ba_standjahr": 107,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56845220569217&lon=7.593083240090686&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5933761675205105,
+          47.56736508160225
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.319078",
+        "ba_baumnr": "BS016854",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56736508160225&lon=7.5933761675205105&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5930825060913225,
+          47.56829953865747
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.319918",
+        "ba_baumnr": "BS016888",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": null,
+        "ba_baumalter": 116,
+        "ba_standjahr": 107,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56829953865747&lon=7.5930825060913225&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592649114308167,
+          47.56645232041583
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320050",
+        "ba_baumnr": "BS016785",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56645232041583&lon=7.592649114308167&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593943867734543,
+          47.566335060287464
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.310551",
+        "ba_baumnr": "BS041830",
+        "ba_art": "Fraxinus angustifolia \"Raywood\" (Schmalblättrige Purpur-Esche)",
+        "baumart_lateinisch": "Fraxinus angustifolia \"Raywood\"",
+        "baumart_deutsch": "Schmalblättrige Purpur-Esche",
+        "timeposition": "2017-10-30",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Privatbäume gepflegt durch STG",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566335060287464&lon=7.593943867734543&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59397024230206,
+          47.56626552179587
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.310590",
+        "ba_baumnr": "BS041831",
+        "ba_art": "Fraxinus angustifolia \"Raywood\" (Schmalblättrige Purpur-Esche)",
+        "baumart_lateinisch": "Fraxinus angustifolia \"Raywood\"",
+        "baumart_deutsch": "Schmalblättrige Purpur-Esche",
+        "timeposition": "2017-10-30",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Privatbäume gepflegt durch STG",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56626552179587&lon=7.59397024230206&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592590756166354,
+          47.567679857849846
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.332359",
+        "ba_baumnr": "BS019403",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1980-03-01",
+        "ba_baumalter": 56,
+        "ba_standjahr": 47,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567679857849846&lon=7.592590756166354&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592226069373979,
+          47.56871365182691
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.315756",
+        "ba_baumnr": "BS016905",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56871365182691&lon=7.592226069373979&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592507657229798,
+          47.567240355524945
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320757",
+        "ba_baumnr": "BS016835",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1963-01-01",
+        "ba_baumalter": 73,
+        "ba_standjahr": 64,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567240355524945&lon=7.592507657229798&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59305059238844,
+          47.56754819340387
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320826",
+        "ba_baumnr": "BS016851",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56754819340387&lon=7.59305059238844&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593425389119524,
+          47.56720016171318
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320925",
+        "ba_baumnr": "BS016856",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56720016171318&lon=7.593425389119524&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5927237075036915,
+          47.56747164890901
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320981",
+        "ba_baumnr": "BS016849",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56747164890901&lon=7.5927237075036915&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59291963968564,
+          47.56595520439903
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.320355",
+        "ba_baumnr": "BS016789",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1993-01-01",
+        "ba_baumalter": 43,
+        "ba_standjahr": 34,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56595520439903&lon=7.59291963968564&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593082700347742,
+          47.56837587690158
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.321711",
+        "ba_baumnr": "BS016891",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": null,
+        "ba_baumalter": 116,
+        "ba_standjahr": 107,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56837587690158&lon=7.593082700347742&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593445854242032,
+          47.56713162051901
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.321530",
+        "ba_baumnr": "BS016887",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56713162051901&lon=7.593445854242032&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592340341813566,
+          47.56788737616158
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.318644",
+        "ba_baumnr": "BS016133",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1968-01-01",
+        "ba_baumalter": 68,
+        "ba_standjahr": 59,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56788737616158&lon=7.592340341813566&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592689603893906,
+          47.56776936744995
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.329815",
+        "ba_baumnr": "BS031708",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2010-10-20",
+        "ba_baumalter": 25,
+        "ba_standjahr": 16,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56776936744995&lon=7.592689603893906&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592789791868048,
+          47.56777064700548
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.329858",
+        "ba_baumnr": "BS043879",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2020-11-06",
+        "ba_baumalter": 15,
+        "ba_standjahr": 6,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56777064700548&lon=7.592789791868048&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593575162048705,
+          47.56703866967974
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.335047",
+        "ba_baumnr": "BS042772",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2019-03-17",
+        "ba_baumalter": 17,
+        "ba_standjahr": 8,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56703866967974&lon=7.593575162048705&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5924834459967085,
+          47.568536505347744
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.333083",
+        "ba_baumnr": "BS018113",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568536505347744&lon=7.5924834459967085&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.589377724084071,
+          47.566049478808154
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.333420",
+        "ba_baumnr": "BS045312",
+        "ba_art": "Celtis australis (Südlicher Zürgelbaum)",
+        "baumart_lateinisch": "Celtis australis",
+        "baumart_deutsch": "Südlicher Zürgelbaum",
+        "timeposition": "2023-03-07",
+        "ba_baumalter": 13,
+        "ba_standjahr": 4,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Erasmusplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566049478808154&lon=7.589377724084071&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592085038285291,
+          47.566278820357276
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.333978",
+        "ba_baumnr": "BS016799",
+        "ba_art": "Acer platanoides (Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides",
+        "baumart_deutsch": "Spitz-Ahorn",
+        "timeposition": "1960-03-01",
+        "ba_baumalter": 76,
+        "ba_standjahr": 67,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.566278820357276&lon=7.592085038285291&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592528532804004,
+          47.56717087860867
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.314565",
+        "ba_baumnr": "BS044063",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2020-12-07",
+        "ba_baumalter": 15,
+        "ba_standjahr": 6,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56717087860867&lon=7.592528532804004&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593265118176015,
+          47.565632205325805
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.310825",
+        "ba_baumnr": "BS016767",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "2000-11-01",
+        "ba_baumalter": 35,
+        "ba_standjahr": 26,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565632205325805&lon=7.593265118176015&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.590554845968969,
+          47.56737062746501
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311285",
+        "ba_baumnr": "BS046871",
+        "ba_art": "Quercus x hispanica \"Fulhamensis\" (Spanische Eiche \"Fulhamensis\")",
+        "baumart_lateinisch": "Quercus x hispanica \"Fulhamensis\"",
+        "baumart_deutsch": "Spanische Eiche \"Fulhamensis\"",
+        "timeposition": "2024-11-05",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56737062746501&lon=7.590554845968969&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.590769516337791,
+          47.56669132308592
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311296",
+        "ba_baumnr": "BS046874",
+        "ba_art": "Quercus x hispanica \"Fulhamensis\" (Spanische Eiche \"Fulhamensis\")",
+        "baumart_lateinisch": "Quercus x hispanica \"Fulhamensis\"",
+        "baumart_deutsch": "Spanische Eiche \"Fulhamensis\"",
+        "timeposition": "2024-11-05",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56669132308592&lon=7.590769516337791&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591151916424749,
+          47.56541986009845
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311219",
+        "ba_baumnr": "BS046868",
+        "ba_art": "Quercus x hispanica \"Wageningen\" (Spanische Eiche)",
+        "baumart_lateinisch": "Quercus x hispanica \"Wageningen\"",
+        "baumart_deutsch": "Spanische Eiche",
+        "timeposition": "2024-11-04",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56541986009845&lon=7.591151916424749&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591112471832359,
+          47.565566958794584
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311240",
+        "ba_baumnr": "BS046866",
+        "ba_art": "Quercus x hispanica \"Wageningen\" (Spanische Eiche)",
+        "baumart_lateinisch": "Quercus x hispanica \"Wageningen\"",
+        "baumart_deutsch": "Spanische Eiche",
+        "timeposition": "2024-11-04",
+        "ba_baumalter": 11,
+        "ba_standjahr": 2,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Klybeckstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565566958794584&lon=7.591112471832359&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591959736536859,
+          47.56626777009494
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311923",
+        "ba_baumnr": "BS037148",
+        "ba_art": "Cladrastis lutea (Kentucky-Gelbholz)",
+        "baumart_lateinisch": "Cladrastis lutea",
+        "baumart_deutsch": "Kentucky-Gelbholz",
+        "timeposition": "2013-11-11",
+        "ba_baumalter": 22,
+        "ba_standjahr": 13,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56626777009494&lon=7.591959736536859&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591951580833822,
+          47.5663337406442
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.311994",
+        "ba_baumnr": "BS037147",
+        "ba_art": "Cladrastis lutea (Kentucky-Gelbholz)",
+        "baumart_lateinisch": "Cladrastis lutea",
+        "baumart_deutsch": "Kentucky-Gelbholz",
+        "timeposition": "2013-11-11",
+        "ba_baumalter": 22,
+        "ba_standjahr": 13,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5663337406442&lon=7.591951580833822&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592384495331643,
+          47.5676686541319
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.312008",
+        "ba_baumnr": "BS047744",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2025-11-07",
+        "ba_baumalter": 10,
+        "ba_standjahr": 1,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5676686541319&lon=7.592384495331643&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592426146114257,
+          47.56782220257125
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324952",
+        "ba_baumnr": "BS018222",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1984-01-01",
+        "ba_baumalter": 52,
+        "ba_standjahr": 43,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56782220257125&lon=7.592426146114257&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592789124948756,
+          47.56640743662715
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324452",
+        "ba_baumnr": "BS016783",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1983-01-01",
+        "ba_baumalter": 53,
+        "ba_standjahr": 44,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56640743662715&lon=7.592789124948756&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5932705574617865,
+          47.567579082951895
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324465",
+        "ba_baumnr": "BS016875",
+        "ba_art": "Acer platanoides (Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides",
+        "baumart_deutsch": "Spitz-Ahorn",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567579082951895&lon=7.5932705574617865&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592689376080692,
+          47.56768120251903
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.327302",
+        "ba_baumnr": "BS016864",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56768120251903&lon=7.592689376080692&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592959712841467,
+          47.565884685669864
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328812",
+        "ba_baumnr": "BS016790",
+        "ba_art": "Acer platanoides \"Globosum\" (Kugel-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Globosum\"",
+        "baumart_deutsch": "Kugel-Ahorn",
+        "timeposition": "1983-01-01",
+        "ba_baumalter": 53,
+        "ba_standjahr": 44,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.565884685669864&lon=7.592959712841467&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5932028580370945,
+          47.56830207723628
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.328927",
+        "ba_baumnr": "BS016889",
+        "ba_art": "Platanus x hispanica (Gewöhnliche Platane)",
+        "baumart_lateinisch": "Platanus x hispanica",
+        "baumart_deutsch": "Gewöhnliche Platane",
+        "timeposition": null,
+        "ba_baumalter": 116,
+        "ba_standjahr": 107,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Bläsischulhaus",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56830207723628&lon=7.5932028580370945&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593330280803442,
+          47.567484039227615
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.323603",
+        "ba_baumnr": "BS016853",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1954-01-01",
+        "ba_baumalter": 82,
+        "ba_standjahr": 73,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567484039227615&lon=7.593330280803442&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592405300854964,
+          47.567597810299155
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.324266",
+        "ba_baumnr": "BS016824",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1968-01-01",
+        "ba_baumalter": 68,
+        "ba_standjahr": 59,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567597810299155&lon=7.592405300854964&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592546933594727,
+          47.567639695898606
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.343520",
+        "ba_baumnr": "BS045811",
+        "ba_art": "Carpinus betulus (Gewöhnliche Hain- oder Weissbuche)",
+        "baumart_lateinisch": "Carpinus betulus",
+        "baumart_deutsch": "Gewöhnliche Hain- oder Weissbuche",
+        "timeposition": "2000-10-01",
+        "ba_baumalter": 36,
+        "ba_standjahr": 27,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.567639695898606&lon=7.592546933594727&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592011656612918,
+          47.568498274303074
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337735",
+        "ba_baumnr": "BS043754",
+        "ba_art": "Taxus baccata (Gewöhnliche oder Europäische Eibe)",
+        "baumart_lateinisch": "Taxus baccata",
+        "baumart_deutsch": "Gewöhnliche oder Europäische Eibe",
+        "timeposition": "2000-04-01",
+        "ba_baumalter": 36,
+        "ba_standjahr": 27,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Bläsianlage",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.568498274303074&lon=7.592011656612918&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592232952407484,
+          47.5680805674475
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337986",
+        "ba_baumnr": "BS033137",
+        "ba_art": "Ilex aquifolium (Gewöhnliche Stechpalme)",
+        "baumart_lateinisch": "Ilex aquifolium",
+        "baumart_deutsch": "Gewöhnliche Stechpalme",
+        "timeposition": "2001-04-02",
+        "ba_baumalter": 35,
+        "ba_standjahr": 26,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.5680805674475&lon=7.592232952407484&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592490108433094,
+          47.56821069988352
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.337999",
+        "ba_baumnr": "BS043851",
+        "ba_art": "Prunus avium (Vogel-Kirsche)",
+        "baumart_lateinisch": "Prunus avium",
+        "baumart_deutsch": "Vogel-Kirsche",
+        "timeposition": "2018-04-02",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56821069988352&lon=7.592490108433094&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592512895560737,
+          47.56813576129744
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.338018",
+        "ba_baumnr": "BS043849",
+        "ba_art": "Prunus avium (Vogel-Kirsche)",
+        "baumart_lateinisch": "Prunus avium",
+        "baumart_deutsch": "Vogel-Kirsche",
+        "timeposition": "2018-04-02",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56813576129744&lon=7.592512895560737&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592450341133094,
+          47.56820370130681
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.338047",
+        "ba_baumnr": "BS043850",
+        "ba_art": "Prunus avium (Vogel-Kirsche)",
+        "baumart_lateinisch": "Prunus avium",
+        "baumart_deutsch": "Vogel-Kirsche",
+        "timeposition": "2018-04-02",
+        "ba_baumalter": 18,
+        "ba_standjahr": 9,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Schul- und Kindergartenareal",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56820370130681&lon=7.592450341133094&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5927557515069415,
+          47.56679201551445
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340661",
+        "ba_baumnr": "BS016841",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-03-01",
+        "ba_baumalter": 46,
+        "ba_standjahr": 37,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Matthäuskirchplatz",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56679201551445&lon=7.5927557515069415&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593406623828036,
+          47.56762130765273
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340667",
+        "ba_baumnr": "BS016877",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1990-03-01",
+        "ba_baumalter": 46,
+        "ba_standjahr": 37,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Mörsbergerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56762130765273&lon=7.593406623828036&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.593437439487103,
+          47.56679141794614
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340668",
+        "ba_baumnr": "BS016796",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "1950-03-01",
+        "ba_baumalter": 86,
+        "ba_standjahr": 77,
+        "ba_schutzstatus": "Geschützt (Umfang)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56679141794614&lon=7.593437439487103&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5924868917833646,
+          47.56776772851968
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.334101",
+        "ba_baumnr": "BS031107",
+        "ba_art": "Tilia x euchlora (Krim-Linde)",
+        "baumart_lateinisch": "Tilia x euchlora",
+        "baumart_deutsch": "Krim-Linde",
+        "timeposition": "2008-03-13",
+        "ba_baumalter": 28,
+        "ba_standjahr": 19,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Matthäusstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Öffentliche Grünflächen",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56776772851968&lon=7.5924868917833646&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.591733673396833,
+          47.56625371328034
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.334109",
+        "ba_baumnr": "BS045355",
+        "ba_art": "Cladrastis lutea (Kentucky-Gelbholz)",
+        "baumart_lateinisch": "Cladrastis lutea",
+        "baumart_deutsch": "Kentucky-Gelbholz",
+        "timeposition": "2023-03-13",
+        "ba_baumalter": 13,
+        "ba_standjahr": 4,
+        "ba_schutzstatus": "Geschützt (Ersatzpflanzung)",
+        "ba_strasse": "Feldbergstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56625371328034&lon=7.591733673396833&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.592020303884506,
+          47.56607766243925
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.331003",
+        "ba_baumnr": "BS018225",
+        "ba_art": "Acer platanoides \"Columnare\" (Säulenförmiger Spitz-Ahorn)",
+        "baumart_lateinisch": "Acer platanoides \"Columnare\"",
+        "baumart_deutsch": "Säulenförmiger Spitz-Ahorn",
+        "timeposition": "1996-03-01",
+        "ba_baumalter": 40,
+        "ba_standjahr": 31,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Claragraben",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56607766243925&lon=7.592020303884506&p1=Baumkataster&p2=BA_Baeume"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.59282829158042,
+          47.56633573198574
+        ]
+      },
+      "properties": {
+        "gml_id": "BA_Baeume.340146",
+        "ba_baumnr": "BS033142",
+        "ba_art": "Fraxinus ornus (Blumen-Esche / Manna-Esche)",
+        "baumart_lateinisch": "Fraxinus ornus",
+        "baumart_deutsch": "Blumen-Esche / Manna-Esche",
+        "timeposition": "2009-04-22",
+        "ba_baumalter": 27,
+        "ba_standjahr": 18,
+        "ba_schutzstatus": "Gemäss Baumschutzgesetz (BSchG)",
+        "ba_strasse": "Müllheimerstrasse",
+        "ba_kreis": "Kleinbasel",
+        "ba_gruppe": "Strassenbäume",
+        "ba_gemeinde": "Basel",
+        "map_links": "https://opendatabs.github.io/map-links/?lat=47.56633573198574&lon=7.59282829158042&p1=Baumkataster&p2=BA_Baeume"
+      }
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+version: 1
+purpose: "Shared Hack am Rhein research inventory; not a product decision."
+
+resources:
+  - id: basel-open-data
+    kind: data_portal
+    title: "Open Data Basel-Stadt"
+    url: "https://data.bs.ch/"
+    status: verified
+    tags: [basel, open-data, api]
+
+  - id: opendatabs-github
+    kind: repository_org
+    title: "Open Data Basel-Stadt GitHub"
+    url: "https://github.com/opendatabs"
+    status: verified
+    tags: [basel, open-data, code]
+
+  - id: swiss-stac
+    kind: standard_api
+    title: "Swiss federal STAC API"
+    url: "https://data.geo.admin.ch/api/stac/static/spec/v1/api.html"
+    status: verified
+    tags: [geodata, stac, switzerland, spatial, temporal]
+
+  - id: bafu-basel-rheinhalle
+    kind: data_source
+    title: "BAFU Rhein — Basel, Rheinhalle"
+    url: "https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2289"
+    status: verified
+    tags: [rhine, hydrology, timeseries]
+
+  - id: basel-rhine-data
+    kind: data_source
+    title: "Basel-Stadt Rhein water level / discharge"
+    url: "https://data.bs.ch/explore/assets/100089/?flg=de-ch"
+    status: verified
+    tags: [rhine, basel, hydrology]
+
+  - id: port-of-switzerland-gauge
+    kind: data_source
+    title: "Port of Switzerland Rhine gauge"
+    url: "https://port-of-switzerland.ch/hafenservice/pegel/"
+    status: verified
+    tags: [rhine, shipping, gauge]
+
+  - id: basel-sponge-example
+    kind: case_study
+    title: "Basel greening/unsealing coordinated with district heating"
+    url: "https://www.bs.ch/bvd/staedtebau-architektur/baukultur/grau-blau-gruen-baukultur-machen/gruene-zukunft-begruenung-und-entsiegelung-im-zuge-des-fernwaermeausbaus"
+    status: verified
+    tags: [sponge-city, basel, planned-works, greening]
+
+  - id: bafu-sponge
+    kind: guidance
+    title: "BAFU sponge-city concept"
+    url: "https://www.bafu.admin.ch/de/konzept-schwammstadt"
+    status: verified
+    tags: [sponge-city, switzerland, guidance]
+
+  - id: bern-sponge-trees
+    kind: guidance
+    title: "Bern — Schwammstadt für Bäume"
+    url: "https://www.bern.ch/themen/umwelt-natur-und-energie/klima/klimaanpassung/grundlagen-und-wissen/schwammstadt/schwammstadt-fuer-baeume"
+    status: verified_source_not_basel_rule
+    tags: [sponge-city, trees, guidance]
+
+  - id: zurich-sponge
+    kind: guidance
+    title: "Kanton Zürich — Schwammstadt-Prinzip"
+    url: "https://www.zh.ch/de/umwelt-tiere/klima/schwammstadt-prinzip.html"
+    status: verified_source_not_basel_rule
+    tags: [sponge-city, planning, guidance]
+
+  - id: lucerne-sponge
+    kind: guidance
+    title: "Stadt Luzern — Schwammstadt"
+    url: "https://www.stadtluzern.ch/dienstleistungeninformation/73666"
+    status: verified_source_not_basel_rule
+    tags: [sponge-city, approvals, guidance]
+
+  - id: baselaunch
+    kind: ecosystem
+    title: "BaseLaunch"
+    url: "https://baselarea.swiss/program/baselaunch/"
+    status: verified
+    tags: [life-sciences, startup, accelerator]
+
+  - id: sip-basel
+    kind: ecosystem
+    title: "Switzerland Innovation Park Basel Area"
+    url: "https://sip-baselarea.com/"
+    status: verified
+    tags: [life-sciences, labs, startup]
+
+  - id: napwalk
+    kind: prior_art_repo
+    title: "Napwalk — shade-aware walking routes"
+    url: "https://github.com/vesaias/Napwalk"
+    status: verify_license_and_quality
+    tags: [heat, routing, shade, prior-art]
+
+  - id: prefer-shade
+    kind: prior_art_repo
+    title: "prefer-shade"
+    url: "https://github.com/gyuro/prefer-shade"
+    status: verify_license_and_quality
+    tags: [heat, routing, shade, prior-art]
+
+  - id: shade-walk
+    kind: prior_art_repo
+    title: "shade-walk"
+    url: "https://github.com/sungchriskim-dev/shade-walk"
+    status: verify_license_and_quality
+    tags: [heat, routing, shade, prior-art]
+
+  - id: solara-shade
+    kind: prior_art_repo
+    title: "solara — shade-aware geospatial routing"
+    url: "https://github.com/sclufly/solara"
+    status: verify_license_and_quality
+    tags: [heat, routing, shade, prior-art]
+
+  - id: opa
+    kind: technical_repo
+    title: "Open Policy Agent"
+    url: "https://github.com/open-policy-agent/opa"
+    status: verify_fit
+    tags: [rules, policy-as-code]
+
+  - id: cedar
+    kind: technical_repo
+    title: "Cedar policy"
+    url: "https://github.com/cedar-policy/cedar"
+    status: verify_fit
+    tags: [rules, policy-as-code, schema]
+
+  - id: cel
+    kind: technical_pattern
+    title: "Common Expression Language"
+    url: "https://github.com/google/cel-spec"
+    status: verify_fit
+    tags: [rules, expressions, typed]
+
+  - id: gorules-zen
+    kind: technical_repo
+    title: "GoRules ZEN Engine"
+    url: "https://github.com/gorules/zen"
+    status: verify_fit
+    tags: [decision-table, rules]
+
+  - id: networkx
+    kind: technical_repo
+    title: "NetworkX"
+    url: "https://github.com/networkx/networkx"
+    status: known_reference
+    tags: [graph, dependencies]
+
+  - id: ortools
+    kind: technical_repo
+    title: "Google OR-Tools"
+    url: "https://github.com/google/or-tools"
+    status: known_reference
+    tags: [constraints, optimisation]
+
+  - id: z3
+    kind: technical_repo
+    title: "Z3"
+    url: "https://github.com/Z3Prover/z3"
+    status: known_reference
+    tags: [constraints, smt, explanations]
+
+  - id: w3c-prov
+    kind: standard
+    title: "W3C PROV"
+    url: "https://www.w3.org/TR/prov-overview/"
+    status: known_reference
+    tags: [provenance, evidence]
+
+  - id: pystac
+    kind: technical_repo
+    title: "PySTAC"
+    url: "https://github.com/stac-utils/pystac"
+    status: known_reference
+    tags: [stac, geodata, catalogue]
+
+  - id: pygeoapi
+    kind: technical_repo
+    title: "pygeoapi"
+    url: "https://github.com/geopython/pygeoapi"
+    status: verify_fit
+    tags: [ogc, geodata, api]
+
+  - id: duckdb
+    kind: technical_repo
+    title: "DuckDB"
+    url: "https://github.com/duckdb/duckdb"
+    status: known_reference
+    tags: [spatial, asof, analytics, replay]
+
+  - id: simpy
+    kind: technical_repo
+    title: "SimPy"
+    url: "https://gitlab.com/team-simpy/simpy"
+    status: verify_fit
+    tags: [simulation, discrete-event]

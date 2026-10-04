@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+__pycache__/
+.pytest_cache/
+/site/assets/
+/site/wrapper/
+/site/adaptive-interface/
+/site/shared/
+/site/journey/
+/site/solutions.html
+/site/README.md

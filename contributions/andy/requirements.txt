@@ -1,0 +1,8 @@
+numpy
+requests
+pyproj
+shapely>=2
+rasterio
+planetary-computer
+pystac-client
+pytest>=8

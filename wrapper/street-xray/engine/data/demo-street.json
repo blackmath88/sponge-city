@@ -1,0 +1,138 @@
+{
+  "schema_version": "demo-street/0.1",
+  "selection_rule": "Suitable by traffic, middle vertex in a Fokus heat area, named; most active or upcoming permits within 60 m (ties: longer).",
+  "segment": {
+    "street": "Kanonengasse",
+    "length_m": 241.4,
+    "parts": 8,
+    "dtv_class": "< 2000",
+    "suitability": "geeignet",
+    "heat_area": "Fokus",
+    "geometry": {
+      "type": "MultiLineString",
+      "coordinates": [
+        [
+          [
+            7.585965,
+            47.553339
+          ],
+          [
+            7.58541,
+            47.553196
+          ]
+        ],
+        [
+          [
+            7.58541,
+            47.553196
+          ],
+          [
+            7.584686,
+            47.55301
+          ]
+        ],
+        [
+          [
+            7.585965,
+            47.553339
+          ],
+          [
+            7.58541,
+            47.553196
+          ]
+        ],
+        [
+          [
+            7.586035,
+            47.553359
+          ],
+          [
+            7.585965,
+            47.553339
+          ]
+        ],
+        [
+          [
+            7.586035,
+            47.553359
+          ],
+          [
+            7.586165,
+            47.553409
+          ]
+        ],
+        [
+          [
+            7.586165,
+            47.553409
+          ],
+          [
+            7.586305,
+            47.553449
+          ]
+        ],
+        [
+          [
+            7.586305,
+            47.553449
+          ],
+          [
+            7.586745,
+            47.553619
+          ]
+        ],
+        [
+          [
+            7.587051,
+            47.553747
+          ],
+          [
+            7.586745,
+            47.553619
+          ]
+        ]
+      ]
+    },
+    "middle_vertex": [
+      7.58541,
+      47.553196
+    ]
+  },
+  "permits_near": {
+    "radius_m": 60,
+    "snapshot": "2026-10-03T20:36:22.296Z",
+    "count": 24,
+    "by_category": {
+      "utility": 24
+    },
+    "ends": [
+      202612,
+      202704
+    ]
+  },
+  "corridor": {
+    "half_width_m": 12,
+    "method": "1 m grid samples within the half width of the line, classed by the land-cover polygon they fall in",
+    "source": "https://data.bs.ch/api/explore/v2.1/catalog/datasets/100477/exports/geojson?where=within_distance%28geo_point_2d%2C+geom%27POINT%287.585869+47.553379%29%27%2C+398m%29&select=bodenbedeckungsart%2Cgeo_point_2d%2Cgeo_shape",
+    "area_m2": {
+      "building": 1901,
+      "paved-other": 271,
+      "planted": 176,
+      "road": 2806
+    }
+  },
+  "trees": {
+    "count": 2,
+    "no_mapped_planted_polygon": 2
+  },
+  "groundwater_station": {
+    "name": "Steinenparking (1060)",
+    "distance_m": 164,
+    "depth_min_m": 13.1,
+    "period": "01.01.2016–31.12.2025 23:00:00"
+  },
+  "protection_zone": {
+    "source": "https://data.bs.ch/api/explore/v2.1/catalog/datasets/100292/exports/json?where=intersects%28geo_shape%2C+geom%27POINT%287.58541+47.553196%29%27%29&select=typ%2Ckantypbez%2Cgeschaesta",
+    "zones": []
+  }
+}

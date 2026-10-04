@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Sponge City Data Charter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css">
+  <style>
+    /*__SHARED_CSS__*/
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.45; overflow: hidden; }
+    button { font: inherit; color: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #4e9ac0; outline-offset: 2px; }
+    a { color: inherit; }
+
+    /* Evidence classes. REAL = solid, INFERRED = hollow/dashed with ≈, MISSING = amber hatch. */
+    :root { --real: #1f7a4d; --official: #2d6fa3; --inferred: #7a4fb0; --missing: #b8741a; --restricted: #9b3d2f; }
+    :root[data-theme="dark"] { --real: #4fc28a; --official: #6fb0e8; --inferred: #b48ef0; --missing: #f0a94a; --restricted: #e07a66; }
+
+    .bar { height: var(--bar); display: flex; align-items: center; gap: 14px; padding: 0 14px; border-bottom: 1px solid var(--ink); background: var(--paper); position: relative; z-index: 3; }
+    .wordmark { font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; color: var(--ink); text-decoration: none; }
+    .bar h1 { font: 500 22px/1 var(--serif); letter-spacing: -.02em; margin: 0; white-space: nowrap; }
+    :root[data-theme="dark"] .bar h1 { font: 700 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+    .bar .spacer { flex: 1; }
+    .tool { border: 1px solid var(--line); background: transparent; padding: 6px 10px; cursor: pointer; font: 12px/1 var(--mono); color: var(--muted); white-space: nowrap; }
+    .tool:hover { color: var(--ink); border-color: var(--ink); }
+    .tool[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .bar a.link { font: 12px/1 var(--mono); color: var(--muted); text-decoration: none; white-space: nowrap; }
+
+    #map { position: absolute; top: var(--bar); left: 0; right: 0; bottom: 0; background: var(--map-bg); }
+    .panel { position: absolute; top: calc(var(--bar) + 12px); max-height: calc(100% - var(--bar) - 56px); overflow: auto; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-float); z-index: 2; }
+    #layers { left: 12px; width: 330px; }
+    #charter { right: 12px; width: 400px; }
+    .section { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    .section:last-child { border-bottom: 0; }
+    .label { display: block; font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 8px; }
+    .group-title { display: flex; justify-content: space-between; align-items: baseline; font: 700 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; margin: 0 0 4px; }
+    .group-title small { font: 11px/1.3 var(--sans); text-transform: none; letter-spacing: 0; color: var(--muted); }
+    .g-real { color: var(--real); } .g-inferred { color: var(--inferred); } .g-missing { color: var(--missing); }
+    .row { display: grid; grid-template-columns: 18px 22px 1fr; gap: 8px; align-items: start; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; font-size: 14px; }
+    .row:first-of-type { border-top: 0; }
+    .row input { margin: 3px 0 0; accent-color: var(--accent); }
+    .row .meta { display: block; font: 11px/1.4 var(--mono); color: var(--muted); }
+    .row.dim { opacity: .55; }
+    .row .claim { color: var(--inferred); }
+    .row details.limits { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .row details.limits summary { cursor: pointer; }
+    .row details.limits ul { margin: 2px 0 0; padding-left: 16px; }
+    .sw { width: 18px; height: 18px; margin-top: 1px; }
+    .sw.real { background: var(--real); }
+    .sw.official { background: var(--official); }
+    .sw.inferred { border: 2px dashed var(--inferred); border-radius: 50%; }
+    .sw.missing { background: repeating-linear-gradient(135deg, transparent 0 4px, var(--missing) 4px 6px); border: 1px solid var(--missing); }
+    .tag { font: 700 9px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; padding: 3px 5px; border: 1px solid currentColor; white-space: nowrap; display: inline-block; }
+    .tag.open { color: var(--real); } .tag.partial { color: var(--official); } .tag.restricted { color: var(--restricted); } .tag.missing { color: var(--missing); }
+    .tag.run { color: var(--inferred); border-style: dashed; } .tag.proposed { color: var(--muted); border-style: dashed; } .tag.none { color: var(--muted); }
+    .rule { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+
+    .stack { display: flex; height: 14px; border: 1px solid var(--line); margin: 6px 0 6px; }
+    .stack span { display: block; height: 100%; }
+    .stack .open { background: var(--real); } .stack .partial { background: var(--official); } .stack .restricted { background: var(--restricted); } .stack .missing { background: repeating-linear-gradient(135deg, transparent 0 3px, var(--missing) 3px 5px); }
+    .counts { display: flex; flex-wrap: wrap; gap: 6px 12px; font: 12px/1.3 var(--mono); color: var(--muted); }
+    .counts b { color: var(--ink); }
+    .ind { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; padding: 7px 0; border-top: 1px solid var(--line); cursor: pointer; }
+    .ind:hover .name { text-decoration: underline; }
+    .ind .name { font-size: 14px; }
+    .ind .chips { display: flex; gap: 4px; justify-content: flex-end; align-items: start; }
+    .ind[aria-expanded="true"] { background: var(--accent-soft); margin: 0 -14px; padding: 7px 14px; }
+    .detail { grid-column: 1 / 3; font-size: 13px; display: none; }
+    .ind[aria-expanded="true"] .detail { display: block; }
+    .detail h4 { font: 700 10px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 10px 0 3px; }
+    .detail p { margin: 0; }
+    .detail .inferred-box { border-left: 3px dashed var(--inferred); padding-left: 8px; }
+    .detail .real-box { border-left: 3px solid var(--real); padding-left: 8px; }
+    .detail .ask { border-left: 3px solid var(--missing); padding-left: 8px; }
+    .detail ul { margin: 2px 0 0; padding-left: 16px; }
+    .detail button { margin-top: 8px; border: 1px solid var(--ink); background: transparent; padding: 4px 8px; cursor: pointer; font-size: 12px; }
+    .refs { font-size: 12px; color: var(--muted); }
+
+    .notice { position: absolute; left: 50%; transform: translateX(-50%); bottom: 34px; z-index: 2; max-width: 520px; background: var(--surface); border: 2px solid var(--missing); padding: 10px 14px; font-size: 14px; display: none; }
+    .notice b { color: var(--missing); }
+    .hud { position: absolute; left: 12px; bottom: 34px; z-index: 2; font: 11px/1 var(--mono); color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 6px 9px; }
+    .maplibregl-popup-content { font: 13px/1.35 var(--sans); padding: 8px 10px; border-radius: 0; box-shadow: var(--shadow-float); background: var(--surface); color: var(--ink); max-width: 280px; }
+    .maplibregl-popup-tip { display: none; }
+    .pop-real { border-left: 3px solid var(--real); padding-left: 6px; margin: 4px 0; }
+    .pop-inferred { border-left: 3px dashed var(--inferred); padding-left: 6px; margin: 4px 0; }
+    .pop-k { font: 700 9px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    @media (max-width: 900px) { #charter { width: auto; left: 12px; right: 12px; top: auto; bottom: 34px; max-height: 40%; } #layers { max-height: 40%; } }
+    body.map-unavailable { height: auto; min-height: 100%; overflow: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; padding-bottom: 12px; }
+    .map-unavailable .bar, .map-unavailable #map { grid-column: 1 / -1; }
+    .map-unavailable #map { position: static; padding: 16px; }
+    .map-unavailable .panel { position: static; width: auto !important; max-height: none !important; margin: 0 12px; }
+    .map-unavailable .hud { display: none; }
+    @media (max-width: 600px) { body.map-unavailable { grid-template-columns: minmax(0, 1fr); } .map-unavailable .bar { flex-wrap: wrap; height: auto; padding: 12px; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a class="wordmark" href="../../">Sponge Squad</a>
+    <h1>Data Charter · Basel</h1>
+    <span class="spacer"></span>
+    <button class="tool" type="button" id="toggle-theme" aria-pressed="false">Control room</button>
+    <a class="link" href="docs/DATA-CHARTER.md">Charter text</a>
+  </header>
+  <div id="map" role="region" aria-label="Map of Basel data layers"></div>
+
+  <aside class="panel" id="layers" aria-label="Layers">
+    <div class="section">
+      <span class="label">How to read this map</span>
+      <p class="rule"><span class="tag open">Real</span> published by an authority, as published. <span class="tag run">≈ Inferred</span> derived by us from real data, method shown. <span class="tag missing">Missing</span> no open data found in the sources reviewed.</p>
+    </div>
+    <div class="section" id="layer-groups"></div>
+  </aside>
+
+  <aside class="panel" id="charter" aria-label="Charter scorecard">
+    <div class="section">
+      <span class="label">North star → Basel today</span>
+      <p class="rule">Open-data publication coverage against this draft charter—not a score of Basel's sponge-city performance.</p>
+      <div class="stack" id="stack"></div>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div id="indicators"></div>
+  </aside>
+
+  <div class="notice" id="notice" role="status"></div>
+  <div class="hud" id="hud"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
+  <script id="map-logic">
+    const CHARTER = /*__CHARTER__*/ null;
+    const SNAPSHOT = /*__CHARTER_MAP__*/ null;
+
+    const BS_WMS = "https://wms.geo.bs.ch/?SERVICE=WMS&VERSION=1.3.0";
+    const BS_CREDIT = "Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)";
+    const wmsTiles = layer => `${BS_WMS}&REQUEST=GetMap&LAYERS=${encodeURIComponent(layer)}&STYLES=&CRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=true`;
+    const RUNOFF_ID = "ch.bafu.gefaehrdungskarte-oberflaechenabfluss";
+    const NOW_YM = (d => d.getUTCFullYear() * 100 + d.getUTCMonth() + 1)(new Date(SNAPSHOT.fetched_at));
+
+    // Evidence: "real" (observed, published), "official" (an authority's own model, published), "inferred" (ours), "missing".
+    const EVIDENCE = ["real", "official", "inferred", "missing"];
+    const PERMIT_COLOURS = { sewer: "#2d6fa3", heat: "#c0362c", house: "#d08a1e", water: "#3aa0c8", gas: "#8a6d3b", power: "#c9b22f", utility: "#7a4fb0" };
+
+    const LEGENDS = {
+      "i-pits": [["#d0702a", "no mapped planted area at tree point"], ["#2e9d5b", "in a mapped planted polygon"]],
+      "i-gwdepth": [["#c0362c", "< 3 m"], ["#e0812f", "3–6 m"], ["#e6c84a", "6–10 m"], ["#6fb0e8", "10–15 m"], ["#2d4fa3", "≥ 15 m"]],
+      "i-underground": Object.entries({ sewer: "sewer", heat: "district heating", house: "house connection", water: "water", gas: "gas", power: "electricity", utility: "utility works (unspecified)" }).map(([k, label]) => [null, label, k])
+    };
+    const LAYERS = [
+      { id: "r-landcover", evidence: "real", title: "Land cover (official survey)", meta: "Polygons of sidewalk, road, building, garden… · visible from zoom 16", type: "wms", wms: "Bodenbedeckung", minzoom: 16, opacity: 0.7 },
+      { id: "r-trees", evidence: "real", title: "Street trees (tree cadastre)", meta: "12,504 street trees · data.bs.ch 100052", type: "trees" },
+      { id: "r-gwstations", evidence: "real", title: "Groundwater stations", meta: "Terrain and 10-year levels · data.bs.ch 100180", type: "gw" },
+      { id: "r-permits", evidence: "real", title: "Works permits (as published)", meta: "Construction sites and excavation notices · data.bs.ch 100018", type: "permits" },
+      { id: "r-setv", evidence: "official", title: "Sponge suitability by traffic", meta: "Canton model on 2023 traffic · SETV", type: "wms", wms: "ch.bs.schwammstadt_nach_verkehrsbelastung_setv", opacity: 0.9 },
+      { id: "r-fgsk", evidence: "official", title: "Heat focus areas", meta: "Stadtklimakonzept · FGSK", type: "wms", wms: "ch.bs.fokusgebiet_hitzeentwicklung_fgsk", opacity: 0.6 },
+      { id: "r-uhi", evidence: "official", title: "Heat-island effect (climate analysis 2019)", meta: "Canton model · map image only", type: "wms", wms: "KL_Waermeinseleffekt", opacity: 0.6 },
+      { id: "r-runoff", evidence: "official", title: "Overland-flow hazard", meta: "BAFU model · screening, not field-verified", type: "wmts", tiles: `https://wmts.geo.admin.ch/1.0.0/${RUNOFF_ID}/default/current/3857/{z}/{x}/{y}.png`, credit: "© BAFU / geo.admin.ch", opacity: 0.75 },
+      { id: "r-hazard", evidence: "official", title: "River flood hazard (water)", meta: "Natural hazard map · geo.bs.ch", type: "wms", wms: "NG_Gefahrenkarten_ProzessWasser", opacity: 0.6 },
+      { id: "r-gwprot", evidence: "real", title: "Groundwater protection zones", meta: "Gewässerschutzkarte · geo.bs.ch", type: "wms", wms: "ch.bs.gewaesserschutzkarte_gwsk.grundwasserschutzzone,ch.bs.gewaesserschutzkarte_gwsk.gewaesserschutzbereich", opacity: 0.6 },
+      { id: "r-contam", evidence: "real", title: "Contaminated sites register", meta: "Kataster der belasteten Standorte · geo.bs.ch", type: "wms", wms: "AK_KatasterDerBelastetenStandorte", opacity: 0.8 },
+      { id: "r-soil", evidence: "real", title: "Soil map", meta: "Mainly unsealed ground · geo.bs.ch", type: "wms", wms: "Bodenkarte", opacity: 0.6 },
+      { id: "i-pits", evidence: "inferred", title: "≈ Tree planting context", meta: "Tree point intersected with mapped planted land cover; this does not measure an individual tree pit", type: "pits" },
+      { id: "i-gwdepth", evidence: "inferred", title: "≈ Shallowest depth to groundwater", meta: "Terrain − 10-year max level, per station · not interpolated", type: "gwdepth" },
+      { id: "i-underground", evidence: "inferred", title: "≈ Underground activity by network", meta: "Network type read from permit text (keywords)", type: "underground" },
+      { id: "i-digwindows", evidence: "inferred", title: "≈ Active or upcoming works", meta: "Permits ending after the snapshot date; not a coordinated future works plan", type: "digwindows" }
+    ];
+    // Typed inference claims (ADR 0006/0007): evidence class, validation, permitted use and limitations travel with each inferred layer.
+    const CLAIMS = Object.fromEntries(CHARTER.claims.map(claim => [claim.layer, claim]));
+    function claimSummary(claim) {
+      if (!claim) return "";
+      const cls = claim.evidence_class[0].toUpperCase() + claim.evidence_class.slice(1);
+      const verb = { explain: "explaining", screen: "screening", prioritise: "prioritising", design: "design" };
+      return `${cls} · ${claim.validation} · for ${claim.permitted_use.map(use => verb[use] || use).join(" and ")} only`;
+    }
+    // Missing layers come from the charter: every indicator Basel does not have as open real data.
+    for (const ind of CHARTER.indicators) {
+      if (["missing", "restricted"].includes(ind.basel.status)) LAYERS.push({ id: `m-${ind.id}`, evidence: "missing", title: ind.name, meta: ind.basel.status === "restricted" ? "Expected to exist (assumed), not found as open data" : "No open data found in the reviewed sources", type: "missing", indicator: ind.id });
+    }
+
+    // ---------- Pure logic (tested by smoke.mjs)
+    function decodeTrees(snapshot) {
+      const t = snapshot.trees;
+      return t.rows.map(([id, lon, lat, species, years, pit, strip]) => ({ id, lon, lat, species: t.dictionaries.species[species], years, pit, strip }));
+    }
+    function decodePermits(snapshot) {
+      const p = snapshot.permits;
+      return p.rows.map(([lon, lat, category, from, to]) => ({ lon, lat, category: p.categories[category], from, to, upcoming: to !== null && to >= NOW_YM }));
+    }
+    function scorecard(charter) {
+      const real = Object.fromEntries(Object.keys(charter.real_status).map(key => [key, 0]));
+      const fill = Object.fromEntries(Object.keys(charter.fill_status).map(key => [key, 0]));
+      for (const ind of charter.indicators) {
+        real[ind.basel.status] += 1;
+        if (ind.fill) fill[ind.fill.status] += 1;
+      }
+      return { total: charter.indicators.length, real, fill };
+    }
+    function depthColour(depth) {
+      return depth < 3 ? "#c0362c" : depth < 6 ? "#e0812f" : depth < 10 ? "#e6c84a" : depth < 15 ? "#6fb0e8" : "#2d4fa3";
+    }
+    const fmtYm = ym => ym ? `${String(ym).slice(4)}.${String(ym).slice(0, 4)}` : "?";
+    const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
+
+    const TREES = decodeTrees(SNAPSHOT);
+    const PERMITS = decodePermits(SNAPSHOT);
+    const SCORE = scorecard(CHARTER);
+  </script>
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const state = { on: new Set(["r-setv", "i-pits"]), missing: null, theme: "light", open: null };
+
+    // ---------- Layers panel
+    function renderLayerPanel() {
+      const groups = [
+        ["real", "Real data", "published by an authority, as published", LAYERS.filter(l => l.evidence === "real" || l.evidence === "official")],
+        ["inferred", "Inferred by us", "derived from real data; method shown, never shown as real", LAYERS.filter(l => l.evidence === "inferred")],
+        ["missing", "Missing", "no open data found in the reviewed Basel and federal sources; pick one to see its coverage", LAYERS.filter(l => l.evidence === "missing")]
+      ];
+      $("#layer-groups").innerHTML = groups.map(([key, title, hint, layers]) => `
+        <div style="margin-bottom:12px">
+          <div class="group-title g-${key}">${title}<small>${hint}</small></div>
+          ${layers.map(layer => `<label class="row" data-layer="${layer.id}">
+            <input type="${key === "missing" ? "radio" : "checkbox"}" name="${key === "missing" ? "missing" : layer.id}" ${key === "missing" ? (state.missing === layer.id ? "checked" : "") : (state.on.has(layer.id) ? "checked" : "")}>
+            <span class="sw ${layer.evidence}"></span>
+            <span>${escapeHtml(layer.title)}${layer.evidence === "official" ? ' <span class="tag partial">official model</span>' : ""}<span class="meta">${escapeHtml(layer.meta)}</span>${CLAIMS[layer.id] ? `<span class="meta claim">${escapeHtml(claimSummary(CLAIMS[layer.id]))}</span><details class="limits"><summary>Limitations</summary><ul>${CLAIMS[layer.id].limitations.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul></details>` : ""}${LEGENDS[layer.id] ? `<span class="meta">${LEGENDS[layer.id].map(([colour, label, key]) => `<span style="display:inline-block;width:9px;height:9px;border-radius:50%;border:2px solid ${colour || PERMIT_COLOURS[key]};margin-right:4px"></span>${escapeHtml(label)}`).join("<br>")}</span>` : ""}</span>
+          </label>`).join("")}
+        </div>`).join("");
+    }
+    // "Limitations" sits inside the layer's label: open it without toggling the layer.
+    $("#layer-groups").addEventListener("click", event => {
+      const summary = event.target.closest("details.limits summary");
+      if (!summary) return;
+      event.preventDefault();
+      summary.parentElement.open = !summary.parentElement.open;
+    });
+    $("#layer-groups").addEventListener("change", event => {
+      const row = event.target.closest("[data-layer]");
+      if (!row) return;
+      const layer = LAYERS.find(l => l.id === row.dataset.layer);
+      if (layer.evidence === "missing") setMissing(layer.id);
+      else { event.target.checked ? state.on.add(layer.id) : state.on.delete(layer.id); applyVisibility(); }
+    });
+
+    // ---------- Charter panel
+    function renderCharter() {
+      const order = ["open", "partial", "restricted", "missing"];
+      $("#stack").innerHTML = order.map(key => `<span class="${key}" style="width:${100 * SCORE.real[key] / SCORE.total}%" title="${key}: ${SCORE.real[key]}"></span>`).join("");
+      $("#counts").innerHTML = `<span><b>${SCORE.total}</b> indicators</span>` + order.map(key => `<span><span class="tag ${key}">${key}</span> <b>${SCORE.real[key]}</b></span>`).join("") + `<span><span class="tag run">≈ inferred</span> <b>${SCORE.fill.run}</b></span><span><span class="tag proposed">fill proposed</span> <b>${SCORE.fill.proposed}</b></span>`;
+      $("#indicators").innerHTML = CHARTER.groups.map(group => `<div class="section"><span class="label">${escapeHtml(group.label)}</span>
+        ${CHARTER.indicators.filter(ind => ind.group === group.id).map(ind => `
+          <div class="ind" data-ind="${ind.id}" role="button" tabindex="0" aria-expanded="${state.open === ind.id}">
+            <span class="name">${escapeHtml(ind.name)}</span>
+            <span class="chips"><span class="tag ${ind.basel.status}">${ind.basel.status}</span>${ind.fill ? `<span class="tag ${ind.fill.status}">${ind.fill.status === "run" ? "≈ inferred" : ind.fill.status === "proposed" ? "fill proposed" : "measure"}</span>` : ""}</span>
+            <div class="detail">
+              <h4>North star</h4><p>${escapeHtml(ind.north_star)}</p>
+              <h4>Basel today · real data</h4><div class="real-box"><p>${escapeHtml(ind.basel.detail)}</p>${ind.basel.sources.length ? `<ul>${ind.basel.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`).join("")}</ul>` : ""}</div>
+              ${ind.fill ? `<h4>${ind.fill.status === "run" ? "Inferred by us (not real data)" : ind.fill.status === "proposed" ? "How it could be inferred (not run)" : "No inference route"}</h4><div class="inferred-box"><p>${escapeHtml(ind.fill.method)}</p><p class="refs">Confidence: ${escapeHtml(ind.fill.confidence)}</p></div>` : ""}
+              ${ind.ask ? `<h4>Open-data ask</h4><p class="ask">${escapeHtml(ind.ask)}</p>` : ""}
+              ${ind.refs.length ? `<h4>References</h4><p class="refs">${ind.refs.map(id => { const r = CHARTER.references.find(x => x.id === id); return `<a href="${r.url}" target="_blank" rel="noopener">${escapeHtml(r.label.split(" (")[0])}</a>`; }).join(" · ")}</p>` : ""}
+              ${ind.layers.length ? `<button type="button" data-show="${ind.id}">Show on map</button>` : ""}
+            </div>
+          </div>`).join("")}</div>`).join("");
+    }
+    $("#indicators").addEventListener("click", event => {
+      const show = event.target.closest("[data-show]");
+      if (show) {
+        const ind = CHARTER.indicators.find(i => i.id === show.dataset.show);
+        for (const id of ind.layers) id.startsWith("m-") ? setMissing(id) : state.on.add(id);
+        renderLayerPanel(); applyVisibility();
+        return;
+      }
+      if (event.target.closest("a")) return;
+      const row = event.target.closest("[data-ind]");
+      if (!row) return;
+      state.open = state.open === row.dataset.ind ? null : row.dataset.ind;
+      renderCharter();
+    });
+    $("#indicators").addEventListener("keydown", event => { if (event.key === "Enter" && event.target.dataset.ind) event.target.click(); });
+
+    // ---------- Map
+    const SWISSTOPO = "© <a href=\"https://www.swisstopo.admin.ch/\">swisstopo</a>";
+    const baseStyle = () => ({
+      version: 8,
+      sources: { base: { type: "raster", tiles: ["https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg"], tileSize: 256, maxzoom: 19, attribution: SWISSTOPO } },
+      layers: [{ id: "base", type: "raster", source: "base", paint: state.theme === "dark" ? { "raster-brightness-min": 0.42, "raster-brightness-max": 0.06, "raster-saturation": -1 } : { "raster-opacity": 0.85 } }]
+    });
+    let map = null;
+    try {
+      if (!window.maplibregl || !maplibregl.supported()) throw new Error("Map rendering unavailable");
+      map = new maplibregl.Map({ container: "map", style: baseStyle(), center: [7.595, 47.56], zoom: 13, maxBounds: [[7.4, 47.48], [7.8, 47.65]] });
+    } catch {
+      document.body.classList.add("map-unavailable");
+      $("#map").textContent = "Map unavailable in this browser. Explore the data layers, evidence gaps and gatekeepers below.";
+    }
+    window.charterMap = map;
+    if (map) {
+      map.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), "bottom-right");
+      map.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-right");
+    }
+
+    const fc = features => ({ type: "FeatureCollection", features });
+    const pt = (lon, lat, properties) => ({ type: "Feature", geometry: { type: "Point", coordinates: [lon, lat] }, properties });
+    function hatchImage(colour) {
+      const size = 12, canvas = document.createElement("canvas");
+      canvas.width = canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      ctx.strokeStyle = colour; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, size); ctx.lineTo(size, 0); ctx.moveTo(-size / 2, size / 2); ctx.lineTo(size / 2, -size / 2); ctx.moveTo(size / 2, size * 1.5); ctx.lineTo(size * 1.5, size / 2); ctx.stroke();
+      return ctx.getImageData(0, 0, size, size);
+    }
+    const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    function addLayers() {
+      for (const layer of LAYERS.filter(l => l.type === "wms" || l.type === "wmts")) {
+        map.addSource(layer.id, { type: "raster", tiles: [layer.type === "wms" ? wmsTiles(layer.wms) : layer.tiles], tileSize: 256, attribution: layer.credit || BS_CREDIT, ...(layer.minzoom ? { minzoom: layer.minzoom } : {}) });
+        map.addLayer({ id: layer.id, type: "raster", source: layer.id, paint: { "raster-opacity": layer.opacity ?? 0.8 }, layout: { visibility: "none" }, ...(layer.minzoom ? { minzoom: layer.minzoom } : {}) });
+      }
+      map.addImage("hatch", hatchImage(css("--missing")));
+      map.addSource("boundary", { type: "geojson", data: SNAPSHOT.boundary });
+      map.addLayer({ id: "missing-fill", type: "fill", source: "boundary", paint: { "fill-pattern": "hatch", "fill-opacity": 0.55 }, layout: { visibility: "none" } });
+      map.addLayer({ id: "missing-line", type: "line", source: "boundary", paint: { "line-color": css("--missing"), "line-width": 2 }, layout: { visibility: "none" } });
+
+      map.addSource("trees", { type: "geojson", data: fc(TREES.map((t, i) => pt(t.lon, t.lat, { i, pit: t.pit }))) });
+      map.addLayer({ id: "r-trees", type: "circle", source: "trees", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 17, 5], "circle-color": css("--real"), "circle-opacity": 0.9 } });
+      map.addLayer({ id: "i-pits", type: "circle", source: "trees", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 2.5, 17, 8], "circle-color": "rgba(0,0,0,0)", "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 17, 2.5], "circle-stroke-color": ["case", ["==", ["get", "pit"], 1], "#2e9d5b", "#d0702a"] } });
+
+      map.addSource("gw", { type: "geojson", data: fc(SNAPSHOT.groundwater.map((s, i) => pt(s.lon, s.lat, { i, depth: s.inferred.depth_min_m, colour: depthColour(s.inferred.depth_min_m), label: `≈ ${s.inferred.depth_min_m} m` }))) });
+      map.addLayer({ id: "r-gwstations", type: "circle", source: "gw", layout: { visibility: "none" }, paint: { "circle-radius": 4, "circle-color": css("--official") } });
+      map.addLayer({ id: "i-gwdepth", type: "circle", source: "gw", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["get", "depth"], 0, 14, 20, 6], "circle-color": "rgba(0,0,0,0)", "circle-stroke-width": 3, "circle-stroke-color": ["get", "colour"] } });
+
+      map.addSource("permits", { type: "geojson", data: fc(PERMITS.map((p, i) => pt(p.lon, p.lat, { i, category: p.category, colour: PERMIT_COLOURS[p.category], upcoming: p.upcoming ? 1 : 0 }))) });
+      map.addLayer({ id: "r-permits", type: "circle", source: "permits", layout: { visibility: "none" }, paint: { "circle-radius": 2.5, "circle-color": css("--muted"), "circle-opacity": 0.7 } });
+      map.addLayer({ id: "i-underground", type: "circle", source: "permits", layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 15, 4, 17, 7], "circle-color": "rgba(0,0,0,0)", "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 12, 0.8, 16, 1.8], "circle-stroke-color": ["get", "colour"] } });
+      map.addLayer({ id: "i-digwindows", type: "circle", source: "permits", filter: ["==", ["get", "upcoming"], 1], layout: { visibility: "none" }, paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 6, 17, 12], "circle-color": "rgba(0,0,0,0)", "circle-stroke-width": 3, "circle-stroke-color": css("--inferred") } });
+      applyVisibility();
+    }
+
+    function applyVisibility() {
+      if (!map) return;
+      for (const layer of LAYERS.filter(l => l.evidence !== "missing")) {
+        for (const id of [layer.id]) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", state.on.has(layer.id) ? "visible" : "none");
+      }
+      const missing = !!state.missing;
+      for (const id of ["missing-fill", "missing-line"]) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", missing ? "visible" : "none");
+      const notice = $("#notice");
+      if (missing) {
+        const layer = LAYERS.find(l => l.id === state.missing);
+        const ind = CHARTER.indicators.find(i => i.id === layer.indicator);
+        notice.innerHTML = `<b>Missing · ${escapeHtml(ind.name)}</b> — ${ind.basel.status === "restricted" ? "expected to exist but not found as open data in the reviewed Basel and federal sources" : "no open data found in the reviewed Basel and federal sources"}. The hatch covers the whole canton.<br>${escapeHtml(ind.basel.detail)}${ind.basel.existence_basis ? `<br><small>${escapeHtml(ind.basel.existence_basis)}</small>` : ""}${ind.fill && ind.fill.status !== "none" ? `<br><span style="color:var(--inferred)">≈ ${ind.fill.status === "run" ? "Inferred" : "Could be inferred"}: ${escapeHtml(ind.fill.method)}</span>` : ""}${ind.ask ? `<br><span class="refs">Ask: ${escapeHtml(ind.ask)}</span>` : ""} <button type="button" class="tool" id="clear-missing">clear</button>`;
+        notice.style.display = "block";
+      } else notice.style.display = "none";
+      $("#hud").textContent = `snapshot ${SNAPSHOT.fetched_at.slice(0, 10)} · ${state.on.size} layers on`;
+    }
+    function setMissing(id) {
+      state.missing = state.missing === id ? null : id;
+      renderLayerPanel(); applyVisibility();
+    }
+    $("#notice").addEventListener("click", event => { if (event.target.id === "clear-missing") setMissing(state.missing); });
+
+    // ---------- Popups: real fields and inferred fields kept apart
+    const popup = map ? new maplibregl.Popup({ closeButton: true, maxWidth: "300px" }) : null;
+    if (map) map.on("click", event => {
+      const hits = map.queryRenderedFeatures(event.point, { layers: ["i-pits", "r-trees", "i-gwdepth", "r-gwstations", "i-digwindows", "i-underground", "r-permits"].filter(id => map.getLayer(id) && state.on.has(id)) });
+      if (!hits.length) return;
+      const f = hits[0];
+      let html = "";
+      if (["i-pits", "r-trees"].includes(f.layer.id)) {
+        const t = TREES[f.properties.i];
+        html = `<div class="pop-real"><span class="pop-k">Real · tree cadastre</span><br><b>${escapeHtml(t.species)}</b><br>Tree ${escapeHtml(t.id)} · ${t.years ?? "?"} years at site</div>
+          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>${t.pit ? `Tree point lies in a mapped planted polygon of ${t.strip?.toLocaleString("de-CH")} m²; this is not a pit measurement` : "No mapped planted land-cover polygon at this tree point; the actual pit remains unknown"}<br><small>${escapeHtml(claimSummary(CLAIMS["i-pits"]))}</small></div>`;
+      } else if (["i-gwdepth", "r-gwstations"].includes(f.layer.id)) {
+        const s = SNAPSHOT.groundwater[f.properties.i];
+        html = `<div class="pop-real"><span class="pop-k">Real · groundwater statistics</span><br><b>${escapeHtml(s.name)}</b><br>Terrain ${s.real.terrain_masl} m a.s.l. · 10-year max level ${s.real.level_10y_max_masl} m · mean ${s.real.level_10y_mean_masl} m</div>
+          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>Shallowest depth to groundwater ≈ ${s.inferred.depth_min_m} m (mean ≈ ${s.inferred.depth_mean_m} m)<br><small>${escapeHtml(s.inferred.method)}<br>${escapeHtml(claimSummary(CLAIMS["i-gwdepth"]))}</small></div>`;
+      } else {
+        const p = PERMITS[f.properties.i];
+        html = `<div class="pop-real"><span class="pop-k">Real · works permit</span><br>${fmtYm(p.from)} – ${fmtYm(p.to)}</div>
+          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>Network: <b>${escapeHtml(p.category)}</b> (keyword in permit text)${p.upcoming ? "<br>Active or upcoming permitted works; not a coordinated works plan" : ""}<br><small>${escapeHtml(claimSummary(CLAIMS[p.upcoming && state.on.has("i-digwindows") ? "i-digwindows" : "i-underground"]))}</small></div>`;
+      }
+      popup.setLngLat(event.lngLat).setHTML(html).addTo(map);
+    });
+
+    function setTheme(theme) {
+      state.theme = theme;
+      document.documentElement.dataset.theme = theme;
+      $("#toggle-theme").setAttribute("aria-pressed", String(theme === "dark"));
+      if (map) {
+        map.once("style.load", () => addLayers());
+        map.setStyle(baseStyle(), { diff: false });
+      }
+    }
+    $("#toggle-theme").addEventListener("click", () => setTheme(state.theme === "dark" ? "light" : "dark"));
+
+    renderLayerPanel();
+    renderCharter();
+    if (map) map.on("load", addLayers);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1486 @@
+{
+  "contract": "connected-case/v1",
+  "case_id": "klybeck-edge",
+  "title": "Klybeck edge: from candidate signal to a bounded investigation decision",
+  "boundary": {
+    "statement": "This case connects independent SpongeSquad modules through shared claims, gaps and actions. It is an investigation brief, not an engineering recommendation, a design or a permit basis.",
+    "engineering_recommendation": false,
+    "roles": {
+      "calculate": "GIS and source modules calculate. This build only reads their published values and checks arithmetic consistency.",
+      "constrain": "Rules constrain: unknowns stay explicit, restricted evidence stays gated, and the decision cannot advance past requires-investigation.",
+      "explain": "AI and presentation layers may explain claims and gaps by ID. They must not add values, upgrade evidence states or change the decision."
+    }
+  },
+  "rules": [
+    {
+      "id": "rule:unknown-never-zero",
+      "statement": "Unknown never silently becomes zero. Unknown values are {kind: unknown, amount: null}; no numeric zero appears anywhere in the case.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:missing-never-safe",
+      "statement": "Missing or restricted evidence never becomes safe or suitable. Such claims carry no permitted use and always point to an open gap.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:evidence-separate-from-assumptions",
+      "statement": "Known and derived claims are listed separately from assumed and modelled ones; assumptions may only explain or screen.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:provenance-required",
+      "statement": "Every claim names its source module, locator, original source, method, validation and at least one limitation.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:gap-has-gatekeeper-and-action",
+      "statement": "Every gap names at least one gatekeeper and one next action, and every reference resolves.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:scenario-is-not-performance",
+      "statement": "The scenario volume is rain falling on an assumed footprint. It is never labelled as retained volume, storage, capacity or performance.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:decision-bounded",
+      "statement": "The decision state is requires-investigation. Recommended, approved, suitable, safe or feasible states are rejected.",
+      "enforced_by": [
+        "schema",
+        "build",
+        "test"
+      ]
+    },
+    {
+      "id": "rule:deterministic",
+      "statement": "The generated case is byte-identical for identical inputs: no timestamps, random IDs or unordered output.",
+      "enforced_by": [
+        "build",
+        "test"
+      ]
+    }
+  ],
+  "vocabulary": {
+    "evidence_states": {
+      "known": "Published or directly measured (Data Charter: observed)",
+      "derived": "Deterministically calculated from named observed inputs (Data Charter: derived)",
+      "assumed": "Introduced only for a declared scenario or stated without verification (Data Charter: assumed)",
+      "modelled": "Produced by an explicit model or schematic (Data Charter: modelled)",
+      "restricted": "Exists, but is released only to a legitimate project or purpose by a gatekeeper (Data Charter: unknown + restricted access)",
+      "missing": "No defensible value exists yet; it must be measured, tested, observed or located (Data Charter: unknown + other access)"
+    },
+    "source_evidence_class_mapping": [
+      {
+        "source_class": "observed",
+        "source_access_state": null,
+        "evidence_state": "known"
+      },
+      {
+        "source_class": "derived",
+        "source_access_state": null,
+        "evidence_state": "derived"
+      },
+      {
+        "source_class": "assumed",
+        "source_access_state": null,
+        "evidence_state": "assumed"
+      },
+      {
+        "source_class": "modelled",
+        "source_access_state": null,
+        "evidence_state": "modelled"
+      },
+      {
+        "source_class": "unknown",
+        "source_access_state": "restricted",
+        "evidence_state": "restricted"
+      },
+      {
+        "source_class": "unknown",
+        "source_access_state": "site-check-required",
+        "evidence_state": "missing"
+      },
+      {
+        "source_class": "unknown",
+        "source_access_state": "unknown",
+        "evidence_state": "missing"
+      }
+    ],
+    "access_states": {
+      "open": "Directly available and reusable from an official or public source",
+      "registered": "Available through a login or bounded self-service request",
+      "restricted": "Exists, but released only for a legitimate area, project or purpose",
+      "operator-held": "The infrastructure operator holds the authoritative detail",
+      "project-held": "Held within a private project, property or professional workflow",
+      "site-check": "A decision-quality value must be inspected, sampled, surveyed or tested locally",
+      "unknown": "We do not yet know whether usable evidence exists or who holds it"
+    },
+    "permitted_uses": {
+      "identity": "Use only to identify and locate the case; not as evidence about site conditions",
+      "explain": "Use to explain a mechanism or a data gap",
+      "screen": "Use to decide where to look more closely; never to decide what to build",
+      "prioritise": "Use to rank places or options; needs validation against independent data",
+      "design": "Use as a design input; needs validated, site-level evidence"
+    }
+  },
+  "sources": [
+    {
+      "id": "source:site-scoping-areas",
+      "module": "Basel Site Scoping Tool · candidate areas",
+      "path": "wrapper/site/basel-site-scoping-tool/src/data/areas.ts",
+      "version": "unversioned; pinned by sha256",
+      "sha256": "6e0049e8d982c8162a272405f984ed957a9f90b4113b0d4bf66d40acfc5eefed",
+      "role": "identify",
+      "read_only": true
+    },
+    {
+      "id": "source:candidate-site-contract",
+      "module": "Candidate site handoff contract",
+      "path": "wrapper/site/integration/contracts/candidate-site-context.v1.schema.json",
+      "version": "Candidate site handoff v1",
+      "sha256": "622adf000e8c766428186bae51992b3ee2eda8aa939caf4b6ff15164e525fae2",
+      "role": "identify",
+      "read_only": true
+    },
+    {
+      "id": "source:data-charter",
+      "module": "Data Charter",
+      "path": "wrapper/data-charter-map/data/data-charter.json",
+      "version": "data-charter/0.1 (2026-10-03)",
+      "sha256": "fd12024f3f5697ec786f3526422379bba1dea5eaa7c783d85a30c8289e86aecb",
+      "role": "classify",
+      "read_only": true
+    },
+    {
+      "id": "source:street-xray",
+      "module": "Street X-Ray · street evidence profile",
+      "path": "wrapper/street-xray/data/street-evidence-profile.v0.json",
+      "version": "street-evidence-profile/0.1 (2026-10-04)",
+      "sha256": "b2fe8c91c7c9c3dccbcea43f19c8e65e92a0f0af2b0455acd9bc000605bd6560",
+      "role": "constrain",
+      "read_only": true
+    },
+    {
+      "id": "source:sponge-catalogue",
+      "module": "Sponge Catalogue",
+      "path": "wrapper/sponge-catalogue/data/catalogue.json",
+      "version": "sponge-catalogue/0.1 (2026-10-03)",
+      "sha256": "8538b7879c1d98218fb997bbff04a156a53e48f8b90124dfad283b834e61cd77",
+      "role": "constrain",
+      "read_only": true
+    },
+    {
+      "id": "source:rain-walk",
+      "module": "Rain Walk · observation model",
+      "path": "wrapper/street-workspace/public/rain-walk/evidence.mjs",
+      "version": "unversioned; pinned by sha256",
+      "sha256": "911f08a3ded0a59a217ab030d79db7f8102f407f13f634b2571d2b57686c25cd",
+      "role": "observe",
+      "read_only": true
+    },
+    {
+      "id": "source:street-lab",
+      "module": "Street Lab · illustrative water model",
+      "path": "wrapper/street-workspace/README.md",
+      "version": "unversioned; pinned by sha256",
+      "sha256": "a7ea0243904108eb50a4cf4c53c879f7b70d889eb0ab099a3df821b7db51ce9e",
+      "role": "explain",
+      "read_only": true
+    }
+  ],
+  "subject": {
+    "candidate_id": "KLY",
+    "name": "Klybeck waterfront",
+    "district": "Klybeck",
+    "coordinates": [
+      7.588,
+      47.573
+    ],
+    "coordinate_use": "identity-context-only",
+    "claim_ids": [
+      "claim:candidate-identity"
+    ]
+  },
+  "claims": [
+    {
+      "id": "claim:candidate-identity",
+      "statement": "Klybeck waterfront (Klybeck) is a named candidate in the Basel Site Scoping Tool.",
+      "evidence_state": "known",
+      "value": {
+        "kind": "coordinates",
+        "lon": 7.588,
+        "lat": 47.573,
+        "crs": "WGS84"
+      },
+      "provenance": {
+        "source_id": "source:site-scoping-areas",
+        "locator": "areas[id=KLY]",
+        "original_source": "Basel Site Scoping Tool candidate list",
+        "source_url": null,
+        "method": "Candidate record selected by id KLY."
+      },
+      "validation": {
+        "status": "source-recorded",
+        "note": "Identity read from the scoping tool; coordinates are identity context only."
+      },
+      "permitted_use": [
+        "identity"
+      ],
+      "limitations": [
+        "The coordinates identify a discussion point, not a surveyed site boundary or footprint."
+      ],
+      "access_state": "open",
+      "state": "identity-context",
+      "gap_id": null
+    },
+    {
+      "id": "claim:screening-hypothesis",
+      "statement": "Screening hypothesis: extensive hard surfaces and limited shade may overlap with heat exposure and reduced local rain retention.",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "text",
+        "text": "The current screening hypothesis is that extensive hard surfaces and limited shade could combine heat exposure with less opportunity to retain rainfall locally. This is a plausible overlap to test against the official climate, land-cover and runoff layers; the placeholder scores do not establish its severity."
+      },
+      "provenance": {
+        "source_id": "source:site-scoping-areas",
+        "locator": "areas[id=KLY].profile",
+        "original_source": "Basel Site Scoping Tool candidate list",
+        "source_url": null,
+        "method": "Screening narrative written by the site-scoping workstream."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "Not yet tested against official layers."
+      },
+      "permitted_use": [
+        "explain",
+        "screen"
+      ],
+      "limitations": [
+        "The candidate's 0–1 indicator scores are illustrative placeholders; they are deliberately not carried into this case as values.",
+        "The hypothesis must be tested against official climate, land-cover and runoff layers.",
+        "Evidence leads named by the source, not yet checked: Basel climate analysis (to verify); Tree inventory (to verify); Surface runoff layer (to verify)."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    },
+    {
+      "id": "claim:screening-indicators-unverified",
+      "statement": "Measured canopy cover and site-specific runoff capacity are not available for the candidate.",
+      "evidence_state": "missing",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Listed as missing data by the scoping tool: Measured canopy cover; Site-specific runoff capacity."
+      },
+      "provenance": {
+        "source_id": "source:site-scoping-areas",
+        "locator": "areas[id=KLY].indicators.missingData",
+        "original_source": "Basel Site Scoping Tool candidate list",
+        "source_url": null,
+        "method": "Copied from the candidate’s missing-data list."
+      },
+      "validation": {
+        "status": "not-available",
+        "note": "No value exists to validate."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "Absence of data is not evidence of absence of a problem, nor of suitability."
+      ],
+      "access_state": "unknown",
+      "state": "open-gap",
+      "gap_id": "gap:screening-indicators"
+    },
+    {
+      "id": "claim:ownership-and-planned-works",
+      "statement": "Who controls the street edge, and whether works are planned there, is not yet known.",
+      "evidence_state": "missing",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Listed as missing data by the scoping tool: Ownership / planned works."
+      },
+      "provenance": {
+        "source_id": "source:site-scoping-areas",
+        "locator": "areas[id=KLY].indicators.missingData",
+        "original_source": "Basel Site Scoping Tool candidate list",
+        "source_url": null,
+        "method": "Copied from the candidate’s missing-data list."
+      },
+      "validation": {
+        "status": "not-available",
+        "note": "No value exists to validate."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "Absence of data is not evidence of absence of a problem, nor of suitability."
+      ],
+      "access_state": "unknown",
+      "state": "open-gap",
+      "gap_id": "gap:ownership-and-planned-works"
+    },
+    {
+      "id": "claim:tree-context",
+      "statement": "16 registered trees within 100 m",
+      "evidence_state": "known",
+      "value": {
+        "kind": "number",
+        "amount": 16,
+        "unit": "tree-cadastre points"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=tree-context]",
+        "original_source": "Basel-Stadt tree cadastre 100052",
+        "source_url": "https://data.bs.ch/explore/dataset/100052/",
+        "method": "Count points within a 100 m radius of the study centre in the 3 October snapshot."
+      },
+      "validation": {
+        "status": "snapshot-reproduced",
+        "note": "Validation status recorded by Street X-Ray for \"tree-context\"."
+      },
+      "permitted_use": [
+        "explain",
+        "screen"
+      ],
+      "limitations": [
+        "Nearby tree points do not prove canopy, shade, root-space quality or availability inside the proposed footprint."
+      ],
+      "access_state": "open",
+      "state": "established-context",
+      "gap_id": null
+    },
+    {
+      "id": "claim:groundwater-station-context",
+      "statement": "Nearest groundwater station is 222 m away",
+      "evidence_state": "derived",
+      "value": {
+        "kind": "number",
+        "amount": 5,
+        "unit": "m derived minimum depth at station"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=groundwater-context]",
+        "original_source": "Basel-Stadt groundwater statistics 100180",
+        "source_url": "https://data.bs.ch/explore/dataset/100180/",
+        "method": "Station terrain elevation minus its published 10-year maximum groundwater level."
+      },
+      "validation": {
+        "status": "arithmetic-checked",
+        "note": "Validation status recorded by Street X-Ray for \"groundwater-context\"."
+      },
+      "permitted_use": [
+        "explain",
+        "screen"
+      ],
+      "limitations": [
+        "A station value 222 m away is context, not groundwater clearance at the candidate footprint."
+      ],
+      "access_state": "open",
+      "state": "established-context",
+      "gap_id": null
+    },
+    {
+      "id": "claim:no-groundwater-protection-zone",
+      "statement": "No groundwater protection zone intersects the study point.",
+      "evidence_state": "known",
+      "value": {
+        "kind": "text",
+        "text": "none (protection zone)"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "engine.facts.protection_zone",
+        "original_source": "data.bs.ch 100292 Grundwasserschutz",
+        "source_url": "https://data.bs.ch/explore/dataset/100292/",
+        "method": "data.bs.ch 100292 Grundwasserschutz: no zone intersects the study point (queried 2026-10-04)"
+      },
+      "validation": {
+        "status": "source-recorded",
+        "note": "Query result recorded by the Street X-Ray engine."
+      },
+      "permitted_use": [
+        "explain",
+        "screen"
+      ],
+      "limitations": [
+        "A point query: it does not establish that infiltration is permitted, safe or effective at the footprint."
+      ],
+      "access_state": "open",
+      "state": "established-context",
+      "gap_id": null
+    },
+    {
+      "id": "claim:study-segment-length",
+      "statement": "An illustrative 160 m study segment is anchored to the Klybeck candidate point.",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "number",
+        "amount": 160,
+        "unit": "m segment length"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "site.length_m",
+        "original_source": "SpongeSquad demo fixture",
+        "source_url": null,
+        "method": "Street X-Ray identity status: illustrative segment anchored to Andy's Klybeck candidate."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "No survey defines the segment."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "The centre point is real. The 160 m segment, its width and every drawn object are a demo fixture until surveyed."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    },
+    {
+      "id": "claim:edge-strip-width",
+      "statement": "An illustrative 2.4 m edge strip frames the test.",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "number",
+        "amount": 2.4,
+        "unit": "m strip width"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=candidate-footprint].method",
+        "original_source": "SpongeSquad demo fixture",
+        "source_url": null,
+        "method": "Illustrative 160 m segment × 2.4 m edge strip."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "The width is stated in Street X-Ray’s method text and checked to be present there."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "No survey, ownership check, kerb measurement or accessibility clearance supports this footprint."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    },
+    {
+      "id": "claim:assumed-footprint",
+      "statement": "The scenario footprint is assumed to be 384 m² (160 m × 2.4 m).",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "number",
+        "amount": 384,
+        "unit": "m² scenario footprint"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=candidate-footprint]",
+        "original_source": "SpongeSquad demo fixture",
+        "source_url": null,
+        "method": "Illustrative 160 m segment × 2.4 m edge strip."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "Validation status recorded by Street X-Ray for \"candidate-footprint\"."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "No survey, ownership check, kerb measurement or accessibility clearance supports this footprint."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    },
+    {
+      "id": "claim:surface-flow-hypothesis",
+      "statement": "Rain may collect along the drawn kerb line",
+      "evidence_state": "modelled",
+      "value": {
+        "kind": "text",
+        "text": "\"review\" (flow hypothesis)"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=surface-flow-hypothesis]",
+        "original_source": "SpongeSquad schematic",
+        "source_url": null,
+        "method": "A manually seeded downhill arrow demonstrates the future terrain-analysis output."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "Validation status recorded by Street X-Ray for \"surface-flow-hypothesis\"."
+      },
+      "permitted_use": [
+        "explain",
+        "screen"
+      ],
+      "limitations": [
+        "No elevation raster or field level check has been sampled for this segment."
+      ],
+      "access_state": "unknown",
+      "state": "hypothesis",
+      "gap_id": null
+    },
+    {
+      "id": "claim:utility-clearance",
+      "statement": "Whether the strip can be excavated without conflicting with buried utilities is unknown and restricted.",
+      "evidence_state": "restricted",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Street X-Ray records \"gated\" (decision input) for an open gate; no quantity exists."
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=utility-clearance]",
+        "original_source": "Area-limited planning extract and operator confirmation",
+        "source_url": null,
+        "method": "Not determinable from open data. Unlock: Request an area-limited extract; confirm depth and clearance before excavation."
+      },
+      "validation": {
+        "status": "not-available",
+        "note": "Validation status recorded by Street X-Ray for \"utility-clearance\"."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "Visible street space cannot reveal buried networks."
+      ],
+      "access_state": "restricted",
+      "state": "blocked",
+      "gap_id": "gap:utility-clearance"
+    },
+    {
+      "id": "claim:drainage-routing",
+      "statement": "Where the kerb inlet leads, and whether street runoff may be connected and overflow safely, is unknown and restricted.",
+      "evidence_state": "restricted",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Street X-Ray records \"gated\" (decision input) for an open gate; no quantity exists."
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=drainage-routing]",
+        "original_source": "Drainage / GEP records and field inspection",
+        "source_url": null,
+        "method": "Not determinable from open data. Unlock: Confirm inlet, catchment, connection, capacity and safe overflow route."
+      },
+      "validation": {
+        "status": "not-available",
+        "note": "Validation status recorded by Street X-Ray for \"drainage-routing\"."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "A visible inlet does not establish its connection or capacity."
+      ],
+      "access_state": "restricted",
+      "state": "blocked",
+      "gap_id": "gap:drainage-routing"
+    },
+    {
+      "id": "claim:infiltration",
+      "statement": "Whether water can infiltrate safely at the footprint is unknown until tested on site.",
+      "evidence_state": "missing",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Street X-Ray records \"site check\" (decision input) for an open gate; no quantity exists."
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=infiltration-test]",
+        "original_source": "Qualified site investigation",
+        "source_url": null,
+        "method": "Not determinable from open data. Unlock: Test permeability, pavement build-up, contamination and groundwater clearance locally."
+      },
+      "validation": {
+        "status": "not-measured",
+        "note": "Validation status recorded by Street X-Ray for \"infiltration-test\"."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "Nearby geology and groundwater context cannot replace a local test."
+      ],
+      "access_state": "site-check",
+      "state": "open-gap",
+      "gap_id": "gap:infiltration"
+    },
+    {
+      "id": "claim:field-observations",
+      "statement": "No field or community observations have been collected for this segment.",
+      "evidence_state": "missing",
+      "value": {
+        "kind": "unknown",
+        "amount": null,
+        "reason": "Rain Walk ships only synthetic practice clues; no reviewed export for this segment is attached."
+      },
+      "provenance": {
+        "source_id": "source:rain-walk",
+        "locator": "seed()",
+        "original_source": "Rain Walk (Street Lab workspace)",
+        "source_url": null,
+        "method": "Checked that every bundled observation is a synthetic demo seed (source=demo, observedAt=null)."
+      },
+      "validation": {
+        "status": "not-measured",
+        "note": "No field visit has taken place for this case."
+      },
+      "permitted_use": [],
+      "limitations": [
+        "Synthetic demo clues are practice material and never count as field evidence."
+      ],
+      "access_state": "site-check",
+      "state": "open-gap",
+      "gap_id": "gap:field-observations"
+    },
+    {
+      "id": "claim:basel-rain-garden-precedent",
+      "statement": "Rain gardens and swales that take pavement and road runoff are in progress elsewhere in Basel (e.g. Sevogelstrasse).",
+      "evidence_state": "known",
+      "value": {
+        "kind": "text",
+        "text": "Vegetated swales and mulch beds that take sidewalk and road runoff, e.g. Sevogelstrasse. (status: in-progress)"
+      },
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "actions[id=rain-garden].basel",
+        "original_source": "Basel-Stadt media release 2025: Sevogelstrasse",
+        "source_url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau",
+        "method": "Listed in the Sponge Catalogue’s Basel status for this action."
+      },
+      "validation": {
+        "status": "source-recorded",
+        "note": "Recorded from a public media release; not inspected on site."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "A precedent elsewhere says nothing about utilities, drainage or soil at this footprint."
+      ],
+      "access_state": "open",
+      "state": "established-context",
+      "gap_id": null
+    },
+    {
+      "id": "claim:scenario-rainfall-depth",
+      "statement": "The scenario assumes a 20 mm rainfall depth.",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "number",
+        "amount": 20,
+        "unit": "mm rainfall depth"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "intervention.scenario.rainfall_mm",
+        "original_source": "SpongeSquad scenario",
+        "source_url": null,
+        "method": "Scenario input declared by Street X-Ray."
+      },
+      "validation": {
+        "status": "not-validated",
+        "note": "A chosen scenario depth, not a design storm."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "Rainfall depth × illustrative footprint only. It is not retained volume, flood reduction or design performance."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    },
+    {
+      "id": "claim:scenario-rain-on-footprint",
+      "statement": "20 mm of rain falling on the assumed 384 m² footprint amounts to 7.68 m³ of water.",
+      "evidence_state": "assumed",
+      "value": {
+        "kind": "number",
+        "amount": 7.68,
+        "unit": "m³ of rain falling on the assumed footprint"
+      },
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "intervention.scenario.rain_on_footprint_m3",
+        "original_source": "SpongeSquad scenario",
+        "source_url": null,
+        "method": "Rainfall depth × assumed footprint, published by Street X-Ray and re-checked arithmetically by this build."
+      },
+      "validation": {
+        "status": "arithmetic-checked",
+        "note": "footprint_m2 × rainfall_mm ÷ 1000 equals the published value."
+      },
+      "permitted_use": [
+        "explain"
+      ],
+      "limitations": [
+        "Rainfall depth × illustrative footprint only. It is not retained volume, flood reduction or design performance."
+      ],
+      "access_state": "unknown",
+      "state": "illustrative",
+      "gap_id": null
+    }
+  ],
+  "gatekeepers": [
+    {
+      "id": "gatekeeper:leitungskataster",
+      "name": "Leitungskataster (Grundbuch- und Vermessungsamt)",
+      "role": "Overview of all supply and disposal lines in public space; released case by case as B-Daten, e.g. for planning and building projects; no depths.",
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "gatekeepers.leitungskataster"
+      }
+    },
+    {
+      "id": "gatekeeper:operators",
+      "name": "Network operators (Werke)",
+      "role": "Only the operators give depths; they must be contacted before digging.",
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "gatekeepers.operators"
+      }
+    },
+    {
+      "id": "gatekeeper:tba-aue",
+      "name": "Tiefbauamt and Amt für Umwelt und Energie",
+      "role": "Review the drainage plan (GEP), the basis for property-drainage permits and municipal rainwater management.",
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "gatekeepers.tba-aue"
+      }
+    },
+    {
+      "id": "gatekeeper:field",
+      "name": "Qualified field team",
+      "role": "Survey, coring, infiltration test, arborist review.",
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "gatekeepers.field"
+      }
+    },
+    {
+      "id": "gatekeeper:public",
+      "name": "Residents and team",
+      "role": "Visible, time-stamped observations; never asset records.",
+      "provenance": {
+        "source_id": "source:sponge-catalogue",
+        "locator": "gatekeepers.public"
+      }
+    },
+    {
+      "id": "gatekeeper:project-owner",
+      "name": "Project owner (not yet identified)",
+      "role": "Commissions site investigations and owns the next decision. Street X-Ray names this role for the infiltration test; no person or body has been confirmed.",
+      "provenance": {
+        "source_id": "source:street-xray",
+        "locator": "claims[id=infiltration-test].gatekeeper"
+      }
+    },
+    {
+      "id": "gatekeeper:site-scoping",
+      "name": "Site scoping workstream",
+      "role": "Owns the candidate indicators and must replace placeholders with spatially joined official data.",
+      "provenance": {
+        "source_id": "source:site-scoping-areas",
+        "locator": "areas header comment: replace with spatially joined official data"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap:utility-clearance",
+      "question": "Can this strip be excavated?",
+      "claim_ids": [
+        "claim:utility-clearance"
+      ],
+      "evidence_state": "restricted",
+      "access_state": "restricted",
+      "gatekeeper_ids": [
+        "gatekeeper:leitungskataster",
+        "gatekeeper:operators"
+      ],
+      "next_action_ids": [
+        "action:request-utility-extract"
+      ],
+      "blocks": "Whether the proposed footprint is buildable.",
+      "state": "open"
+    },
+    {
+      "id": "gap:drainage-routing",
+      "question": "Where does the inlet lead, and where may overflow go?",
+      "claim_ids": [
+        "claim:drainage-routing"
+      ],
+      "evidence_state": "restricted",
+      "access_state": "restricted",
+      "gatekeeper_ids": [
+        "gatekeeper:tba-aue"
+      ],
+      "next_action_ids": [
+        "action:confirm-drainage-routing"
+      ],
+      "blocks": "Whether street runoff can be connected safely.",
+      "state": "open"
+    },
+    {
+      "id": "gap:infiltration",
+      "question": "Will water infiltrate safely here?",
+      "claim_ids": [
+        "claim:infiltration"
+      ],
+      "evidence_state": "missing",
+      "access_state": "site-check",
+      "gatekeeper_ids": [
+        "gatekeeper:project-owner",
+        "gatekeeper:field"
+      ],
+      "next_action_ids": [
+        "action:infiltration-test",
+        "action:specialist-review"
+      ],
+      "blocks": "Whether infiltration is a credible mechanism.",
+      "state": "open"
+    },
+    {
+      "id": "gap:ownership-and-planned-works",
+      "question": "Who controls the street edge, and are works planned there?",
+      "claim_ids": [
+        "claim:ownership-and-planned-works"
+      ],
+      "evidence_state": "missing",
+      "access_state": "unknown",
+      "gatekeeper_ids": [
+        "gatekeeper:site-scoping"
+      ],
+      "next_action_ids": [
+        "action:identify-owner-and-plans"
+      ],
+      "blocks": "Whether anyone can commission or host an investigation on this strip.",
+      "state": "open"
+    },
+    {
+      "id": "gap:screening-indicators",
+      "question": "Do official layers confirm the heat and runoff overlap?",
+      "claim_ids": [
+        "claim:screening-indicators-unverified"
+      ],
+      "evidence_state": "missing",
+      "access_state": "unknown",
+      "gatekeeper_ids": [
+        "gatekeeper:site-scoping"
+      ],
+      "next_action_ids": [
+        "action:spatial-join-official-layers"
+      ],
+      "blocks": "Whether Klybeck should stay ahead of other candidates in the screening.",
+      "state": "open"
+    },
+    {
+      "id": "gap:field-observations",
+      "question": "What does the street visibly do in rain?",
+      "claim_ids": [
+        "claim:field-observations"
+      ],
+      "evidence_state": "missing",
+      "access_state": "site-check",
+      "gatekeeper_ids": [
+        "gatekeeper:public",
+        "gatekeeper:field"
+      ],
+      "next_action_ids": [
+        "action:rain-walk"
+      ],
+      "blocks": "Whether the drawn surface-flow hypothesis matches visible behaviour on the street.",
+      "state": "open"
+    }
+  ],
+  "actions": [
+    {
+      "id": "action:request-utility-extract",
+      "kind": "request",
+      "title": "Request an area-limited utility extract and ask operators for depths and clearance",
+      "gatekeeper_ids": [
+        "gatekeeper:leitungskataster",
+        "gatekeeper:operators"
+      ],
+      "resolves_gap_ids": [
+        "gap:utility-clearance"
+      ],
+      "would_establish": "Which networks run under the strip and, from operators, at what depth.",
+      "cannot_establish": "Whether a rain garden is the right measure; only whether excavation is possible.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:confirm-drainage-routing",
+      "kind": "request",
+      "title": "Ask the drainage / GEP owner to confirm inlet, catchment, connection, capacity and overflow route",
+      "gatekeeper_ids": [
+        "gatekeeper:tba-aue"
+      ],
+      "resolves_gap_ids": [
+        "gap:drainage-routing"
+      ],
+      "would_establish": "Whether street runoff may be connected and where overflow may safely go.",
+      "cannot_establish": "Local infiltration capacity or utility conflicts.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:infiltration-test",
+      "kind": "site-test",
+      "title": "Commission an on-site infiltration test at the footprint",
+      "gatekeeper_ids": [
+        "gatekeeper:project-owner",
+        "gatekeeper:field"
+      ],
+      "resolves_gap_ids": [
+        "gap:infiltration"
+      ],
+      "would_establish": "Local permeability and pavement build-up at the tested points.",
+      "cannot_establish": "Contamination or groundwater clearance without specialist review.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:specialist-review",
+      "kind": "specialist-review",
+      "title": "Have a qualified specialist review the test, contamination and groundwater clearance",
+      "gatekeeper_ids": [
+        "gatekeeper:field"
+      ],
+      "resolves_gap_ids": [
+        "gap:infiltration"
+      ],
+      "would_establish": "Whether infiltration is a credible mechanism at this footprint.",
+      "cannot_establish": "Utility clearance or drainage routing.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:identify-owner-and-plans",
+      "kind": "request",
+      "title": "Identify who controls the street edge and whether works are planned",
+      "gatekeeper_ids": [
+        "gatekeeper:site-scoping"
+      ],
+      "resolves_gap_ids": [
+        "gap:ownership-and-planned-works"
+      ],
+      "would_establish": "Who can host or commission an investigation, and whether planned works change the timing.",
+      "cannot_establish": "Any physical site condition.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:spatial-join-official-layers",
+      "kind": "spatial-analysis",
+      "title": "Replace placeholder indicators with spatially joined official climate, land-cover and runoff layers",
+      "gatekeeper_ids": [
+        "gatekeeper:site-scoping"
+      ],
+      "resolves_gap_ids": [
+        "gap:screening-indicators"
+      ],
+      "would_establish": "Whether the heat and runoff overlap holds in official data at area scale.",
+      "cannot_establish": "Street-level conditions at the footprint.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:rain-walk",
+      "kind": "field-observation",
+      "title": "Run a Rain Walk along the segment, ideally during rain, and review every clue",
+      "gatekeeper_ids": [
+        "gatekeeper:public",
+        "gatekeeper:field"
+      ],
+      "resolves_gap_ids": [
+        "gap:field-observations"
+      ],
+      "would_establish": "Reviewed, time-stamped visual clues: inlets, ponding, tree pits, sealed surfaces, obstructions.",
+      "cannot_establish": "Pipe connections, infiltration rates, utility depths or any hydraulic parameter.",
+      "status": "proposed"
+    },
+    {
+      "id": "action:agree-commissioning",
+      "kind": "decide",
+      "title": "Agree who commissions the utility, drainage and infiltration checks for the 160 m study segment",
+      "gatekeeper_ids": [
+        "gatekeeper:project-owner"
+      ],
+      "resolves_gap_ids": [],
+      "would_establish": "Whether the investigation proceeds, is paused, or the candidate is dropped.",
+      "cannot_establish": "Whether a rain garden should be built.",
+      "status": "proposed"
+    }
+  ],
+  "stages": [
+    {
+      "id": "stage:1-candidate-signal",
+      "order": 1,
+      "key": "candidate-signal",
+      "title": "Candidate signal",
+      "question": "Why is this place worth a closer look?",
+      "module": {
+        "name": "Basel Site Scoping Tool · candidate areas + Candidate site handoff contract",
+        "source_ids": [
+          "source:site-scoping-areas",
+          "source:candidate-site-contract"
+        ]
+      },
+      "role": "identify",
+      "claim_ids": [
+        "claim:candidate-identity",
+        "claim:screening-hypothesis",
+        "claim:screening-indicators-unverified",
+        "claim:ownership-and-planned-works"
+      ],
+      "gap_ids": [
+        "gap:screening-indicators",
+        "gap:ownership-and-planned-works"
+      ],
+      "action_ids": [
+        "action:spatial-join-official-layers",
+        "action:identify-owner-and-plans"
+      ],
+      "can_show": [
+        "A named candidate and a screening hypothesis worth testing."
+      ],
+      "cannot_show": [
+        "The severity of heat or runoff; the candidate scores are placeholders."
+      ]
+    },
+    {
+      "id": "stage:2-evidence-classification",
+      "order": 2,
+      "key": "evidence-classification",
+      "title": "Evidence classification",
+      "question": "What is known, derived, assumed or modelled?",
+      "module": {
+        "name": "Data Charter + Street X-Ray · street evidence profile",
+        "source_ids": [
+          "source:data-charter",
+          "source:street-xray"
+        ]
+      },
+      "role": "classify",
+      "claim_ids": [
+        "claim:tree-context",
+        "claim:groundwater-station-context",
+        "claim:no-groundwater-protection-zone",
+        "claim:study-segment-length",
+        "claim:edge-strip-width",
+        "claim:assumed-footprint",
+        "claim:surface-flow-hypothesis"
+      ],
+      "gap_ids": [],
+      "action_ids": [],
+      "can_show": [
+        "Open records give context around the study point; the segment, strip and flow line are labelled as assumptions or hypotheses."
+      ],
+      "cannot_show": [
+        "Conditions inside the footprint or under the street."
+      ]
+    },
+    {
+      "id": "stage:3-evidence-gate",
+      "order": 3,
+      "key": "evidence-gate",
+      "title": "Evidence gate",
+      "question": "What stops this becoming a recommendation, and who can unlock it?",
+      "module": {
+        "name": "Street X-Ray · street evidence profile + Sponge Catalogue",
+        "source_ids": [
+          "source:street-xray",
+          "source:sponge-catalogue"
+        ]
+      },
+      "role": "constrain",
+      "claim_ids": [
+        "claim:utility-clearance",
+        "claim:drainage-routing",
+        "claim:infiltration"
+      ],
+      "gap_ids": [
+        "gap:utility-clearance",
+        "gap:drainage-routing",
+        "gap:infiltration"
+      ],
+      "action_ids": [
+        "action:request-utility-extract",
+        "action:confirm-drainage-routing",
+        "action:infiltration-test",
+        "action:specialist-review"
+      ],
+      "can_show": [
+        "Each decisive unknown, its access state, its gatekeeper and the next action."
+      ],
+      "cannot_show": [
+        "The answer to any gate; none is available in open data."
+      ]
+    },
+    {
+      "id": "stage:4-field-observation-plan",
+      "order": 4,
+      "key": "field-observation-plan",
+      "title": "Field-observation plan",
+      "question": "What could people on the street establish, and what not?",
+      "module": {
+        "name": "Rain Walk · observation model",
+        "source_ids": [
+          "source:rain-walk"
+        ]
+      },
+      "role": "observe",
+      "claim_ids": [
+        "claim:field-observations"
+      ],
+      "gap_ids": [
+        "gap:field-observations"
+      ],
+      "action_ids": [
+        "action:rain-walk"
+      ],
+      "can_show": [
+        "Which visible clues to look for and which gap each one informs."
+      ],
+      "cannot_show": [
+        "Any completed observation; none has been collected for this segment."
+      ],
+      "observation_plan": {
+        "status": "planned-not-collected",
+        "targets": [
+          {
+            "kind": "inlet",
+            "label": "Possible inlet",
+            "can_support": "Visible surface structure",
+            "cannot_establish": "Network connection, pipe depth or capacity",
+            "follow_up": "Ask drainage owner to check connection and condition",
+            "informs_gap_ids": [
+              "gap:drainage-routing"
+            ]
+          },
+          {
+            "kind": "ponding",
+            "label": "Water / stain / debris",
+            "can_support": "A reported surface clue",
+            "cannot_establish": "Flood hazard or cause",
+            "follow_up": "Repeat observation during rain with time and conditions",
+            "informs_gap_ids": [
+              "gap:drainage-routing"
+            ]
+          },
+          {
+            "kind": "cover",
+            "label": "Cover / manhole",
+            "can_support": "Visible cover",
+            "cannot_establish": "Asset owner or underground route",
+            "follow_up": "Identify the responsible asset owner",
+            "informs_gap_ids": [
+              "gap:utility-clearance"
+            ]
+          },
+          {
+            "kind": "tree",
+            "label": "Tree pit",
+            "can_support": "Apparent planting condition",
+            "cannot_establish": "Root volume or soil health",
+            "follow_up": "Check soil and rooting space",
+            "informs_gap_ids": []
+          },
+          {
+            "kind": "sealed",
+            "label": "Sealed-looking surface",
+            "can_support": "Surface appearance",
+            "cannot_establish": "Infiltration rate or sub-base",
+            "follow_up": "Measure area and investigate pavement construction",
+            "informs_gap_ids": [
+              "gap:infiltration"
+            ]
+          },
+          {
+            "kind": "constraint",
+            "label": "Access / obstruction",
+            "can_support": "An apparent spatial constraint",
+            "cannot_establish": "Legal compliance or ownership",
+            "follow_up": "Request access and ownership review",
+            "informs_gap_ids": [
+              "gap:ownership-and-planned-works"
+            ]
+          },
+          {
+            "kind": "opportunity",
+            "label": "Possible planting space",
+            "can_support": "A candidate surface opportunity",
+            "cannot_establish": "Buildability or utility clearance",
+            "follow_up": "Check utilities, ownership and accessibility",
+            "informs_gap_ids": [
+              "gap:utility-clearance"
+            ]
+          }
+        ],
+        "review_states": {
+          "pending": "Pending review",
+          "accepted": "Visible clue accepted",
+          "uncertain": "Needs another observation",
+          "rejected": "Rejected / misclassified",
+          "clarification": "Needs specialist clarification"
+        },
+        "collected_observations": [],
+        "boundary": "Rain Walk clues are visual, time-stamped and reviewed. They point gatekeepers to what to check; they never confirm assets, connections or clearance."
+      }
+    },
+    {
+      "id": "stage:5-intervention-candidate",
+      "order": 5,
+      "key": "intervention-candidate",
+      "title": "Intervention candidate",
+      "question": "Which measure is being investigated?",
+      "module": {
+        "name": "Sponge Catalogue + Street X-Ray · street evidence profile",
+        "source_ids": [
+          "source:sponge-catalogue",
+          "source:street-xray"
+        ]
+      },
+      "role": "explain",
+      "claim_ids": [
+        "claim:basel-rain-garden-precedent",
+        "claim:assumed-footprint"
+      ],
+      "gap_ids": [
+        "gap:utility-clearance",
+        "gap:drainage-routing",
+        "gap:infiltration"
+      ],
+      "action_ids": [],
+      "can_show": [
+        "Why a kerbside rain garden is the concept under investigation and that Basel has comparable work in progress."
+      ],
+      "cannot_show": [
+        "That the concept is buildable, permitted or effective at this footprint."
+      ],
+      "intervention": {
+        "id": "kerbside-rain-garden",
+        "name": "Kerbside rain garden + tree trench",
+        "catalogue_action_id": "rain-garden",
+        "status": "requires-investigation",
+        "mechanisms_claimed_by_catalogue": [
+          "STORE",
+          "ABSORB",
+          "SWEAT"
+        ],
+        "why_considered": "The concept could intercept kerb runoff, add root space and make the sponge mechanism visible."
+      }
+    },
+    {
+      "id": "stage:6-illustrative-scenario",
+      "order": 6,
+      "key": "illustrative-scenario",
+      "title": "Illustrative scenario",
+      "question": "What does the scenario arithmetic say, and what does it not say?",
+      "module": {
+        "name": "Street X-Ray · street evidence profile + Street Lab · illustrative water model",
+        "source_ids": [
+          "source:street-xray",
+          "source:street-lab"
+        ]
+      },
+      "role": "calculate",
+      "claim_ids": [
+        "claim:assumed-footprint",
+        "claim:scenario-rainfall-depth",
+        "claim:scenario-rain-on-footprint"
+      ],
+      "gap_ids": [],
+      "action_ids": [],
+      "can_show": [
+        "The scale of rain falling on the assumed footprint in one 20 mm event.",
+        "How a rain garden works in principle (Street Lab, synthetic street)."
+      ],
+      "cannot_show": [
+        "Retained volume, storage, infiltration, flood reduction or design performance.",
+        "Anything about Klybeck's soil, drainage or utilities."
+      ],
+      "scenario": {
+        "id": "rain-on-assumed-footprint",
+        "quantity": "rain-falling-on-assumed-footprint",
+        "label": "Rain falling on the assumed footprint during a 20 mm event",
+        "result_claim_id": "claim:scenario-rain-on-footprint",
+        "input_claim_ids": [
+          "claim:assumed-footprint",
+          "claim:scenario-rainfall-depth"
+        ],
+        "street_lab": {
+          "source_id": "source:street-lab",
+          "use": "illustration-only",
+          "site": "synthetic-street-not-klybeck",
+          "may_explain": [
+            "How runoff can be routed from a sealed street into a planted strip.",
+            "Why a connected rain garden behaves differently from an isolated one.",
+            "That stored, infiltrated and overflow water are separate quantities."
+          ],
+          "must_not_be_used_for": [
+            "Engineering validation of any Klybeck intervention.",
+            "Retained volume, flood reduction or design performance at Klybeck.",
+            "Soil, drainage or utility facts; Street Lab uses a synthetic street and illustrative parameters."
+          ]
+        }
+      }
+    },
+    {
+      "id": "stage:7-bounded-decision",
+      "order": 7,
+      "key": "bounded-decision",
+      "title": "Bounded decision and next actions",
+      "question": "What may be decided now?",
+      "module": {
+        "name": "Street X-Ray · street evidence profile",
+        "source_ids": [
+          "source:street-xray"
+        ]
+      },
+      "role": "decide",
+      "claim_ids": [],
+      "gap_ids": [
+        "gap:utility-clearance",
+        "gap:drainage-routing",
+        "gap:infiltration",
+        "gap:ownership-and-planned-works"
+      ],
+      "action_ids": [
+        "action:agree-commissioning",
+        "action:identify-owner-and-plans",
+        "action:request-utility-extract",
+        "action:confirm-drainage-routing",
+        "action:infiltration-test",
+        "action:rain-walk"
+      ],
+      "can_show": [
+        "Only whether to commission the investigation."
+      ],
+      "cannot_show": [
+        "Whether to build, fund or approve a rain garden."
+      ]
+    }
+  ],
+  "decision": {
+    "id": "decision:klybeck-edge-investigation",
+    "state": "requires-investigation",
+    "question": "Should the Klybeck edge proceed to a bounded investigation of a kerbside rain garden?",
+    "bounded_next_decision": "Agree who commissions the utility extract, drainage confirmation and infiltration test for the 160 m study segment, and run one reviewed Rain Walk. Nothing is built or recommended at this step.",
+    "not_a_recommendation": true,
+    "unsupported_states": [
+      "recommended",
+      "approved",
+      "suitable",
+      "safe",
+      "feasible",
+      "validated",
+      "ready-to-build"
+    ],
+    "blocked_by_gap_ids": [
+      "gap:utility-clearance",
+      "gap:drainage-routing",
+      "gap:infiltration",
+      "gap:ownership-and-planned-works"
+    ],
+    "next_action_ids": [
+      "action:agree-commissioning",
+      "action:identify-owner-and-plans",
+      "action:request-utility-extract",
+      "action:confirm-drainage-routing",
+      "action:infiltration-test",
+      "action:specialist-review",
+      "action:rain-walk"
+    ],
+    "reopen_when": [
+      "Utility clearance is confirmed by the cadastral authority and network operators.",
+      "The drainage / GEP owner confirms connection and a safe overflow route.",
+      "An on-site infiltration test has been reviewed by a qualified specialist."
+    ]
+  },
+  "summary": {
+    "why_investigate": [
+      "claim:screening-hypothesis",
+      "claim:tree-context",
+      "claim:surface-flow-hypothesis",
+      "claim:basel-rain-garden-precedent"
+    ],
+    "known": [
+      "claim:candidate-identity",
+      "claim:tree-context",
+      "claim:groundwater-station-context",
+      "claim:no-groundwater-protection-zone",
+      "claim:basel-rain-garden-precedent"
+    ],
+    "assumed": [
+      "claim:screening-hypothesis",
+      "claim:study-segment-length",
+      "claim:edge-strip-width",
+      "claim:assumed-footprint",
+      "claim:surface-flow-hypothesis",
+      "claim:scenario-rainfall-depth",
+      "claim:scenario-rain-on-footprint"
+    ],
+    "missing_or_restricted": [
+      "gap:utility-clearance",
+      "gap:drainage-routing",
+      "gap:infiltration",
+      "gap:ownership-and-planned-works",
+      "gap:screening-indicators",
+      "gap:field-observations"
+    ],
+    "field_observation_could_establish": [
+      "Possible inlet: visible surface structure (cannot establish: network connection, pipe depth or capacity)",
+      "Water / stain / debris: a reported surface clue (cannot establish: flood hazard or cause)",
+      "Cover / manhole: visible cover (cannot establish: asset owner or underground route)",
+      "Tree pit: apparent planting condition (cannot establish: root volume or soil health)",
+      "Sealed-looking surface: surface appearance (cannot establish: infiltration rate or sub-base)",
+      "Access / obstruction: an apparent spatial constraint (cannot establish: legal compliance or ownership)",
+      "Possible planting space: a candidate surface opportunity (cannot establish: buildability or utility clearance)"
+    ],
+    "scenario_can_show": [
+      "The scale of rain falling on the assumed footprint in one 20 mm event.",
+      "How a rain garden works in principle (Street Lab, synthetic street)."
+    ],
+    "scenario_cannot_show": [
+      "Retained volume, storage, infiltration, flood reduction or design performance.",
+      "Anything about Klybeck's soil, drainage or utilities."
+    ],
+    "next_bounded_decision": "decision:klybeck-edge-investigation"
+  }
+}

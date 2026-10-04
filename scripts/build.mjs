@@ -1,56 +1,50 @@
-// Builds every registered solution into a standalone page in site/, plus the hub at site/index.html.
-import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { join } from "node:path";
-import { root, loadSolutions, datasetDate } from "./lib-solutions.mjs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
-const { solutions, errors } = await loadSolutions();
-if (errors.length) {
-  console.error(errors.join("\n"));
-  process.exit(1);
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const output = join(root, 'site');
+const run = (args, cwd = root, env = process.env) => {
+  const result = spawnSync(process.execPath, args, {cwd, env, stdio:'inherit'});
+  if (result.status !== 0) throw Error(`Build failed: ${args.join(' ')}`);
+};
+const copy = (source, target) => cpSync(join(root,source),join(output,target),{
+  recursive:true, filter:p => !p.split('/').some(s => ['node_modules','dist','.git'].includes(s))
+});
+run(['scripts/build-evidence.mjs']);
+run(['--experimental-strip-types','--no-warnings','scripts/build-case.mjs'],join(root,'wrapper/achim/connected-case'));
+run(['scripts/build.mjs'],join(root,'wrapper/data-charter-map'));
+const lab = join(root,'wrapper/street-workspace');
+if (!existsSync(join(lab,'node_modules/vite'))) {
+  const result = spawnSync('npm',['ci','--no-audit','--no-fund'],{cwd:lab,stdio:'inherit'});
+  if (result.status !== 0) throw Error('Street Lab dependency installation failed');
 }
-
-const sharedCss = await readFile(join(root, "shared", "tokens.css"), "utf8");
-const cssMarker = "/*__SHARED_CSS__*/";
-const leftover = /\/\*__[A-Z_]+__\*\/ null/;
-await mkdir(join(root, "site"), { recursive: true });
-
-const pick = (data, keys) => keys ? Object.fromEntries(keys.map(key => [key, data[key]])) : data;
-const hubEntries = [];
-
-for (const solution of solutions) {
-  let html = await readFile(join(solution.dir, solution.page), "utf8");
-  if (!html.includes(cssMarker)) throw new Error(`${solution.id}: page must include ${cssMarker} in its <style>`);
-  html = html.replace(cssMarker, () => sharedCss.trim());
-  const datasets = [];
-  for (const [key, embed] of Object.entries(solution.embeds || {})) {
-    const marker = `/*__${key}__*/ null`;
-    if (!html.includes(marker)) throw new Error(`${solution.id}: page has no marker ${marker}`);
-    const data = JSON.parse(await readFile(join(root, embed.file), "utf8"));
-    html = html.replace(marker, () => JSON.stringify(pick(data, embed.pick)));
-    datasets.push({ file: embed.file, date: datasetDate(data) });
-  }
-  const unfilled = html.match(leftover);
-  if (unfilled) throw new Error(`${solution.id}: unfilled data marker ${unfilled[0]}`);
-  await writeFile(join(root, "site", `${solution.id}.html`), html);
-  console.log(`Built site/${solution.id}.html`);
-  const { dir, ...manifest } = solution;
-  hubEntries.push({ ...manifest, href: `${solution.id}.html`, datasets });
+run(['node_modules/typescript/bin/tsc','--noEmit'],lab);
+run([join(root,'scripts/vite-build.mjs'),join(output,'wrapper/street-workspace'),'--no-treeshake'],lab,
+  {...process.env,VITE_SCOPING_TOOL_URL:'../../index.html'});
+for (const path of ['wrapper/street-xray','wrapper/sponge-catalogue','wrapper/achim/connected-case','adaptive-interface','shared']) {
+  rmSync(join(output,path),{recursive:true,force:true}); copy(path,path);
 }
-
-const hub = (await readFile(join(root, "shared", "hub.html"), "utf8"))
-  .replace(cssMarker, () => sharedCss.trim())
-  .replace("/*__SOLUTIONS__*/ null", () => JSON.stringify(hubEntries));
-await writeFile(join(root, "site", "index.html"), hub);
-console.log(`Built site/index.html with ${hubEntries.length} solutions`);
-
-// Old prototype/ links keep working through small redirect pages.
-const legacy = { "prototype/evidence-atlas.html": "evidence-atlas.html", "prototype/basel-map.html": "situation-map.html" };
-await mkdir(join(root, "prototype"), { recursive: true });
-for (const [path, target] of Object.entries(legacy)) {
-  await writeFile(join(root, path), `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Moved</title>
-<meta http-equiv="refresh" content="0; url=../site/${target}">
-<script>location.replace("../site/${target}" + location.hash);</script></head>
-<body><p>This page moved to <a href="../site/${target}">site/${target}</a>.</p></body></html>
-`);
-}
+rmSync(join(output,'wrapper/data-charter-map'),{recursive:true,force:true});
+cpSync(join(root,'wrapper/data-charter-map/dist'),join(output,'wrapper/data-charter-map'),{recursive:true});
+mkdirSync(join(output,'assets'),{recursive:true});
+for (const file of ['app.mjs','context.mjs','style.css','modules.json']) copy('journey/'+file,'assets/'+file);
+copy('journey/page.html','index.html');
+copy('README.md','README.md');
+const profiles = [
+  ['kanonengasse','wrapper/street-xray/engine/data/kanonengasse.page.json'],
+  ['klybeck','wrapper/street-xray/data/street-evidence-profile.v0.json']
+].map(([key,source]) => {
+  const bytes = readFileSync(join(root,source));
+  return {key,source,sha256:createHash('sha256').update(bytes).digest('hex'),profile:JSON.parse(bytes)};
+});
+const connectedCase = JSON.parse(readFileSync(join(root,'wrapper/achim/connected-case/generated/klybeck-edge.case.json'),'utf8'));
+writeFileSync(join(output,'assets/places.json'),JSON.stringify({schema_version:'sponge-places/1',places:profiles,connected_case:connectedCase},null,2)+'\n');
+const catalogue = JSON.parse(readFileSync(join(root,'wrapper/sponge-catalogue/data/catalogue.json'),'utf8'));
+const esc = s => String(s || '').replace(/[&<>"']/g,c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Render the existing knowledge records, without adding a second data source.
+writeFileSync(join(output,'catalogue.html'),`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sponge interventions</title><link rel="stylesheet" href="assets/style.css"><body><header><a href="index.html">Sponge City Basel</a></header><main class="catalogue"><p class="eyebrow">Mechanisms and evidence</p><h1>What could change?</h1><p>Intervention knowledge explains mechanisms. Feasibility depends on the selected place and its unresolved checks.</p>${catalogue.actions.map(a => `<article><p class="eyebrow">${esc(a.mechanisms.join(' / '))}</p><h2>${esc(a.name)}</h2><p>${esc(a.what)}</p>${(a.basel || []).map(b=>`<p><strong>Basel · ${esc(catalogue.basel_status[b.status] || b.status)}</strong> — ${esc(b.text)}</p>${(b.sources || []).map(id=>`<a href="${esc(catalogue.sources[id].url)}" target="_blank" rel="noreferrer">${esc(catalogue.sources[id].title || catalogue.sources[id].name || id)} ↗</a>`).join(' · ')}`).join('')}<h3>Before design</h3><ul>${(a.gaps || []).map(g=>`<li><strong>${esc(g.question)}</strong> · ${esc(g.access)}<br>${esc(g.blocks)}</li>`).join('')}</ul></article>`).join('')}<p><a href="wrapper/sponge-catalogue/data/catalogue.json">Complete source catalogue</a></p></main></body></html>`);
+writeFileSync(join(output,'.nojekyll'),'');
+console.log('Sponge City journey ready in site/.');

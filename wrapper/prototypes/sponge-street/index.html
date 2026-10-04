@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sponge Street · Basel Decision Canvas</title>
+<style>
+/*__SHARED_CSS__*/
+/* Layout: sketchbook page. Pen cross-section (after the team's notebook sketch) on top, a left-to-right timeline of states under it,
+   live meters, then catalog (free mode) + explanation card. Single deliberate look: ink on cool paper; colour arrives with each state. */
+:root{
+  --paper:#eef0eb; --paper-2:#e3e6df; --ink:#23272a; --muted:#61686d; --line:#c7ccc4;
+  --water:#2d7db5; --leaf:#5f9a3a; --soil:#a8784b; --stone:#cdb889; --needle:#c2462c; --warn:#b7791f;
+  --f-hand:"Bradley Hand","Segoe Print","Comic Sans MS",cursive;
+  --f-body:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--f-body);font-size:16px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px}
+h1{font-family:var(--f-hand);font-weight:400;font-size:clamp(30px,4.4vw,44px);margin:0;line-height:1.05}
+.lede{margin:0;color:var(--muted);max-width:58ch}
+.event{display:flex;align-items:center;gap:8px;font-size:14px}
+.event select{font:inherit;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:4px 8px}
+
+.stage{overflow-x:auto;border:1.5px solid var(--ink);border-radius:3px;background:var(--paper);box-shadow:3px 3px 0 var(--line)}
+.stage svg{display:block;width:100%;min-width:780px;height:auto}
+svg text{font-family:var(--f-hand);fill:var(--ink)}
+.ink{stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.thin{stroke-width:1.3}
+.lbl{font-size:16px}.lbl-s{font-size:13px;fill:var(--muted)}.roman{font-family:Georgia,serif!important;font-size:22px;text-decoration:underline}
+.seglbl{font-size:15px;fill:var(--muted)}
+.wash{opacity:0;transition:opacity .8s ease}
+.wash.on{opacity:1}
+.f{mix-blend-mode:multiply}
+.fade{transition:opacity .6s ease}
+.gone{opacity:.1}
+#tree{transform-box:view-box;transform-origin:520px 430px;transition:transform 1s cubic-bezier(.3,.8,.3,1)}
+#crownFill{transition:opacity .8s}
+.flow{fill:none;stroke:var(--water);stroke-linecap:round;transition:stroke-width .6s,opacity .6s}
+.flow.dash{stroke-dasharray:9 9;animation:run 1.2s linear infinite}
+.flow.up{stroke:var(--leaf)}
+@keyframes run{to{stroke-dashoffset:-18}}
+.drop{stroke:var(--water);stroke-width:1.4;stroke-linecap:round;opacity:.5;animation:fall 1.1s linear infinite}
+.ev-steady .drop{opacity:.3;animation-duration:1.8s!important}
+.ev-cloudburst .drop{stroke-width:2.2;opacity:.75;animation-duration:.55s!important}
+@keyframes fall{from{transform:translateY(-60px)}to{transform:translateY(420px)}}
+.link{fill:none;stroke-width:3;transition:opacity .6s}
+.link.ok{stroke:var(--water);stroke-dasharray:6 7;animation:run 1s linear infinite}
+.link.miss{stroke:var(--warn);stroke-dasharray:3 6}
+.tag rect{fill:var(--paper);stroke-width:1.5}
+.tag text{font-family:var(--f-mono);font-size:11.5px;font-weight:600}
+.tag.ok rect{stroke:var(--water)}.tag.ok text{fill:var(--water)}
+.tag.miss rect{stroke:var(--warn)}.tag.miss text{fill:var(--warn)}
+.hidden{opacity:0;pointer-events:none}
+
+.timeline{display:grid;gap:8px}
+.tl-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.tl-head h2{font-family:var(--f-hand);font-weight:400;font-size:22px;margin:0 auto 0 0}
+.frames{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.frame{flex:0 0 112px;scroll-snap-align:start;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:3px;padding:6px 8px;min-height:74px;display:flex;flex-direction:column;gap:2px;position:relative}
+.frame .k{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--muted)}
+.frame .t{font-size:13px;font-weight:700;line-height:1.2}
+.frame .c{position:absolute;top:6px;right:7px;font-family:var(--f-mono);font-size:10px;color:var(--water);font-weight:600}
+.frame.done{border-color:var(--ink)}
+.frame.done .k{color:var(--needle)}
+.frame.cur{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.frame.cur .k,.frame.cur .c{color:var(--paper)}
+.frame.star{border-style:dashed}
+#scrub{width:100%;accent-color:var(--needle)}
+
+.meters{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:14px}
+.meter{border-top:1.5px solid var(--ink);padding-top:8px;min-width:0}
+.meter h3{margin:0 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.bar{display:flex;height:22px;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden;background:var(--paper-2)}
+.bar span{transition:flex-basis .6s ease;display:block}
+.b-et{background:var(--leaf)}.b-inf{background:var(--water)}.b-hold{background:var(--stone)}.b-run{background:repeating-linear-gradient(45deg,var(--ink) 0 1.5px,transparent 1.5px 6px)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:14px}
+.legend b{font-family:var(--f-mono);font-weight:600}
+.sw{display:inline-block;width:10px;height:10px;border:1px solid var(--ink);margin-right:5px;vertical-align:-1px}
+.ref{font-size:12.5px;color:var(--muted);margin-top:2px}
+.big{font-family:var(--f-mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.thermo{height:8px;background:linear-gradient(90deg,var(--water),var(--stone),var(--needle));border:1px solid var(--ink);position:relative;margin-top:8px;border-radius:2px}
+.thermo i{position:absolute;top:-5px;width:3px;height:16px;background:var(--ink);transition:left .6s ease}
+.pill{display:inline-block;font-size:13px;font-weight:700;padding:1px 10px;border:1.5px solid currentColor;border-radius:99px;margin-left:6px;vertical-align:4px;font-family:var(--f-body)}
+.pill.high{color:var(--needle)}.pill.medium{color:var(--warn)}.pill.low{color:var(--leaf)}
+
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:var(--paper);border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:15px;box-shadow:2px 2px 0 var(--ink)}
+.btn:hover{background:var(--paper-2)}.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+
+.below{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:22px;align-items:start}
+.catalog h2,.combos h2{font-family:var(--f-hand);font-weight:400;font-size:22px;margin:0 0 6px}
+.track{display:grid;gap:4px;padding:8px 0;border-top:1px solid var(--line)}
+.track .name{font-weight:700;font-size:14.5px;display:flex;justify-content:space-between;gap:8px}
+.track .name span{font-weight:400;color:var(--muted);font-size:13px}
+.seg{display:flex;border:1.5px solid var(--ink);border-radius:3px;overflow:hidden}
+.seg button{flex:1;background:var(--paper);border:0;border-left:1.5px solid var(--ink);padding:4px 6px;font-size:13px;line-height:1.2;min-width:0}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.combos{margin-top:14px}
+.combos ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.combos li{display:grid;grid-template-columns:18px 1fr;gap:6px;font-size:14px;align-items:start}
+.combos li i{font-style:normal;font-family:var(--f-mono);font-weight:600}
+.combos li.ok i{color:var(--water)}.combos li.miss i{color:var(--warn)}.combos li.idle{color:var(--muted)}
+.combos small{display:block;color:var(--muted);font-size:12.5px}
+
+.card{border:1.5px solid var(--ink);border-radius:3px;padding:18px 20px;background:var(--paper);box-shadow:3px 3px 0 var(--line);min-width:0}
+.card .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.card h2{font-family:var(--f-hand);font-weight:400;font-size:30px;margin:2px 0 8px;line-height:1.15;text-wrap:balance}
+.verbs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.verb{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;border:1px solid var(--ink);padding:1px 7px;border-radius:2px}
+.card h4{margin:14px 0 2px;font-size:14px}
+.card p{margin:0;max-width:66ch}
+.card ul{margin:4px 0 0;padding-left:20px;max-width:66ch}
+.note{margin-top:12px;padding:8px 12px;border-left:3px solid var(--warn);background:var(--paper-2);font-size:14.5px}
+.note.blue{border-left-color:var(--water)}
+.links a{color:var(--water)}
+footer{font-size:13px;color:var(--muted);max-width:86ch}
+
+@media (max-width:780px){
+  .meters{grid-template-columns:1fr}
+  .below{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .drop{animation:none!important;transform:translateY(160px)}
+  .flow.dash,.link.ok{animation:none}
+  .wash,.fade,.bar span,.thermo i,#tree{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Sponge Street</h1>
+      <p class="lede">How an old European street turns into a sponge, one state at a time. Move left to right through the timeline, or switch measures on and off in the catalog.</p>
+    </div>
+    <label class="event" for="event">Rain
+      <select id="event">
+        <option value="steady">Steady rain</option>
+        <option value="heavy" selected>Heavy rain</option>
+        <option value="cloudburst">Cloudburst</option>
+      </select>
+    </label>
+  </header>
+
+  <div class="stage">
+    <svg id="section" viewBox="0 0 1400 770" role="img" aria-labelledby="svgT">
+      <title id="svgT">Cross-section of an old European street: building with cellar, sidewalk with a street tree, parking bay, road, and soil layers I to III</title>
+      <desc>The same city street changes through twelve states. Colour, water paths and the tree expand as roof, paving, tree trench, rain garden and storage measures are connected.</desc>
+      <defs>
+        <filter id="pen" x="-2%" y="-2%" width="104%" height="104%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="5" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+        </filter>
+        <filter id="wc" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="10" result="d"/>
+          <feGaussianBlur in="d" stdDeviation="0.9"/>
+        </filter>
+        <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink)" stroke-width="1" opacity=".55"/></pattern>
+        <pattern id="hatchL" width="26" height="22" patternUnits="userSpaceOnUse"><path d="M3 16 l12 -9 M15 20 l9 -6" stroke="var(--ink)" stroke-width="1.1" opacity=".45"/></pattern>
+        <pattern id="dots" width="16" height="13" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.1" fill="var(--ink)" opacity=".5"/><circle cx="11" cy="9" r="1.1" fill="var(--ink)" opacity=".5"/></pattern>
+        <pattern id="pebbles" width="26" height="20" patternUnits="userSpaceOnUse"><ellipse cx="6" cy="6" rx="4.5" ry="3.5" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".5"/><ellipse cx="19" cy="14" rx="4" ry="4" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".5"/></pattern>
+        <pattern id="waves" width="40" height="14" patternUnits="userSpaceOnUse"><path d="M0 7 Q10 2 20 7 T40 7" fill="none" stroke="var(--ink)" stroke-width=".9" opacity=".45"/></pattern>
+        <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--water)"/></marker>
+        <marker id="ahg" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--leaf)"/></marker>
+        <clipPath id="sky"><rect x="0" y="0" width="1400" height="424"/></clipPath>
+      </defs>
+      <rect width="1400" height="770" fill="var(--paper)"/>
+
+      <!-- Soil layers I / II / III, stepping at the façade and the kerb like the sketch -->
+      <g filter="url(#pen)">
+        <path d="M0 432 H1400 V505 H760 V510 H336 V520 H0 Z" fill="url(#hatchL)"/>
+        <path d="M0 520 H336 V510 H760 V505 H1400 V595 H760 V600 H336 V610 H0 Z" fill="url(#dots)"/>
+        <path d="M0 610 H336 V600 H760 V595 H1400 V688 H760 V690 H336 V700 H0 Z" fill="url(#pebbles)"/>
+        <path d="M0 700 H336 V690 H760 V688 H1400 V770 H0 Z" fill="url(#waves)"/>
+        <path class="ink thin" d="M0 520 H336 V510 H760 V505 H1400 M0 610 H336 V600 H760 V595 H1400 M0 700 H336 V690 H760 V688 H1400"/>
+      </g>
+      <rect id="gwTint" x="0" y="690" width="1400" height="80" fill="var(--water)" opacity="0" filter="url(#wc)" class="fade"/>
+      <g class="roman">
+        <text x="150" y="486">I</text><text x="146" y="576">II</text><text x="142" y="666">III</text>
+        <text x="1352" y="480">I</text><text x="1348" y="565">II</text><text x="1344" y="656">III</text>
+      </g>
+      <text class="lbl-s" x="1390" y="755" text-anchor="end">groundwater</text>
+
+      <!-- Building (pen) -->
+      <g filter="url(#pen)">
+        <path class="ink" d="M8 124 H330 M14 124 V432 M330 112 V432" />
+        <path class="ink" d="M8 112 H338 V124"/>
+        <!-- windows with transom + mullion, like the sketch -->
+        <g class="ink thin">
+          <path d="M50 150 h80 v100 h-80 z M50 172 h80 M90 172 v78 M50 214 h28 M102 214 h28"/>
+          <path d="M200 150 h80 v100 h-80 z M200 172 h80 M240 172 v78 M200 214 h28 M252 214 h28"/>
+          <path d="M14 266 H330 M14 276 H330"/>
+          <path d="M50 296 h80 v90 h-80 z M50 316 h80 M90 316 v70 M50 352 h28 M102 352 h28"/>
+          <path d="M200 296 h80 v90 h-80 z M200 316 h80 M240 316 v70 M200 352 h28 M252 352 h28"/>
+        </g>
+        <!-- plinth with arched cellar windows -->
+        <path class="ink" d="M14 400 H330 M30 400 V432 M76 432 a34 22 0 0 1 68 0 M196 432 a34 22 0 0 1 68 0"/>
+        <rect class="ink" x="30" y="432" width="296" height="128" stroke-dasharray="6 5" fill="var(--paper)"/>
+        <!-- downpipe -->
+        <path class="ink" d="M326 116 H344 M336 116 V428" stroke-width="3.5"/>
+        <path id="roofPipe" class="ink fade" d="M336 432 V462 H1010 L1062 610" stroke-width="2.6"/>
+      </g>
+      <text class="lbl-s" x="178" y="545" text-anchor="middle">cellar</text>
+
+      <!-- Sidewalk, parking, road (pen) -->
+      <g filter="url(#pen)">
+        <rect x="340" y="424" width="300" height="8" fill="url(#hatch)" class="ink thin"/>
+        <path class="ink" d="M640 424 V434 M640 434 H760 M760 426 V434"/>
+        <path d="M762 434 Q1080 424 1400 434 L1400 444 L762 444 Z" fill="url(#hatch)" class="ink thin"/>
+        <path class="ink thin" d="M1040 429 H1120" stroke-dasharray="10 8"/>
+        <rect class="ink thin" x="764" y="434" width="12" height="6"/>
+        <path id="gullyPipe" class="ink" d="M770 444 V560 L1058 622" stroke-width="2.6"/>
+        <g id="car" class="ink fade">
+          <rect x="650" y="400" width="100" height="28" rx="9"/><path d="M668 400 L682 382 L722 382 L736 400"/>
+          <circle cx="672" cy="428" r="9" fill="var(--paper)"/><circle cx="728" cy="428" r="9" fill="var(--paper)"/>
+        </g>
+        <g class="ink thin"><circle cx="380" cy="470" r="8"/><circle cx="400" cy="480" r="6"/><circle cx="612" cy="474" r="7"/></g>
+        <circle class="ink" cx="1080" cy="640" r="34" fill="var(--paper)"/>
+        <path class="ink thin" d="M1110 628 L1124 612" stroke-dasharray="4 4"/>
+      </g>
+      <text class="lbl-s" x="366" y="500">utilities</text>
+      <text class="lbl" x="1080" y="700" text-anchor="middle">combined sewer</text>
+      <text class="lbl-s" x="1124" y="608">to the plant, or the Rhine when full</text>
+
+      <!-- Segment names -->
+      <g class="seglbl" text-anchor="middle">
+        <path class="ink thin" d="M14 46 V54 H330 V46 M342 46 V54 H638 V46 M642 46 V54 H758 V46 M762 46 V54 H1392 V46" opacity=".5"/>
+        <text x="268" y="38">building</text><text x="490" y="38">sidewalk</text><text x="700" y="38">parking</text><text x="1077" y="38">road</text>
+      </g>
+
+      <!-- ROOF stages -->
+      <g class="wash" data-s="roof:1">
+        <rect class="f" x="10" y="100" width="326" height="12" fill="var(--leaf)" filter="url(#wc)"/>
+        <path class="ink thin" d="M30 100 l3 -8 l3 8 M70 100 l3 -10 l3 10 M115 100 l3 -7 l3 7 M160 100 l3 -9 l3 9 M205 100 l3 -8 l3 8 M250 100 l3 -10 l3 10 M300 100 l3 -7 l3 7" stroke="var(--leaf)"/>
+      </g>
+      <g class="wash" data-s="roof:2">
+        <rect class="f" x="10" y="88" width="326" height="24" fill="var(--soil)" opacity=".6" filter="url(#wc)"/>
+        <path class="f" d="M10 92 Q90 82 170 92 T336 90 V100 H10Z" fill="var(--leaf)" filter="url(#wc)"/>
+        <g class="ink thin" stroke="var(--ink)">
+          <path d="M40 92 c-10 -30 30 -48 48 -22 c18 -8 34 10 22 24" fill="var(--leaf)" fill-opacity=".55"/>
+          <path d="M150 92 V64 M150 66 c-30 -4 -30 -46 -4 -50 c6 -22 44 -16 40 10 c22 10 12 44 -14 40 c-6 6 -14 6 -22 0" fill="var(--leaf)" fill-opacity=".55"/>
+          <path d="M230 92 l-8 -24 M236 92 l2 -28 M242 92 l10 -22 M290 92 l-6 -20 M296 92 l3 -26 M302 92 l9 -18" stroke="var(--leaf)" stroke-width="2"/>
+        </g>
+      </g>
+
+      <!-- PIPE stages -->
+      <g class="wash" data-s="pipe:1 pipe:2">
+        <rect x="348" y="368" width="40" height="56" rx="4" class="ink" fill="var(--paper)"/>
+        <rect id="barrelFill" class="f" x="350" y="404" width="36" height="18" fill="var(--water)" opacity=".7" style="transition:y .6s,height .6s"/>
+        <path d="M336 360 Q346 360 360 370" fill="none" stroke="var(--water)" stroke-width="3.5" stroke-linecap="round"/>
+        <text class="lbl-s" x="392" y="384">barrel</text>
+      </g>
+
+      <!-- SIDEWALK stage -->
+      <g class="wash" data-s="walk:1">
+        <rect class="f" x="340" y="424" width="300" height="8" fill="var(--stone)"/>
+        <path d="M356 424v8M374 424v8M392 424v8M410 424v8M428 424v8M446 424v8M600 424v8M618 424v8" stroke="var(--paper)" stroke-width="2.4"/>
+      </g>
+
+      <!-- TREE trench (stage 2) behind the tree -->
+      <g class="wash" data-s="tree:2">
+        <rect class="f" x="350" y="442" width="406" height="140" fill="var(--soil)" opacity=".5" filter="url(#wc)"/>
+        <rect x="350" y="442" width="406" height="140" fill="url(#pebbles)" opacity=".7"/>
+        <rect class="f" x="350" y="552" width="406" height="30" fill="var(--water)" opacity=".65" filter="url(#wc)"/>
+        <path class="ink thin" d="M520 436 q-30 40 -90 70 M520 436 q20 50 70 80 M520 436 q60 20 150 30 M520 436 q-6 60 -20 110" stroke="var(--soil)" stroke-width="2"/>
+        <text class="lbl-s" x="440" y="600" style="fill:var(--needle)">utilities in the way?</text>
+      </g>
+      <!-- TREE pit (stage 1+) -->
+      <g class="wash" data-s="tree:1">
+        <path class="f" d="M462 424 h116 v10 h-116z" fill="var(--leaf)" filter="url(#wc)"/>
+        <path class="ink thin" d="M470 424 l3 -9 l3 9 M490 424 l2 -11 l3 11 M548 424 l3 -10 l2 10 M568 424 l2 -8 l3 8" stroke="var(--leaf)"/>
+      </g>
+      <!-- Base grate pit -->
+      <g id="grate" class="fade" filter="url(#pen)">
+        <rect x="500" y="424" width="40" height="10" fill="url(#hatch)" class="ink"/>
+        <rect x="500" y="434" width="40" height="26" class="ink thin" stroke-dasharray="3 3"/>
+      </g>
+      <!-- The tree, scaled by stage -->
+      <g id="tree">
+        <path id="crownFill" class="f" fill="var(--leaf)" opacity="0" filter="url(#wc)"/>
+        <g filter="url(#pen)">
+          <path class="ink" d="M512 430 V300 M528 430 V300"/>
+          <path class="ink thin" d="M514 320 L460 210 M526 316 L590 196 M520 300 V200 M520 250 l26 -30"/>
+          <path id="crownLine" class="ink" stroke-width="5"/>
+        </g>
+      </g>
+
+      <!-- PARKING stages -->
+      <g class="wash" data-s="park:1 park:2">
+        <path class="f" d="M642 435 Q700 476 758 435 Z" fill="var(--leaf)" filter="url(#wc)"/>
+        <path class="f" d="M660 441 Q700 462 740 441 Z" fill="var(--water)" filter="url(#wc)"/>
+        <path class="ink thin" d="M650 435 l3 -13 l3 13 M672 442 l2 -16 l3 16 M720 442 l3 -15 l2 15 M744 435 l2 -12 l3 12" stroke="var(--leaf)"/>
+        <text class="lbl-s" x="700" y="370" text-anchor="middle">rain garden</text>
+      </g>
+
+      <!-- ROAD stage -->
+      <g class="wash" data-s="road:1">
+        <path d="M764 440 L1398 430" fill="none" stroke="var(--soil)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M1010 424 L790 430" fill="none" stroke="var(--water)" stroke-width="2.6" marker-end="url(#ah)"/>
+        <path d="M760 426 v8" stroke="var(--needle)" stroke-width="5"/>
+        <text class="lbl-s" x="880" y="412">kerb opened, road tilts to the bay</text>
+      </g>
+
+      <!-- STORAGE stage -->
+      <g class="wash" data-s="store:1">
+        <rect class="f" x="860" y="468" width="150" height="62" fill="var(--water)" opacity=".3"/>
+        <path class="ink thin" d="M860 468 h150 v62 h-150z M897 468 v62 M935 468 v62 M972 468 v62 M860 499 h150" stroke="var(--water)"/>
+        <text class="lbl-s" x="935" y="550" text-anchor="middle">storage crates</text>
+      </g>
+
+      <!-- Combination links -->
+      <g id="links">
+        <path id="lk-roofTree" class="link" d="M368 424 V470 H430"/>
+        <path id="lk-roadBay" class="link" d="M900 420 Q800 405 728 436"/>
+        <path id="lk-bayTrench" class="link" d="M700 462 V520 H640"/>
+        <path id="lk-overflow" class="link" d="M1010 500 H1040 L1068 606"/>
+      </g>
+
+      <!-- Water flows -->
+      <g id="flows">
+        <path id="fRun" class="flow dash" d="M1300 424 Q1100 422 790 430 L770 444 V560 L1050 620" marker-end="url(#ah)"/>
+        <path id="fRoof" class="flow dash fade" d="M336 140 V430 M350 462 H1000" />
+        <g id="fInf">
+          <path data-k="walk:1" class="flow dash" d="M600 434 V500" marker-end="url(#ah)"/>
+          <path data-k="tree:2" class="flow dash" d="M450 584 V660" marker-end="url(#ah)"/>
+          <path data-k="park:1" class="flow dash" d="M700 462 V540" marker-end="url(#ah)"/>
+          <path data-k="store:1" class="flow dash" d="M935 532 V640" marker-end="url(#ah)"/>
+        </g>
+        <g id="fEt">
+          <path data-k="roof:1" class="flow up dash" d="M80 80 q-6 -14 0 -26 t0 -26" marker-end="url(#ahg)"/>
+          <path data-k="roof:1" class="flow up dash" d="M260 80 q-6 -14 0 -26 t0 -26" marker-end="url(#ahg)"/>
+          <path data-k="tree:1" class="flow up dash" d="M610 170 q-6 -14 0 -26 t0 -26" marker-end="url(#ahg)"/>
+          <path data-k="tree:2" class="flow up dash" d="M430 150 q-6 -14 0 -26 t0 -26" marker-end="url(#ahg)"/>
+          <path data-k="park:1" class="flow up dash" d="M700 350 q-6 -14 0 -26 t0 -26" marker-end="url(#ahg)"/>
+        </g>
+      </g>
+      <g id="tags"></g>
+      <g id="rain" clip-path="url(#sky)"></g>
+    </svg>
+  </div>
+
+  <section class="timeline" aria-label="Timeline of states">
+    <div class="tl-head">
+      <h2>From grey street to sponge</h2>
+      <button class="btn" id="prev" type="button" aria-label="Previous state">←</button>
+      <button class="btn primary" id="play" type="button">Play</button>
+      <button class="btn" id="next" type="button" aria-label="Next state">→</button>
+    </div>
+    <input id="scrub" type="range" min="0" max="11" value="0" step="1" aria-label="Timeline position">
+    <div class="frames" id="frames"></div>
+  </section>
+
+  <div class="meters" aria-live="polite">
+    <div class="meter">
+      <h3>Where the rain goes</h3>
+      <div class="bar" aria-hidden="true"><span class="b-et" id="bEt"></span><span class="b-inf" id="bInf"></span><span class="b-hold" id="bHold"></span><span class="b-run" id="bRun"></span></div>
+      <div class="legend">
+        <span><i class="sw b-et"></i>Evaporates <b id="vEt"></b></span>
+        <span><i class="sw b-inf"></i>Soaks in <b id="vInf"></b></span>
+        <span><i class="sw b-hold"></i>Held for later <b id="vHold"></b></span>
+        <span><i class="sw b-run"></i>Runs off <b id="vRun"></b></span>
+      </div>
+      <div class="ref">Natural meadow for comparison: about 40% evaporates, 50% soaks in, 10% runs off</div>
+    </div>
+    <div class="meter">
+      <h3>Relative surface heat</h3>
+      <div class="big"><span id="vHeat"></span><span class="pill" id="pHeat">index</span></div>
+      <div class="thermo" aria-hidden="true"><i id="tHeat"></i></div>
+      <div class="ref">Illustrative index · lower is better</div>
+    </div>
+    <div class="meter">
+      <h3>Fast runoff / sewer path</h3>
+      <div class="big"><span id="vSewer"></span>%<span class="pill" id="pSewer"></span></div>
+      <div class="ref">Illustrative share, not an overflow prediction</div>
+    </div>
+  </div>
+
+  <div class="below">
+    <div>
+      <section class="catalog" aria-label="Catalog">
+        <h2>Catalog</h2>
+        <div id="tracks"></div>
+      </section>
+      <section class="combos" aria-label="Combinations">
+        <h2>Works together</h2>
+        <ul id="combos"></ul>
+      </section>
+    </div>
+    <article class="card" id="card" aria-live="polite"></article>
+  </div>
+
+  <footer>This is an explanatory scenario, not a hydraulic or thermal model. The starting water balance is adapted from general US EPA land-cover figures; intervention changes are deliberately illustrative and show direction only. They do not predict the performance, temperature or overflow risk of a real Basel street. Every sponge has a capacity: in a cloudburst conventional drainage and a designed overflow are still needed. The timeline is one suggested path; the catalog lets you try any order.</footer>
+</div>
+
+<script id="sponge-logic">
+const L = {
+  epaBal:["EPA: impervious cover and the water balance","https://archive.epa.gov/water/test/web/html/urbanx3.html"],
+  baselSponge:["Basel: Basel wird Schwammstadt (2022)","https://www.bs.ch/medienmitteilungen/bvd/2022-basel-wird-schwammstadt"],
+  basel:["Basel: implementing the urban climate concept","https://www.bs.ch/schwerpunkte/klima/stadtklima/umsetzung-stadtklimakonzept"],
+  depave:["Basel: testing surfaces for depaved parking spaces (2022)","https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze"],
+  bafu:["BAFU: Konzept Schwammstadt","https://www.bafu.admin.ch/de/konzept-schwammstadt"],
+  bgg:["Blue Green Grey: Norra Infarten system","https://bluegreengrey.edges.se/article/norra-infarten-inside-the-blue-green-grey-system/"],
+  epaGI:["EPA: what is green infrastructure","https://www.epa.gov/green-infrastructure"],
+  greenroof:["Green roof (Wikipedia)","https://en.wikipedia.org/wiki/Green_roof"],
+  perm:["Permeable paving (Wikipedia)","https://en.wikipedia.org/wiki/Permeable_paving"],
+  nacto:["NACTO Urban Street Stormwater Guide","https://planning.org/knowledgebase/resource/9196672"],
+  epaTrees:["EPA: urban street trees and green infrastructure","https://www.epa.gov/water-research/urban-street-trees-and-green-infrastructure"],
+  zhaw:["ZHAW project 74640: vegetation building blocks for Basel streets","https://www.zhaw.ch/de/forschung/projekt/74640"],
+  volta:["Basel: VoltaNord area development","https://www.bs.ch/schwerpunkte/arealentwicklungen-im-kanton-basel-stadt/voltanord"],
+  swale:["Bioswale (Wikipedia)","https://en.wikipedia.org/wiki/Bioswale"],
+  raingarden:["Rain garden (Wikipedia)","https://en.wikipedia.org/wiki/Rain_garden"],
+  zh:["Kanton Zürich: dealing with lack of space in streets (German)","https://www.zh.ch/de/umwelt-tiere/klima/langfristige-klimastrategie/massnahmen/massnahmen-definition/massnahme-lk05.html"],
+  basin:["Retention basin (Wikipedia)","https://en.wikipedia.org/wiki/Retention_basin"],
+  rotterdam:["Rotterdam Weatherwise programme 2030 (PDF)","https://rotterdamsweerwoord.nl/content/uploads/2023/06/RWW_Programmakader-2030_ENG.pdf"],
+  acu:["Urban acupuncture (Wikipedia)","https://en.wikipedia.org/wiki/Urban_acupuncture"],
+  cso:["Combined sewer (Wikipedia)","https://en.wikipedia.org/wiki/Combined_sewer"]
+};
+
+/* Tracks: each intervention has stages. d = change vs. grey street at that stage (percentage points). */
+const TRACKS = [
+ {id:"roof", name:"Roof", seg:"Building", stages:["Bare","Thin green","Roof garden"],
+  d:[null,{run:-5,et:5},{run:-8,et:7,inf:1,heat:-1}],
+  base:"A bare gravel or bitumen roof. Rain runs to the gutter within minutes."},
+ {id:"pipe", name:"Downpipe", seg:"Building", stages:["To sewer","Rain barrel","Feeds the tree"],
+  d:[null,{run:-4,hold:4},{run:-7,hold:2,inf:4,et:1}], needs:{2:["tree",2]},
+  base:"The downpipe is plugged straight into the combined sewer, as in most old buildings."},
+ {id:"walk", name:"Sidewalk", seg:"Sidewalk", stages:["Sealed","Open joints"],
+  d:[null,{run:-6,inf:6,heat:-3}],
+  base:"Sealed asphalt that sheds water to the kerb and heats up in the sun."},
+ {id:"tree", name:"Street tree", seg:"Sidewalk + underground", stages:["Grate pit","Bigger pit","Sponge trench"],
+  d:[null,{run:-2,inf:1,et:1,heat:-4},{run:-7,inf:4,et:3,heat:-11}],
+  base:"A tree in a pit the size of its grate. Too little soil, water and air, so it stays small."},
+ {id:"park", name:"Parking bay", seg:"Parking", stages:["Cars","Rain garden","Joined to trench"],
+  d:[null,{run:-4,inf:3,et:1,heat:-2},{run:-7,inf:5,et:2,heat:-3}], needs:{2:["tree",2]},
+  base:"Sealed parking spaces, draining to the gully."},
+ {id:"road", name:"Road", seg:"Road", stages:["To the drain","Open kerb"],
+  d:[null,{run:-6,inf:4,et:1,hold:1}], needs:{1:["park",1]},
+  base:"A crowned road. Water runs to the gully and straight into the sewer."},
+ {id:"store", name:"Underground", seg:"Under the road", stages:["Nothing","Storage + overflow"],
+  d:[null,{run:-6,hold:4,inf:2}],
+  base:"No storage. In a storm, everything arrives at the sewer at once."}
+];
+const T = Object.fromEntries(TRACKS.map(t=>[t.id,t]));
+
+const COMBOS = [
+ {id:"roofTree", name:"Roof feeds the tree", parts:[["pipe",2],["tree",2]], text:"Barrel overflow runs into the tree trench, not the sewer."},
+ {id:"roadBay", name:"Road feeds the bay", parts:[["road",1],["park",1]], text:"An open kerb only helps if a rain garden sits behind it."},
+ {id:"bayTrench", name:"One connected sponge", parts:[["park",2],["tree",2]], text:"Rain garden and tree trench share one underground volume."},
+ {id:"overflow", name:"Safe overflow", parts:[["store",1]], text:"When the sponge is full, excess goes a planned way."}
+];
+const TAGPOS = {roofTree:[392,520,"roof → tree"], roadBay:[870,396,"road → bay"], bayTrench:[656,530,"bay ↔ trench"], overflow:[1040,490,"safe overflow"]};
+
+/* Timeline: each frame raises one track by one stage */
+const FRAMES = [
+ {k:0, title:"Grey street", eyebrow:"State 0 · starting point", verbs:[],
+  what:"An old inner-city street, sealed from façade to façade. Roof, sidewalk and road send rain into one combined sewer within minutes.",
+  why:"Little soaks in and little evaporates. The tree is starved, the surfaces store heat, and in a heavy storm the sewer overflows into the river.",
+  trade:["About half of the rain runs off. That is the classic figure for land that is 75 to 100% sealed."],
+  links:[L.epaBal,L.cso,L.baselSponge]},
+ {t:"pipe", s:1, title:"Catch the roof water", verbs:["STORE"],
+  what:"The downpipe fills a rain barrel or tank instead of the sewer.",
+  why:"The roof is one of the biggest surfaces on the street. Stored water can water plants in dry weeks.",
+  trade:["A barrel fills in one storm, so it needs an overflow","It's the building owner's decision, not the city's"],
+  links:[L.epaGI]},
+ {t:"roof", s:1, title:"Thin green roof", verbs:["STORE","SWEAT","COOL"],
+  what:"A few centimetres of substrate with hardy plants on the flat roof.",
+  why:"The substrate soaks up the first rain and releases it slowly or evaporates it. Basel is known for greening its flat roofs.",
+  trade:["Needs a waterproof, sound roof","Can be combined with solar panels"],
+  links:[L.greenroof,L.bafu]},
+ {t:"walk", s:1, title:"Open the sidewalk joints", verbs:["ABSORB"],
+  what:"Pavers with open joints on a base that lets water through.",
+  why:"Light rain soaks in where it falls instead of running to the kerb. Damp joints also cool a little.",
+  trade:["Joints clog without cleaning","Must stay smooth for wheelchairs and strollers"],
+  links:[L.perm,L.nacto]},
+ {t:"tree", s:1, title:"Give the tree a bigger pit", verbs:["ABSORB","SHADE"],
+  what:"The grate gives way to an open planted strip around the trunk.",
+  why:"More soil surface lets water and air reach the roots. The tree grows and starts to shade the sidewalk.",
+  trade:["Less room for walking, bikes and bins"],
+  links:[L.epaTrees]},
+ {t:"park", s:1, title:"Depave one parking bay", verbs:["ABSORB","SLOW","SWEAT"],
+  what:"One parking space becomes a sunken rain garden.",
+  why:"This is the acupuncture move: one small, repeatable unit that changes where water goes. A rain garden holds water for hours and lets it soak away.",
+  trade:["Lost parking is the political price","Check visibility, loading and utilities"],
+  links:[L.depave,L.raingarden]},
+ {t:"road", s:1, title:"Open the kerb", verbs:["SLOW"],
+  what:"The road gets a slight tilt toward the bay and a gap in the kerb.",
+  why:"Now road water reaches the rain garden instead of the gully. A green island without an inlet is decoration, not water infrastructure.",
+  trade:["Road water carries sediment, oil and winter salt","Cheapest when the road is renewed anyway"],
+  links:[L.nacto,L.zh]},
+ {t:"tree", s:2, title:"Build a sponge tree trench", verbs:["STORE","SWEAT","SHADE","COOL"],
+  what:"A large connected body of soil and gravel under the sidewalk: structural soil, or a Baumrigole.",
+  why:"Roots get room and a water reserve. The tree grows big, shades and evaporates, which makes it the strongest cooling lever on the street.",
+  trade:["Gas, water and fibre lines under the sidewalk get in the way","Expensive, and takes years to reach full effect"],
+  links:[L.epaTrees,L.zhaw,L.volta]},
+ {t:"pipe", s:2, title:"Let the roof feed the tree", verbs:["STORE","SWEAT"],
+  what:"The barrel's overflow runs underground into the tree trench.",
+  why:"Roof water never touches the sewer and the tree gets water in dry spells. Two separate measures become one system.",
+  trade:["Keep water away from the cellar walls","Crosses the line between private building and public street"],
+  links:[L.bgg]},
+ {t:"park", s:2, title:"Join the bay to the trench", verbs:["STORE","ABSORB"],
+  what:"A gravel link connects the rain garden to the tree trench below the sidewalk.",
+  why:"Surface and underground share one volume. Water from the road can reach the tree's roots.",
+  trade:["Crossing utility lines","Needs careful design of soil layers"],
+  links:[L.bgg,L.swale]},
+ {t:"roof", s:2, title:"Grow a roof garden", verbs:["STORE","SWEAT","COOL"],
+  what:"Deeper substrate with shrubs, grasses and even a small tree.",
+  why:"Holds much more water than a thin roof and evaporates more, which cools the building and the air around it.",
+  trade:["Old roofs often can't carry the weight","Costs more and needs care"],
+  links:[L.greenroof]},
+ {t:"store", s:1, title:"Storage and a safe overflow", verbs:["STORE","SLOW"],
+  what:"Storage crates under the road hold the peak, with a planned overflow to the sewer.",
+  why:"Every sponge fills up. Storage buys time in a storm, and the overflow makes sure excess water leaves safely instead of flooding cellars.",
+  trade:["Groundwater level and soil contamination must be checked","Costly, best during road renewal"],
+  star:true, links:[L.basin,L.rotterdam,L.acu,L.basel]}
+];
+
+const BASE = {et:30, inf:13, hold:2, run:55, heat:72};
+const EVENT = {steady:{g:1.1,s:.6}, heavy:{g:1,s:1}, cloudburst:{g:.55,s:1.5}};
+
+function stagesAt(k){ const st={roof:0,pipe:0,walk:0,tree:0,park:0,road:0,store:0}; for(let i=1;i<=k;i++){const f=FRAMES[i]; st[f.t]=f.s;} return st; }
+function missing(tid,stage,st){ const n=T[tid].needs && T[tid].needs[stage]; return n && st[n[0]]<n[1] ? n : null; }
+function model(st,event="heavy"){
+  const r={...BASE}, ev=EVENT[event];
+  for(const t of TRACKS){ const s=st[t.id]; if(!s) continue; const d=t.d[s];
+    const f=(missing(t.id,s,st)?0.35:1)*(t.id==="store"?ev.s:ev.g);
+    for(const k in d) r[k]+=d[k]*(k==="heat"?(missing(t.id,s,st)?0.35:1):f); }
+  if(r.run<4){ const x=4-r.run; r.run=4; r.inf-=x; }
+  return r;
+}
+function frameOf(st){ for(let k=FRAMES.length-1;k>=0;k--){ const a=stagesAt(k); if(TRACKS.every(t=>a[t.id]===st[t.id])) return k; } return -1; }
+</script>
+<script>
+const state = {st:{roof:0,pipe:0,walk:0,tree:0,park:0,road:0,store:0}, frame:0, focus:{frame:0}, event:"heavy", timer:null};
+const $ = id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+
+/* tree crown: scalloped like the sketch */
+(function(){
+  const cx=520, cy=240, rx=112, ry=96, n=11; let d="", seed=3;
+  const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  const pt=(a,r)=>[cx+rx*r*Math.cos(a), cy+ry*r*Math.sin(a)];
+  for(let i=0;i<n;i++){ const a0=i/n*2*Math.PI-Math.PI/2, a1=(i+1)/n*2*Math.PI-Math.PI/2, am=(a0+a1)/2;
+    const p0=pt(a0,1), p1=pt(a1,1), c=pt(am,1.28+rnd()*.12);
+    if(!i) d+=`M${p0[0].toFixed(1)} ${p0[1].toFixed(1)}`; d+=` Q${c[0].toFixed(1)} ${c[1].toFixed(1)} ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`; }
+  d+="Z"; $("crownLine").setAttribute("d",d); $("crownFill").setAttribute("d",d);
+})();
+/* rain */
+(function(){ const g=$("rain"); for(let i=0;i<90;i++){ const l=document.createElementNS(NS,"line"), x=Math.random()*1400, y=Math.random()*60;
+  l.setAttribute("x1",x);l.setAttribute("y1",y);l.setAttribute("x2",x-3);l.setAttribute("y2",y+13);l.setAttribute("class","drop");
+  l.style.animationDelay=(-Math.random()*1.2).toFixed(2)+"s"; l.style.animationDuration=(0.9+Math.random()*.5).toFixed(2)+"s"; g.appendChild(l);} })();
+/* timeline frames */
+$("frames").innerHTML = FRAMES.map((f,i)=>`<button class="frame${f.star?" star":""}" type="button" data-f="${i}"><span class="k">${i}${f.star?" ★":""}</span><span class="t">${f.title}</span>${COMBOS.some(c=>c.parts.length>1&&c.parts.some(p=>p[0]===f.t&&p[1]===f.s)&&c.parts.every(p=>stagesAt(i)[p[0]]>=p[1]))?'<span class="c">link</span>':""}</button>`).join("");
+$("frames").addEventListener("click",e=>{const b=e.target.closest(".frame"); if(b) go(+b.dataset.f);});
+/* catalog */
+$("tracks").innerHTML = TRACKS.map(t=>`<div class="track"><div class="name">${t.name}<span>${t.seg}</span></div>
+  <div class="seg" role="group" aria-label="${t.name}">${t.stages.map((s,i)=>`<button type="button" data-t="${t.id}" data-s="${i}" aria-pressed="false">${s}</button>`).join("")}</div></div>`).join("");
+$("tracks").addEventListener("click",e=>{const b=e.target.closest("button[data-t]"); if(!b) return; stop();
+  state.st[b.dataset.t]=+b.dataset.s; state.focus={t:b.dataset.t,s:+b.dataset.s}; const k=frameOf(state.st); state.frame=k; render();});
+
+function go(k){ k=Math.max(0,Math.min(FRAMES.length-1,k)); state.frame=k; state.st=stagesAt(k); state.focus={frame:k}; render();
+  const el=document.querySelector(`.frame[data-f="${k}"]`); el && el.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"}); }
+function stop(){ if(state.timer){clearInterval(state.timer);state.timer=null;$("play").textContent="Play";} }
+$("prev").onclick=()=>{stop();go((state.frame<0?0:state.frame)-1);};
+$("next").onclick=()=>{stop();go((state.frame<0?0:state.frame)+1);};
+$("scrub").oninput=e=>{stop();go(+e.target.value);};
+$("play").onclick=()=>{ if(state.timer){stop();return;} if(state.frame>=FRAMES.length-1||state.frame<0) go(0);
+  $("play").textContent="Pause"; state.timer=setInterval(()=>{ if(state.frame>=FRAMES.length-1){stop();return;} go(state.frame+1); },2600); };
+$("event").onchange=e=>{state.event=e.target.value; render();};
+
+const sign=n=>(n>0?"+":"")+n;
+function linksHtml(ls){ return `<h4>Read more</h4><ul class="links">${ls.map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`).join("")}</ul>`; }
+function comboStatus(c,st){ const have=c.parts.filter(p=>st[p[0]]>=p[1]).length; return have===c.parts.length?"ok":have>0?"miss":"idle"; }
+
+function cardHtml(st){
+  let f, eyebrow;
+  if(state.focus.frame!==undefined){ f=FRAMES[state.focus.frame]; eyebrow = f.eyebrow || `State ${state.focus.frame} · ${T[f.t].name}, ${T[f.t].stages[f.s].toLowerCase()}`; }
+  else { const {t,s}=state.focus; f=FRAMES.find(x=>x.t===t&&x.s===s);
+    if(!f) f={title:`${T[t].name}: ${T[t].stages[0].toLowerCase()}`, verbs:[], what:T[t].base, why:"This is the conventional starting point for this part of the street.", trade:[], links:[L.epaBal]};
+    eyebrow = `Catalog · ${T[t].name}`; }
+  let extra="";
+  if(f.t){ const m=missing(f.t,f.s,st); if(m) extra+=`<div class="note">This only works partly on its own. It needs <b>${T[m[0]].name}: ${T[m[0]].stages[m[1]].toLowerCase()}</b>.</div>`;
+    const cs=COMBOS.filter(c=>c.parts.length>1&&c.parts.some(p=>p[0]===f.t&&p[1]<=f.s));
+    if(cs.length) extra+=`<h4>Works with</h4><ul>${cs.map(c=>`<li><b>${c.name}</b>: ${c.text} ${comboStatus(c,st)==="ok"?"(connected)":""}</li>`).join("")}</ul>`;
+    const d=T[f.t].d[f.s]; extra+=`<h4>Illustrative directional change</h4><p style="font-family:var(--f-mono);font-size:13px;color:var(--muted)">${["run","inf","et","hold"].filter(k=>d[k]).map(k=>({run:"runs off",inf:"soaks in",et:"evaporates",hold:"held"}[k])+" "+sign(d[k])).join(" · ")}${d.heat?" · heat index "+sign(d.heat):""}</p>`; }
+  if(f.star) extra+=`<div class="note blue"><b>North star, not a plan.</b> With every measure in place the street moves toward a more natural water balance. Real streets hit limits: utilities, cellars, parking, money and soil. The useful question is which needle to place next. Try the cloudburst to see the sponge reach its limit.</div>`;
+  return `<div class="eyebrow">${eyebrow}</div><h2>${f.title}</h2>
+   ${f.verbs&&f.verbs.length?`<div class="verbs">${f.verbs.map(v=>`<span class="verb">${v}</span>`).join("")}</div>`:""}
+   <h4>What changes</h4><p>${f.what}</p><h4>Why it matters</h4><p>${f.why}</p>
+   ${f.trade&&f.trade.length?`<h4>${f.t?"Trade-offs":"What to look at"}</h4><ul>${f.trade.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
+   ${extra}${linksHtml(f.links)}`;
+}
+
+function render(){
+  const st=state.st, m=model(st,state.event);
+  // washes
+  document.querySelectorAll(".wash").forEach(g=>{ const on=g.dataset.s.split(" ").some(x=>{const [t,s]=x.split(":"); return st[t]===+s;}); g.classList.toggle("on",on); });
+  document.querySelector('[data-s="roof:1"]').classList.toggle("on",st.roof>=1);
+  document.querySelector('[data-s="tree:1"]').classList.toggle("on",st.tree>=1);
+  $("car").classList.toggle("gone",st.park>=1);
+  $("grate").classList.toggle("gone",st.tree>=1);
+  $("roofPipe").classList.toggle("gone",st.pipe>=1);
+  $("gullyPipe").style.opacity = st.road>=1 && st.park>=1 ? .45 : 1;
+  $("tree").style.transform=`scale(${[0.55,0.78,1][st.tree]})`;
+  $("crownFill").style.opacity=[0,.5,.85][st.tree];
+  $("barrelFill").setAttribute("y", st.pipe===2?414:402); $("barrelFill").setAttribute("height", st.pipe===2?8:20);
+  $("gwTint").setAttribute("opacity",Math.max(0,(m.inf-13)/30*.45).toFixed(2));
+  $("section").classList.remove("ev-steady","ev-cloudburst"); if(state.event!=="heavy") $("section").classList.add("ev-"+state.event);
+  // flows
+  $("fRun").style.strokeWidth=(1+m.run*.15).toFixed(1);
+  $("fRoof").style.opacity = st.pipe>=1?0:1; $("fRoof").style.strokeWidth=3;
+  document.querySelectorAll("#fInf path, #fEt path").forEach(p=>{const [t,s]=p.dataset.k.split(":"); const on=st[t]>=+s; p.style.opacity=on?1:0;
+    p.style.strokeWidth=(p.closest("#fEt")?1+m.et*.05:1+m.inf*.08).toFixed(1);});
+  // combos: links + tags
+  const tags=[];
+  COMBOS.forEach(c=>{ const s=comboStatus(c,st), el=$("lk-"+c.id); el.setAttribute("class","link "+(s==="ok"?"ok":s==="miss"&&c.parts.length>1?"miss":"hidden"));
+    if(s==="ok"||(s==="miss"&&c.parts.length>1)){ const [x,y,txt]=TAGPOS[c.id], label=s==="ok"?txt:txt+" ?", w=label.length*7.2+14;
+      tags.push(`<g class="tag ${s==="ok"?"ok":"miss"}"><rect x="${x}" y="${y-13}" width="${w}" height="20" rx="3"/><text x="${x+7}" y="${y+1}">${label}</text></g>`);} });
+  $("tags").innerHTML=tags.join("");
+  // meters
+  const rEt=Math.round(m.et), rInf=Math.round(m.inf), rHold=Math.round(m.hold), rRun=100-rEt-rInf-rHold;
+  $("bEt").style.flexBasis=m.et+"%";$("bInf").style.flexBasis=m.inf+"%";$("bHold").style.flexBasis=m.hold+"%";$("bRun").style.flexBasis=m.run+"%";
+  $("vEt").textContent=rEt+"%";$("vInf").textContent=rInf+"%";$("vHold").textContent=rHold+"%";$("vRun").textContent=rRun+"%";
+  $("vHeat").textContent=Math.round(m.heat); $("tHeat").style.left=`calc(${Math.max(0,Math.min(100,m.heat)).toFixed(1)}% - 1.5px)`;
+  $("vSewer").textContent=rRun; const risk=rRun>=40?"high":rRun>=20?"medium":"low";
+  const ps=$("pSewer"); ps.className="pill "+risk; ps.textContent={high:"higher load",medium:"reduced load",low:"lower load"}[risk];
+  // timeline
+  document.querySelectorAll(".frame").forEach(b=>{const i=+b.dataset.f; b.classList.toggle("cur",i===state.frame); b.classList.toggle("done",state.frame>=0&&i<state.frame);});
+  $("scrub").value=Math.max(0,state.frame);
+  // catalog
+  document.querySelectorAll("button[data-t]").forEach(b=>b.setAttribute("aria-pressed",st[b.dataset.t]===+b.dataset.s));
+  $("combos").innerHTML=COMBOS.map(c=>{const s=comboStatus(c,st); const miss=c.parts.filter(p=>st[p[0]]<p[1]).map(p=>`${T[p[0]].name}: ${T[p[0]].stages[p[1]].toLowerCase()}`);
+    return `<li class="${s}"><i>${s==="ok"?"✓":s==="miss"?"!":"·"}</i><span>${c.name}<small>${s==="ok"?c.text:"Needs "+miss.join(" + ")}</small></span></li>`;}).join("");
+  $("card").innerHTML=cardHtml(st);
+}
+go(0);
+</script>
+</body>
+</html>
