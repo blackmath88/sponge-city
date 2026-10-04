@@ -1,0 +1,19 @@
+{
+  "schema_version": "sponge-journey/1",
+  "title": "Sponge City Basel",
+  "default_place": "kanonengasse",
+  "modules": [
+    {"id":"evidence","label":"Evidence","question":"What do we know about this place?","path":"wrapper/street-xray/index.html","context":"street-profile","boundary":"The street drawing is schematic. Open records establish context; underground conditions remain unknown."},
+    {"id":"charter","label":"Data gaps","question":"What is available, computable or held elsewhere?","path":"wrapper/data-charter-map/index.html","context":"reference","boundary":"The charter classifies evidence and permitted uses. A visible layer is not an intervention clearance."},
+    {"id":"observe","label":"Observe","question":"What could a person on the street establish?","path":"wrapper/street-workspace/rain-walk/index.html","context":"observation","boundary":"Reports are saved on this device and need review. The distance scale is a 120 m practice layout; the selected place is investigation context, not surveyed geometry."},
+    {"id":"explore","label":"Explore","question":"How would a connected sponge intervention work?","path":"wrapper/street-workspace/index.html","context":"candidate","boundary":"The selected place travels as context only. Street Lab uses a synthetic street and illustrative water parameters."},
+    {"id":"decide","label":"Next action","question":"What may we decide now?","context":"decision","boundary":"Commission the missing investigation. No construction or engineering recommendation is implied."}
+  ],
+  "references": [
+    {"label":"Situation map","path":"situation-map.html"},
+    {"label":"Evidence atlas","path":"evidence-atlas.html"},
+    {"label":"Interventions and mechanisms","path":"catalogue.html"},
+    {"label":"Adaptive state engine · learning model","path":"adaptive-interface/demo/index.html"},
+    {"label":"Research and solution registry","path":"solutions.html"}
+  ]
+}

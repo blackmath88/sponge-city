@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/place-model.schema.json",
+  "title": "PlaceModel (adaptive-place/0.1)",
+  "description": "Semantic interpretation of one selected place. Independent of Basel source schemas and of any renderer. Produced by a PlaceProvider. runtime/validate.js additionally enforces: unknown/not-applicable carry value null; known states carry a value; user-corrected keeps 'replaces'; element ids unique; source_id resolves to provenance.",
+  "type": "object",
+  "required": ["schema_version", "place_id", "label", "selection", "elements", "context", "provenance"],
+  "properties": {
+    "schema_version": { "const": "adaptive-place/0.1" },
+    "place_id": { "type": "string", "minLength": 1 },
+    "label": { "type": "string", "minLength": 1 },
+    "fixture": { "type": "boolean", "description": "true for hand-authored demo data" },
+    "selection": { "$ref": "#/$defs/selection" },
+    "schematic": {
+      "type": "object",
+      "description": "Optional drawing hints for schematic renderers.",
+      "properties": { "length_m": { "type": "number", "exclusiveMinimum": 0 }, "note": { "type": "string" } }
+    },
+    "elements": { "type": "array", "items": { "$ref": "#/$defs/element" } },
+    "context": {
+      "type": "object",
+      "description": "Place-level evidence such as heat_focus_area, surface_runoff_hazard, groundwater_protection_zone, infiltration_capacity, utilities, ownership, traffic_load, access_requirements, slope, soil_water. Interventions reference these keys.",
+      "additionalProperties": { "$ref": "#/$defs/evidence" }
+    },
+    "routing": {
+      "type": "object",
+      "description": "OPTIONAL, additive in 0.1. Drainage evidence: where water goes. Omit it if you do not know: the engine then treats routing as unknown and never invents sewer connections.",
+      "properties": {
+        "nodes": { "type": "array", "items": { "type": "object", "required": ["id", "type"], "properties": { "id": { "type": "string" }, "type": { "enum": ["gully", "downpipe", "sewer", "overflow"] }, "label": { "type": "string" }, "state": { "$ref": "#/$defs/state" }, "source_id": { "type": "string" } } } },
+        "connections": { "type": "array", "items": { "type": "object", "required": ["from", "to", "mode", "state"], "properties": { "from": { "type": "string" }, "to": { "type": "string" }, "mode": { "enum": ["surface-runoff", "roof-drainage", "pipe", "overflow"] }, "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected"] }, "source_id": { "type": "string" }, "note": { "type": "string" } } } }
+      }
+    },
+    "applied": { "type": "array", "description": "Scenario places only: interventions applied, with their assumptions." },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "type": "string", "description": "e.g. demo-fixture, dataset, model, imagery, selection" },
+          "label": { "type": "string" },
+          "url": { "type": "string" },
+          "licence": { "type": "string" },
+          "date": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "selection": {
+      "type": "object",
+      "required": ["lon", "lat", "radius_m"],
+      "properties": {
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "radius_m": { "type": "number", "exclusiveMinimum": 0 },
+        "from": { "type": ["string", "null"] },
+        "place_profile_id": { "type": ["string", "null"] }
+      }
+    },
+    "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected", "unknown", "not-applicable"] },
+    "evidence": {
+      "type": "object",
+      "required": ["value", "state"],
+      "properties": {
+        "value": {},
+        "state": { "$ref": "#/$defs/state" },
+        "source_id": { "type": "string" },
+        "method": { "type": "string" },
+        "note": { "type": "string" },
+        "label": { "type": "string" },
+        "reason": { "type": "string" },
+        "replaces": { "description": "The evidence value this one replaced (user-corrected or scenario change)." }
+      }
+    },
+    "placement": {
+      "type": "object",
+      "description": "Optional placement provenance: which surface the element occupies or replaces, and how. Missing = unknown placement (never inferred).",
+      "required": ["surface", "mode"],
+      "properties": {
+        "surface": { "allOf": [{ "$ref": "#/$defs/evidence" }], "properties": { "value": { "enum": ["parking", "sidewalk", "road", "roof", "green", "parcel", "unknown", null] } } },
+        "mode": { "allOf": [{ "$ref": "#/$defs/evidence" }], "properties": { "value": { "enum": ["replaces", "occupies", "adjacent", "unknown", null] } } }
+      }
+    },
+    "element": {
+      "type": "object",
+      "required": ["id", "type", "label", "presence", "surface", "area_m2"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["building", "road", "sidewalk", "parking", "tree", "vegetation", "rain-garden", "tree-trench", "rain-barrel", "water", "tram", "entrance", "fixed-area", "unknown-area"] },
+        "label": { "type": "string" },
+        "presence": { "$ref": "#/$defs/evidence", "description": "true / false; unknown when a source is uncertain the element exists" },
+        "surface": { "$ref": "#/$defs/evidence", "description": "sealed | permeable | planted | water | unknown(state); not-applicable for point elements" },
+        "area_m2": { "$ref": "#/$defs/evidence" },
+        "count": { "$ref": "#/$defs/evidence", "description": "e.g. parking spaces" },
+        "fixed": { "type": "boolean", "description": "true if the area must not be transformed" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "origin": { "type": "string", "description": "absent = provider; 'correction'; 'intervention:<id>'" },
+        "layout": {
+          "type": "object",
+          "description": "Renderer-neutral schematic hints: cross-section band (0 = one facade), width_m, along [start,end] as fractions of schematic.length_m, or point (fraction) for trees/entrances. Real providers may omit and give geometry_ref instead.",
+          "properties": {
+            "band": { "type": "number" },
+            "width_m": { "type": "number" },
+            "along": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+            "point": { "type": "number" },
+            "inserted_from": { "type": "string" }
+          }
+        },
+        "geometry_ref": { "type": "string", "description": "Opaque reference to provider geometry, never parsed by renderers." },
+        "placement": { "$ref": "#/$defs/placement" },
+        "material": { "allOf": [{ "$ref": "#/$defs/evidence" }], "description": "Optional surface archetype id (catalogues/surfaces.json), e.g. roof-garden. Omit to use the default for the surface class." },
+        "pit": { "allOf": [{ "$ref": "#/$defs/evidence" }], "description": "Trees only: standard | enlarged | trench (tree pit / root space). Omit when not known." }
+      }
+    }
+  }
+}

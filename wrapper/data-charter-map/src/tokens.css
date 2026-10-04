@@ -1,0 +1,45 @@
+    /* Shared design tokens for every solution. Inlined at build time by scripts/build.mjs. */
+    :root {
+      --ink: #13271f;
+      --muted: #607068;
+      --paper: #f2f0e8;
+      --surface: #fbfaf5;
+      --surface-2: #f2f0e8;
+      --line: #c9cec7;
+      --accent: #0d6b4c;
+      --accent-soft: #b7dac8;
+      --green: #0d6b4c;
+      --green-2: #b7dac8;
+      --blue: #19678a;
+      --amber: #b96a16;
+      --red: #a33c32;
+      --violet: #66508f;
+      --teal: #2c7a7b;
+      --map-bg: #e8e6df;
+      --shadow: 0 18px 55px rgba(19, 39, 31, 0.10);
+      --shadow-float: 0 18px 55px rgba(19, 39, 31, 0.16);
+      --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      --sans: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+      --bar: 52px;
+    }
+    :root[data-theme="dark"] {
+      --ink: #e4ece6;
+      --muted: #8fa199;
+      --paper: #0e1213;
+      --surface: #15191b;
+      --surface-2: #1c2224;
+      --line: #2b3436;
+      --accent: #5fd0a0;
+      --accent-soft: #1d3b30;
+      --green: #5fd0a0;
+      --green-2: #1d3b30;
+      --blue: #6fb6e0;
+      --amber: #f0b04a;
+      --red: #ef7f73;
+      --violet: #b9a5f0;
+      --teal: #6ad1d1;
+      --map-bg: #0e1213;
+      --shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+      --shadow-float: 0 18px 55px rgba(0, 0, 0, 0.55);
+    }

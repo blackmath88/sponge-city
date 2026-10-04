@@ -1,40 +1,59 @@
 # Sponge City — Basel Decision Canvas
 
-Hack am Rhein 2026 · **Make Basel a Sponge**
-
-Turn overlapping heat, surface-runoff and urban-form evidence into specific places where an intervention could offer several benefits, with visible evidence and unresolved questions.
-
-## Start here
-
-- [Decision Canvas concept](docs/DECISION-CANVAS.md): product thesis, scale, interaction and computational architecture.
-- [Sponge-city research and technical landscape](docs/RESEARCH.md): planning foundations, candidate open-source precedents and reuse strategy.
-- [Governance and measurement](docs/GOVERNANCE-AND-MEASUREMENT.md): the second map—how Basel decides, who can influence it, which evidence is missing and how outcomes could be measured.
-- [Queryable evidence atlas](docs/QUERYABLE-EVIDENCE-ATLAS.md): evidence model, claim ladder and group-access design, seeded with the VoltaNord/ZHAW monitoring case.
-- [Monitoring and data stack](docs/MONITORING-DATA-STACK.md): verified 2024→2026 Basel evidence chain, usable open data, maturity ladder and research-dump triage.
-- [ZHAW / VoltaNord public-source check](docs/ZHAW-SOURCES.md): what code, data and method material is (not) public, with licences and a contact recommendation.
-- [Precedent: QTrees / Baumblick Berlin](docs/PRECEDENT-QTREES-BERLIN.md): open street-tree soil-water schema, model and status classes (MIT), with limits on transfer.
-- [Solution model](docs/SOLUTIONS.md): how solutions plug into one canvas, the manifest contract and `make new`.
-- **[Open the solutions hub](site/index.html)**: every solution, its question, roles and data.
-
-## Solutions
-
-Everything you open lives in `site/` and is built from `solutions/`. Open `site/index.html` directly, or run `make run` and visit <http://127.0.0.1:4173>.
-
-| Solution | Question | Source |
-|---|---|---|
-| [Evidence atlas](site/evidence-atlas.html) | What do we actually know about VoltaNord and Basel's sponge-city decisions, and what is still open? | [solutions/evidence-atlas](solutions/evidence-atlas) |
-| [Basel situation map](site/situation-map.html) | What do we know about this place, and what don't we? | [solutions/situation-map](solutions/situation-map) |
-
-Add one with `make new name=my-solution`; the contract is in [docs/SOLUTIONS.md](docs/SOLUTIONS.md). `make smoke` builds, validates the atlas and runs every solution's test; `make fetch` refreshes data snapshots. Shared evidence lives in `data/evidence-atlas.json`, so edit records there, not inside a solution.
-
-## Working principle
+Choose a Basel place. Inspect what is known, what can be computed and what still needs asking or measuring. Explore the mechanism of a sponge intervention, then leave with a concrete investigation record.
 
 **GIS calculates. Rules constrain. AI explains.**
 
-Separate **need**, **possibility** and **potential effect**. A place with high risk is not automatically a feasible intervention site. Unknown soil, utilities, ownership or available space remain explicit unknowns.
+## Run
 
-## Initial scope
+Requires Node 24 and npm. From the repository root:
 
-Explore one Basel neighbourhood, identify a small set of candidate sites, and examine one real location in depth. Connect that spatial evidence to the responsible institutions, decision gates and public influence routes. This is screening-level decision support; detailed engineering and quantified performance require further investigation.
+```sh
+make run
+```
 
-Current repository state: concept and research documentation, two solutions (evidence atlas, situation map) on shared data, and a Basel open-data snapshot. No verified site assessment or hydrological model yet.
+Open <http://127.0.0.1:4173/>. `make build` generates the static application in `site/`; `make smoke` builds it and checks the evidence, contracts, state engine, simulation and module handoffs. Missing Street Lab dependencies are installed from its pinned lockfile. No backend is needed for the application. `site/` can be published beneath a GitHub Pages project path.
+
+## The journey
+
+1. **Choose a place:** Kanonengasse is computed from open-data snapshots; Klybeck is the earlier illustrative study segment.
+2. **Inspect evidence:** Street X-Ray keeps observed context, derived claims and unknowns separate.
+3. **Find the gaps:** Data Charter names access limits, permitted uses and gap-filling methods.
+4. **Observe:** Rain Walk captures device-local reports in separate place contexts, with review history and export.
+5. **Explore:** Street Lab explains water movement using a synthetic street. The selected place is context only.
+6. **Decide:** Export source-pinned claims, unresolved gates, responsible actors and next actions. The status remains `requires-investigation`.
+
+Need, possibility and potential effect remain separate. A real place selection does not supply measured geometry or hydraulic parameters to a learning model.
+
+## Modules and contracts
+
+| Source | Role |
+| --- | --- |
+| `journey/` | Manifest, context adapters and replaceable Decision Canvas view |
+| `data/`, `solutions/` | Canonical evidence atlas, situation map and sourced fact catalogue |
+| `adaptive-interface/` | PlaceModel → StateModel → interventions → effects under a scenario; independent of the renderer |
+| `wrapper/data-charter-map/` | 25-indicator charter, Basel snapshots, live layers and gap research |
+| `wrapper/street-xray/` | Street evidence profiles and deterministic assessment rules |
+| `wrapper/street-workspace/` | React/SVG Street Lab, conservation-tested illustrative water model and Rain Walk |
+| `wrapper/sponge-catalogue/` | Intervention mechanisms, local precedents, gatekeepers and evidence access vocabulary |
+| `wrapper/achim/connected-case/` | Reproducible Klybeck claim/gap/action graph with schema and source fingerprints |
+| `wrapper/site/basel-site-scoping-tool/` | Preserved discovery snapshot and candidate fixture used by the connected case; illustrative rankings are not authoritative |
+| `contributions/andy/` | Andy Nkunzimana's Tellplatz evidence audit and Landsat processing, preserved with attribution |
+| `archive/` | Original ZIP snapshot and per-file hashes, before consolidation |
+
+`wrapper/` paths are retained to preserve module imports and source identities. The shared team shell is no longer the application. Simon's bitmap interface, Bala's videos and the pitch/presentation are excluded from the active source and build.
+
+## Architecture, provenance and research
+
+- [Post-hackathon architecture](docs/POST-HACKATHON-ARCHITECTURE.md): boundaries, current integration and next seams.
+- [Offboarding record and attribution](docs/OFFBOARDING.md): commits, archive, backbone choice and migration inventory.
+- [Decision Canvas](docs/DECISION-CANVAS.md): product direction.
+- [Governance and measurement](docs/GOVERNANCE-AND-MEASUREMENT.md): responsible institutions and public influence routes.
+- [Queryable evidence atlas](docs/QUERYABLE-EVIDENCE-ATLAS.md), [monitoring/data stack](docs/MONITORING-DATA-STACK.md), [research](docs/RESEARCH.md).
+- [Sponge facts](docs/SPONGE-FACTS.md), [data sources](docs/DATA-SOURCES.md), [gap filling](docs/GAP-FILLING.md).
+
+## Current boundary
+
+The application connects evidence and investigation workflows. It is screening-level decision support, not a verified site assessment, real-site hydrological model or construction recommendation. The adaptive demo and Street Lab retain explicit synthetic inputs. Rain Walk review is local and unauthenticated; reports do not clear authority gates or change simulation parameters. Andy's Tellplatz measurements are retained as a separate evidence contribution and are not transferred to another place.
+
+The team repository and its website remain unchanged. This consolidation is isolated on `feat/post-hackathon-consolidation`; merging and deployment are separate actions.

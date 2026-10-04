@@ -1,0 +1,1620 @@
+{
+  "schema_version": "sponge-catalogue/0.1",
+  "updated": "2026-10-03",
+  "title": "What a sponge city can do: Basel",
+  "purpose": "One column per action. Row 1: what is possible, for whom. Row 2: what Basel is already doing (verified, or visibly empty). Row 3: where the potential is, with numbers from open data. Row 4: what data is missing, who holds it and the hack that fills or works around the gap. Band: how to get there (our proposals).",
+  "segments": {
+    "context": {
+      "new": "New development or full street rebuild",
+      "existing": "Existing street, building or courtyard"
+    },
+    "owner": {
+      "private": "Private owners (courtyards, roofs, forecourts)",
+      "public-building": "Public buildings and their grounds",
+      "allmend": "Allmend: public street space"
+    }
+  },
+  "evidence": {
+    "observed": "Published by an authority or stated in an official source, quoted as published",
+    "derived": "Computed by us from open Basel data; method named; reproducible with scripts/compute_potential.py; for explaining and screening only",
+    "assumed": "Our reasoning or a proposal; not measured",
+    "unknown": "No open data found in the reviewed Basel and federal sources"
+  },
+  "basel_status": {
+    "in-force": "A rule that applies today",
+    "done": "Built",
+    "in-progress": "Under construction, being piloted or being planned",
+    "announced": "Announced; depends on a pending decision",
+    "none-found": "Nothing published found in the reviewed sources"
+  },
+  "sources": {
+    "bpg72": {
+      "label": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern (§ 72 BPG)",
+      "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern"
+    },
+    "fernwaerme": {
+      "label": "Basel-Stadt media release, 16 July 2025: heat protection on about 30 streets",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-kanton-sorgt-anlaesslich-des-fernwaermeausbaus-fuer-besseren-hitzeschutz-auf-gut-30-strassen"
+    },
+    "sevogel": {
+      "label": "Basel-Stadt media release 2025: Sevogelstrasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
+    },
+    "engelgasse": {
+      "label": "Basel-Stadt media release 2016: Engelgasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse"
+    },
+    "voltanord": {
+      "label": "Regierungsratsbeschluss P251765: monitoring of sponge-city pilots, VoltaNord",
+      "url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse"
+    },
+    "zhaw": {
+      "label": "ZHAW project 74640: vegetation building blocks for three Basel streets",
+      "url": "https://www.zhaw.ch/de/forschung/projekt/74640"
+    },
+    "parking2022": {
+      "label": "Basel-Stadt media release 2022: surfaces for depaved parking spaces",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze"
+    },
+    "subsidy": {
+      "label": "Basel-Stadt media release, 16 Sept 2025: more funding for small greening projects",
+      "url": "https://www.bs.ch/medienmitteilungen/2025-fuer-ein-grueneres-basel-verstaerkte-foerderung-von-kleinprojekten"
+    },
+    "rainfee": {
+      "label": "Basel-Stadt: wastewater fees",
+      "url": "https://www.bs.ch/ls/node/28497"
+    },
+    "skk": {
+      "label": "Basel-Stadt: Umsetzung Stadtklimakonzept",
+      "url": "https://www.bs.ch/schwerpunkte/klima/stadtklima/umsetzung-stadtklimakonzept"
+    },
+    "trees": {
+      "label": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
+      "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand"
+    },
+    "klybeck": {
+      "label": "Basel-Stadt media release, 26 Nov 2025: Klybeck planning",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-entwicklung-des-klybeck-areals-die-planung-erreicht-naechsten-meilenstein"
+    },
+    "landcover": {
+      "label": "data.bs.ch 100477 Bodenbedeckung",
+      "url": "https://data.bs.ch/explore/dataset/100477/"
+    },
+    "parcels": {
+      "label": "data.bs.ch 100201 Liegenschaften: Parzellen",
+      "url": "https://data.bs.ch/explore/dataset/100201/"
+    },
+    "setv": {
+      "label": "geo.bs.ch SETV Schwammstadt-Eignung nach Tagesverkehr",
+      "url": "https://api.geo.bs.ch/stac/v1/collections/SETV"
+    },
+    "fgsk": {
+      "label": "geo.bs.ch FGSK Fokusgebiete Stadtklimakonzept",
+      "url": "https://api.geo.bs.ch/stac/v1/collections/FGSK"
+    },
+    "permits": {
+      "label": "data.bs.ch 100018 Allmendbewilligungen (via the Data Charter snapshot)",
+      "url": "https://data.bs.ch/explore/dataset/100018/"
+    },
+    "parkingcounts": {
+      "label": "data.bs.ch 100329 Parkflächen",
+      "url": "https://data.bs.ch/explore/dataset/100329/"
+    },
+    "groundwater": {
+      "label": "data.bs.ch 100180 groundwater statistics",
+      "url": "https://data.bs.ch/explore/dataset/100180/"
+    },
+    "rotterdam": {
+      "label": "Klimaatadaptatie Nederland: Rotterdam water squares",
+      "url": "https://klimaatadaptatienederland.nl/en/@163422/rotterdam-water"
+    },
+    "tudelft": {
+      "label": "TU Delft, ten Veldhuis (2010): blocked gully pots",
+      "url": "https://delta.tudelft.nl/?p=109226"
+    },
+    "bern36": {
+      "label": "Stadt Bern: Arbeitshilfe Wurzelraum für Strassenbäume",
+      "url": "https://www.bern.ch/themen/planen-und-bauen/bern-baut/arbeitshilfen/wurzelraum-fuer-baeume-im-strassenraum/anhang/arbeitshilfe-wurzelraum-fur-strassenbaume-version.pdf"
+    },
+    "leitungskataster": {
+      "label": "Grundbuch- und Vermessungsamt Basel-Stadt: Leitungskataster",
+      "url": "https://www.bs.ch/bvd/grundbuch-und-vermessungsamt/leitungskataster"
+    },
+    "gep": {
+      "label": "Amt für Umwelt und Energie: Genereller Entwässerungsplan (GEP)",
+      "url": "https://www.bs.ch/wsu/aue/abteilung-gewaesser-und-boden/genereller-entwaesserungsplan"
+    },
+    "gep-map": {
+      "label": "GEP Stadt Basel: Karte Entwässerungsarten (PDF, 18 Sept 2012, 1:20,000)",
+      "url": "https://media.bs.ch/original_file/6c906a4607e4c2c068f631e6bd27aeac09a977e9/karte-genereller-entwaesserungsplan-entwaesserungsarten-bs-0.pdf"
+    },
+    "overland": {
+      "label": "BAFU Gefährdungskarte Oberflächenabfluss",
+      "url": "https://map.geo.admin.ch/?layers=ch.bafu.gefaehrdungskarte-oberflaechenabfluss"
+    },
+    "solar": {
+      "label": "data.bs.ch 100382 Solarkataster",
+      "url": "https://data.bs.ch/explore/dataset/100382/"
+    },
+    "canopy": {
+      "label": "data.bs.ch 100357 Baumkronenbedeckung",
+      "url": "https://data.bs.ch/explore/dataset/100357/"
+    },
+    "protection": {
+      "label": "data.bs.ch 100292 Grundwasserschutz",
+      "url": "https://data.bs.ch/explore/dataset/100292/"
+    }
+  },
+  "city_findings": [
+    {
+      "id": "sealed-by-parcel",
+      "evidence": "derived",
+      "sources": [
+        "landcover",
+        "parcels"
+      ],
+      "text": "Of about 1,650 ha of sealed ground in Basel-Stadt, 296 ha (18 %) lies on Allmend parcels and 1,353 ha (82 %) on other parcels: 601 ha buildings, 490 ha other paving (courtyards, forecourts, yards, parking, rail and industrial areas) and 262 ha of road surface.",
+      "method": "Each land-cover polygon is assigned to the parcel containing its representative point; Allmend = parcel type 'Allmendparzelle'.",
+      "limitations": [
+        "Polygons crossing parcel boundaries count wholly to one parcel",
+        "'Other parcels' include land owned by the canton, municipalities and SBB, not only private owners",
+        "Parcel data carries no owner field"
+      ]
+    },
+    {
+      "id": "official-private-potential",
+      "evidence": "observed",
+      "sources": [
+        "skk"
+      ],
+      "text": "The canton states: \"The greatest potential lies in the many large and small private open spaces of our city.\""
+    },
+    {
+      "id": "suitable-in-heat",
+      "evidence": "derived",
+      "sources": [
+        "setv",
+        "fgsk"
+      ],
+      "text": "137.7 km of streets rated sponge-suitable by traffic lie in heat areas marked Fokus (77.9 km) or Verbessern (59.8 km).",
+      "method": "Middle vertex of each segment's longest part, tested against the heat focus polygons; lengths from the canton's segment table.",
+      "limitations": [
+        "Traffic is the only suitability criterion; utilities, groundwater and space are not in the rating",
+        "One point per segment decides its heat area"
+      ]
+    },
+    {
+      "id": "works-near-suitable",
+      "evidence": "derived",
+      "sources": [
+        "permits",
+        "setv",
+        "fgsk"
+      ],
+      "text": "231 of 334 active or upcoming permitted works (snapshot 3 October 2026) lie within 60 m of those suitable streets in heat areas.",
+      "method": "Permit point within 60 m of the middle vertex of a suitable segment in a Fokus or Verbessern area; upcoming = permit ends October 2026 or later.",
+      "limitations": [
+        "Permits are not a coordinated works plan",
+        "60 m is a screening radius, not a design rule"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "unseal-streets",
+      "name": "Unseal street space",
+      "de": "Strassen entsiegeln",
+      "what": "Take out asphalt that traffic does not need; replace it with loosened soil and planting.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "SWEAT",
+        "COOL"
+      ],
+      "sketch": "street-unseal",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "About 1,000 m² unsealed and about 600 m² of new green space at Sevogelstrasse, from spring 2026.",
+          "sources": [
+            "sevogel"
+          ]
+        },
+        {
+          "status": "in-progress",
+          "text": "Heat protection on about 30 streets during the district-heating build-out, including unsealing.",
+          "sources": [
+            "fernwaerme"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "296 ha of sealed ground lie on Allmend parcels.",
+          "finding": "sealed-by-parcel"
+        },
+        {
+          "evidence": "derived",
+          "text": "137.7 km of traffic-suitable streets lie in heat areas.",
+          "finding": "suitable-in-heat"
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "utilities",
+          "question": "Is there a line under the footprint?",
+          "access": "restricted",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "leitungskataster",
+            "operators"
+          ],
+          "blocks": "Whether digging here can go to detailed design",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Order a Leitungskataster extract for the footprint plus a 5 m buffer, stated as early planning.",
+              "cannot": "Depths and clearances; only the operators give depths.",
+              "prototype": "gap-investigator"
+            },
+            {
+              "kind": "design-around",
+              "text": "Keep a no-dig and a shallow variant ready, so a conflict changes the family rather than ending the idea.",
+              "cannot": "Whether the deep variant is possible.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        },
+        {
+          "indicator": "soil",
+          "question": "What lies under the asphalt?",
+          "access": "site-check",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "field"
+          ],
+          "blocks": "Excavation cost and the depth of new soil",
+          "hacks": [
+            {
+              "kind": "site-test",
+              "text": "Core the pavement during works that open the street anyway.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "works-calendar",
+          "question": "Will this street be dug up soon anyway?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [],
+          "blocks": "Whether a sponge rebuild can ride on planned works",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Use active and upcoming permits as a screening signal (231 near suitable streets in heat areas).",
+              "cannot": "A coordinated works plan; permits are not one.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask the canton who holds the street's multi-year works horizon, then ask them.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unseal-courtyards",
+      "name": "Unseal courtyards and forecourts",
+      "de": "Höfe und Vorplätze entsiegeln",
+      "what": "Private and public grounds: replace paving in courtyards, front gardens and yards with planting that takes roof and yard water.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "STORE",
+        "SWEAT",
+        "COOL"
+      ],
+      "sketch": "courtyard",
+      "basel": [
+        {
+          "status": "announced",
+          "text": "A funding programme for unsealing, trees and green spaces on private property, to launch in 2026 if the Grand Council approves it.",
+          "sources": [
+            "subsidy"
+          ]
+        },
+        {
+          "status": "in-force",
+          "text": "The canton offers advice to owners and grants via the value-added levy fund and Swisslos for citizen initiatives.",
+          "sources": [
+            "skk"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "490 ha of other paving (courtyards, forecourts, yards, parking, rail and industrial land) lie outside Allmend parcels.",
+          "finding": "sealed-by-parcel"
+        },
+        {
+          "evidence": "observed",
+          "text": "The canton itself sees the greatest potential on private open spaces.",
+          "finding": "official-private-potential"
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "sealing-fraction",
+          "question": "Which courtyards are most sealed?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [],
+          "blocks": "Whom to approach first",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Sealed share per parcel from land cover and parcels, as in scripts/compute_potential.py.",
+              "cannot": "Ownership type, use or willingness; parcels carry no owner field.",
+              "prototype": "overlay"
+            }
+          ],
+          "sources": [
+            "landcover",
+            "parcels"
+          ]
+        },
+        {
+          "question": "Who owns the parcel and would they act?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "owner"
+          ],
+          "blocks": "Any private unsealing",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Route owners of large sealed courtyards in heat areas to the canton's advice and the 2026 fund.",
+              "cannot": "Whether they agree.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "infiltration",
+          "question": "Does water soak away here?",
+          "access": "site-check",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "field"
+          ],
+          "blocks": "Whether infiltration is a credible mechanism at this footprint",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Screen with open layers: groundwater protection zones (infiltration bans), contaminated sites and the nearest groundwater station.",
+              "cannot": "Local permeability.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "site-test",
+              "text": "Commission an infiltration test at the footprint.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trees-root-space",
+      "name": "Keep trees; give them root space",
+      "de": "Bäume erhalten, Wurzelraum schaffen",
+      "what": "Protect existing trees and plant new ones with enough soil volume and planted area around them.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend",
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "SHADE",
+        "SWEAT",
+        "COOL"
+      ],
+      "sketch": "tree-pit",
+      "basel": [
+        {
+          "status": "done",
+          "text": "About 200 trees planted along streets and in green spaces in 2024.",
+          "sources": [
+            "fernwaerme"
+          ]
+        },
+        {
+          "status": "done",
+          "text": "Engelgasse: tree pits enlarged and 50 young trees planted (2016).",
+          "sources": [
+            "engelgasse"
+          ]
+        },
+        {
+          "status": "in-progress",
+          "text": "Over 28,000 trees in the cadastre; about 1 % of the stock is renewed each year.",
+          "sources": [
+            "trees"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "9,132 of 12,504 street-tree points have no mapped planted polygon at the point. This does not mean sealed paving and does not reveal pit size.",
+          "sources": [
+            "landcover"
+          ],
+          "claim": "tree-planting-context"
+        },
+        {
+          "evidence": "observed",
+          "text": "Bern's guidance targets 36 m³ of root space per street tree.",
+          "finding": null,
+          "sources": [
+            "bern36"
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "tree-pits",
+          "question": "How big is each tree's pit and root space?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "stadtgaertnerei"
+          ],
+          "blocks": "Which trees most need more root space",
+          "hacks": [
+            {
+              "kind": "annotate",
+              "text": "Measure the visible pit opening on the orthophoto or with a tape on site.",
+              "cannot": "Root volume below the surface.",
+              "prototype": "annotation"
+            },
+            {
+              "kind": "request",
+              "text": "Ask Stadtgärtnerei whether pit records exist for street trees.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "utilities",
+          "question": "Is there a line under the footprint?",
+          "access": "restricted",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "leitungskataster",
+            "operators"
+          ],
+          "blocks": "Whether digging here can go to detailed design",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Order a Leitungskataster extract for the footprint plus a 5 m buffer, stated as early planning.",
+              "cannot": "Depths and clearances; only the operators give depths.",
+              "prototype": "gap-investigator"
+            },
+            {
+              "kind": "design-around",
+              "text": "Keep a no-dig and a shallow variant ready, so a conflict changes the family rather than ending the idea.",
+              "cannot": "Whether the deep variant is possible.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tree-trench",
+      "name": "Tree trench (Baumrigole)",
+      "de": "Baumrigole",
+      "what": "A load-bearing root bed under the pavement that also takes street runoff.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend"
+      ],
+      "mechanisms": [
+        "STORE",
+        "SLOW",
+        "SWEAT",
+        "SHADE"
+      ],
+      "sketch": "tree-trench",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "Sponge-city elements tested in the new VoltaNord streets, with five years of scientific monitoring.",
+          "sources": [
+            "voltanord"
+          ]
+        },
+        {
+          "status": "in-progress",
+          "text": "ZHAW develops substrates and vegetation for Therwiler-, Lysbüchel- and Weinlagerstrasse.",
+          "sources": [
+            "zhaw"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "231 active or upcoming works lie near traffic-suitable streets in heat areas: moments when the street is open anyway.",
+          "finding": "works-near-suitable"
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "utilities",
+          "question": "Is there a line under the footprint?",
+          "access": "restricted",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "leitungskataster",
+            "operators"
+          ],
+          "blocks": "Whether digging here can go to detailed design",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Order a Leitungskataster extract for the footprint plus a 5 m buffer, stated as early planning.",
+              "cannot": "Depths and clearances; only the operators give depths.",
+              "prototype": "gap-investigator"
+            },
+            {
+              "kind": "design-around",
+              "text": "Keep a no-dig and a shallow variant ready, so a conflict changes the family rather than ending the idea.",
+              "cannot": "Whether the deep variant is possible.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        },
+        {
+          "indicator": "utilities",
+          "question": "How deep are the lines?",
+          "access": "operator-held",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "operators"
+          ],
+          "blocks": "How deep a trench or pit may go",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Ask the operators named on the extract for depths in the footprint.",
+              "cannot": "Anything outside the asked footprint.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Can the sewer take an overflow here?",
+          "access": "restricted",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether the design may rely on a sewer overflow",
+          "hacks": [
+            {
+              "kind": "design-around",
+              "text": "Design retention-first with a surface overflow route, so no capacity is promised.",
+              "cannot": "Network capacity.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rain-garden",
+      "name": "Rain garden and swale",
+      "de": "Versickerungsmulde",
+      "what": "A shallow planted hollow that collects runoff from paving and lets it soak in or evaporate.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend",
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "STORE",
+        "ABSORB",
+        "SWEAT"
+      ],
+      "sketch": "rain-garden",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "Vegetated swales and mulch beds that take sidewalk and road runoff, e.g. Sevogelstrasse.",
+          "sources": [
+            "fernwaerme",
+            "sevogel"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "At the 81 monitoring stations, the shallowest groundwater level in ten years lies 0.8 m to 20.8 m below ground (median 9.8 m). Stations are points, not a depth map; infiltration needs a site test.",
+          "sources": [
+            "groundwater"
+          ],
+          "claim": "groundwater-depth-at-stations"
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "infiltration",
+          "question": "Does water soak away here?",
+          "access": "site-check",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "field"
+          ],
+          "blocks": "Whether infiltration is a credible mechanism at this footprint",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Screen with open layers: groundwater protection zones (infiltration bans), contaminated sites and the nearest groundwater station.",
+              "cannot": "Local permeability.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "site-test",
+              "text": "Commission an infiltration test at the footprint.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Which drainage system serves this area, and where may water go?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether to infiltrate, retain or connect an overflow",
+          "hacks": [
+            {
+              "kind": "digitise",
+              "text": "Trace the published 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and its infiltration bans in protection zones.",
+              "cannot": "Pipe routes, connections or capacity; the map is 1:20,000 and from 2012.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask Tiefbauamt where overflow from the footprint may discharge.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "gep-map"
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Can the sewer take an overflow here?",
+          "access": "restricted",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether the design may rely on a sewer overflow",
+          "hacks": [
+            {
+              "kind": "design-around",
+              "text": "Design retention-first with a surface overflow route, so no capacity is promised.",
+              "cannot": "Network capacity.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curb-cut",
+      "name": "Lead road water into green",
+      "de": "Strassenwasser in Grünflächen leiten",
+      "what": "Open the kerb so road runoff reaches a rain garden or tree trench instead of the gully.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend"
+      ],
+      "mechanisms": [
+        "SLOW",
+        "STORE"
+      ],
+      "sketch": "curb-cut",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "At Sevogelstrasse, rain from sidewalk and road is to collect and soak in under the new trees.",
+          "sources": [
+            "sevogel"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "About 507 ha of mapped road surface: 245 ha on Allmend parcels and 262 ha on other parcels.",
+          "finding": "sealed-by-parcel"
+        },
+        {
+          "evidence": "unknown",
+          "text": "Where each road drains today is not open data (no sewer or gully data found)."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "gullies",
+          "question": "Where are the gullies and kerb inlets?",
+          "access": "restricted",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "leitungskataster",
+            "public"
+          ],
+          "blocks": "Where road water can be led into green",
+          "hacks": [
+            {
+              "kind": "annotate",
+              "text": "Mark visible gullies on the orthophoto and own photos as reviewed candidates.",
+              "cannot": "Connections, owner or condition.",
+              "prototype": "annotation"
+            },
+            {
+              "kind": "request",
+              "text": "Check whether the Leitungskataster extract for the footprint shows inlets (it covers lines and their structures).",
+              "prototype": "gap-investigator"
+            },
+            {
+              "kind": "observe",
+              "text": "Rain Walk: note flow direction at the kerb and where water ponds.",
+              "cannot": "Network behaviour.",
+              "prototype": "rain-walk"
+            }
+          ]
+        },
+        {
+          "indicator": "overland-flow",
+          "question": "Which way does surface water run?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [],
+          "blocks": "Which kerb gets the inlet",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Read the federal overland-flow hazard map at the street.",
+              "cannot": "Kerb-scale flow; the map is modelled and simplified.",
+              "prototype": "overlay"
+            }
+          ],
+          "sources": [
+            "overland"
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Which drainage system serves this area, and where may water go?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether to infiltrate, retain or connect an overflow",
+          "hacks": [
+            {
+              "kind": "digitise",
+              "text": "Trace the published 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and its infiltration bans in protection zones.",
+              "cannot": "Pipe routes, connections or capacity; the map is 1:20,000 and from 2012.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask Tiefbauamt where overflow from the footprint may discharge.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "gep-map"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "permeable-parking",
+      "name": "Permeable parking",
+      "de": "Versickerungsfähige Parkplätze",
+      "what": "Grass-joint stones or open joints let rain soak in where cars stand.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "allmend",
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "SLOW"
+      ],
+      "sketch": "parking",
+      "basel": [
+        {
+          "status": "done",
+          "text": "Surfaces for depaved parking spaces tested in 2022.",
+          "sources": [
+            "parking2022"
+          ]
+        },
+        {
+          "status": "in-progress",
+          "text": "14 grass-joint parking bays at Sevogelstrasse; parking there goes from 36 to 19 spaces.",
+          "sources": [
+            "sevogel"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "observed",
+          "text": "The canton counts about 20,000 blue-zone and about 2,100 paid street parking spaces (counts per street, without geometry).",
+          "finding": null,
+          "sources": [
+            "parkingcounts"
+          ]
+        },
+        {
+          "evidence": "unknown",
+          "text": "Bay geometry is not open, so the paved parking area cannot be measured yet."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "parking",
+          "question": "Where exactly are the parking bays?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [],
+          "blocks": "How much paved parking could become permeable",
+          "hacks": [
+            {
+              "kind": "annotate",
+              "text": "Trace the bays of the demo street on the orthophoto; check against the open counts per street section.",
+              "cannot": "Bay areas citywide.",
+              "prototype": "annotation"
+            }
+          ],
+          "sources": [
+            "parkingcounts"
+          ]
+        },
+        {
+          "indicator": "soil",
+          "question": "What lies under the asphalt?",
+          "access": "site-check",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "field"
+          ],
+          "blocks": "Excavation cost and the depth of new soil",
+          "hacks": [
+            {
+              "kind": "site-test",
+              "text": "Core the pavement during works that open the street anyway.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "green-roof",
+      "name": "Green roof",
+      "de": "Dachbegrünung",
+      "what": "A planted layer on flat roofs that holds back and evaporates part of the rain.",
+      "context": [
+        "new",
+        "existing"
+      ],
+      "owner": [
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "STORE",
+        "SLOW",
+        "SWEAT",
+        "COOL"
+      ],
+      "sketch": "roof",
+      "basel": [
+        {
+          "status": "in-force",
+          "text": "§ 72 BPG: flat roofs of 10 m² or more must be greened when built or renovated (at least 15 cm substrate).",
+          "sources": [
+            "bpg72"
+          ]
+        },
+        {
+          "status": "announced",
+          "text": "Funding for roof greening beyond the minimum, planned from 2026.",
+          "sources": [
+            "subsidy"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "Buildings cover about 606 ha, 16.6 % of the mapped ground (601 ha of it outside Allmend parcels).",
+          "finding": "sealed-by-parcel"
+        },
+        {
+          "evidence": "unknown",
+          "text": "Which roofs are flat, already green or strong enough is not open data."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "roofs",
+          "question": "Which roofs are flat?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [],
+          "blocks": "Which buildings to approach",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Screen roof surfaces in the solar register for low pitch (fields to be checked).",
+              "cannot": "Existing greening or load capacity.",
+              "prototype": "overlay"
+            }
+          ],
+          "sources": [
+            "solar"
+          ]
+        },
+        {
+          "indicator": "roofs",
+          "question": "Can the roof carry soil and water?",
+          "access": "project-held",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "owner"
+          ],
+          "blocks": "Any retrofit",
+          "hacks": [
+            {
+              "kind": "site-test",
+              "text": "Structural check by the owner's engineer.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disconnect-downpipes",
+      "name": "Disconnect downpipes",
+      "de": "Fallrohre abkoppeln",
+      "what": "Lead roof water into a garden, swale or barrel instead of the sewer.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "SLOW"
+      ],
+      "sketch": "downpipe",
+      "basel": [
+        {
+          "status": "in-force",
+          "text": "Rainwater fee of CHF 0.90 per m² of sealed area connected to the sewer.",
+          "sources": [
+            "rainfee"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "assumed",
+          "text": "≈ Because the fee is charged on connected sealed area, disconnecting a roof should lower it; the fee page does not state this rule explicitly."
+        },
+        {
+          "evidence": "unknown",
+          "text": "How roofs drain today (sewer, infiltration) is not open data."
+        }
+      ],
+      "gaps": [
+        {
+          "question": "Where does this roof drain today?",
+          "access": "project-held",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "owner",
+            "tba-aue"
+          ],
+          "blocks": "Whether a downpipe can be led into green",
+          "hacks": [
+            {
+              "kind": "observe",
+              "text": "Rain Walk: note visible downpipes and where they enter the ground.",
+              "cannot": "The connection underground.",
+              "prototype": "rain-walk"
+            },
+            {
+              "kind": "request",
+              "text": "Owner checks the house-drainage plans of the property.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "question": "Does disconnection lower the rainwater fee?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [],
+          "blocks": "The owner's financial case",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Ask the office named on the wastewater-fee page whether disconnected sealed area is exempt.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "rainfee"
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Which drainage system serves this area, and where may water go?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether to infiltrate, retain or connect an overflow",
+          "hacks": [
+            {
+              "kind": "digitise",
+              "text": "Trace the published 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and its infiltration bans in protection zones.",
+              "cannot": "Pipe routes, connections or capacity; the map is 1:20,000 and from 2012.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask Tiefbauamt where overflow from the footprint may discharge.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "gep-map"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rain-barrel",
+      "name": "Rain barrel or cistern",
+      "de": "Regentonne / Zisterne",
+      "what": "Collect roof water for watering; it helps in storms only if empty beforehand.",
+      "context": [
+        "existing",
+        "new"
+      ],
+      "owner": [
+        "private",
+        "public-building"
+      ],
+      "mechanisms": [
+        "STORE"
+      ],
+      "sketch": "barrel",
+      "basel": [
+        {
+          "status": "none-found",
+          "text": "No Basel programme found."
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "assumed",
+          "text": "≈ Small for flooding, useful for watering young trees and gardens in dry summers."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "measures-registry",
+          "question": "How many barrels and cisterns exist?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "public"
+          ],
+          "blocks": "Whether this matters at street scale",
+          "hacks": [
+            {
+              "kind": "observe",
+              "text": "Count visible barrels on a Rain Walk.",
+              "cannot": "Volume or use.",
+              "prototype": "rain-walk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "water-square",
+      "name": "Water square",
+      "de": "Wasserplatz",
+      "what": "A public square that stores water briefly in a cloudburst and is a place to stay when dry.",
+      "context": [
+        "new",
+        "existing"
+      ],
+      "owner": [
+        "allmend",
+        "public-building"
+      ],
+      "mechanisms": [
+        "STORE",
+        "SLOW"
+      ],
+      "sketch": "square",
+      "basel": [
+        {
+          "status": "none-found",
+          "text": "No Basel water square found."
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "observed",
+          "text": "Rotterdam's Benthemplein stores about 1,800 m³.",
+          "finding": null,
+          "sources": [
+            "rotterdam"
+          ]
+        },
+        {
+          "evidence": "unknown",
+          "text": "Where Basel's streets pond in cloudbursts is not open (only a modelled national overland-flow map)."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "overland-flow",
+          "question": "Where do streets pond in cloudbursts?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "public"
+          ],
+          "blocks": "Where storage would intercept water",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Read the federal overland-flow hazard map for low points.",
+              "cannot": "Observed flooding; no open event record was found.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "observe",
+              "text": "Rain Walk after heavy rain: photograph ponding with time and place.",
+              "cannot": "Depth or frequency.",
+              "prototype": "rain-walk"
+            }
+          ],
+          "sources": [
+            "overland"
+          ]
+        },
+        {
+          "indicator": "sewer-network",
+          "question": "Can the sewer take an overflow here?",
+          "access": "restricted",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether the design may rely on a sewer overflow",
+          "hacks": [
+            {
+              "kind": "design-around",
+              "text": "Design retention-first with a surface overflow route, so no capacity is promised.",
+              "cannot": "Network capacity.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clear-gullies",
+      "name": "Keep gullies clear",
+      "de": "Strassenabläufe reinigen",
+      "what": "Leaves, litter and sand in gullies cause much local flooding; cleaning is a sponge action too.",
+      "context": [
+        "existing"
+      ],
+      "owner": [
+        "allmend"
+      ],
+      "mechanisms": [
+        "SLOW"
+      ],
+      "sketch": "gully",
+      "basel": [
+        {
+          "status": "none-found",
+          "text": "No published gully-cleaning data found."
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "observed",
+          "text": "In two Dutch cities, 70 % of resident flood reports were caused by blocked gully pots, not too little pipe capacity.",
+          "finding": null,
+          "sources": [
+            "tudelft"
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "gullies",
+          "question": "Which gullies are blocked?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "public"
+          ],
+          "blocks": "Where cleaning comes first",
+          "hacks": [
+            {
+              "kind": "observe",
+              "text": "Rain Walk: report blocked or covered gullies.",
+              "cannot": "The cleaning schedule.",
+              "prototype": "rain-walk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dig-once",
+      "name": "Dig once",
+      "de": "Gleichzeitig bauen",
+      "what": "When a street is opened for pipes, heating or tracks, rebuild it as a sponge street in the same works.",
+      "context": [
+        "existing"
+      ],
+      "owner": [
+        "allmend"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "STORE",
+        "SHADE"
+      ],
+      "sketch": "dig-once",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "District heating grows by about 60 km by 2037; the canton uses it to redesign streets, about 30 so far; 55 % of these projects hold potential for unsealing and greening.",
+          "sources": [
+            "fernwaerme",
+            "sevogel"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "derived",
+          "text": "231 of 334 active or upcoming permits lie near traffic-suitable streets in heat areas.",
+          "finding": "works-near-suitable"
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "works-calendar",
+          "question": "Will this street be dug up soon anyway?",
+          "access": "unknown",
+          "access_basis": "assumed",
+          "gatekeepers": [],
+          "blocks": "Whether a sponge rebuild can ride on planned works",
+          "hacks": [
+            {
+              "kind": "derive",
+              "text": "Use active and upcoming permits as a screening signal (231 near suitable streets in heat areas).",
+              "cannot": "A coordinated works plan; permits are not one.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask the canton who holds the street's multi-year works horizon, then ask them.",
+              "prototype": "gap-investigator"
+            }
+          ]
+        },
+        {
+          "indicator": "utilities",
+          "question": "Is there a line under the footprint?",
+          "access": "restricted",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "leitungskataster",
+            "operators"
+          ],
+          "blocks": "Whether digging here can go to detailed design",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Order a Leitungskataster extract for the footprint plus a 5 m buffer, stated as early planning.",
+              "cannot": "Depths and clearances; only the operators give depths.",
+              "prototype": "gap-investigator"
+            },
+            {
+              "kind": "design-around",
+              "text": "Keep a no-dig and a shallow variant ready, so a conflict changes the family rather than ending the idea.",
+              "cannot": "Whether the deep variant is possible.",
+              "prototype": "constraint-simulator"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sponge-districts",
+      "name": "Sponge districts from the start",
+      "de": "Schwammstadt in Arealentwicklungen",
+      "what": "In new districts, plan water paths, storage, parks and trees before the buildings.",
+      "context": [
+        "new"
+      ],
+      "owner": [
+        "private",
+        "public-building",
+        "allmend"
+      ],
+      "mechanisms": [
+        "ABSORB",
+        "STORE",
+        "SLOW",
+        "SWEAT",
+        "SHADE",
+        "COOL"
+      ],
+      "sketch": "district",
+      "basel": [
+        {
+          "status": "in-progress",
+          "text": "VoltaNord: sponge-city elements in the new streets, monitored for five years.",
+          "sources": [
+            "voltanord"
+          ]
+        },
+        {
+          "status": "in-progress",
+          "text": "Klybeck (almost 30 ha): two parks, green courtyards, facade greening and unsealed surfaces planned; building plan expected early 2027. Rainwater management is not mentioned in the release.",
+          "sources": [
+            "klybeck"
+          ]
+        }
+      ],
+      "potential": [
+        {
+          "evidence": "assumed",
+          "text": "≈ The cheapest moment: water paths and soil volume cost least before buildings and pipes are fixed."
+        }
+      ],
+      "gaps": [
+        {
+          "indicator": "sewer-network",
+          "question": "Which drainage system serves this area, and where may water go?",
+          "access": "open",
+          "access_basis": "sourced",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Whether to infiltrate, retain or connect an overflow",
+          "hacks": [
+            {
+              "kind": "digitise",
+              "text": "Trace the published 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and its infiltration bans in protection zones.",
+              "cannot": "Pipe routes, connections or capacity; the map is 1:20,000 and from 2012.",
+              "prototype": "overlay"
+            },
+            {
+              "kind": "request",
+              "text": "Ask Tiefbauamt where overflow from the footprint may discharge.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "gep-map"
+          ]
+        },
+        {
+          "indicator": "measures-registry",
+          "question": "How do built sponge measures perform?",
+          "access": "project-held",
+          "access_basis": "assumed",
+          "gatekeepers": [
+            "tba-aue"
+          ],
+          "blocks": "Evidence that a design works after construction",
+          "hacks": [
+            {
+              "kind": "request",
+              "text": "Ask for the Volta Nord pilot monitoring results once published.",
+              "prototype": "gap-investigator"
+            }
+          ],
+          "sources": [
+            "voltanord"
+          ]
+        }
+      ]
+    }
+  ],
+  "levers": [
+    {
+      "id": "rules",
+      "name": "Rules",
+      "text": "Ask for sponge-city requirements (water paths, root space, unsealed share) in every building plan, as Klybeck's plan is being drafted.",
+      "evidence": "assumed"
+    },
+    {
+      "id": "coordination",
+      "name": "Dig once by default",
+      "text": "Check every street permit near a suitable street in a heat area for a sponge rebuild; publish a coordinated multi-year works plan.",
+      "evidence": "assumed"
+    },
+    {
+      "id": "money",
+      "name": "Money",
+      "text": "Prioritise the 2026 private greening fund for courtyards in heat areas; state explicitly that disconnected roofs pay a lower rainwater fee.",
+      "evidence": "assumed"
+    },
+    {
+      "id": "standards",
+      "name": "Standards",
+      "text": "Set a root-space target for every new street tree (Bern uses 36 m³) and a standard for kerb inlets into green.",
+      "evidence": "assumed"
+    },
+    {
+      "id": "data",
+      "name": "Data",
+      "text": "Publish gully points and drainage type per street, tree-pit sizes, a green-roof inventory and parking geometry (the Data Charter asks).",
+      "evidence": "assumed"
+    },
+    {
+      "id": "people",
+      "name": "People",
+      "text": "Invite residents to water young trees and report blocked gullies; advise owners of large courtyards directly.",
+      "evidence": "assumed"
+    }
+  ],
+  "access_states": {
+    "open": "Directly available and reusable from an official or public source",
+    "registered": "Available through a login or bounded self-service request",
+    "restricted": "Exists, but released only for a legitimate area, project or purpose",
+    "operator-held": "The infrastructure operator holds the authoritative detail",
+    "project-held": "Held within a private project, property or professional workflow",
+    "site-check": "A decision-quality value must be inspected, sampled, surveyed or tested locally",
+    "unknown": "We do not yet know whether usable evidence exists or who holds it"
+  },
+  "access_note": "Access states follow wrapper/data-charter-map/docs/GATEKEEPERS.md. 'sourced' means an official page states the access rule; 'assumed' is our expectation.",
+  "gatekeepers": {
+    "leitungskataster": {
+      "name": "Leitungskataster (Grundbuch- und Vermessungsamt)",
+      "role": "Overview of all supply and disposal lines in public space; released case by case as B-Daten, e.g. for planning and building projects; no depths.",
+      "sources": [
+        "leitungskataster"
+      ]
+    },
+    "operators": {
+      "name": "Network operators (Werke)",
+      "role": "Only the operators give depths; they must be contacted before digging.",
+      "sources": [
+        "leitungskataster"
+      ]
+    },
+    "tba-aue": {
+      "name": "Tiefbauamt and Amt für Umwelt und Energie",
+      "role": "Review the drainage plan (GEP), the basis for property-drainage permits and municipal rainwater management.",
+      "sources": [
+        "gep"
+      ]
+    },
+    "stadtgaertnerei": {
+      "name": "Stadtgärtnerei",
+      "role": "Maintains the city's trees and the tree cadastre.",
+      "sources": [
+        "trees"
+      ]
+    },
+    "owner": {
+      "name": "Property owner and their engineer",
+      "role": "Hold building, roof and house-drainage records."
+    },
+    "field": {
+      "name": "Qualified field team",
+      "role": "Survey, coring, infiltration test, arborist review."
+    },
+    "public": {
+      "name": "Residents and team",
+      "role": "Visible, time-stamped observations; never asset records."
+    }
+  },
+  "hack_kinds": {
+    "derive": "Compute from open inputs; result is derived and named with its method",
+    "digitise": "Trace a published map or document into data; keeps its date and scale",
+    "annotate": "People mark visible features on open imagery or own photos; candidates, reviewed",
+    "observe": "Structured site observation (Rain Walk); time-stamped, reviewable",
+    "request": "Ask the gatekeeper with a bounded, polygon-specific question",
+    "site-test": "Commission the measurement that only exists on site",
+    "design-around": "Choose an intervention that does not depend on the missing fact"
+  },
+  "prototypes": {
+    "gap-investigator": "Gap → gatekeeper → request brief",
+    "constraint-simulator": "Toggle a gatekeeper's answer; see the intervention family change",
+    "annotation": "Manual marking of visible features on the orthophoto or photos",
+    "rain-walk": "Five-minute on-site checklist, kept on the phone",
+    "overlay": "Open or digitised layer added to the map or street profile"
+  }
+}

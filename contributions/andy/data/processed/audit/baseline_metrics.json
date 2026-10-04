@@ -1,0 +1,151 @@
+{
+  "area_id": "tellplatz",
+  "generated_at": "2026-10-04T05:56:01.647725+00:00",
+  "aoi": {
+    "area_m2": 125322.12182409748,
+    "area_ha": 12.532212182409749,
+    "bbox_epsg4326": [
+      7.58896256,
+      47.56521014,
+      7.59427502,
+      47.5688056
+    ],
+    "bbox_epsg2056": [
+      2611313.55387088,
+      1268289.06696506,
+      2611713.33092404,
+      1268688.84401803
+    ]
+  },
+  "decision": {
+    "status": "GO",
+    "reason": "Official focus-area classification establishes site relevance; land-cover, tree and runoff data provide the required local baseline."
+  },
+  "heat_relevance": {
+    "status": "PASS",
+    "source": "fokusgebiet_hitzeentwicklung",
+    "type": "categorical planning classification",
+    "focus_fraction": 0.874252
+  },
+  "numerical_heat": {
+    "status": "UNAVAILABLE",
+    "blocking": false,
+    "value": null,
+    "required_for": "optional numerical thermal context",
+    "reason": "The official WMS and downloaded focus-area GeoPackage do not expose numerical heat values."
+  },
+  "heat": {
+    "source_file": "data/raw_data/heat/basel_stadt_waermeinseleffekt_current_epsg2056.gpkg",
+    "source_layer": "fokusgebiet_hitzeentwicklung",
+    "source_type": "categorical",
+    "status": "UNAVAILABLE",
+    "source": "delivered official local GeoPackage",
+    "indicator": "Fokusgebiete Stadtklimakonzept, not a numerical heat indicator",
+    "crs": "EPSG:2056",
+    "unit": null,
+    "model_year": null,
+    "resolution": null,
+    "value_field": null,
+    "feature_or_pixel_count": 976,
+    "valid_value_count": 0,
+    "null_or_nodata_count": null,
+    "coverage_area_m2": 125322.12182409684,
+    "coverage_fraction": 0.9999999999999949,
+    "mean_heat_island_k": null,
+    "area_weighted_mean_heat_island_k": null,
+    "median_heat_island_k": null,
+    "minimum_heat_island_k": null,
+    "maximum_heat_island_k": null,
+    "class_areas_m2": {
+      "übriges Gebiet": 15758.958752146118,
+      "Fokus": 109563.16307195071
+    },
+    "class_fractions": {
+      "übriges Gebiet": 0.12574762159122585,
+      "Fokus": 0.8742523784087689
+    },
+    "limitations": [
+      "The only numeric fields are FID and Id_Fokusgebiet identifiers.",
+      "Art contains planning categories Erhalten, Fokus, Verbessern and übriges Gebiet, not heat intensity.",
+      "No unit, model year, resolution, heat value field or metadata tables are present."
+    ]
+  },
+  "land_cover": {
+    "status": "PASS",
+    "feature_count": 526,
+    "classes": {
+      "befestigt.uebrige_befestigte.uebrige_befestigte": {
+        "area_m2": 24389.22280955655,
+        "percentage": 19.46122715971035
+      },
+      "Gebaeude.Gebaeude": {
+        "area_m2": 52074.21496436562,
+        "percentage": 41.55229276875566
+      },
+      "humusiert.Gartenanlage.Gartenanlage": {
+        "area_m2": 15075.590350351133,
+        "percentage": 12.029472634936136
+      },
+      "befestigt.Trottoir": {
+        "area_m2": 13799.88150654242,
+        "percentage": 11.01152877535219
+      },
+      "befestigt.Strasse_Weg": {
+        "area_m2": 16303.038917244183,
+        "percentage": 13.00890750966312
+      },
+      "befestigt.Verkehrsinsel": {
+        "area_m2": 475.43854104673676,
+        "percentage": 0.3793731977456173
+      },
+      "humusiert.uebrige_humusierte.uebrige_humusierte": {
+        "area_m2": 832.3402121633872,
+        "percentage": 0.6641606446239894
+      },
+      "humusiert.Gartenanlage.Parkanlage_Spielplatz": {
+        "area_m2": 2372.394916555496,
+        "percentage": 1.8930376233857553
+      }
+    },
+    "sealed_fraction": null,
+    "source": "ch.bs.av_bodenbedeckung_einzelobjekte_avbe.bodenbedeckung"
+  },
+  "trees": {
+    "status": "PASS",
+    "tree_count": 172,
+    "trees_per_ha": 13.724631972112611,
+    "source": "100052"
+  },
+  "runoff": {
+    "status": "PASS",
+    "exposed_fraction": 0.1605386415605892,
+    "classes": {
+      "unclassified_hazard": 20119.04319513128
+    },
+    "sample_count": 25,
+    "analytical_value_count": 6,
+    "no_hazard_count": 19,
+    "unqueryable_count": 0,
+    "source": "ch.bafu.gefaehrdungskarte-oberflaechenabfluss",
+    "method": "25-point EPSG:2056 grid; WMS GetFeatureInfo JSON geometry"
+  },
+  "focus": {
+    "status": "PASS",
+    "intersects": true,
+    "source": "ch.bs.fokusgebiet_hitzeentwicklung_fgsk",
+    "feature_count": 5
+  },
+  "status_table": {
+    "AOI": "PASS",
+    "Official heat-planning relevance": "PASS",
+    "Official numerical heat intensity": "UNAVAILABLE",
+    "Bodenbedeckung": "PASS",
+    "Baumkataster": "PASS",
+    "Oberflächenabfluss": "PASS",
+    "Fokusgebiete": "PASS",
+    "Einzelobjekte": "PARTIAL",
+    "Site-selection gate": "PASS",
+    "Data-foundation gate": "PASS",
+    "Overall MVP decision": "GO"
+  }
+}

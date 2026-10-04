@@ -1,0 +1,874 @@
+{
+  "schema_version": "data-charter/0.1",
+  "updated": "2026-10-03",
+  "title": "Sponge City Data Charter",
+  "purpose": "The north-star set of data a city should hold, keep current and publish openly so that sponge-city principles and interventions can be planned, evaluated and monitored in public. Each indicator states the ideal, Basel's real status today, and how a gap could be filled by inference, kept apart from real data.",
+  "real_status": {
+    "open": "Real data, openly downloadable or queryable, close to the north star",
+    "partial": "Real open data exists but falls short of the north star (resolution, coverage, format or only as a map image)",
+    "restricted": "Expected to exist but not openly available; not found as open data in the reviewed Basel and federal sources. The basis for expecting it is stated per indicator and is an assumption, not a verified fact",
+    "missing": "No open data found in the reviewed Basel and federal sources"
+  },
+  "fill_status": {
+    "run": "Inferred by us in a pilot on live open data; shown on the map as inferred, never as real",
+    "proposed": "A known indirect, detection or synthesis method; not run yet",
+    "none": "No credible inference route; it has to be measured or published"
+  },
+  "references": [
+    {
+      "id": "gbt51345",
+      "label": "GB/T 51345-2018 海绵城市建设评价标准 / Assessment standard for sponge city construction effect (China, MOHURD; approval draft)",
+      "url": "https://cctc.cn/Portals/0/2020/NewFolder/《海绵城市建设评价标准》报批稿.pdf",
+      "note": "Seven assessment items (5.1–5.7): annual runoff volume capture, source-reduction effectiveness, road ponding and waterlogging, urban water bodies, natural ecological pattern and shorelines, groundwater depth trend, urban heat island mitigation. Clause 3.0.4: assessment rests on at least one year of continuous monitoring of typical projects, the pipe network and water bodies, plus field checks and modelling."
+    },
+    {
+      "id": "wsc-index",
+      "label": "Water Sensitive Cities Index (CRC for Water Sensitive Cities, Australia)",
+      "url": "https://watersensitivecities.org.au/water-sensitive-cities-index-tool",
+      "note": "34 indicators in 7 goals, scored 1–5 in a workshop; used by more than 70 cities."
+    },
+    {
+      "id": "vsa-2019",
+      "label": "VSA guideline Abwasserbewirtschaftung bei Regenwetter (2019) and the GEP",
+      "url": "https://www.vs.ch/de/web/sen/regenwasserbewirtschaftung-in-stadtischen-gebieten",
+      "note": "The municipal general drainage plan (GEP) must define where infiltration is possible; infiltration map, groundwater and protection maps and the contaminated-sites register are its inputs."
+    },
+    {
+      "id": "waterml-ud",
+      "label": "WaterML-UD, FAIR metadata for urban drainage observations (Eawag)",
+      "url": "https://www.eawag.ch/en/department/sww/projects/waterml-ud",
+      "note": "How monitoring data from drainage systems should be described to be reusable."
+    },
+    {
+      "id": "berlin-atlas",
+      "label": "Berlin Umweltatlas: sealing, water balance (ABIMO) and green roofs",
+      "url": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/2022/einleitung/",
+      "note": "A city that publishes sealing, a block-level water balance and a green-roof inventory as open maps."
+    },
+    {
+      "id": "copenhagen",
+      "label": "Copenhagen Cloudburst Management Plan (2012)",
+      "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/",
+      "note": "Catchment-based plan built on a calibrated city-wide hydraulic model."
+    }
+  ],
+  "groups": [
+    {
+      "id": "surface",
+      "label": "Surfaces and sealing"
+    },
+    {
+      "id": "subsurface",
+      "label": "Ground and groundwater"
+    },
+    {
+      "id": "water",
+      "label": "Drainage and rain"
+    },
+    {
+      "id": "green",
+      "label": "Trees and vegetation"
+    },
+    {
+      "id": "heat",
+      "label": "Heat"
+    },
+    {
+      "id": "governance",
+      "label": "Priorities, ownership and timing"
+    }
+  ],
+  "indicators": [
+    {
+      "id": "land-cover",
+      "group": "surface",
+      "name": "Land cover and sealing",
+      "north_star": "Polygons of every sealed and unsealed surface (roofs, roads, sidewalks, parking, planted), ≤ 1 m, updated yearly, open vector download and API.",
+      "refs": [
+        "gbt51345",
+        "berlin-atlas"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "Cadastral land cover: 49,595 polygons with classes such as sidewalk, road, traffic island, tram area, building, garden, water. CC BY 4.0, updated 2026-08-20.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100477 Bodenbedeckung",
+            "url": "https://data.bs.ch/explore/dataset/100477/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": [
+        "r-landcover"
+      ]
+    },
+    {
+      "id": "sealing-fraction",
+      "group": "surface",
+      "name": "Sealed share per block or catchment",
+      "north_star": "Sealed fraction per block and per drainage catchment, yearly, as the basis of a water balance (runoff, infiltration, evaporation).",
+      "refs": [
+        "berlin-atlas",
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "missing",
+        "detail": "No published sealed-share or water-balance layer. The inputs are open (land cover, statistical blocks).",
+        "sources": []
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "deduce",
+        "method": "Aggregate land-cover classes per statistical block (100040); a water balance like Berlin's ABIMO could follow.",
+        "confidence": "high for sealed share, it is arithmetic on real polygons"
+      },
+      "ask": null,
+      "layers": [
+        "m-sealing-fraction"
+      ]
+    },
+    {
+      "id": "roofs",
+      "group": "surface",
+      "name": "Roof form, green roofs and load capacity",
+      "north_star": "Per building: roof form and slope, existing green-roof area and type, heritage constraints, structural reserve for a green roof; open, updated with building permits.",
+      "refs": [
+        "berlin-atlas"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Open: solar register per roof (model values) and heritage roof survey (WMS/WFS). Not found: an inventory of existing green roofs, roof load capacity.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100382 Solarkataster",
+            "url": "https://data.bs.ch/explore/dataset/100382/"
+          },
+          {
+            "label": "geo.bs.ch Dachflächenkataster Denkmalpflege",
+            "url": "https://wms.geo.bs.ch/"
+          }
+        ]
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "detect",
+        "method": "Green-roof detection from orthophotos (Berlin method; NDVI needs near-infrared, which SWISSIMAGE RS has but not for free). Flat roofs from swissBUILDINGS3D plus the § 72 BPG obligation give a prior. Load capacity has no remote proxy.",
+        "confidence": "medium for green roofs, none for load capacity"
+      },
+      "ask": "Publish the green-roof inventory if one exists (Kanton Basel-Stadt).",
+      "layers": []
+    },
+    {
+      "id": "parking",
+      "group": "surface",
+      "name": "On-street parking geometry",
+      "north_star": "Every on-street parking bay as a polygon with type and count, updated with traffic orders; open.",
+      "refs": [],
+      "basel": {
+        "status": "partial",
+        "detail": "Counts per street section and type (7,817 records) are open, but without geometry. Special parking (disabled, charging, taxi) is open as points.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100329 Parkflächen",
+            "url": "https://data.bs.ch/explore/dataset/100329/"
+          },
+          {
+            "label": "geo.bs.ch STAC PRKG",
+            "url": "https://api.geo.bs.ch/stac/v1/collections/PRKG"
+          }
+        ]
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "deduce",
+        "method": "Spread the per-street counts along the road edges (land cover + street segments), or detect bays in aerial imagery (DLR method); OSM parking:* tags where mapped.",
+        "confidence": "medium"
+      },
+      "ask": "Publish the geometry behind 100329 (Amt für Mobilität).",
+      "layers": []
+    },
+    {
+      "id": "infiltration",
+      "group": "subsurface",
+      "name": "Infiltration capacity",
+      "north_star": "An infiltration suitability map (as the GEP requires) with measured permeability where available, at parcel or street scale, open.",
+      "refs": [
+        "vsa-2019",
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "missing",
+        "detail": "No open infiltration map or permeability data found. Related open inputs: soil depth classes, boreholes, groundwater levels, protection zones, contaminated sites.",
+        "sources": []
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "deduce",
+        "method": "Combine depth to groundwater, borehole stratigraphy, soil depth and exclusions (protection zones S1/S2, contaminated sites); validate with citizen-science infiltration tests.",
+        "confidence": "low to medium: screening only"
+      },
+      "ask": "Publish the GEP infiltration map (Amt für Umwelt und Energie).",
+      "layers": [
+        "m-infiltration",
+        "r-soil"
+      ]
+    },
+    {
+      "id": "groundwater-depth",
+      "group": "subsurface",
+      "name": "Depth to groundwater",
+      "north_star": "A continuous map of depth to groundwater (mean and high levels) plus live levels, yearly trend.",
+      "refs": [
+        "gbt51345",
+        "vsa-2019"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Real and open at about 80 monitoring stations (hourly levels, 10-year statistics); no continuous depth map.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100164 Wasserstand Grundwasser",
+            "url": "https://data.bs.ch/explore/dataset/100164/"
+          },
+          {
+            "label": "data.bs.ch 100180 langjährige Statistiken",
+            "url": "https://data.bs.ch/explore/dataset/100180/"
+          }
+        ]
+      },
+      "fill": {
+        "status": "run",
+        "route": "deduce",
+        "method": "Terrain height minus the 10-year maximum level gives the shallowest depth to groundwater per station: 0.8 m to 20.8 m, median 9.8 m across 81 stations. Not interpolated between stations.",
+        "confidence": "high at stations, none between them"
+      },
+      "ask": null,
+      "layers": [
+        "r-gwstations",
+        "i-gwdepth"
+      ]
+    },
+    {
+      "id": "protection",
+      "group": "subsurface",
+      "name": "Groundwater protection and contaminated sites",
+      "north_star": "Protection zones and contaminated-sites register as open vectors, kept current.",
+      "refs": [
+        "vsa-2019"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "Groundwater protection zones and areas, and the register of contaminated sites, are open (data.bs.ch, WMS/WFS).",
+        "sources": [
+          {
+            "label": "data.bs.ch 100292 Grundwasserschutzzonen",
+            "url": "https://data.bs.ch/explore/dataset/100292/"
+          },
+          {
+            "label": "geo.bs.ch Kataster der belasteten Standorte (WFS)",
+            "url": "https://wfs.geo.bs.ch/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": [
+        "r-gwprot",
+        "r-contam"
+      ]
+    },
+    {
+      "id": "soil",
+      "group": "subsurface",
+      "name": "Soil type and depth",
+      "north_star": "Soil map with texture, depth and compaction for open and sealed ground, open.",
+      "refs": [
+        "vsa-2019"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Soil map with depth classes is open as WMS/WFS, mainly for unsealed areas; little about the ground under streets.",
+        "sources": [
+          {
+            "label": "geo.bs.ch Bodenkarte",
+            "url": "https://wms.geo.bs.ch/"
+          }
+        ]
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "deduce",
+        "method": "Borehole profiles (Bohrkataster) for material under sealed ground.",
+        "confidence": "low"
+      },
+      "ask": null,
+      "layers": [
+        "r-soil"
+      ]
+    },
+    {
+      "id": "utilities",
+      "group": "subsurface",
+      "name": "Underground utilities",
+      "north_star": "At least a utility-corridor density per street segment (no exact positions), open; positions available to planners.",
+      "refs": [],
+      "basel": {
+        "status": "restricted",
+        "detail": "Not found as open data in the reviewed sources. Open: large pipelines only, district-heating area.",
+        "sources": [
+          {
+            "label": "geo.bs.ch STAC AVRO, IWBF",
+            "url": "https://api.geo.bs.ch/stac/v1/collections"
+          }
+        ],
+        "existence_basis": "Assumed: a utility cadastre is expected to exist for Basel-Stadt; it was not found as open data."
+      },
+      "fill": {
+        "status": "run",
+        "route": "deduce",
+        "method": "Permit trail: works permits whose text names utility, sewer, district-heating, water, gas, electricity or house-connection work (7,032 construction-site and excavation permits on the map; 7,557 utility-works records on 666 streets in the wider pilot). Shows activity, not the network.",
+        "confidence": "medium as a density signal; no positions"
+      },
+      "ask": "Publish a corridor-density class per street segment (IWB, Tiefbauamt).",
+      "layers": [
+        "r-permits",
+        "i-underground",
+        "m-utilities"
+      ]
+    },
+    {
+      "id": "sewer-network",
+      "group": "water",
+      "name": "Sewer and drainage network (GEP)",
+      "north_star": "Pipes, manholes, gullies, combined or separate system, overflows, catchments, with the GEP; open, at least as a simplified network.",
+      "refs": [
+        "vsa-2019",
+        "gbt51345",
+        "copenhagen"
+      ],
+      "basel": {
+        "status": "restricted",
+        "detail": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
+        "sources": [
+          {
+            "label": "data.bs.ch 100336 Einzugsgebiet ARA",
+            "url": "https://data.bs.ch/explore/dataset/100336/"
+          },
+          {
+            "label": "AUE: GEP Stadt Basel, Karte Entwässerungsarten (PDF, 2012)",
+            "url": "https://media.bs.ch/original_file/6c906a4607e4c2c068f631e6bd27aeac09a977e9/karte-genereller-entwaesserungsplan-entwaesserungsarten-bs-0.pdf"
+          }
+        ],
+        "existence_basis": "Assumed: the GEP page states that Tiefbauamt and AUE review the drainage plan, so network data is expected to exist; it was not found as open data."
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "synthesise",
+        "method": "SWMManywhere or the Eawag sewer generator from streets, terrain and buildings; checked against the 96 streets with sewer-works permits.",
+        "confidence": "low: a plausible network, never the real one"
+      },
+      "ask": "Publish gully points and a combined/separate flag per street segment (Tiefbauamt, AUE).",
+      "layers": [
+        "m-sewer-network"
+      ]
+    },
+    {
+      "id": "gullies",
+      "group": "water",
+      "name": "Gullies and inlets",
+      "north_star": "Every street gully and inlet as a point with its connection, open.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "missing",
+        "detail": "No open gully data found.",
+        "sources": []
+      },
+      "fill": {
+        "status": "proposed",
+        "route": "detect",
+        "method": "Detection in street-level photos (Mapillary manhole class, published storm-drain detectors) or true orthophotos; OSM manhole=drain.",
+        "confidence": "medium where imagery exists"
+      },
+      "ask": "Part of the sewer-network ask.",
+      "layers": [
+        "m-sewer-network",
+        "m-gullies"
+      ]
+    },
+    {
+      "id": "overland-flow",
+      "group": "water",
+      "name": "Overland flow and ponding",
+      "north_star": "Pluvial flood hazard from a calibrated city model, plus recorded ponding and flooding events.",
+      "refs": [
+        "gbt51345",
+        "copenhagen"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Federal overland-flow hazard map (modelled, simplified, not field-verified) and cantonal river flood hazard maps are open. No open record of flooding events in streets.",
+        "sources": [
+          {
+            "label": "BAFU Gefährdungskarte Oberflächenabfluss",
+            "url": "https://map.geo.admin.ch/?layers=ch.bafu.gefaehrdungskarte-oberflaechenabfluss"
+          },
+          {
+            "label": "geo.bs.ch Naturgefahren",
+            "url": "https://wms.geo.bs.ch/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": "Publish recorded flooding and ponding events.",
+      "layers": [
+        "r-runoff",
+        "r-hazard"
+      ]
+    },
+    {
+      "id": "rainfall",
+      "group": "water",
+      "name": "Rainfall at high resolution",
+      "north_star": "Rain gauges and radar at ≤ 10 minutes and ≤ 1 km, long records for design storms and event analysis.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "MeteoSwiss Basel/Binningen station (10-minute data, long records), radar precipitation (last 14 days), climate scenarios CH2025; city sensors with hourly rain (raw).",
+        "sources": [
+          {
+            "label": "MeteoSwiss open data (STAC)",
+            "url": "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.meteoschweiz.ogd-smn"
+          },
+          {
+            "label": "data.bs.ch 100009 Smart Climate",
+            "url": "https://data.bs.ch/explore/dataset/100009/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": []
+    },
+    {
+      "id": "network-monitoring",
+      "group": "water",
+      "name": "Flow and overflow monitoring in the network",
+      "north_star": "Flows, levels and combined-sewer overflow events at key points, open in a FAIR format (e.g. WaterML-UD).",
+      "refs": [
+        "gbt51345",
+        "waterml-ud"
+      ],
+      "basel": {
+        "status": "missing",
+        "detail": "No open sewer flow or overflow data found.",
+        "sources": []
+      },
+      "fill": {
+        "status": "none",
+        "route": "measure",
+        "method": "Has to be measured and published by the operator.",
+        "confidence": "n/a"
+      },
+      "ask": "Publish overflow events and flows (sewer and treatment-plant operators).",
+      "layers": [
+        "m-network-monitoring"
+      ]
+    },
+    {
+      "id": "receiving-waters",
+      "group": "water",
+      "name": "Rivers and receiving waters",
+      "north_star": "Levels, flows and quality of rivers and streams, live and open.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "Rhine, Birs and Wiese levels and flows every 5 minutes (BAFU, CC0), Rhine monitoring station, surface-water analyses.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100089 Rhein",
+            "url": "https://data.bs.ch/explore/dataset/100089/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": []
+    },
+    {
+      "id": "trees",
+      "group": "green",
+      "name": "Tree inventory",
+      "north_star": "Every public tree with species, age, size and condition, updated continuously, open.",
+      "refs": [],
+      "basel": {
+        "status": "open",
+        "detail": "Tree cadastre: 32,378 trees (12,504 street trees) with species, years at site, protection status; daily updates.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100052 Baumkataster",
+            "url": "https://data.bs.ch/explore/dataset/100052/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": [
+        "r-trees"
+      ]
+    },
+    {
+      "id": "tree-pits",
+      "group": "green",
+      "name": "Tree pit and root space",
+      "north_star": "Per tree: pit area and volume, substrate, connected trench or not.",
+      "refs": [],
+      "basel": {
+        "status": "missing",
+        "detail": "The tree cadastre has no pit size or root-space field.",
+        "sources": []
+      },
+      "fill": {
+        "status": "run",
+        "route": "deduce",
+        "method": "Intersect street-tree points with mapped planted land-cover polygons. 3,372 points lie inside a mapped planted polygon; 9,132 have no mapped planted polygon at the point. This classifies planting context, not pit dimensions.",
+        "confidence": "medium for mapped planting context; none for an individual pit's dimensions"
+      },
+      "ask": "Add a pit-area field to the tree cadastre (Stadtgärtnerei).",
+      "layers": [
+        "i-pits",
+        "m-tree-pits"
+      ]
+    },
+    {
+      "id": "canopy",
+      "group": "green",
+      "name": "Canopy cover over time",
+      "north_star": "LiDAR canopy every 3 years or better, open.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "LiDAR canopy cover for 2012, 2021 and 2024 (0.5 m, GeoTIFF).",
+        "sources": [
+          {
+            "label": "data.bs.ch 100357 Baumkronenbedeckung",
+            "url": "https://data.bs.ch/explore/dataset/100357/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": []
+    },
+    {
+      "id": "soil-moisture",
+      "group": "green",
+      "name": "Soil moisture and tree water stress",
+      "north_star": "Soil-moisture sensors at representative trees and sponge measures, live and open (as in Berlin's QTrees).",
+      "refs": [],
+      "basel": {
+        "status": "missing",
+        "detail": "No open soil-moisture or tree-stress sensor data found.",
+        "sources": []
+      },
+      "fill": {
+        "status": "none",
+        "route": "measure",
+        "method": "Has to be measured.",
+        "confidence": "n/a"
+      },
+      "ask": null,
+      "layers": [
+        "m-soil-moisture"
+      ]
+    },
+    {
+      "id": "climate-analysis",
+      "group": "heat",
+      "name": "Urban climate analysis",
+      "north_star": "Heat stress, heat-island and cold-air maps for today and scenarios, as open grids.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Climate analysis 2019 and 2030 (PET, heat island, air temperature, cold air) open as map images; the grids are in the geodata shop.",
+        "sources": [
+          {
+            "label": "geo.bs.ch Stadtklima (WMS)",
+            "url": "https://wms.geo.bs.ch/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": "Publish the climate-analysis grids as open GeoTIFFs.",
+      "layers": [
+        "r-uhi"
+      ]
+    },
+    {
+      "id": "street-temperature",
+      "group": "heat",
+      "name": "Street-level temperature",
+      "north_star": "Calibrated air and surface temperature sensors across street types, live and open.",
+      "refs": [
+        "gbt51345"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "About 200 city sensors with hourly air temperature, open but raw (not quality-checked).",
+        "sources": [
+          {
+            "label": "data.bs.ch 100009 / 100082 Smart Climate",
+            "url": "https://data.bs.ch/explore/dataset/100082/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": []
+    },
+    {
+      "id": "priorities",
+      "group": "governance",
+      "name": "Suitability and priority areas",
+      "north_star": "Published suitability of streets for sponge measures and priority areas for heat and water.",
+      "refs": [
+        "wsc-index"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "Sponge suitability by daily traffic for 6,519 street segments, and heat focus areas from the city climate concept.",
+        "sources": [
+          {
+            "label": "geo.bs.ch STAC SETV",
+            "url": "https://api.geo.bs.ch/stac/v1/collections/SETV"
+          },
+          {
+            "label": "geo.bs.ch STAC FGSK",
+            "url": "https://api.geo.bs.ch/stac/v1/collections/FGSK"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": [
+        "r-setv",
+        "r-fgsk"
+      ]
+    },
+    {
+      "id": "ownership",
+      "group": "governance",
+      "name": "Ownership and public realm",
+      "north_star": "Parcels and public-realm boundaries, open.",
+      "refs": [
+        "wsc-index"
+      ],
+      "basel": {
+        "status": "open",
+        "detail": "Parcels with EGRID and public-realm (Allmend) parcels are open.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100201 Parzellen",
+            "url": "https://data.bs.ch/explore/dataset/100201/"
+          }
+        ]
+      },
+      "fill": null,
+      "ask": null,
+      "layers": []
+    },
+    {
+      "id": "works-calendar",
+      "group": "governance",
+      "name": "Works calendar",
+      "north_star": "Planned street and utility works per segment, years ahead, open, so sponge measures can join them.",
+      "refs": [
+        "wsc-index"
+      ],
+      "basel": {
+        "status": "partial",
+        "detail": "Public-ground permits (150,799, daily) and construction sites are open; no multi-year coordinated works plan is published.",
+        "sources": [
+          {
+            "label": "data.bs.ch 100018 Allmendbewilligungen",
+            "url": "https://data.bs.ch/explore/dataset/100018/"
+          },
+          {
+            "label": "data.bs.ch 100335 Baustellen",
+            "url": "https://data.bs.ch/explore/dataset/100335/"
+          }
+        ]
+      },
+      "fill": {
+        "status": "run",
+        "route": "deduce",
+        "method": "Permits with an end date from today onwards identify active or upcoming permitted works.",
+        "confidence": "high for the permit dates shown; this is not a coordinated future works plan"
+      },
+      "ask": "Publish the coordinated multi-year works plan.",
+      "layers": [
+        "i-digwindows"
+      ]
+    },
+    {
+      "id": "measures-registry",
+      "group": "governance",
+      "name": "Registry of built sponge measures and their performance",
+      "north_star": "Every built measure (rain garden, tree trench, depaving, green roof) with location, design, date and monitored effect, open.",
+      "refs": [
+        "gbt51345",
+        "wsc-index"
+      ],
+      "basel": {
+        "status": "missing",
+        "detail": "No open registry found; only 64 permit texts mention unsealing or infiltration.",
+        "sources": []
+      },
+      "fill": {
+        "status": "none",
+        "route": "ask",
+        "method": "Has to be recorded by the city.",
+        "confidence": "n/a"
+      },
+      "ask": "Start an open registry of sponge measures (Stadtgärtnerei, Tiefbauamt).",
+      "layers": [
+        "m-measures-registry"
+      ]
+    }
+  ],
+  "evidence_classes": {
+    "observed": "Published or directly measured",
+    "derived": "Deterministically calculated from named observed inputs",
+    "modelled": "Produced by an explicit statistical, computer-vision or physical model",
+    "assumed": "Introduced only for a declared scenario or stated without verification",
+    "unknown": "No defensible evidence is available"
+  },
+  "permitted_uses": {
+    "explain": "Use to explain a mechanism or a data gap",
+    "screen": "Use to decide where to look more closely; never to decide what to build",
+    "prioritise": "Use to rank places or options; needs validation against independent data",
+    "design": "Use as a design input; needs validated, site-level evidence"
+  },
+  "claims": [
+    {
+      "id": "tree-planting-context",
+      "layer": "i-pits",
+      "indicator": "tree-pits",
+      "evidence_class": "derived",
+      "statement": "Whether a street-tree point lies inside a mapped planted land-cover polygon.",
+      "method": "Point-in-polygon test of street-tree points (ba_gruppe 'Strassenbäume') against land-cover polygons of classes humusiert* and bestockt*.",
+      "inputs": [
+        {
+          "label": "data.bs.ch 100052 Baumkataster",
+          "url": "https://data.bs.ch/explore/dataset/100052/"
+        },
+        {
+          "label": "data.bs.ch 100477 Bodenbedeckung",
+          "url": "https://data.bs.ch/explore/dataset/100477/"
+        }
+      ],
+      "spatial_resolution": "Per tree point; land-cover polygons at official-survey scale",
+      "temporal_resolution": "Snapshot 2026-10-03; inputs as published on that date",
+      "validation": "not validated",
+      "limitations": [
+        "Describes mapped planting context at the tree point only",
+        "No mapped planted polygon at the point does not prove sealed paving",
+        "Says nothing about pit area, soil volume or substrate",
+        "Planted areas below the survey's mapping threshold are not distinguished"
+      ],
+      "permitted_use": [
+        "explain",
+        "screen"
+      ]
+    },
+    {
+      "id": "groundwater-depth-at-stations",
+      "layer": "i-gwdepth",
+      "indicator": "groundwater-depth",
+      "evidence_class": "derived",
+      "statement": "Shallowest and mean depth to groundwater at each monitoring station.",
+      "method": "Terrain height minus the 10-year maximum (and mean) groundwater level published per station; shallowest value per station.",
+      "inputs": [
+        {
+          "label": "data.bs.ch 100180 Wasserstand Grundwasser: langjährige Statistiken",
+          "url": "https://data.bs.ch/explore/dataset/100180/"
+        }
+      ],
+      "spatial_resolution": "Per monitoring station (point); not interpolated",
+      "temporal_resolution": "Statistic period per station (usually 10 years), as published",
+      "validation": "not validated",
+      "limitations": [
+        "Point values; nothing is known between stations",
+        "The shallowest observed level is not a design groundwater level",
+        "Local perched water and construction effects are not represented"
+      ],
+      "permitted_use": [
+        "explain",
+        "screen"
+      ]
+    },
+    {
+      "id": "underground-activity-by-network",
+      "layer": "i-underground",
+      "indicator": "utilities",
+      "evidence_class": "derived",
+      "statement": "Which network a works permit concerns (sewer, district heating, house connection, water, gas, electricity, unspecified utility).",
+      "method": "Keyword rules on the permit description; the first matching category wins.",
+      "inputs": [
+        {
+          "label": "data.bs.ch 100018 Allmendbewilligungen",
+          "url": "https://data.bs.ch/explore/dataset/100018/"
+        }
+      ],
+      "spatial_resolution": "Per permit point (centroid of the permitted area)",
+      "temporal_resolution": "Permits in the snapshot of 2026-10-03, with their own start and end dates",
+      "validation": "not validated",
+      "limitations": [
+        "Shows permitted activity, not the location, depth or density of networks",
+        "Keyword rules were not checked against permit documents; mixed works get one category",
+        "A street without permits may still contain utilities"
+      ],
+      "permitted_use": [
+        "explain",
+        "screen"
+      ]
+    },
+    {
+      "id": "active-or-upcoming-works",
+      "layer": "i-digwindows",
+      "indicator": "works-calendar",
+      "evidence_class": "derived",
+      "statement": "Permits whose end date is on or after the snapshot date.",
+      "method": "Date filter on the permit end date.",
+      "inputs": [
+        {
+          "label": "data.bs.ch 100018 Allmendbewilligungen",
+          "url": "https://data.bs.ch/explore/dataset/100018/"
+        }
+      ],
+      "spatial_resolution": "Per permit point (centroid of the permitted area)",
+      "temporal_resolution": "Relative to the snapshot date 2026-10-03",
+      "validation": "not validated",
+      "limitations": [
+        "Only works that are already permitted",
+        "Not a coordinated future works plan",
+        "Permit dates can change"
+      ],
+      "permitted_use": [
+        "explain",
+        "screen"
+      ]
+    }
+  ]
+}

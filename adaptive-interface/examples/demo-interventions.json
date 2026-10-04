@@ -1,0 +1,86 @@
+{
+  "schema_version": "intervention-catalog/0.1",
+  "catalogue_id": "mock-catalogue",
+  "label": "Mock intervention catalogue",
+  "note": "Placeholder rules for the prototype. The Basel research team replaces this catalogue; nothing here is an engineering requirement.",
+  "interventions": [
+    {
+      "id": "depave",
+      "label": "Depave",
+      "summary": "Remove sealing from part of a paved surface and plant it.",
+      "mechanisms": ["ABSORB", "SWEAT"],
+      "target": { "types": ["sidewalk", "parking"], "surfaces": ["sealed"] },
+      "params": {
+        "area_m2": { "default": 20, "state": "assumed", "note": "design choice for the scenario" },
+        "parking_bay_m2": { "default": 12.5, "state": "assumed", "note": "one parking bay ≈ 12.5 m²" }
+      },
+      "requirements": [],
+      "checks": [
+        { "id": "utilities", "label": "Underground utilities", "context_key": "utilities", "basis": "placeholder" },
+        { "id": "access", "label": "Access and use requirements", "context_key": "access_requirements", "basis": "placeholder" },
+        { "id": "ownership", "label": "Ownership", "context_key": "ownership", "basis": "placeholder" }
+      ],
+      "transform": [
+        { "op": "carve", "area_param": "area_m2", "new_element": { "type": "vegetation", "surface": "planted", "label": "Depaved planting bed" } },
+        { "op": "reduce-count", "when_target_type": "parking", "area_per_unit_param": "parking_bay_m2" }
+      ],
+      "reports": ["sealed_area_m2", "planted_area_m2", "parking_spaces"],
+      "sources": [
+        { "label": "Basel: testing surfaces for depaved parking spaces (2022)", "url": "https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze" }
+      ]
+    },
+    {
+      "id": "permeable-parking",
+      "label": "Permeable parking",
+      "summary": "Replace sealed parking paving with a permeable surface. Parking bays stay.",
+      "mechanisms": ["ABSORB", "SLOW"],
+      "target": { "types": ["parking"], "surfaces": ["sealed"] },
+      "params": {},
+      "requirements": [
+        { "id": "groundwater-zone", "label": "Outside groundwater protection zones S1/S2", "context_key": "groundwater_protection_zone", "fail_if_in": ["S1", "S2"], "basis": "placeholder" }
+      ],
+      "checks": [
+        { "id": "load", "label": "Traffic and load requirements", "context_key": "traffic_load", "basis": "placeholder" },
+        { "id": "infiltration", "label": "Infiltration capacity", "context_key": "infiltration_capacity", "basis": "placeholder" },
+        { "id": "utilities", "label": "Underground utilities", "context_key": "utilities", "basis": "placeholder" }
+      ],
+      "transform": [
+        { "op": "set-surface", "to": "permeable" }
+      ],
+      "reports": ["sealed_area_m2", "permeable_area_m2", "parking_spaces"],
+      "sources": [
+        { "label": "Permeable paving (overview)", "url": "https://en.wikipedia.org/wiki/Permeable_paving" }
+      ]
+    },
+    {
+      "id": "tree-rain-garden",
+      "label": "Tree + rain garden",
+      "summary": "Open a sealed surface for a planted rain garden with a new tree.",
+      "mechanisms": ["STORE", "ABSORB", "SHADE", "SWEAT"],
+      "target": { "types": ["sidewalk", "parking"], "surfaces": ["sealed"] },
+      "params": {
+        "area_m2": { "default": 12, "state": "assumed", "note": "design choice for the scenario" },
+        "parking_bay_m2": { "default": 12.5, "state": "assumed", "note": "one parking bay ≈ 12.5 m²" }
+      },
+      "requirements": [
+        { "id": "groundwater-zone", "label": "Outside groundwater protection zones S1/S2", "context_key": "groundwater_protection_zone", "fail_if_in": ["S1", "S2"], "basis": "placeholder" }
+      ],
+      "checks": [
+        { "id": "utilities", "label": "Underground utilities", "context_key": "utilities", "basis": "placeholder" },
+        { "id": "infiltration", "label": "Infiltration capacity", "context_key": "infiltration_capacity", "basis": "placeholder" },
+        { "id": "slope", "label": "Slope and flow direction", "context_key": "slope", "basis": "placeholder" },
+        { "id": "ownership", "label": "Ownership", "context_key": "ownership", "basis": "placeholder" }
+      ],
+      "transform": [
+        { "op": "carve", "area_param": "area_m2", "new_element": { "type": "vegetation", "surface": "planted", "label": "Rain garden", "tags": ["rain-garden"] } },
+        { "op": "add", "new_element": { "type": "tree", "label": "New tree (scenario)" } },
+        { "op": "reduce-count", "when_target_type": "parking", "area_per_unit_param": "parking_bay_m2" }
+      ],
+      "reports": ["sealed_area_m2", "planted_area_m2", "tree_count", "parking_spaces"],
+      "sources": [
+        { "label": "Rain garden (overview)", "url": "https://en.wikipedia.org/wiki/Rain_garden" },
+        { "label": "ZHAW project 74640: vegetation building blocks for Basel streets", "url": "https://www.zhaw.ch/de/forschung/projekt/74640" }
+      ]
+    }
+  ]
+}
