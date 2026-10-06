@@ -1,10 +1,10 @@
-# Orca Orchestration — Multi-agent delivery for Sponge City V2
+# Weavr → Orca execution — Multi-agent delivery for Sponge City V2
 
 ## Purpose
 
-Orca is the orchestration/control plane for the Sponge City V2 work.
+Weavr is the semantic control plane for Sponge City V2. Orca is its local execution substrate.
 
-It does not replace specialist models. It decomposes work, chooses the right worker, packages context, checks evidence, records decisions and hands implementation tasks to the appropriate execution agent.
+Weavr creates and governs the Mission: it owns authority, scope, routing policy, independent verification, Proof and Decision. Orca materializes the workspace and represents the execution attempt as a Run, Tasks and Dispatches; it launches workers and manages their lifecycle. A worker result is evidence returned to Weavr, never a canonical research conclusion merely because Orca reports the Dispatch complete.
 
 Target worker pool:
 
@@ -12,14 +12,19 @@ Target worker pool:
 - **Perplexity Pro** — current external research and source discovery;
 - **Claude** — deep synthesis, architecture review and adversarial critique;
 - **Codex** — implementation, tests, Git and PR work;
-- **Orca** — planner, router, evidence ledger and acceptance coordinator.
+- **Weavr** — Mission owner, semantic router, independent verifier, evidence promoter and Decision authority;
+- **Orca** — workspace, Run, Task, Dispatch, agent-launch and worker-lifecycle substrate.
 
 ## Authority model
 
 ```text
 Human
   ↓
+Weavr
+  Mission · authority · scope · routing · verification · Proof · Decision
+  ↓
 Orca
+  workspace · Run · Task · Dispatch · worker lifecycle · agent launch
   ├─ Nebu       local analysis
   ├─ Perplexity external research
   ├─ Claude     deep review / synthesis
@@ -28,18 +33,28 @@ Orca
  tests / evidence / PR
 ```
 
-No worker gains authority merely because it can produce an answer or edit code.
+No worker gains authority merely because it can produce an answer or edit code. `worker_done` proves only that an execution attempt settled; it does not prove a claim, satisfy Mission acceptance, or authorize integration.
+
+Weavr owns:
+
+- Mission intent and outcome;
+- authority and bounded scope;
+- semantic routing and provider legality;
+- independent verification;
+- accepted/rejected claims and unresolved questions;
+- canonical Proof and Decision;
+- permission to release the implementation gate.
 
 Orca owns:
 
-- task decomposition;
-- worker selection;
-- context packaging;
-- task dependencies;
-- acceptance criteria;
-- evidence aggregation;
-- escalation;
-- final work-state transitions.
+- workspace materialization;
+- Run, Task and Dispatch records;
+- dependency mechanics for the projected task graph;
+- agent launch;
+- worker status, transcript and lifecycle;
+- execution provenance such as Run, Task, Dispatch, worktree and effective provider IDs.
+
+The Mission definition and its canonical decisions do not move into Orca. Weavr projects a bounded task graph into Orca and observes execution evidence without treating Orca as a research database.
 
 Human retains authority over:
 
@@ -151,11 +166,11 @@ Required packet:
 - evidence requirements;
 - what not to change.
 
-## Orca workflow
+## Weavr-governed execution workflow
 
-### Phase 1 — Frame
+### Phase 1 — Frame in Weavr
 
-Orca translates the human goal into:
+Weavr translates the human goal into:
 
 - decision question;
 - deliverables;
@@ -163,9 +178,9 @@ Orca translates the human goal into:
 - risk;
 - expected evidence.
 
-### Phase 2 — Decompose
+### Phase 2 — Decompose in Weavr, project into Orca
 
-Tasks are split into typed work units.
+Weavr splits work into typed work units. Orca receives the execution projection and enforces dependency mechanics; the Weavr Mission remains canonical.
 
 Example:
 
@@ -185,9 +200,9 @@ Example:
 }
 ```
 
-### Phase 3 — Delegate
+### Phase 3 — Route in Weavr, dispatch through Orca
 
-Orca selects a worker using a simple policy:
+Weavr selects an eligible worker using a simple policy. Orca launches the requested worker and records the Dispatch:
 
 ```text
 large local reading/classification? → Nebu
@@ -196,9 +211,9 @@ architecture ambiguity/risk?        → Claude
 code/test/repo mutation?            → Codex
 ```
 
-### Phase 4 — Validate
+### Phase 4 — Validate in Weavr
 
-Orca does not promote worker output automatically.
+Weavr does not promote worker output automatically. Orca completion is runtime evidence only.
 
 Validation may include:
 
@@ -209,19 +224,19 @@ Validation may include:
 - test execution;
 - cross-worker review.
 
-### Phase 5 — Synthesize
+### Phase 5 — Synthesize in Weavr
 
-Orca combines accepted outputs into a canonical project state.
+Weavr combines independently verified outputs into canonical project state.
 
 Rejected claims remain rejected; they are not silently rewritten.
 
-### Phase 6 — Execute
+### Phase 6 — Execute through Orca
 
 Implementation packets go to Codex.
 
-### Phase 7 — Accept
+### Phase 7 — Prove and decide in Weavr
 
-Orca verifies:
+Weavr independently verifies:
 
 - tests;
 - evidence;
@@ -234,7 +249,7 @@ Orca verifies:
 ```text
 HUMAN VISION
     ↓
-ORCA: frame V2
+WEAVR: frame V2 Mission
     ↓
 ┌──────────────────────────┬─────────────────────────┐
 │ NEBU                     │ PERPLEXITY              │
@@ -243,21 +258,24 @@ ORCA: frame V2
 │ current data inventory   │ comparator evidence     │
 └─────────────┬────────────┴─────────────┬───────────┘
               ↓                          ↓
-              └──────── ORCA ────────────┘
+              └── ORCA execution evidence ┘
                          ↓
                      CLAUDE
              architecture / critique
                          ↓
-                       ORCA
+                       WEAVR
                 canonical build packet
+                         ↓
+                       ORCA
+                   Codex Dispatch
                          ↓
                       CODEX
              schemas + first vertical slice
                          ↓
                     tests / PR
                          ↓
-                       ORCA
-                    acceptance
+                       WEAVR
+                 Proof / Decision
 ```
 
 ## First mission
@@ -316,13 +334,13 @@ Answer:
 - where are we mixing explanation, evidence and decision authority?
 - what is the smallest coherent first implementation?
 
-**Orca**
+**Weavr**
 
-Resolve conflicts and produce one implementation packet.
+Independently verify worker evidence, resolve conflicts and produce one canonical implementation packet. Record accepted claims, rejected claims and unresolved questions explicitly.
 
-**Codex**
+**Codex — gated**
 
-Implement only Stage 1 kernel + narrow Basel/VoltaNord fixture.
+Implement only Stage 1 kernel + narrow Basel/VoltaNord fixture, and only after the human accepts Weavr Task D. Until then Task E exists as a dependency-blocked Orca Task and must not be dispatched.
 
 ## Worker result envelope
 
@@ -353,7 +371,7 @@ worker suggestion
 ≠ implementation state
 ```
 
-Orca should explicitly promote information through these states.
+Weavr should explicitly promote information through these states. Orca may display the state projection but does not perform the semantic promotion.
 
 For research:
 
@@ -385,9 +403,9 @@ Default:
 
 This avoids using expensive reasoning models for bulk reading or external search and prevents Codex from becoming the product architect by accident.
 
-## UI / observability for Orca
+## UI / observability using existing Weavr and Orca surfaces
 
-Orca should expose:
+Do not build a third dashboard. Use the Weavr Mission surface for semantic state, evidence review, Proof and Decision. Use the Orca Run/Task/Dispatch surfaces for execution status and worker lifecycle. Together they should expose:
 
 - active mission;
 - task graph;
@@ -396,7 +414,7 @@ Orca should expose:
 - evidence received;
 - blocked dependencies;
 - token / budget use where available;
-- current canonical decision;
+- current canonical decision from Weavr, never inferred from Orca Task state;
 - next approval gate.
 
 A useful visual vocabulary:
@@ -419,7 +437,7 @@ DONE         accepted result
 - Perplexity findings remain external evidence until accepted.
 - Claude recommendations are advisory.
 - Codex receives explicit repo scope and acceptance tests.
-- Orca never treats model confidence as evidence quality.
+- Weavr never treats model confidence or Orca completion as evidence quality.
 - Unknown remains a valid outcome.
 - Human approval is required before destructive or cross-boundary changes.
 
@@ -427,4 +445,14 @@ DONE         accepted result
 
 The orchestration is successful when:
 
-> Orca can turn the Sponge City V2 vision into traceable research, local analysis, architecture review and implementation work without any single model needing the entire job or silently becoming the authority.
+> Weavr can turn the Sponge City V2 vision into a governed Mission, project its work into traceable Orca execution, independently verify returned evidence, and make Proof/Decision transitions without any runtime silently becoming the authority.
+
+## First live projection
+
+The portable Mission and typed task graph are committed at:
+
+- `.weavr/missions/sponge-city-v2-reconciliation.json`;
+- `.weavr/plans/sponge-city-v2-reconciliation.tasks.json`;
+- `.weavr/schemas/worker-result-envelope.v1.schema.json`.
+
+The live Orca projection is Run `run_79dab8a8e83e`. Task A completed with a partial live Morrow result. Task B is honestly blocked because no callable Perplexity adapter exists. Tasks C and D therefore remain pending, and Task E remains undispatched behind Task D plus an explicit human acceptance gate.
