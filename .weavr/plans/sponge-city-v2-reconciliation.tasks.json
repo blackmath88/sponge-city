@@ -37,7 +37,23 @@
       "objective": "Research official evidence standards, city-data practices, comparator cities, and source-backed indicators.",
       "latest_evidence": "No Perplexity CLI, Orca agent, or Weavr adapter was found.",
       "blocked_reason": "Perplexity is not connected; no execution was simulated.",
-      "artifact": null
+      "artifact": null,
+      "blocking_for": [],
+      "evidence_policy": "Preserve as missing until Perplexity or an equivalent source-backed research lane is deliberately connected."
+    },
+    {
+      "id": "sponge-v2-R",
+      "orca_task_id": null,
+      "type": "runtime_acceptance",
+      "worker": "weavr/orca",
+      "activity": "VERIFYING",
+      "depends_on": [],
+      "status": "completed",
+      "result_status": "passed",
+      "objective": "Prove the Weavr runner, Orca adapter, and bounded Morrow, Codex, and Claude settlement/evidence spine.",
+      "latest_evidence": "All three providers settled through Orca; Weavr proof bundles contain adapter and provider provenance, and the Morrow proof contains a validated Qwen3-14B structured result.",
+      "blocked_reason": null,
+      "artifact": "docs/orchestration/results/runtime-spine-acceptance.json"
     },
     {
       "id": "sponge-v2-C",
@@ -47,14 +63,14 @@
       "activity": "SPARRING",
       "depends_on": [
         "sponge-v2-A",
-        "sponge-v2-B"
+        "sponge-v2-R"
       ],
-      "status": "pending",
-      "result_status": null,
+      "status": "completed",
+      "result_status": "completed_with_open_evidence_gap",
       "objective": "Challenge the V2 architecture, evidence/decision boundary, PR survival choices, and smallest coherent slice.",
-      "latest_evidence": "Claude CLI is installed, but its OAuth token is stale; the task is also dependency-blocked by Task B.",
-      "blocked_reason": "Task B has no result and Claude authentication must be refreshed.",
-      "artifact": null
+      "latest_evidence": "Claude OAuth was refreshed and Task C settled through Orca as task_be02c560bb86 / ctx_3029bcdb14e9. The review accepts the epistemic core, challenges build sequencing, and keeps Perplexity research explicitly missing.",
+      "blocked_reason": null,
+      "artifact": "docs/orchestration/results/runtime-spine-acceptance.json"
     },
     {
       "id": "sponge-v2-D",
@@ -64,14 +80,14 @@
       "activity": "WEAVING",
       "depends_on": [
         "sponge-v2-A",
-        "sponge-v2-B",
-        "sponge-v2-C"
+        "sponge-v2-C",
+        "sponge-v2-R"
       ],
-      "status": "pending",
+      "status": "ready",
       "result_status": null,
       "objective": "Independently verify worker evidence and create the canonical implementation packet.",
-      "latest_evidence": "No canonical synthesis exists; Nebu output has not been promoted.",
-      "blocked_reason": "Tasks B and C are incomplete.",
+      "latest_evidence": "Runtime spine acceptance and the independent Claude architecture review are recorded. Task B remains an explicit missing external-research input, not an inferred fact and not a hard dependency for synthesis.",
+      "blocked_reason": null,
       "artifact": null
     },
     {
@@ -93,8 +109,8 @@
     }
   ],
   "canonical_decision": {
-    "state": "not_ready",
-    "summary": "Do not dispatch Stage 1 implementation.",
-    "reason": "Perplexity evidence and Claude review are missing; Weavr has not synthesized or accepted an implementation packet."
+    "state": "synthesis_ready",
+    "summary": "Task D may perform canonical synthesis. Do not dispatch Stage 1 implementation.",
+    "reason": "The Weavr-Orca runtime spine and Task C review are proven. Perplexity evidence remains explicitly missing and must be represented as a gap in synthesis; Task E still requires explicit human acceptance of Task D."
   }
 }

@@ -1,0 +1,77 @@
+{
+  "schema": "sponge-city.runtime-spine-acceptance/v1",
+  "recorded_at": "2026-10-06T16:54:00Z",
+  "status": "passed",
+  "orca_run_id": "run_79dab8a8e83e",
+  "runner": {
+    "id": "nebu-orca-e2e",
+    "adapter": "orca",
+    "online": true,
+    "workhorses": ["morrow", "codex", "claude"]
+  },
+  "evidence": {
+    "morrow": {
+      "mission_id": "sponge-city-orca-morrow-evidence-v2",
+      "weavr_run_id": "6f45b924-28b5-4c1e-bc12-0e28e86d733e",
+      "proof_id": "pow:6f45b924-28b5-4c1e-bc12-0e28e86d733e",
+      "orca_task_id": "task_518535e22578",
+      "orca_dispatch_id": "ctx_e0f98ff88727",
+      "orca_outcome": "succeeded",
+      "provider_path": "Weavr -> Orca -> OpenCode -> Morrow -> Qwen3-14B Q4_K_M",
+      "result_artifact": "runtime-result.json",
+      "result_validation": "valid JSON; evidence_state=missing; site_visit_required=true",
+      "scope_clean": true
+    },
+    "codex": {
+      "mission_id": "sponge-city-orca-codex-acceptance",
+      "weavr_run_id": "a7ecadca-c03a-4f55-b96f-25895378537a",
+      "proof_id": "pow:a7ecadca-c03a-4f55-b96f-25895378537a",
+      "orca_task_id": "task_cd94ab8917b8",
+      "orca_dispatch_id": "ctx_3407f0bb6369",
+      "orca_outcome": "succeeded",
+      "result": {
+        "task_id": "runtime-codex",
+        "status": "completed",
+        "summary": "The Mission preserves observed, derived, inferred, missing, and site-visit-required."
+      },
+      "scope_clean": true
+    },
+    "claude_oauth": {
+      "mission_id": "sponge-city-orca-claude-acceptance",
+      "weavr_run_id": "1448d51c-260c-42a3-b8c1-8f4efdb46700",
+      "proof_id": "pow:1448d51c-260c-42a3-b8c1-8f4efdb46700",
+      "orca_task_id": "task_562df878cd52",
+      "orca_dispatch_id": "ctx_2e50f27577a4",
+      "orca_outcome": "succeeded",
+      "auth": "claude.ai OAuth refreshed before dispatch",
+      "result": {
+        "task_id": "runtime-claude",
+        "status": "completed",
+        "summary": "Missing evidence remains missing; Task D readiness is synthesis readiness, not Stage 1 implementation."
+      },
+      "scope_clean": true
+    },
+    "task_c": {
+      "mission_id": "sponge-city-v2-task-c-architecture-review",
+      "weavr_run_id": "5ff70bf0-832d-4d51-9672-c0903f7f9748",
+      "proof_id": "pow:5ff70bf0-832d-4d51-9672-c0903f7f9748",
+      "orca_task_id": "task_be02c560bb86",
+      "orca_dispatch_id": "ctx_3029bcdb14e9",
+      "orca_outcome": "succeeded",
+      "result_status": "completed",
+      "scope_clean": true
+    }
+  },
+  "control_plane_note": "The bounded runs end in needs_human after their single automatic iteration by design. Orca settlement, structured output, scope evidence, and proof provenance are recorded independently; needs_human is not a failed dispatch.",
+  "perplexity": {
+    "state": "missing",
+    "connected": false,
+    "blocking_task_d_synthesis": false,
+    "policy": "Do not infer or fabricate the absent external research. Carry it into Task D as an explicit evidence gap."
+  },
+  "stage_1": {
+    "implementation_started": false,
+    "dispatch_allowed": false,
+    "gate": "explicit human acceptance of Task D remains required"
+  }
+}
