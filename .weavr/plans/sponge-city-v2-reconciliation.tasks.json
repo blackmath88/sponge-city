@@ -22,7 +22,8 @@
       "objective": "Inventory PR #3 and PR #4, classify modules and contracts, and map them to the five V2 domain objects.",
       "latest_evidence": "Live Morrow compute.analyze returned 18 path-level classifications using 5,234 tokens; the result remains unaccepted pending independent review.",
       "blocked_reason": null,
-      "artifact": "docs/orchestration/results/task-a-nebu.json"
+      "artifact": "docs/orchestration/results/task-a-nebu.json",
+      "review_artifact": "docs/orchestration/results/task-a-nebu.review.json"
     },
     {
       "id": "sponge-v2-B",

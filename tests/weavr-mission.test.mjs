@@ -5,6 +5,7 @@ import { test } from "node:test";
 const missionPath = new URL("../.weavr/missions/sponge-city-v2-reconciliation.json", import.meta.url);
 const graphPath = new URL("../.weavr/plans/sponge-city-v2-reconciliation.tasks.json", import.meta.url);
 const resultPath = new URL("../docs/orchestration/results/task-a-nebu.json", import.meta.url);
+const reviewPath = new URL("../docs/orchestration/results/task-a-nebu.review.json", import.meta.url);
 
 const load = async (path) => JSON.parse(await readFile(path, "utf8"));
 
@@ -54,7 +55,9 @@ test("worker result keeps partial evidence distinct from acceptance", async () =
 
   assert.equal(result.status, "partial");
   assert.equal(result.runtime_provenance.accepted_by_weavr, false);
-  assert.ok(result.evidence.some((item) => item.classification === "archive"));
-  assert.ok(result.evidence.some((item) => item.classification === "conflict"));
+  const review = await load(reviewPath);
+  assert.equal(review.worker, "weavr/operator-review");
+  assert.equal(review.runtime_provenance.accepted_by_weavr, false);
+  assert.ok(review.evidence.some((item) => item.classification === "archive"));
+  assert.ok(review.evidence.some((item) => item.classification === "conflict"));
 });
-

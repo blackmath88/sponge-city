@@ -42,7 +42,7 @@ Orca already exposes Run, Task, dependency, Dispatch, effective provider, transc
 
 ### Morrow
 
-The live governed call used `compute.analyze`, model `qwen3-14b-q4_k_m`, an 8,192-token context, and produced a 5,234-token request/result total. The normalized result is in `docs/orchestration/results/task-a-nebu.json`; `accepted_by_weavr` is `false`.
+The live governed call used `compute.analyze`, model `qwen3-14b-q4_k_m`, an 8,192-token context, and produced a 5,234-token request/result total. The unchanged worker envelope is in `docs/orchestration/results/task-a-nebu.json`; `accepted_by_weavr` is `false`. Operator corrections are separate in `task-a-nebu.review.json`, also unaccepted pending Task D.
 
 ### Perplexity
 
