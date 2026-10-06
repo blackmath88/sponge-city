@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sponge-city.local/schemas/worker-result-envelope.v1.schema.json",
+  "title": "Weavr worker evidence envelope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "task_id",
+    "worker",
+    "status",
+    "summary",
+    "artifacts",
+    "claims",
+    "evidence",
+    "uncertainties",
+    "recommended_next"
+  ],
+  "properties": {
+    "task_id": { "type": "string", "minLength": 1 },
+    "worker": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": ["completed", "partial", "blocked", "failed"]
+    },
+    "summary": { "type": "string" },
+    "artifacts": { "type": "array" },
+    "claims": { "type": "array" },
+    "evidence": { "type": "array" },
+    "uncertainties": { "type": "array" },
+    "recommended_next": { "type": "array" }
+  }
+}

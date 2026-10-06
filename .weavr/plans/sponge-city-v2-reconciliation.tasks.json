@@ -1,0 +1,116 @@
+{
+  "schema": "sponge-city.weavr-task-graph/v1",
+  "mission_id": "sponge-city-v2-reconciliation",
+  "canonical_owner": "weavr",
+  "execution_substrate": "orca",
+  "orca_projection": {
+    "run_id": "run_79dab8a8e83e",
+    "workspace": "d1eb1698-9a68-4997-b8fa-ed6e8fcb034b::/home/achim/Documents/Codex/2026-10-06/files-pasted-by-the-user-you/work/sponge-city",
+    "created_at": "2026-10-06T15:33:19Z"
+  },
+  "result_envelope": ".weavr/schemas/worker-result-envelope.v1.schema.json",
+  "tasks": [
+    {
+      "id": "sponge-v2-A",
+      "orca_task_id": "task_6241a9d04b30",
+      "type": "local_analysis",
+      "worker": "nebu/morrow/qwen3-14b",
+      "activity": "READING",
+      "depends_on": [],
+      "status": "completed",
+      "result_status": "partial",
+      "objective": "Inventory PR #3 and PR #4, classify modules and contracts, and map them to the five V2 domain objects.",
+      "latest_evidence": "Live Morrow compute.analyze returned 18 path-level classifications using 5,234 tokens; the result remains unaccepted pending independent review.",
+      "blocked_reason": null,
+      "artifact": "docs/orchestration/results/task-a-nebu.json",
+      "review_artifact": "docs/orchestration/results/task-a-nebu.review.json"
+    },
+    {
+      "id": "sponge-v2-B",
+      "orca_task_id": "task_c210d7c4fade",
+      "type": "external_research",
+      "worker": "perplexity",
+      "activity": "SCOUTING",
+      "depends_on": [],
+      "status": "blocked",
+      "result_status": "blocked",
+      "objective": "Research official evidence standards, city-data practices, comparator cities, and source-backed indicators.",
+      "latest_evidence": "No Perplexity CLI, Orca agent, or Weavr adapter was found.",
+      "blocked_reason": "Perplexity is not connected; no execution was simulated.",
+      "artifact": null,
+      "blocking_for": [],
+      "evidence_policy": "Preserve as missing until Perplexity or an equivalent source-backed research lane is deliberately connected."
+    },
+    {
+      "id": "sponge-v2-R",
+      "orca_task_id": null,
+      "type": "runtime_acceptance",
+      "worker": "weavr/orca",
+      "activity": "VERIFYING",
+      "depends_on": [],
+      "status": "completed",
+      "result_status": "passed",
+      "objective": "Prove the Weavr runner, Orca adapter, and bounded Morrow, Codex, and Claude settlement/evidence spine.",
+      "latest_evidence": "All three providers settled through Orca; Weavr proof bundles contain adapter and provider provenance, and the Morrow proof contains a validated Qwen3-14B structured result.",
+      "blocked_reason": null,
+      "artifact": "docs/orchestration/results/runtime-spine-acceptance.json"
+    },
+    {
+      "id": "sponge-v2-C",
+      "orca_task_id": "task_a5dec4577a0d",
+      "type": "architecture_review",
+      "worker": "claude",
+      "activity": "SPARRING",
+      "depends_on": [
+        "sponge-v2-A",
+        "sponge-v2-R"
+      ],
+      "status": "completed",
+      "result_status": "completed_with_open_evidence_gap",
+      "objective": "Challenge the V2 architecture, evidence/decision boundary, PR survival choices, and smallest coherent slice.",
+      "latest_evidence": "Claude OAuth was refreshed and Task C settled through Orca as task_be02c560bb86 / ctx_3029bcdb14e9. The review accepts the epistemic core, challenges build sequencing, and keeps Perplexity research explicitly missing.",
+      "blocked_reason": null,
+      "artifact": "docs/orchestration/results/runtime-spine-acceptance.json"
+    },
+    {
+      "id": "sponge-v2-D",
+      "orca_task_id": "task_0f0298346df4",
+      "type": "canonical_synthesis",
+      "worker": "weavr",
+      "activity": "WEAVING",
+      "depends_on": [
+        "sponge-v2-A",
+        "sponge-v2-C",
+        "sponge-v2-R"
+      ],
+      "status": "ready",
+      "result_status": null,
+      "objective": "Independently verify worker evidence and create the canonical implementation packet.",
+      "latest_evidence": "Runtime spine acceptance and the independent Claude architecture review are recorded. Task B remains an explicit missing external-research input, not an inferred fact and not a hard dependency for synthesis.",
+      "blocked_reason": null,
+      "artifact": null
+    },
+    {
+      "id": "sponge-v2-E",
+      "orca_task_id": "task_aeb1ba718d61",
+      "type": "implementation",
+      "worker": "codex",
+      "activity": "BUILDING",
+      "depends_on": [
+        "sponge-v2-D"
+      ],
+      "status": "pending",
+      "result_status": null,
+      "objective": "Implement the accepted Stage 1 and narrow Basel/VoltaNord packet.",
+      "latest_evidence": "A separate Orca probe proved Codex launch and input acceptance but did not settle; no Stage 1 dispatch has occurred.",
+      "blocked_reason": "Task D is incomplete and has not received human acceptance.",
+      "artifact": null,
+      "dispatch_gate": "explicit_human_acceptance_of_task_d"
+    }
+  ],
+  "canonical_decision": {
+    "state": "synthesis_ready",
+    "summary": "Task D may perform canonical synthesis. Do not dispatch Stage 1 implementation.",
+    "reason": "The Weavr-Orca runtime spine and Task C review are proven. Perplexity evidence remains explicitly missing and must be represented as a gap in synthesis; Task E still requires explicit human acceptance of Task D."
+  }
+}

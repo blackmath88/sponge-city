@@ -1,0 +1,46 @@
+{
+  "task_id": "sponge-v2-A",
+  "worker": "nebu/morrow/qwen3-14b",
+  "status": "partial",
+  "summary": "Bounded read-only local analysis of Weavr Mission sponge-city-v2-reconciliation for PR #3 and PR #4. Module groups classified as keep, adapt, archive, or conflict, mapped to Charter, CityEvidence, DataGap, PlaceProfile, ActionAssessment.",
+  "artifacts": [],
+  "claims": [],
+  "evidence": [
+    {"path":"adaptive-interface/contracts/effect-result.schema.json","pr":"3","classification":"keep","maps_to":["ActionAssessment"],"reason":"Defines effect results for interventions, aligns with ActionAssessment.","evidence_basis":"Schema is foundational for effect modeling."},
+    {"path":"adaptive-interface/contracts/handoff.md","pr":"3","classification":"keep","maps_to":["Charter"],"reason":"Describes handoff between modules, aligns with Charter's governance and integration.","evidence_basis":"Document outlines process for state and effect handoffs."},
+    {"path":"adaptive-interface/contracts/intervention-catalog.schema.json","pr":"3","classification":"keep","maps_to":["ActionAssessment"],"reason":"Catalog of interventions, aligns with ActionAssessment for scenario planning.","evidence_basis":"Schema defines intervention types and parameters."},
+    {"path":"adaptive-interface/contracts/intervention-knowledge.schema.json","pr":"3","classification":"keep","maps_to":["CityEvidence"],"reason":"Knowledge about interventions, aligns with CityEvidence for data collection.","evidence_basis":"Schema captures intervention-related knowledge."},
+    {"path":"adaptive-interface/contracts/place-model.schema.json","pr":"3","classification":"keep","maps_to":["PlaceProfile"],"reason":"Model for places, aligns with PlaceProfile for spatial data.","evidence_basis":"Schema defines place attributes and geometry."},
+    {"path":"adaptive-interface/contracts/renderer-contract.md","pr":"3","classification":"keep","maps_to":["Charter"],"reason":"Renderer contract, aligns with Charter for integration and rendering.","evidence_basis":"Document outlines rendering responsibilities and constraints."},
+    {"path":"adaptive-interface/contracts/scenario.schema.json","pr":"3","classification":"keep","maps_to":["ActionAssessment"],"reason":"Scenario modeling, aligns with ActionAssessment for simulation.","evidence_basis":"Schema defines scenario parameters and outcomes."},
+    {"path":"adaptive-interface/contracts/state-model.schema.json","pr":"3","classification":"keep","maps_to":["PlaceProfile"],"reason":"State model for places, aligns with PlaceProfile for dynamic modeling.","evidence_basis":"Schema captures state transitions and effects."},
+    {"path":"adaptive-interface/modules/mock-intervention-provider.js","pr":"3","classification":"adapt","maps_to":["ActionAssessment"],"reason":"Mock intervention provider, needs adaptation for real data.","evidence_basis":"Currently mocks data, should be replaced with real intervention logic."},
+    {"path":"adaptive-interface/modules/mock-place-provider.js","pr":"3","classification":"adapt","maps_to":["PlaceProfile"],"reason":"Mock place provider, needs adaptation for real data.","evidence_basis":"Currently mocks place data, should be replaced with real geometry and attributes."},
+    {"path":"adaptive-interface/modules/mock-renderer.js","pr":"3","classification":"adapt","maps_to":["Charter"],"reason":"Mock renderer, needs adaptation for real rendering.","evidence_basis":"Currently mocks rendering, should be replaced with real visual integration."},
+    {"path":"adaptive-interface/modules/street-slice-adapter.js","pr":"3","classification":"keep","maps_to":["PlaceProfile"],"reason":"Street slice adapter, aligns with PlaceProfile for spatial modeling.","evidence_basis":"Adapter processes street geometry and attributes."},
+    {"path":"adaptive-interface/modules/text-renderer.js","pr":"3","classification":"keep","maps_to":["Charter"],"reason":"Text renderer, aligns with Charter for rendering.","evidence_basis":"Renderer for textual outputs and labels."},
+    {"path":"adaptive-interface/runtime/effect-engine.js","pr":"3","classification":"keep","maps_to":["ActionAssessment"],"reason":"Effect engine, aligns with ActionAssessment for simulation.","evidence_basis":"Core logic for effect modeling and execution."},
+    {"path":"adaptive-interface/runtime/evidence.js","pr":"3","classification":"keep","maps_to":["CityEvidence"],"reason":"Evidence handling, aligns with CityEvidence for data collection.","evidence_basis":"Manages evidence and unknowns in the system."},
+    {"path":"contributions/andy/data/docs/data-access-audit.md","pr":"4","classification":"keep","maps_to":["CityEvidence"],"reason":"Data access audit, aligns with CityEvidence for data collection.","evidence_basis":"Document outlines data access and audit procedures."},
+    {"path":"contributions/andy/scripts/audit_data_access.py","pr":"4","classification":"keep","maps_to":["CityEvidence"],"reason":"Script for auditing data access, aligns with CityEvidence for data collection.","evidence_basis":"Script checks data access and permissions."},
+    {"path":"contributions/andy/scripts/extract_landsat_heat.py","pr":"4","classification":"keep","maps_to":["PlaceProfile"],"reason":"Script for extracting Landsat heat data, aligns with PlaceProfile for spatial data.","evidence_basis":"Script processes satellite data for heat mapping."}
+  ],
+  "uncertainties": [
+    "Some PR3 modules may require further adaptation for real-world data integration.",
+    "PR4 scripts may need additional mapping to specific modules or contracts."
+  ],
+  "recommended_next": [
+    "Review and adapt mock modules in PR3 for real data integration.",
+    "Map PR4 scripts to relevant contracts and modules for full integration."
+  ],
+  "runtime_provenance": {
+    "backend": "llama.cpp SYCL",
+    "model": "qwen3-14b-q4_k_m",
+    "accelerator": "Intel Arc Pro B60",
+    "prompt_tokens": 3690,
+    "completion_tokens": 1544,
+    "total_tokens": 5234,
+    "audit_log": "/home/achim/.local/state/morrow/audit.jsonl",
+    "accepted_by_weavr": false
+  }
+}

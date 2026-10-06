@@ -1,0 +1,73 @@
+{
+  "schema": "weavr.mission/v0",
+  "id": "sponge-city-v2-reconciliation",
+  "title": "Reconcile existing Sponge City work and prepare Stage 1 implementation",
+  "kind": "review",
+  "state": "ready",
+  "intent": "Reconcile PR #3 and PR #4 against the Sponge City V2 domain model, research a portable Charter basis, and prepare one reviewed implementation packet for Stage 1 plus a narrow Basel/VoltaNord slice.",
+  "outcome": "A traceable, independently verified implementation packet that records accepted and rejected claims, unresolved questions, the integration base, contract ownership, and keep/adapt/archive decisions.",
+  "requires": {
+    "capabilities": [
+      "repo.read",
+      "research.web",
+      "architecture.review"
+    ],
+    "independentReviewer": true
+  },
+  "prefers": {
+    "localFirst": true,
+    "subscriptionBacked": true,
+    "providerOrder": [
+      "morrow",
+      "perplexity",
+      "claude",
+      "codex"
+    ]
+  },
+  "scope": {
+    "writePaths": [
+      ".weavr/**",
+      "docs/**",
+      "tests/weavr-mission.test.mjs",
+      "scripts/test-all.mjs"
+    ]
+  },
+  "authority": {
+    "architectureChange": "ask",
+    "dependencyInstall": "forbidden",
+    "externalService": "ask",
+    "merge": "forbidden"
+  },
+  "acceptance": [
+    "PR #3 and PR #4 are mapped to CharterIndicator, CityEvidence, DataGap, PlaceProfile, and ActionAssessment with repository evidence",
+    "external research claims retain source and discovery status until Weavr accepts or rejects them",
+    "the implementation packet records accepted claims, rejected claims, unresolved questions, chosen integration base, contract ownership, and keep/adapt/archive decisions",
+    "Orca exposes the Run, typed Tasks, dependencies, assignments, state, evidence summaries, and blocked reasons",
+    "Task E remains undispatched until Task D has been accepted by the human"
+  ],
+  "exclusions": [
+    "do not implement Stage 1 product contracts, fixtures, flows, or screens",
+    "do not make Orca the owner of canonical project state or research conclusions",
+    "do not treat worker completion as Weavr acceptance",
+    "do not replace missing evidence with inference",
+    "do not fake unavailable worker integrations"
+  ],
+  "escalation": [
+    "a required worker has no callable adapter",
+    "the proposed integration base changes",
+    "scope expands from orchestration wiring into product implementation",
+    "independent verification cannot reproduce a material claim"
+  ],
+  "stopConditions": [
+    "Task D is not accepted",
+    "Task B has no source-backed result",
+    "the execution path would bypass Orca worker lifecycle",
+    "Stage 1 implementation is requested before the decision gate"
+  ],
+  "budget": {
+    "maxRuntimeMinutes": 180,
+    "maxAutomaticIterations": 3,
+    "maxExternalCalls": 20,
+    "maxSemanticDecisions": 12
+  }
+}
