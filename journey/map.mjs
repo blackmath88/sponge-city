@@ -163,3 +163,16 @@ export function comparableLayers(a, b) {
   const same = ['theme', 'unit', 'method', 'spatial_scale'].every(f => String(a[f]).trim().toLowerCase() === String(b[f]).trim().toLowerCase());
   return { comparable: same && a.origin === b.origin, same_theme: a.theme === b.theme };
 }
+
+// Initial view: zoom to the thematic layers when they cover well under the whole extent. Returns [x,y,w,h] or null.
+export function fitView(geos, proj) {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const g of geos) walkCoords(g, ([lon, lat]) => { const x = proj.x(lon), y = proj.y(lat); x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); });
+  if (!isFinite(x0)) return null;
+  const pad = Math.max(20, (x1 - x0) * 0.08);
+  let w = Math.max(x1 - x0 + 2 * pad, 80); let h = w * proj.height / proj.width;
+  if (h < (y1 - y0) + 2 * pad) { h = (y1 - y0) + 2 * pad; w = h * proj.width / proj.height; }
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const vx = Math.min(proj.width - w, Math.max(0, cx - w / 2)), vy = Math.min(proj.height - h, Math.max(0, cy - h / 2));
+  return w > proj.width * 0.6 ? null : [vx, vy, w, h].map(v => Math.round(v * 10) / 10);
+}

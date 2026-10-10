@@ -134,7 +134,7 @@ try {
   }
   function bindSvg(svg) {
     const side = svg.closest('.mappanel').dataset.side; const W=+svg.dataset.w, H=+svg.dataset.h;
-    let vb = viewBoxes[side] ?? [0,0,W,H]; const apply = () => { viewBoxes[side]=vb; svg.setAttribute('viewBox',vb.join(' ')); svg.style.setProperty('--z',String(W/vb[2])); };
+    const fit = svg.dataset.fit ? svg.dataset.fit.split(' ').map(Number) : null; let vb = viewBoxes[side] ?? fit ?? [0,0,W,H]; const apply = () => { viewBoxes[side]=vb; svg.setAttribute('viewBox',vb.join(' ')); svg.style.setProperty('--z',String(W/vb[2])); };
     const zoom = (f,cx=vb[0]+vb[2]/2,cy=vb[1]+vb[3]/2) => { const w=Math.min(W,Math.max(W/40,vb[2]*f)), h=w*H/W; vb=[Math.min(W-w,Math.max(0,cx-(cx-vb[0])*(w/vb[2]))),Math.min(H-h,Math.max(0,cy-(cy-vb[1])*(h/vb[3]))),w,h]; apply(); };
     const pan = (dx,dy) => { vb=[Math.min(W-vb[2],Math.max(0,vb[0]+dx)),Math.min(H-vb[3],Math.max(0,vb[1]+dy)),vb[2],vb[3]]; apply(); };
     apply();

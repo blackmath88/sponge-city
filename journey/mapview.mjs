@@ -1,7 +1,7 @@
 // Native bilingual map view. Pure: (state) → HTML string. Behaviour (zoom, click) is bound in app.mjs.
 import { pick } from './i18n.mjs';
 import { esc } from './views.mjs';
-import { makeProjection, geometryPath, isPointGeom, isLineGeom, colorFor, legendEntries, inspectRecord, comparableLayers, packSummary } from './map.mjs';
+import { fitView, makeProjection, geometryPath, isPointGeom, isLineGeom, colorFor, legendEntries, inspectRecord, comparableLayers, packSummary } from './map.mjs';
 
 const MAX_FEATURES = 4000;
 const chip = (text, kind = '') => `<span class="chip ${esc(kind)}">${esc(text)}</span>`;
@@ -28,10 +28,11 @@ function mapPanel({ lang, ui, pack, geoById, state, side, selection }) {
   const order = l => (l.theme === 'boundary' ? 0 : 1);
   const groups = [...drawn].sort((a, b) => order(a) - order(b)).map(l => layerGroup(l, geoById.get(l.id), proj)).join('');
   const name = pick(pack.name, lang);
+  const fit = fitView(drawn.filter(l => l.theme !== 'boundary').map(l => geoById.get(l.id)), proj);
   const [w, s, e, n] = pack.extent.bbox;
   return `<figure class="mappanel" data-city="${esc(pack.city)}" data-side="${side}">
     <figcaption><strong>${esc(name)}</strong> <span class="small muted">${esc(ui('map_extent'))}: ${w.toFixed(3)}–${e.toFixed(3)} °E · ${s.toFixed(3)}–${n.toFixed(3)} °N</span></figcaption>
-    <div class="mapframe"><svg class="mapsvg" role="img" aria-label="${esc(ui('map_aria').replace('{city}', name))}" viewBox="0 0 ${proj.width} ${proj.height}" data-w="${proj.width}" data-h="${proj.height}" preserveAspectRatio="xMidYMid meet" tabindex="0">
+    <div class="mapframe"><svg class="mapsvg" role="img" aria-label="${esc(ui('map_aria').replace('{city}', name))}" viewBox="0 0 ${proj.width} ${proj.height}" data-fit="${fit ? fit.join(' ') : ''}" data-w="${proj.width}" data-h="${proj.height}" preserveAspectRatio="xMidYMid meet" tabindex="0">
       <rect class="seabed" x="0" y="0" width="${proj.width}" height="${proj.height}"/>${groups}${selection ? '' : ''}</svg>
       <div class="zoom" role="group" aria-label="${esc(ui('map_zoom'))}"><button data-zoom="in" aria-label="${esc(ui('map_zoom_in'))}">+</button><button data-zoom="out" aria-label="${esc(ui('map_zoom_out'))}">−</button><button data-zoom="reset" aria-label="${esc(ui('map_zoom_reset'))}">⌂</button></div>
       ${drawn.length ? '' : `<p class="mapempty">${esc(pack.layers.some(l => l.kind === 'geojson-snapshot') ? ui('map_no_layer_selected') : ui('map_no_snapshot'))}</p>`}
