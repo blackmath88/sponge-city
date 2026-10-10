@@ -126,7 +126,7 @@
     "pflanzjahr",
     "kronendurchmesser"
    ],
-   "measure_topic": "canopy"
+   "measure_topic": null
   },
   {
    "kind": "geojson-snapshot",
