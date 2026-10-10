@@ -103,7 +103,7 @@ export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measure
   let compareNote = '';
   if (other) {
     const a = pack.layers.filter(l => state.layers.includes(l.id)), b = other.layers.filter(l => otherState.layers.includes(l.id));
-    const pairs = a.flatMap(x => b.map(y => ({ x, y, ...comparableLayers(x, y) }))).filter(p => p.same_theme);
+    const pairs = a.flatMap(x => b.map(y => ({ x, y, ...comparableLayers(x, y) }))).filter(p => p.same_theme && p.x.theme !== 'boundary');
     compareNote = `<p class="small boundary" data-compare-note>${esc(ui('map_compare_note'))}${pairs.map(p => ` <span class="pair ${p.comparable ? 'ok' : 'no'}">${esc(ui('theme_' + p.x.theme))}: ${esc(ui(p.comparable ? 'comparable' : 'not_comparable'))}${p.comparable ? '' : ` (${esc(ui('differs_in'))} ${p.differs.map(f => esc(ui(f === 'temporal' ? 'f_temporal' : f === 'theme' ? 'map_layer' : f === 'origin' ? 'map_origin' : 'f_' + f))).join(', ')})`}</span>`).join('')}</p>`;
   }
   return `<div class="view mapview" data-city="${esc(state.city)}" data-mode="${mode}">

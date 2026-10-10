@@ -9,14 +9,14 @@ Selection rubric (applied before drafting): official primary sources · publishe
 | Public data access | **partial** — Open downloads and a Zero 2.0 licence were confirmed for the 2005 water-balance record only; 2022 licence and the daten.berlin.de record (blocked, HTTP 403) were not verified. | **partial** — Six skybrud datasets under CC BY 4.0 with CKAN API, but they hold plan and status data; flood scenarios are PDFs from 2012 calculations. |
 | Reported outcomes | **partial** — Output statistics (19,640 m2 green roof, about 300,000 m3 storage) are reported; effects on runoff, evaporation or overflows are not quantified. | **partial** — Programme-level figures exist (7-9 % risk reduction, 4 of 48 critical areas) with method not stated; no project-level measured outcomes found. |
 
-## Why these two
+## Why these three
 
 - **Berlin** was a candidate from earlier repository research (Umweltatlas, QTrees). It contrasts with Basel in scale and in publishing city-wide sealing and a modelled water balance as open maps. It is a comparator for data access and programme steering, not for measured effect.
+- **Zürich** is the most transferable comparator for Swiss law, climate and German-language documentation: open geodata (CCZero) for the tree register, heat-mitigation measure areas and districts, specialist plans for heat and trees, and a rainwater plan in preparation. It is a comparator for planning instruments and open geodata, not for measured effect: no measured sponge-measure results were found, no city sealing statistic exists (this project computed 28.6 percent from the 2020 biotope map and says so), sewer facts exist only as text with a conflicting figure, and no open green-roof inventory was found.
 - **Copenhagen** contrasts with Basel in a flood-led, city-wide plan with a stated target and openly published plan data, in flat terrain with mostly combined sewers. It is a comparator for planning and finance structure, not for measured performance.
 
 ## Considered, not chosen
 
-- **Zürich**: the most transferable comparator for Swiss law, climate and German-language documentation. Not researched in this session (time budget), so no source quality was assessed. Recommended as the first addition: the profile schema is reusable.
 - **Rotterdam, Singapore, Stockholm and others** appear only as single project facts in `data/sponge-facts.json`; no city-level profile was attempted.
 
 ## Known weaknesses (from the workers)

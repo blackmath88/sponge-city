@@ -30,7 +30,7 @@ async function open(url, { w = 1280, h = 900, mobile = false } = {}) {
 const frameOf = page => page.frames().find(f => f !== page.mainFrame());
 const settle = (page, ms = 1200) => page.waitForTimeout(ms);
 const text = async ctxt => ctxt.evaluate(() => document.body.innerText);
-const shot = async (page, name) => { if (shots) await page.screenshot({ path: join(shots, name + '.png'), fullPage: true }); };
+const shot = async (page, name) => { if (shots) await page.screenshot({ path: join(shots, name + '.jpg'), type: 'jpeg', quality: 72, fullPage: true }); };
 
 await check('default language is German, switch persists across reload and URL stays shareable', async () => {
   const { page, ctx } = await open('');
@@ -264,9 +264,22 @@ await check('keyboard: Tab reaches the language switch and the step buttons with
 });
 
 if (shots) for (const [name, url, w, h] of [
-  ['start-de', '?lang=de', 1280, 900], ['start-en-mobile', '?lang=en', 390, 844],
-  ['map-de', '?stage=map&lang=de&city=basel', 1280, 900], ['map-en-mobile', '?stage=map&lang=en&city=basel', 390, 844],
-  ['place-en', '?stage=place&lang=en&place=kanonengasse', 1280, 900], ['observe-de-mobile', '?stage=observe&lang=de', 390, 844]]) {
+  ['start-de-desktop', '?lang=de', 1280, 900], ['start-en-mobile', '?lang=en', 390, 844],
+  ['concept-de-desktop', '?stage=concept&lang=de', 1280, 900], ['concept-en-mobile', '?stage=concept&lang=en', 390, 844],
+  ['practice-de-desktop', '?stage=practice&lang=de', 1280, 900],
+  ['measure-en-desktop', '?stage=measure&lang=en', 1280, 900], ['measure-de-mobile', '?stage=measure&lang=de', 390, 844],
+  ['evidence-de-desktop', '?stage=evidence&lang=de', 1280, 900], ['evidence-en-desktop', '?stage=evidence&lang=en', 1280, 900],
+  ['cities-de-desktop', '?stage=cities&lang=de', 1280, 900], ['cities-en-mobile', '?stage=cities&lang=en', 390, 844],
+  ['map-basel-de-desktop', '?stage=map&lang=de&city=basel&layers=basel.boundary.01,basel.sealing.01', 1280, 900], ['map-basel-en-mobile', '?stage=map&lang=en&city=basel&layers=basel.boundary.01,basel.sealing.01', 390, 844],
+  ['map-berlin-en-desktop', '?stage=map&lang=en&city=berlin&layers=berlin.boundary.01,berlin.sealing.01', 1280, 900],
+  ['map-copenhagen-de-desktop', '?stage=map&lang=de&city=copenhagen&layers=copenhagen.catchments.01,copenhagen.cloudburst-basins.01,copenhagen.cloudburst-roads.01', 1280, 900],
+  ['map-zurich-de-mobile', '?stage=map&lang=de&city=zurich&layers=zurich.boundary.01,zurich.heat.01', 390, 844],
+  ['map-compare-basel-zurich-en-desktop', '?stage=map&lang=en&city=basel&layers=basel.boundary.01,basel.sealing.01&compare=zurich&layers2=zurich.boundary.01,zurich.sealing.01', 1280, 900],
+  ['map-table-de-desktop', '?stage=map&lang=de&city=zurich&mapview=table', 1280, 900],
+  ['place-en-desktop', '?stage=place&lang=en&place=kanonengasse', 1280, 900], ['place-de-mobile', '?stage=place&lang=de&place=kanonengasse', 390, 844],
+  ['observe-de-desktop', '?stage=observe&lang=de&place=kanonengasse', 1280, 900], ['observe-en-mobile', '?stage=observe&lang=en&place=kanonengasse', 390, 844],
+  ['explore-en-desktop', '?stage=explore&lang=en&place=kanonengasse', 1280, 900], ['explore-de-mobile', '?stage=explore&lang=de&place=kanonengasse', 390, 844],
+  ['export-de-desktop', '?stage=export&lang=de&place=kanonengasse', 1280, 900], ['export-en-mobile', '?stage=export&lang=en&place=kanonengasse', 390, 844]]) {
   const { page, ctx } = await open(url, { w, h, mobile: w < 600 }); await settle(page, 2000); await shot(page, name); await ctx.close();
 }
 await browser.close(); server.kill();

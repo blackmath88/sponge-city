@@ -35,3 +35,14 @@ Rules
 - `origin` is what the publisher says (modelled hazard ≠ observed). Colour classes follow the publisher's classes where they exist; do not imply two cities' colours are equal measurements.
 - A source that is blocked, unlicensed or too large is a `gaps` entry with the URL and outcome, not a failure of the whole city.
 - German uses Swiss spelling (ss, never ß).
+
+## Why the map draws its own SVG (map-stack decision)
+
+The existing MapLibre map (Data Charter, Basel only, live swisstopo/Basel-Stadt tiles) is kept unchanged as the *Evidence* step. The city map draws bounded GeoJSON snapshots as SVG instead because it needs: strict city isolation and per-file provenance (layers are validated against the city extent and cannot appear under another city); no dependency on third-party tile services or WebGL (it works in headless tests and on low-end devices); a table with the same data (accessibility); deterministic fixtures. Trade-offs: no basemap, snapshots are windows or simplified, live raster services are listed with a source link but not embedded.
+
+## Extra fields
+
+- `gaps[].state: "not_checked"` marks a theme that was not researched (allows empty `checked`). Prefer a researched gap.
+- `measure_topic` is the id of a featured indicator in `journey/content/measurements.json` or `null`.
+- Source URLs must be plain URLs without whitespace; put WFS typenames into `method`.
+- Checks: `tests/city-data.test.mjs` (packs, sizes, isolation, matrix), `tests/map.test.mjs` (helpers, view), `scripts/maps/check-links.mjs` (live reachability, run by hand).

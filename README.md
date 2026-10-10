@@ -1,4 +1,4 @@
-# Sponge City — Basel Decision Canvas
+# Sponge City — Decision Canvas (Basel, Berlin, Copenhagen, Zürich)
 
 Choose a Basel place. Inspect what is known, what can be computed and what still needs asking or measuring. Explore the mechanism of a sponge intervention, then leave with a concrete investigation record.
 
@@ -16,15 +16,17 @@ Open <http://127.0.0.1:4173/>. `make build` generates the static application in 
 
 ## The journey (German default, English switch)
 
-1. **Understand:** five mechanisms (retention, infiltration, storage, evaporation, shade) across heavy rain, heat and dry periods.
-2. **From practice:** sourced cases, labelled city-wide, programme, single project or study from another setting.
-3. **Measure:** per indicator, the question, desirable measurement, accepted proxy, what exists in Basel, what it cannot establish, next action and later monitoring.
-4. **Evidence:** the Data Charter map.
-5. **Compare cities:** Basel, Berlin and Copenhagen, with incompatible measures marked not comparable. No ranking.
-6. **One Basel place:** Street X-Ray → Rain Walk → Street Lab (synthetic street, place as context only).
-7. **Next investigation:** unresolved gates, gatekeepers and next actions as JSON and a readable report. Status stays `requires-investigation`.
+0. **Start:** enter through a city, a question or an intervention.
+1. **Understand:** five mechanisms (retention, infiltration, storage, evaporation, shade) across heavy rain, heat and dry periods, with a schematic street section.
+2. **From practice:** sourced cases, labelled city-wide, programme, single project or study from another setting; each Basel claim carries its re-verification (2026-10-10) and implementation vs. measured performance is kept apart.
+3. **Measure:** per indicator, a chain from question → needed evidence → available evidence → defensible analysis → potential action → later outcome monitoring, with the other cities and the map one click away.
+4. **Evidence:** the Data Charter map (Basel).
+5. **Compare cities:** Basel, Berlin, Copenhagen and Zürich; incompatible measures are marked not comparable (quantity, unit, method, scale **and period** must match); a matrix of seven common indicators shows what exists, what it rests on, whether it is public and derivable, and what must be requested or measured. No ranking.
+6. **Map:** a city-aware map from bounded, licensed snapshots: city and layer selection, side-by-side comparison with separate legends, click-to-inspect provenance and gaps, an accessible table view, shareable link state, a downloadable investigation brief.
+7. **One Basel place:** Street X-Ray → Rain Walk → Street Lab (synthetic street, place as context only).
+8. **Next investigation:** unresolved gates, gatekeepers and next actions as JSON and a readable report. Status stays `requires-investigation`.
 
-See [Bilingual journey](docs/BILINGUAL-JOURNEY.md), [City profile contract](docs/CITY-PROFILE.md) and [Comparator selection](docs/CITY-SELECTION.md). Need, possibility and potential effect remain separate; a real place selection does not supply measured geometry or hydraulic parameters to a learning model.
+See [Bilingual journey](docs/BILINGUAL-JOURNEY.md), [City profile contract](docs/CITY-PROFILE.md), [Map layer contract](docs/MAP-LAYERS.md) and [Comparator selection](docs/CITY-SELECTION.md). `make smoke` runs the deterministic checks; `make browser` runs the real-browser acceptance suite (needs Playwright and Chromium; see `scripts/browser-acceptance.mjs`). Need, possibility and potential effect remain separate; a real place selection does not supply measured geometry or hydraulic parameters to a learning model.
 
 ## Modules and contracts
 
