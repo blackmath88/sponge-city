@@ -30,3 +30,5 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .example{color:var(--green)}
 @media(max-width:900px){.compare{grid-template-columns:minmax(0,1fr)}.field{grid-template-columns:1fr;gap:4px}}
 @media(max-width:700px){.canvas-panel{padding:0 14px 20px}.step-group{border-right:0}iframe{height:640px}header span{flex-basis:100%;order:3}}
+.decision .indicator dl{grid-template-columns:minmax(0,1fr)}
+@media(max-width:700px){.group-label{display:none}.step-group{gap:0}.steps{gap:2px 4px}}
