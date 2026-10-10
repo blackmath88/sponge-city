@@ -551,7 +551,9 @@
       document.querySelector('[data-site-status]').textContent = computed ? t('site_computed') : t('site_demo');
       document.querySelector('[data-site-length]').textContent = `· ${view.site.length_m} m ${computed ? t('len_street') : t('len_demo')}`;
       const linkParams = new URLSearchParams(location.search); linkParams.delete('street');
-      document.querySelector('.street-switch').append(...Object.keys(STREETS).map(key => {
+      // Embedded in the journey the place is chosen by the shell; an in-frame street link would desynchronise the two.
+      if (embedded) document.querySelector('.street-switch')?.remove();
+      else document.querySelector('.street-switch').append(...Object.keys(STREETS).map(key => {
         const link = document.createElement('a'); const q = new URLSearchParams(linkParams); q.set('street', key);
         link.href = `?${q}`; link.textContent = t(`street_${key}`);
         if (key === streetKey) link.setAttribute('aria-current', 'page');

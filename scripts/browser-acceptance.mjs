@@ -74,6 +74,21 @@ for (const stage of ['evidence', 'place', 'observe', 'explore']) {
   });
 }
 
+await check('in-module navigation keeps the language: X-Ray street switch, Rain Walk references, Data Charter tabs', async () => {
+  for (const lang of ['de', 'en']) {
+    let { page, ctx } = await open(`?stage=place&lang=${lang}&place=kanonengasse`); await settle(page, 1800);
+    let f = frameOf(page); assert(!(await f.$('.street-switch')), 'embedded x-ray must not offer its own street switch (the shell owns the place)');
+    assert(await f.evaluate(() => document.documentElement.lang) === lang, `x-ray ${lang}`); await ctx.close();
+    ({ page, ctx } = await open(`?stage=observe&lang=${lang}&place=kanonengasse`)); await settle(page, 1800); f = frameOf(page);
+    await f.click('a[data-keep-lang="references.html"]'); await settle(page, 1200); f = frameOf(page);
+    assert(/references/.test(f.url()) && await f.evaluate(() => document.documentElement.lang) === lang, `rain walk references keep ${lang}`);
+    assert(!markers.test(await text(f)), 'markers on references'); await ctx.close();
+    ({ page, ctx } = await open(`?stage=evidence&lang=${lang}`)); await settle(page, 2000); f = frameOf(page);
+    const tabs = f.locator('button.tool:visible'); assert(await tabs.count() >= 1, 'charter has a visible tab button');
+    await tabs.nth(await tabs.count() - 1).click(); await settle(page, 600); assert(!markers.test(await text(frameOf(page))), 'markers after charter tab'); assert(await frameOf(page).evaluate(() => document.documentElement.lang) === lang, 'charter keeps lang'); await ctx.close();
+  }
+});
+
 await check('Street Lab: a placed (synthetic) intervention survives DE → EN → DE and a reload, per place', async () => {
   const { page, ctx } = await open('?stage=explore&lang=de&place=kanonengasse'); await settle(page, 2500);
   let f = frameOf(page);

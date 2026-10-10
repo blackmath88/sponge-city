@@ -73,7 +73,7 @@ try {
     $('place-boundary').textContent=site.boundary;
     $('coordinates').textContent=place.profile.site.coordinates.join(' / ');
     $('map-link').href=`situation-map.html#v=${place.profile.site.coordinates.join(',')},17,0,0&lens=${place.profile.site.coordinates.join(',')}`;
-    $('place-title').textContent = stage.needs_place ? site.name : pick(manifest.groups[stage.group],lang);
+    $('place-title').textContent = stage.needs_place ? site.name : pick(stage.label,lang);
     $('stage-question').textContent=pick(stage.question,lang);
     $('stage-boundary').textContent=pick(stage.boundary,lang);
     const url=stage.kind==='map'?null:moduleUrl(stage,place,lang,overlay);
