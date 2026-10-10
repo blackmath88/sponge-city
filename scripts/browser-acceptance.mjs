@@ -184,13 +184,29 @@ await check('map: city switch, real layer toggle, click-to-inspect, share link (
   const firstPage = await page.$$eval('[data-pick]', els => els.map(e => e.dataset.pick));
   const perLayer = {}; for (const k of firstPage) { const l = k.replace(/:\d+$/, ''); perLayer[l] = (perLayer[l] ?? 0) + 1; }
   assert(firstPage.length > 0 && Math.max(...Object.values(perLayer)) <= 50, `table is paged (at most 50 rows per layer), got ${JSON.stringify(perLayer)}`);
-  await page.click('[data-table-page$=":1"]:not([disabled])'); await settle(page, 400);
+  await page.click('[data-table-page$=":1"]:not([aria-disabled="true"])'); await settle(page, 400);
   const secondPage = await page.$$eval('[data-pick]', els => els.map(e => e.dataset.pick));
   assert(secondPage.length > 0 && secondPage.some(k => !firstPage.includes(k)), 'next page shows other objects');
   await page.click('[data-map-mode="map"]'); await settle(page, 600);
   await page.selectOption('#map-compare', cities[1]); await settle(page, 1200);
   assert((await page.$$('.mappanel')).length === 2, 'two panels');
   await shot(page, 'map-compare-en'); await ctx.close();
+});
+
+await check('table paging: the page holding the selected object opens with its row marked; focus stays on the Next button at the last page; stale clicks are ignored while loading', async () => {
+  const { page, ctx } = await open('?stage=map&lang=de&city=basel&layers=basel.trees.01&sel=basel.trees.01:280&mapview=table'); await settle(page, 1500);
+  assert(/Seite 6 von 7/.test(await page.innerText('[data-table-nav]')), 'opens on the page of the selected object');
+  assert(await page.$('tr[aria-current="true"]'), 'the selected row is marked');
+  await page.focus('[data-table-page$=":1"]');
+  for (let i = 0; i < 3; i++) { await page.keyboard.press('Enter'); await settle(page, 400); }
+  assert(/Seite 7 von 7/.test(await page.innerText('[data-table-nav]')), 'reached the last page');
+  assert(await page.evaluate(() => document.activeElement?.getAttribute('data-table-page')?.endsWith(':1')), 'focus stays on the Next button at the last page');
+  assert(await page.getAttribute('[data-table-page$=":1"]', 'aria-disabled') === 'true', 'Next is aria-disabled at the end');
+  assert(/Seite 7 von 7/.test(await page.innerText('#live')) || /Basel/.test(await page.innerText('#live')), 'status line updated');
+  await page.route('**/content/maps/berlin/*.geojson', async r => { await new Promise(x => setTimeout(x, 1500)); r.continue(); });
+  await page.click('[data-map-city="berlin"]'); await page.waitForTimeout(150);
+  assert(await page.evaluate(() => document.getElementById('view').inert === true), 'the old view is inert while Berlin loads');
+  await settle(page, 2500); assert(await page.evaluate(() => document.getElementById('view').inert === false), 'view usable again'); await ctx.close();
 });
 
 await check('keyboard focus survives a re-render (layer toggle, city button, mode button) and the view is not a live region', async () => {

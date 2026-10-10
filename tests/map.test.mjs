@@ -11,6 +11,11 @@ const geoMap = new Map(Object.entries(geoA));
 const byFile = (pack, g) => Object.fromEntries(pack.layers.filter(l => g[l.id]).map(l => [l.file, g[l.id]]));
 const packs = { testa: packA, testb: { ...packB, extent: packA.extent } };
 
+test('the extent guard rejects data about 0.1° (≈10 km) outside the extent', () => {
+  const near = { ...geoA, 'testa.sealing.01': geo([square(7.28, 47.03, 7.3, 47.05), { cls: 'high' }]) }; // bbox east edge is 7.2
+  assert.ok(validateLayerPack(packA, byFile(packA, near)).some(p => /outside the city extent/.test(p)));
+});
+
 test('layer pack validates; city isolation catches foreign geometry', () => {
   assert.deepEqual(validateLayerPack(packA, byFile(packA, geoA)), []);
   const foreign = { ...geoA, 'testa.sealing.01': geo([square(8.5, 52.4, 8.6, 52.5), { cls: 'high' }]) };

@@ -15,7 +15,9 @@ const ind = new Map(charter.indicators.map(i => [i.id, i]));
 const mDe = new Map(measurements.indicators.map(i => [i.id, i]));
 const dePractice = new Map(practice.cases.map(c => [c.fact, c.claim_de]));
 const retrieved = facts.updated;
-const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved, quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement' }]; };
+const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved, quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement', ...(SOURCE_QUOTES[id] ?? {}) }]; };
+// Verbatim source sentences verified on 2026-10-10 (data/verification/basel-claims.json) replace the repository statement as the entry's quote.
+const SOURCE_QUOTES = { engelgasse: { quote: 'Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.', quote_lang: 'de', quote_basis: 'source-verbatim' } };
 const entries = [];
 const fact = (id, dimension, origin, scope, de, measure = null) => entries.push({ id: `basel.${dimension}.${id}`, dimension, text: { de: de ?? dePractice.get(id), en: byFact.get(id).claim }, origin, scope, evidence_state: 'found', measure, sources: factSource(id) });
 const charterEntry = (indId, dimension, state, origin, scope, textDe, textEn) => {

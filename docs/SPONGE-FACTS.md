@@ -1,6 +1,6 @@
 # Sponge City fact cards
 
-Status: research catalogue, 2026-10-03. Generated from [`data/sponge-facts.json`](../data/sponge-facts.json) by `node scripts/facts-doc.mjs`; do not edit by hand. Basel-data numbers are reproduced by [`pilots/basel_facts.py`](pilots/basel_facts.py) and [`pilots/tree_pit_canopy.py`](pilots/tree_pit_canopy.py).
+Status: research catalogue, 2026-10-10. Generated from [`data/sponge-facts.json`](../data/sponge-facts.json) by `node scripts/facts-doc.mjs`; do not edit by hand. Basel-data numbers are reproduced by [`pilots/basel_facts.py`](pilots/basel_facts.py) and [`pilots/tree_pit_canopy.py`](pilots/tree_pit_canopy.py).
 
 Short, sourced facts that explain each sponge-city intervention or action, for visual explainers. Every fact carries exactly one evidence class; numbers are quoted as their source states them, with the caveat that matters.
 

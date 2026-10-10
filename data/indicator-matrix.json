@@ -99,9 +99,7 @@
      "access": "open",
      "derivable": "yes"
     },
-    "needs": [
-     "site_visit"
-    ],
+    "needs": [],
     "scale": "city-wide",
     "entries": [
      "basel.context.basel-sealed",
@@ -111,8 +109,8 @@
      "basel.sealing.01"
     ],
     "note": {
-     "de": "Aus der amtlichen Bodenbedeckung abgeleitet; die Karte zeigt nur einen Innenstadt-Ausschnitt.",
-     "en": "Derived from the cadastral land cover; the map shows a city-centre window only."
+     "de": "Aus den Vermessungsklassen der amtlichen Bodenbedeckung berechnet; die Karte zeigt nur einen Innenstadt-Ausschnitt.",
+     "en": "Computed from the survey classes of the cadastral land cover; the map shows a city-centre window only."
     }
    },
    "berlin": {
@@ -122,9 +120,7 @@
      "access": "open",
      "derivable": "yes"
     },
-    "needs": [
-     "request"
-    ],
+    "needs": [],
     "scale": "city-wide",
     "entries": [
      "berlin.context.01",
@@ -541,7 +537,7 @@
      "derivable": "yes"
     },
     "needs": [],
-    "scale": "programme",
+    "scale": "city-wide",
     "entries": [
      "berlin.interventions.01",
      "berlin.outcomes.01"

@@ -48,7 +48,9 @@
    "claim_en": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
    "claim_de": "Rund 72 % der Basler Strassenbäume (9046 von 12 504, am 10.10.2026 aus den offenen Datensätzen neu berechnet) stehen auf Flächen, die in der amtlichen Vermessung als versiegelt gelten, ihre Baumscheibe ist also vermutlich zu klein, um erfasst zu werden. Die übrigen stehen in erfassten Pflanzstreifen.",
    "caveat_en": "An enlarged pit still below the mapping threshold counts as sealed.",
-   "caveat_de": "Eine vergrösserte Baumscheibe unterhalb der Erfassungsschwelle zählt weiterhin als versiegelt."
+   "caveat_de": "Eine vergrösserte Baumscheibe unterhalb der Erfassungsschwelle zählt weiterhin als versiegelt.",
+   "status_note_en": "Two counts exist: this card counts trees inside polygons classed as paved or built (recomputed on 2026-10-10: 9,046); the Data Charter counts trees without a mapped planted polygon (9,132). The recomputation is recorded in data/verification/basel-claims.json.",
+   "status_note_de": "Es gibt zwei Zählungen: Diese Karte zählt Bäume innerhalb von Flächen der Klasse befestigt oder Gebäude (am 10.10.2026 neu berechnet: 9046); die Datencharta zählt Bäume ohne erfasste Pflanzfläche (9132). Die Neuberechnung steht in data/verification/basel-claims.json."
   },
   {
    "fact": "bern-36",

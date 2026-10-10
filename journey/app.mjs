@@ -123,29 +123,33 @@ try {
   };
   const measureIds = () => content.measurements.indicators.map(i=>i.id);
   const syncUrl = () => { const u = writeMapState(location.href, mapState); mapMode==='table'?u.searchParams.set('mapview','table'):u.searchParams.delete('mapview'); history.replaceState(null,'',u); };
-  async function renderMap() {
+  async function renderMap(announceFn) {
     const token = ++mapToken; const st = mapState; const focusAt = pendingFocus ?? focusKey(); pendingFocus = null;
+    if (mapMode==='table' && st.sel && tablePages[st.sel.layer]===undefined) tablePages[st.sel.layer] = Math.floor(st.sel.index/50); // open the page that holds the selected object
+    // while a city or layer loads, the old view stays visible but cannot be used (inert) so a stale click cannot change the state
     if (!$('view').querySelector('.mapview')) $('view').innerHTML = `<p class="muted">${esc(ui('loading'))}</p>`;
+    else { $('view').inert = true; $('view').setAttribute('aria-busy','true'); announce(ui('loading')); }
     try {
     const need = [...st.layers.map(id=>[st.city,id]), ...(st.compare?(st.layersCompare??[]).map(id=>[st.compare,id]):[]), ...(st.sel?[[Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===st.sel.layer)),st.sel.layer]]:[])];
     await Promise.all(need.map(([c,id])=>loadGeo(c,id)));
     if (token !== mapToken || stage.kind!=='map') return;
     $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,tablePages,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
-    bindMap(); markSelected(); restoreFocus(focusAt); announce(`${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
-    } catch (error) { console.error(error); if (token === mapToken) { $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
+    $('view').inert = false; $('view').removeAttribute('aria-busy');
+    bindMap(); markSelected(); restoreFocus(focusAt); announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
+    } catch (error) { console.error(error); $('view').inert = false; $('view').removeAttribute('aria-busy'); if (token === mapToken) { $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
   const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); bindGoto(); syncUrl(); };
-  const pickFeature = (layer,index) => { mapState = {...mapState, sel:{layer,index}}; showInspect(); };
+  const pickFeature = (layer,index) => { const city = layer.split('.')[0]; if (city !== mapState.city && city !== mapState.compare) return; mapState = {...mapState, sel:{layer,index}}; showInspect(); };
   const briefArgs = () => { const sel = mapState.sel; if (!sel) return null; const city = Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===sel.layer)); const layer = packs[city].layers.find(l=>l.id===sel.layer); const feature = geoCache.get(sel.layer)?.features?.[sel.index]; const profile = content.cities.find(c=>c.id===city); return feature ? {pack:packs[city],profile,layer,index:sel.index,feature,lang,matrix:content.matrix,measurements:content.measurements} : null; };
   const bindBrief = () => { const dl = (name,type,text)=>{const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     if ($('brief-json')) $('brief-json').onclick = () => { const a=briefArgs(); if(a) dl(`${a.pack.city}-map-brief.${lang}.json`,'application/json',JSON.stringify(mapBriefRecord(a),null,2)+'\n'); };
     if ($('brief-md')) $('brief-md').onclick = () => { const a=briefArgs(); if(a) dl(`${a.pack.city}-map-brief.${lang}.md`,'text/markdown',mapBriefMarkdown({...a,ui})); }; };
-  const bindGoto = () => { bindBrief(); for (const a of document.querySelectorAll('[data-goto]')) a.onclick = e => { e.preventDefault(); if (a.dataset.indicatorGo) content.measureSel = a.dataset.indicatorGo; stage = manifest.modules.find(m=>m.id===a.dataset.goto); update(); }; };
+  const bindGoto = () => { bindBrief(); for (const a of document.querySelectorAll('[data-goto]')) a.onclick = e => { e.preventDefault(); if (a.dataset.indicatorGo) content.measureSel = a.dataset.indicatorGo; stage = manifest.modules.find(m=>m.id===a.dataset.goto); update(); $('place-title').setAttribute('tabindex','-1'); $('place-title').focus({preventScroll:false}); }; };
   function bindMap() {
     for (const b of document.querySelectorAll('[data-map-city]')) b.onclick = () => { const city=b.dataset.mapCity; mapState = parseMapState(`?city=${city}${mapState.compare&&mapState.compare!==city?'&compare='+mapState.compare:''}`,packs); viewBoxes.a=viewBoxes.b=null; syncUrl(); renderMap(); };
     if ($('map-compare')) $('map-compare').onchange = e => { const c=e.target.value; mapState = parseMapState(`?city=${mapState.city}&layers=${mapState.layers.join(',')}${c?'&compare='+c:''}`,packs); viewBoxes.b=null; syncUrl(); renderMap(); };
-    for (const b of document.querySelectorAll('[data-table-page]')) b.onclick = () => { const [l,d]=b.dataset.tablePage.split(/:(-?\d+)$/); tablePages[l]=Math.max(0,(tablePages[l]??0)+Number(d)); renderMap(); };
+    for (const b of document.querySelectorAll('[data-table-page]')) b.onclick = () => { if (b.getAttribute('aria-disabled')==='true') return; const [l,d]=b.dataset.tablePage.split(/:(-?\d+)$/); tablePages[l]=Math.max(0,(tablePages[l]??0)+Number(d)); renderMap(()=>{const el=document.querySelector(`[data-table-nav="${CSS.escape(l)}"] [role=status]`);return el?el.textContent:null;}); };
     for (const b of document.querySelectorAll('[data-map-mode]')) b.onclick = () => { mapMode=b.dataset.mapMode; syncUrl(); renderMap(); };
     for (const c of document.querySelectorAll('[data-layer-toggle]')) c.onchange = () => {
       const key = c.dataset.side==='b'?'layersCompare':'layers'; const set = new Set(mapState[key]??[]); c.checked?set.add(c.dataset.layerToggle):set.delete(c.dataset.layerToggle);

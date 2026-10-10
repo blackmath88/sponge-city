@@ -79,6 +79,7 @@ test('indicator matrix: complete, every reference resolves, states are consisten
       if (cell.state.basis === 'observed' && cell.layers.some(l => packs[id].layers.find(x => x.id === l).origin === 'modelled')) assert.fail(`${where}: observed cell cites a modelled layer`);
     }
   }
+  for (const id of CITIES) { const e = matrix.cells.effect[id]; assert.ok(e.state.access === 'unknown' && e.state.derivable === 'unknown', `effect/${id}: an absence of public evidence is not proof of closure`); }
   const ui = JSON.parse(readFileSync(new URL('../journey/content/ui.json', import.meta.url)));
   for (const lang of ['de', 'en']) {
     const html = matrixView({ lang, ui: k => ui[lang][k] ?? `[${lang}:${k}]`, content: { matrix, cities: CITIES.map(id => profiles[id]) } });

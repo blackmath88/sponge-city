@@ -2,12 +2,20 @@
 // A brief states what the map shows and what is still unresolved. It cannot clear an authority gate.
 import { pick } from './i18n.mjs';
 
+// Which matrix row belongs to a layer: its featured indicator when it has one, otherwise by theme. Never "the first row with a null indicator".
+const THEME_ROW = { sealing: 'sealing', trees: 'canopy', heat: 'heat', 'flood-hazard': 'pluvial', green: 'green-roofs' };
+export function matrixRowFor(layer, matrix) {
+  const rows = matrix?.indicators ?? [];
+  if (layer.measure_topic) return rows.find(i => i.featured_indicator === layer.measure_topic) ?? null;
+  return rows.find(i => i.id === THEME_ROW[layer.theme]) ?? null;
+}
+
 export function mapBriefRecord({ pack, profile, layer, index, feature, lang, matrix, measurements }) {
   // The measurement chain and its actors describe Basel (the charter is Basel's). Other cities use their own matrix cell only.
   const indicator = pack.city === 'basel' ? (measurements?.indicators?.find(m => m.id === layer.measure_topic) ?? null) : null;
-  const row = matrix?.indicators?.find(i => i.featured_indicator === layer.measure_topic);
+  const row = matrixRowFor(layer, matrix);
   const cell = row ? matrix.cells[row.id]?.[pack.city] : null;
-  const gaps = (pack.gaps ?? []).filter(g => g.theme === layer.theme || (cell && g.theme === row.id));
+  const gaps = (pack.gaps ?? []).filter(g => g.theme === layer.theme || (row && g.theme === row.id));
   const needs = cell?.needs ?? ['request'];
   return {
     schema_version: 'sponge-map-brief/1', status: 'requires-investigation', language: 'en', ui_language: lang,
@@ -29,10 +37,10 @@ export function mapBriefRecord({ pack, profile, layer, index, feature, lang, mat
 
 export function mapBriefMarkdown({ pack, profile, layer, index, feature, lang, matrix, measurements, ui }) {
   const rec = mapBriefRecord({ pack, profile, layer, index, feature, lang, matrix, measurements });
-  const row = matrix?.indicators?.find(i => i.featured_indicator === layer.measure_topic);
+  const row = matrixRowFor(layer, matrix);
   const cell = row ? matrix.cells[row.id]?.[pack.city] : null;
   const indicator = pack.city === 'basel' ? measurements?.indicators?.find(m => m.id === layer.measure_topic) : null;
-  const gaps = (pack.gaps ?? []).filter(g => g.theme === layer.theme || (cell && g.theme === row.id));
+  const gaps = (pack.gaps ?? []).filter(g => g.theme === layer.theme || (row && g.theme === row.id));
   const needName = n => ui('need_' + n);
   return [
     `# ${pick(profile.name, lang)} · ${pick(layer.title, lang)} · ${ui('mb_title')}`, '',

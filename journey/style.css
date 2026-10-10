@@ -92,3 +92,5 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .tablenav{display:flex;gap:8px;align-items:center;margin:6px 0}.tablenav button{min-height:36px;padding:2px 12px}
 .mapkeys{margin:6px 0}
 .chip.open{background:var(--mint)}
+.tablenav button.is-disabled{opacity:.45;cursor:not-allowed}.sel-row{background:var(--mint)}
+#place-title:focus{outline:none}
