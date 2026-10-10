@@ -86,6 +86,7 @@ test('inspect panel shows source, date, coverage, licence and the screening boun
   const html = mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: rec, measureIds: ['sealing-fraction'] });
   for (const needle of ['fixture method', '2021', '2026-10-10', 'whole fixture city', 'CC0', 'Fixture data only', 'not a verified site assessment']) assert.ok(html.includes(needle), needle);
   assert.ok(!html.includes('data-indicator-go'), 'a non-Basel object must not open the Basel measurement chain');
+  assert.match(html, /data-source-wording/, 'the untranslated source wording is declared next to the metadata');
   assert.match(html, /data-goto="cities"/, 'it points to the city indicator matrix instead');
   const basel = mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: { ...rec, city: 'basel' }, measureIds: ['sealing-fraction'] });
   assert.match(basel, /data-indicator-go="sealing-fraction"/);

@@ -67,6 +67,7 @@ export function inspectPanel({ lang, ui, record, measureIds }) {
   return `<div class="inspect" id="inspect" data-inspect-layer="${esc(record.layer)}"><h4>${esc(record.title)}</h4>
     <p>${chip(ui('cls_' + record.origin), record.origin)} ${chip(ui('theme_' + record.theme))}</p>
     ${rows ? `<table class="props"><tbody>${rows}</tbody></table>` : `<p class="small muted">${esc(ui('map_no_props'))}</p>`}
+    <p class="small muted" data-source-wording>${esc(ui('map_source_wording'))}</p>
     <dl class="meta">
       <dt>${esc(ui('map_method'))}</dt><dd>${esc(record.method)}</dd>
       <dt>${esc(ui('map_unit_scale'))}</dt><dd>${esc(record.unit)} · ${esc(record.spatial_scale)}</dd>

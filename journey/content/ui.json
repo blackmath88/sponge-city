@@ -304,7 +304,8 @@
   "mb_flags": "Markierungen (ungeprüft)",
   "sc_canton": "Kanton, nicht Stadt",
   "origin_note": "Hinweis zur Klasse",
-  "quote_thin": "Beleg dünn"
+  "quote_thin": "Beleg dünn",
+  "map_source_wording": "Methode, Einheit, Massstab, Datenstand und Abdeckung stehen im Wortlaut der Quelle (teils Englisch, nicht übersetzt)."
  },
  "en": {
   "skip": "Skip to content",
@@ -611,6 +612,7 @@
   "mb_flags": "Flags (unchecked)",
   "sc_canton": "Canton, not the city",
   "origin_note": "Note on the class",
-  "quote_thin": "Thin evidence"
+  "quote_thin": "Thin evidence",
+  "map_source_wording": "Method, unit, scale, data date and coverage are in the source wording (not translated)."
  }
 }
