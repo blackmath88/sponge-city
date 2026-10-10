@@ -62,14 +62,14 @@ try {
     $('place-title').textContent = stage.needs_place ? site.name : pick(manifest.groups[stage.group],lang);
     $('stage-question').textContent=pick(stage.question,lang);
     $('stage-boundary').textContent=pick(stage.boundary,lang);
-    const url=moduleUrl(stage,place,lang);
+    const url=moduleUrl(stage,place,lang,overlay);
     const view = $('view');
     $('module-frame').hidden=!url; $('open-module').hidden=!url; view.hidden=!!url;
     if (url) {
       const embedded=new URL(url,location.href);embedded.searchParams.set('embedded','1');
       if ($('module-frame').dataset.src !== embedded.href) {$('module-frame').dataset.src=embedded.href;$('module-frame').src=embedded.href;}
       else try { $('module-frame').contentWindow.postMessage({type:'sponge-lang',lang},location.origin); } catch {}
-      $('open-module').href=moduleUrl(stage,place,lang); $('open-module').textContent=ui('open_tool');
+      $('open-module').href=url; $('open-module').textContent=ui('open_tool');
       $('module-frame').title=`${pick(stage.label,lang)} · ${site.name}`; view.innerHTML='';
     } else {
       $('module-frame').removeAttribute('src'); delete $('module-frame').dataset.src;

@@ -217,6 +217,17 @@ test('Exports stay in one place context, are bilingual, keep stable IDs, and car
   assert.ok(!klyMd.includes(kanon.profile.site.id));
 });
 
+test('The German Street Lab handoff carries localized display text but the same ids and classification', () => {
+  const kanon = places.find(p => p.key === 'kanonengasse');
+  const m = manifest.modules.find(m => m.context === 'candidate');
+  const decode = url => JSON.parse(Buffer.from(new URL(url, 'https://x.test/').searchParams.get('site').replaceAll('-', '+').replaceAll('_', '/'), 'base64').toString('utf8'));
+  const de = decode(moduleUrl(m, kanon, 'de', overlay)); const en = decode(moduleUrl(m, kanon, 'en', overlay));
+  assert.equal(de.site.id, en.site.id); assert.deepEqual(de.site.coordinates, en.site.coordinates);
+  assert.equal(de.provenance.classification, 'illustrative');
+  assert.notDeepEqual(de.site.indicators.missingData, en.site.indicators.missingData);
+  assert.equal(de.site.indicators.missingData.length, en.site.indicators.missingData.length);
+});
+
 test('The selected language travels to every embedded module', () => {
   for (const place of places) for (const m of manifest.modules.filter(m => m.path)) {
     for (const lang of ['de', 'en']) assert.equal(new URL(moduleUrl(m, place, lang), 'https://example.test/').searchParams.get('lang'), lang, m.id);
