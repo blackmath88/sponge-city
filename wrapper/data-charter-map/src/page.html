@@ -137,6 +137,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
   <script id="map-logic">
+    // maplibre-gl 4 has no supported(); test WebGL directly.
+    const webglAvailable = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; } };
     const CHARTER = /*__CHARTER__*/ null;
     const SNAPSHOT = /*__CHARTER_MAP__*/ null;
     const CHARTER_DE = /*__CHARTER_DE__*/ null;
@@ -430,7 +432,7 @@
     let map = null;
     let mapUnavailable = false;
     try {
-      if (!window.maplibregl || !maplibregl.supported()) throw new Error("Map rendering unavailable");
+      if (!window.maplibregl || !webglAvailable()) throw new Error("Map rendering unavailable");
       map = new maplibregl.Map({ container: "map", style: baseStyle(), center: [7.595, 47.56], zoom: 13, maxBounds: [[7.4, 47.48], [7.8, 47.65]] });
     } catch {
       document.body.classList.add("map-unavailable");

@@ -15,7 +15,7 @@ const server = spawn(process.execPath, [join(root, 'scripts/serve.mjs')], { env:
 await new Promise(r => setTimeout(r, 800));
 const base = `http://127.0.0.1:${port}/`;
 const shots = process.env.SHOTS; if (shots) mkdirSync(shots, { recursive: true });
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || '/usr/bin/chromium', args: ['--no-sandbox'] });
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM || '/usr/bin/chromium', args: ['--no-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const results = []; const errors = [];
 const check = async (name, fn) => { try { await fn(); results.push([name, true]); console.log('ok   ', name); } catch (e) { results.push([name, false]); console.log('FAIL ', name, '\n     ', e.message.split('\n')[0]); } };
 const assert = (c, m) => { if (!c) throw new Error(m); };
@@ -98,6 +98,14 @@ await check('Street Lab: a placed (synthetic) intervention survives DE â†’ EN â†
   for (const lang of ['en', 'de']) { await page.click(`button[data-lang="${lang}"]`); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'true', `garden kept after switch to ${lang}`); }
   await page.reload(); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'true', 'garden kept after reload');
   await page.click('[data-place="klybeck"]'); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'false', 'edits do not leak to another place'); await ctx.close();
+});
+
+await check('Data Charter map actually renders (MapLibre canvas) and shows its source attribution; works in both languages', async () => {
+  for (const lang of ['de', 'en']) {
+    const { page, ctx } = await open(`?stage=evidence&lang=${lang}`); await settle(page, 3500);
+    const f = frameOf(page); assert(await f.$('canvas.maplibregl-canvas'), `map canvas present (${lang}); the page must not fall back to "map unavailable"`);
+    assert(/swisstopo|Basel-Stadt/.test(await f.innerText('.maplibregl-ctrl-attrib')), 'attribution visible'); await ctx.close();
+  }
 });
 
 await check('selected place survives language switching and reload', async () => {
