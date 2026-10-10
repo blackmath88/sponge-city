@@ -1,0 +1,423 @@
+{
+ "schema_version": "sponge-city-profile/1",
+ "id": "basel",
+ "role": "home",
+ "name": {
+  "de": "Basel",
+  "en": "Basel"
+ },
+ "country": "CH",
+ "provenance": {
+  "basis": "repository evidence (data/sponge-facts.json, Data Charter)",
+  "refetched_in_this_session": false,
+  "snapshot": "2026-10-03"
+ },
+ "selection": {
+  "rationale": {
+   "de": "Ausgangsstadt dieses Werkzeugs; das Profil stützt sich auf bereits im Repository geprüfte Belege.",
+   "en": "Home city of this tool; the profile rests on evidence already checked in the repository."
+  },
+  "contrast": {
+   "de": "",
+   "en": ""
+  }
+ },
+ "entries": [
+  {
+   "id": "basel.context.basel-sealed",
+   "dimension": "context",
+   "text": {
+    "de": "45 % des Bodens von Basel-Stadt sind versiegelt: 16,6 % Gebäude und 28,5 % befestigte Flächen. Allein Strassen decken 9,5 %, Trottoirs 4,2 %.",
+    "en": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "topic": "sealing",
+    "quantity": "sealed share of ground area",
+    "unit": "%",
+    "method": "area of cadastral land-cover polygons by class",
+    "spatial_scale": "Canton Basel-Stadt (36.6 km²)",
+    "period": "land cover updated 2026-08-20"
+   },
+   "sources": [
+    {
+     "title": "data.bs.ch 100477 Bodenbedeckung (official survey)",
+     "url": "https://data.bs.ch/explore/dataset/100477/",
+     "publisher": "data.bs.ch 100477 Bodenbedeckung (official survey)",
+     "retrieved": "2026-10-03",
+     "quote": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.context.basel-hot-days",
+   "dimension": "context",
+   "text": {
+    "de": "Basel-Binningen hatte 8,8 Hitzetage (≥ 30 °C) pro Jahr in 1961–1990, 14,3 in 1991–2020 und 21,9 in 2015–2024.",
+    "en": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
+     "url": "https://data.bs.ch/explore/dataset/100254/",
+     "publisher": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
+     "retrieved": "2026-10-03",
+     "quote": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.context.basel-canopy",
+   "dimension": "context",
+   "text": {
+    "de": "Baumkronen decken rund 25 % des Kantons (LiDAR-Auswertung 2021). Der Anteil hat sich in den letzten zehn Jahren nur wenig verändert.",
+    "en": "Tree crowns cover about 25 % of the canton (2021 LiDAR evaluation), which has changed only marginally over the past ten years."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "topic": "canopy",
+    "quantity": "tree canopy cover share",
+    "unit": "%",
+    "method": "LiDAR evaluation",
+    "spatial_scale": "Canton Basel-Stadt",
+    "period": "2021"
+   },
+   "sources": [
+    {
+     "title": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
+     "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand",
+     "publisher": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
+     "retrieved": "2026-10-03",
+     "quote": "Tree crowns cover about 25 % of the canton (2021 LiDAR evaluation), which has changed only marginally over the past ten years.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.interventions.bpg-72",
+   "dimension": "interventions",
+   "text": {
+    "de": "In Basel-Stadt müssen Flachdächer ab 10 m² bei Neubau oder Sanierung begrünt werden (§ 72 BPG), mit mindestens 15 cm regionalem Substrat und 20 cm auf einem Drittel des Dachs.",
+    "en": "In Basel-Stadt, flat roofs of 10 m² and more must be greened when built or renovated (§ 72 BPG), with at least 15 cm of regional soil and 20 cm on a third of the roof."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
+     "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern",
+     "publisher": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
+     "retrieved": "2026-10-03",
+     "quote": "In Basel-Stadt, flat roofs of 10 m² and more must be greened when built or renovated (§ 72 BPG), with at least 15 cm of regional soil and 20 cm on a third of the roof.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.interventions.fernwaerme-30",
+   "dimension": "interventions",
+   "text": {
+    "de": "Basel nutzt den Fernwärmeausbau (rund 60 km mehr bis 2037), um Strassen klimafreundlicher zu gestalten: Hitzeschutz auf rund 30 Strassen bisher, mit neuen Bäumen, Grünflächen und Entsiegelung.",
+    "en": "Basel uses the district-heating build-out (about 60 km more by 2037) to redesign streets for a better climate: heat protection on about 30 streets so far, with new trees, green areas and unsealing."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Basel-Stadt media release, 16 July 2025",
+     "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-kanton-sorgt-anlaesslich-des-fernwaermeausbaus-fuer-besseren-hitzeschutz-auf-gut-30-strassen",
+     "publisher": "Basel-Stadt media release, 16 July 2025",
+     "retrieved": "2026-10-03",
+     "quote": "Basel uses the district-heating build-out (about 60 km more by 2037) to redesign streets for a better climate: heat protection on about 30 streets so far, with new trees, green areas and unsealing.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.interventions.sevogel",
+   "dimension": "interventions",
+   "text": {
+    "de": "An der Sevogelstrasse werden rund 1000 m² Asphalt entsiegelt und rund 600 m² werden zu Grünraum, mit 32 neuen Bäumen (ab Frühling 2026).",
+    "en": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026)."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Basel-Stadt media release 2025, Sevogelstrasse",
+     "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau",
+     "publisher": "Basel-Stadt media release 2025, Sevogelstrasse",
+     "retrieved": "2026-10-03",
+     "quote": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.interventions.engelgasse",
+   "dimension": "interventions",
+   "text": {
+    "de": "Basel hat die Baumgruben der Engelgasse vergrössert und 50 junge Bäume neu gepflanzt, weil die alten Gruben zu wenig Wurzelraum boten.",
+    "en": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Basel-Stadt media release 2016, Engelgasse",
+     "url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse",
+     "publisher": "Basel-Stadt media release 2016, Engelgasse",
+     "retrieved": "2026-10-03",
+     "quote": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.measurement.voltanord-pilot",
+   "dimension": "measurement",
+   "text": {
+    "de": "Basel testet Schwammstadt-Elemente in den neuen Strassen im VoltaNord und überwacht sie fünf Jahre lang wissenschaftlich (CHF 280 000 bewilligt). Ergebnisse sind in dieser Quelle nicht enthalten.",
+    "en": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved)."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Regierungsratsbeschluss P251765",
+     "url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse",
+     "publisher": "Regierungsratsbeschluss P251765",
+     "retrieved": "2026-10-03",
+     "quote": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.measurement.rainfall",
+   "dimension": "measurement",
+   "text": {
+    "de": "MeteoSchweiz-Station Basel/Binningen (10-Minuten-Daten, lange Reihen), Radarniederschlag (letzte 14 Tage), Klimaszenarien CH2025; städtische Sensoren mit stündlichem Regen (Rohdaten).",
+    "en": "MeteoSwiss Basel/Binningen station (10-minute data, long records), radar precipitation (last 14 days), climate scenarios CH2025; city sensors with hourly rain (raw)."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "MeteoSwiss open data (STAC)",
+     "url": "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.meteoschweiz.ogd-smn",
+     "publisher": "MeteoSwiss open data (STAC)",
+     "retrieved": "2026-10-03",
+     "quote": "MeteoSwiss Basel/Binningen station (10-minute data, long records), radar precipitation (last 14 days), climate scenarios CH2025; city sensors with hourly rain (raw).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    },
+    {
+     "title": "data.bs.ch 100009 Smart Climate",
+     "url": "https://data.bs.ch/explore/dataset/100009/",
+     "publisher": "data.bs.ch 100009 Smart Climate",
+     "retrieved": "2026-10-03",
+     "quote": "MeteoSwiss Basel/Binningen station (10-minute data, long records), radar precipitation (last 14 days), climate scenarios CH2025; city sensors with hourly rain (raw).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.measurement.street-temperature",
+   "dimension": "measurement",
+   "text": {
+    "de": "Rund 200 städtische Sensoren liefern stündliche Lufttemperatur, offen, aber als Rohdaten (nicht qualitätsgeprüft).",
+    "en": "About 200 city sensors with hourly air temperature, open but raw (not quality-checked)."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "data.bs.ch 100009 / 100082 Smart Climate",
+     "url": "https://data.bs.ch/explore/dataset/100082/",
+     "publisher": "data.bs.ch 100009 / 100082 Smart Climate",
+     "retrieved": "2026-10-03",
+     "quote": "About 200 city sensors with hourly air temperature, open but raw (not quality-checked).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.access.land-cover",
+   "dimension": "access",
+   "text": {
+    "de": "Amtliche Bodenbedeckung: 49 595 Polygone mit Klassen wie Trottoir, Strasse, Verkehrsinsel, Tramfläche, Gebäude, Garten, Wasser. CC BY 4.0, aktualisiert am 20.08.2026.",
+    "en": "Cadastral land cover: 49,595 polygons with classes such as sidewalk, road, traffic island, tram area, building, garden, water. CC BY 4.0, updated 2026-08-20."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "data.bs.ch 100477 Bodenbedeckung",
+     "url": "https://data.bs.ch/explore/dataset/100477/",
+     "publisher": "data.bs.ch 100477 Bodenbedeckung",
+     "retrieved": "2026-10-03",
+     "quote": "Cadastral land cover: 49,595 polygons with classes such as sidewalk, road, traffic island, tram area, building, garden, water. CC BY 4.0, updated 2026-08-20.",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.access.canopy",
+   "dimension": "access",
+   "text": {
+    "de": "LiDAR-Baumkronenbedeckung für 2012, 2021 und 2024 (0,5 m, GeoTIFF).",
+    "en": "LiDAR canopy cover for 2012, 2021 and 2024 (0.5 m, GeoTIFF)."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "data.bs.ch 100357 Baumkronenbedeckung",
+     "url": "https://data.bs.ch/explore/dataset/100357/",
+     "publisher": "data.bs.ch 100357 Baumkronenbedeckung",
+     "retrieved": "2026-10-03",
+     "quote": "LiDAR canopy cover for 2012, 2021 and 2024 (0.5 m, GeoTIFF).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.access.sewer-network",
+   "dimension": "access",
+   "text": {
+    "de": "Netzdaten in den geprüften offenen Basler und Bundesquellen nicht gefunden. Offen: das ARA-Einzugsgebiet (13 Polygone). Veröffentlicht, aber nicht als Daten: die GEP-Karte der Entwässerungsarten von 2012 (Misch, Misch mit Versickerungspflicht, modifiziertes Trennsystem) und Versickerungsverbote in Schutzzonen (PDF, 1:20 000).",
+    "en": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000)."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "data.bs.ch 100336 Einzugsgebiet ARA",
+     "url": "https://data.bs.ch/explore/dataset/100336/",
+     "publisher": "data.bs.ch 100336 Einzugsgebiet ARA",
+     "retrieved": "2026-10-03",
+     "quote": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    },
+    {
+     "title": "AUE: GEP Stadt Basel, Karte Entwässerungsarten (PDF, 2012)",
+     "url": "https://media.bs.ch/original_file/6c906a4607e4c2c068f631e6bd27aeac09a977e9/karte-genereller-entwaesserungsplan-entwaesserungsarten-bs-0.pdf",
+     "publisher": "AUE: GEP Stadt Basel, Karte Entwässerungsarten (PDF, 2012)",
+     "retrieved": "2026-10-03",
+     "quote": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
+     "quote_lang": "en",
+     "quote_basis": "repository-statement"
+    }
+   ]
+  },
+  {
+   "id": "basel.access.infiltration",
+   "dimension": "access",
+   "text": {
+    "de": "Keine offene Versickerungskarte und keine Durchlässigkeitsdaten gefunden. Verwandte offene Eingangsdaten: Bodentiefenklassen, Bohrungen, Grundwasserstände, Schutzzonen, Altlasten.",
+    "en": "No open infiltration map or permeability data found. Related open inputs: soil depth classes, boreholes, groundwater levels, protection zones, contaminated sites."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "basel.access.soil-moisture",
+   "dimension": "access",
+   "text": {
+    "de": "Keine offenen Daten zu Bodenfeuchte oder Baumstress gefunden.",
+    "en": "No open soil-moisture or tree-stress sensor data found."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "basel.outcomes.measures-registry",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Es wurde kein offenes Verzeichnis gebauter Schwamm-Massnahmen und ihrer gemessenen Wirkung gefunden; nur 64 Bewilligungstexte erwähnen Entsiegelung oder Versickerung. Das heisst nicht, dass nichts gemessen wird.",
+    "en": "No open registry of built sponge measures and their measured effect was found; only 64 permit texts mention unsealing or infiltration. This does not mean nothing is measured."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "basel.transfer.groundwater",
+   "dimension": "transfer",
+   "text": {
+    "de": "Wo das Grundwasser nahe an die Oberfläche reicht, muss Versickerung vorsichtig geplant werden; Beispiele aus anderen Städten sind dort nur eingeschränkt übertragbar.",
+    "en": "Where groundwater comes close to the surface, infiltration needs care; examples from other cities transfer only with limits there."
+   },
+   "origin": "assumed",
+   "scope": "unspecified",
+   "evidence_state": "unknown",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "basel.transfer.dig-once",
+   "dimension": "transfer",
+   "text": {
+    "de": "Die laufenden Leitungsbauten in Basel bieten Gelegenheiten, Massnahmen mitzubauen. Ob andere Städte ihre Praxis damit vergleichbar organisieren, ist offen.",
+    "en": "Basel’s ongoing utility works offer windows to build measures along. Whether other cities organise this in a comparable way is open."
+   },
+   "origin": "assumed",
+   "scope": "unspecified",
+   "evidence_state": "unknown",
+   "measure": null,
+   "sources": []
+  }
+ ]
+}
