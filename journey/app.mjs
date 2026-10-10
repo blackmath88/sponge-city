@@ -77,7 +77,9 @@ try {
     $('module-frame').hidden=!url; $('open-module').hidden=!url; view.hidden=!!url;
     if (url) {
       const embedded=new URL(url,location.href);embedded.searchParams.set('embedded','1');
-      if ($('module-frame').dataset.src !== embedded.href) {$('module-frame').dataset.src=embedded.href;$('module-frame').src=embedded.href;}
+      // The frame is reloaded only when something other than the language changes; a language switch is a message, so unsaved in-frame state survives.
+      const identity = new URL(embedded.href); identity.searchParams.delete('lang');
+      if ($('module-frame').dataset.src !== identity.href) {$('module-frame').dataset.src=identity.href;$('module-frame').src=embedded.href;}
       else try { $('module-frame').contentWindow.postMessage({type:'sponge-lang',lang},location.origin); } catch {}
       $('open-module').href=url; $('open-module').textContent=ui('open_tool');
       $('module-frame').title=`${pick(stage.label,lang)} · ${site.name}`; view.innerHTML='';

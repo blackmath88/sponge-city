@@ -492,7 +492,7 @@
 
     function buildSwitcher(){
       const box = document.querySelector('#lang-switch');
-      if (embedded) { box.remove(); return; }
+      if (embedded) { box?.remove(); return; }
       box.setAttribute('aria-label', t('lang_aria'));
       box.replaceChildren(...['de','en'].map(code => {
         const button = document.createElement('button');
