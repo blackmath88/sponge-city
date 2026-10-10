@@ -39,8 +39,17 @@ All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers
 - Finding: a brand-new worktree shows Claude's *folder-trust* prompt; `worker-start --worktree new-child` then fails at `agent_readiness` (ctx_679c6c42c48d). I accepted trust for that one project-local folder, and retried once (ctx_0a03c844a875). Later worktrees: create worktree + terminal first, accept trust, then `worker-start --terminal`.
 - Routing plugin inside the worker: not inspected beyond launch; tier tag is carried in the spec text only (the routing mod acts on Claude Code subagents, not Orca dispatches). Model is chosen with `--model`.
 
-| id | task | owner/route | base | writable | deadline | status |
-|----|------|-------------|------|----------|----------|--------|
-| Z | Zürich profile + layers | Orca claude sonnet, ctx_0a03c844a875 (retry of ctx_679c6c42c48d), wt zurich-research | 5359336 | data/cities/zurich.json, data/maps/zurich/**, scripts/maps/zurich.mjs, docs/session/research/zurich-notes.md | 17:00+75m | running |
-| M | Layer packs Basel/Berlin/Copenhagen | Orca claude sonnet, ctx_d5999ff450ed, wt maps-research | 5359336 | data/maps/{basel,berlin,copenhagen}/**, scripts/maps/{basel,berlin,copenhagen}.mjs, docs/session/research/maps-notes.md | +80m | running |
-| C | Coordinator: shared contracts, map step, DE/EN | this session | HEAD | journey/**, tests/**, docs/** | — | in progress |
+| id | task | owner/route (observed) | writable | status / evidence |
+|----|------|------------------------|----------|-------------------|
+| Z | Zürich profile + 3 layers | Orca claude sonnet, ctx_0a03c844a875 (retry of failed-at-readiness ctx_679c6c42c48d; terminal trust prompt) | data/cities/zurich.json, data/maps/zurich/**, scripts/maps/zurich.mjs | succeeded; worker_done verified; integrated 8569c81; released |
+| M | Layer packs Basel/Berlin/Copenhagen | Orca claude sonnet, ctx_d5999ff450ed | data/maps/{basel,berlin,copenhagen}/**, scripts/maps/* | succeeded; integrated 8569c81 (a partial Basel copy had been taken earlier while the worker was live; replaced by the final tree) |
+| B | Basel claim revalidation (16 claims) | Orca claude sonnet, ctx_73f3d2398e83 | data/verification/basel-claims.json, docs/session/research/basel-claims.md | succeeded: 10 confirmed, 2 with difference, 4 source-unreachable; integrated |
+| D | Sie harmonisation + Street Lab edit persistence | Orca claude sonnet, ctx_cabe53755d44 | wrapper/street-workspace/** | succeeded; integrated; 28 node tests; browser check added (edits survive DE/EN/reload, no leak between places) |
+| T | German translation of claim evidence | Claude Code subagent (general-purpose, sonnet), not Orca | data/verification/basel-claims.de.json | completed; spot-read |
+| Z2 | Zürich gap closing | Orca claude sonnet, ctx_1e3d47c65640, wt zurich-gaps | data/cities/zurich.json, data/maps/zurich/** | running |
+| L | Legend label polish (Basel/Berlin/Copenhagen) | Orca claude sonnet, ctx_b8ea5e627327, wt legend-polish | data/maps/{basel,berlin,copenhagen}/layers.json | running |
+| C | Coordinator (this session): contracts, map step, start page, matrix, briefs, browser suite | foreground Claude Sonnet 5.5 | journey/**, tests/**, scripts/**, docs/** | in progress |
+
+Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task; replaced by retry) and ctx_c57ea941100f (timeout probe; stopped by `worker-stop`, liveness exited, released) are settled and not live. Orca terminals of finished workers are `retained` (external terminal) but idle.
+
+**Map-stack decision (rationale):** the map step draws bounded GeoJSON snapshots as SVG. Reasons: city isolation and provenance per file; no third-party tile service or WebGL (works in headless tests and on low-end devices); every drawn feature is also in an accessible table; deterministic tests. The existing MapLibre Data Charter map (Basel only, live swisstopo/Basel-Stadt WMS) is reused unchanged as the 'Evidence' step. Raster/WMS layers are listed with source links but not embedded.
