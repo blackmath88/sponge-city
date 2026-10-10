@@ -160,6 +160,19 @@ await check('reduced motion is respected (no animation or smooth scroll)', async
   assert(!/smooth/.test(v), `smooth scroll under reduced motion: ${v}`); await ctx.close();
 });
 
+await check('map brief: selecting an object exports a city-isolated brief in the active language', async () => {
+  const { page, ctx } = await open('?stage=map&lang=de&city=zurich'); await settle(page, 1200);
+  await (await page.$('.mapsvg [data-f]')).dispatchEvent('click'); await settle(page, 300);
+  assert((await page.innerText('.attribution')).includes('©'), 'attribution visible on the map');
+  const [d] = await Promise.all([page.waitForEvent('download'), page.click('#brief-json')]);
+  const rec = JSON.parse(readFileSync(await d.path(), 'utf8'));
+  assert(rec.city.id === 'zurich' && rec.ui_language === 'de', 'city and language');
+  assert(!/berlin|basel|copenhagen/i.test(JSON.stringify(rec)), 'no other city in a zurich brief');
+  assert(rec.unresolved_checks.length >= 1 && rec.status === 'requires-investigation', 'unresolved checks kept');
+  const [m] = await Promise.all([page.waitForEvent('download'), page.click('#brief-md')]);
+  const md = readFileSync(await m.path(), 'utf8'); assert(/Untersuchungsnotiz/.test(md) && !markers.test(md), 'german markdown'); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');

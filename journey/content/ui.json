@@ -247,7 +247,23 @@
   "ch_action": "Mögliche Massnahme",
   "ch_monitor": "Spätere Wirkungsbeobachtung",
   "m_elsewhere": "Und in den anderen Städten?",
-  "m_on_map": "Auf der Karte"
+  "m_on_map": "Auf der Karte",
+  "diagram_aria": "Schematischer Strassenquerschnitt: Dach, Baum, Boden und Kanal. Hervorgehoben ist, wo die gewählte Wirkung ansetzt.",
+  "diagram_pipe": "Kanal",
+  "diagram_caption": "Schema ohne Zahlen und ohne realen Ort. Wählen Sie eine Wirkung, um zu sehen, wo sie ansetzt.",
+  "diagram_focus": "Im Schema hervorheben",
+  "mb_title": "Untersuchungsnotiz zur Karte",
+  "mb_object": "Objekt",
+  "mb_class": "Evidenzklasse und Herkunft",
+  "mb_sources": "Quellen",
+  "mb_unresolved": "Offene Prüfungen",
+  "mb_actors": "Zuständige und Datenhalter",
+  "mb_next": "Nächste Schritte",
+  "mb_verify_site": "Das Kartenscreening ist vor Ort nicht überprüft.",
+  "mb_next_generic": "Mit dem Datenhalter klären, was die Ebene belegt, und die Lücke an einer Ortsbegehung prüfen.",
+  "mb_city_only": "Diese Notiz enthält nur Quellen aus {city}; keine Daten einer anderen Stadt.",
+  "mb_export_json": "Notiz als JSON laden",
+  "mb_export_md": "Notiz als Text laden"
  },
  "en": {
   "skip": "Skip to content",
@@ -497,6 +513,22 @@
   "ch_action": "Potential action",
   "ch_monitor": "Later outcome monitoring",
   "m_elsewhere": "And in the other cities?",
-  "m_on_map": "On the map"
+  "m_on_map": "On the map",
+  "diagram_aria": "Schematic street section: roof, tree, soil and sewer. The highlighted parts show where the chosen mechanism acts.",
+  "diagram_pipe": "Sewer",
+  "diagram_caption": "Schematic with no numbers and no real place. Choose a mechanism to see where it acts.",
+  "diagram_focus": "Highlight in the diagram",
+  "mb_title": "Map investigation brief",
+  "mb_object": "Object",
+  "mb_class": "Evidence class and provenance",
+  "mb_sources": "Sources",
+  "mb_unresolved": "Unresolved checks",
+  "mb_actors": "Responsible actors and data holders",
+  "mb_next": "Next actions",
+  "mb_verify_site": "The map screening has not been verified on site.",
+  "mb_next_generic": "Clarify with the data holder what the layer evidences, then check the gap on a site visit.",
+  "mb_city_only": "This brief contains sources from {city} only; no data from another city.",
+  "mb_export_json": "Download brief as JSON",
+  "mb_export_md": "Download brief as Markdown"
  }
 }

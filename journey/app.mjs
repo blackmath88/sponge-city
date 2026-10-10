@@ -2,6 +2,7 @@ import {moduleUrl} from './context.mjs';
 import {resolveLang,persistLang,pick,LANGS} from './i18n.mjs';
 import {conceptView,practiceView,measureView,citiesView,exportView,esc} from './views.mjs';
 import {startView} from './startview.mjs';
+import {mapBriefRecord,mapBriefMarkdown} from './mapbrief.mjs';
 import {mapView,inspectRecord,inspectPanel} from './mapview.mjs';
 import {parseMapState,writeMapState} from './map.mjs';
 import {exportJson,exportMarkdown,localizeRecord,referenceGaps} from './export.mjs';
@@ -52,6 +53,7 @@ try {
   };
   const bindView = () => {
     for (const b of document.querySelectorAll('[data-situation]')) b.onclick = () => {content.conceptSituation=b.dataset.situation;render();};
+    for (const b of document.querySelectorAll('[data-mech]')) b.onclick = () => {content.mechFocus=content.mechFocus===b.dataset.mech?null:b.dataset.mech;render();};
     for (const b of document.querySelectorAll('[data-clear-focus]')) b.onclick = () => {content.conceptFocus=null;render();};
     for (const b of document.querySelectorAll('[data-filter]')) b.onclick = () => {content.practiceFilter=b.dataset.filter;render();};
     for (const b of document.querySelectorAll('[data-indicator]')) b.onclick = () => {content.measureSel=b.dataset.indicator;render();};
@@ -124,7 +126,11 @@ try {
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
   const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); bindGoto(); syncUrl(); };
   const pickFeature = (layer,index) => { mapState = {...mapState, sel:{layer,index}}; showInspect(); };
-  const bindGoto = () => { for (const a of document.querySelectorAll('[data-goto]')) a.onclick = e => { e.preventDefault(); if (a.dataset.indicatorGo) content.measureSel = a.dataset.indicatorGo; stage = manifest.modules.find(m=>m.id===a.dataset.goto); update(); }; };
+  const briefArgs = () => { const sel = mapState.sel; if (!sel) return null; const city = Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===sel.layer)); const layer = packs[city].layers.find(l=>l.id===sel.layer); const feature = geoCache.get(sel.layer)?.features?.[sel.index]; const profile = content.cities.find(c=>c.id===city); return feature ? {pack:packs[city],profile,layer,index:sel.index,feature,lang,matrix:content.matrix,measurements:content.measurements} : null; };
+  const bindBrief = () => { const dl = (name,type,text)=>{const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+    if ($('brief-json')) $('brief-json').onclick = () => { const a=briefArgs(); if(a) dl(`${a.pack.city}-map-brief.${lang}.json`,'application/json',JSON.stringify(mapBriefRecord(a),null,2)+'\n'); };
+    if ($('brief-md')) $('brief-md').onclick = () => { const a=briefArgs(); if(a) dl(`${a.pack.city}-map-brief.${lang}.md`,'text/markdown',mapBriefMarkdown({...a,ui})); }; };
+  const bindGoto = () => { bindBrief(); for (const a of document.querySelectorAll('[data-goto]')) a.onclick = e => { e.preventDefault(); if (a.dataset.indicatorGo) content.measureSel = a.dataset.indicatorGo; stage = manifest.modules.find(m=>m.id===a.dataset.goto); update(); }; };
   function bindMap() {
     for (const b of document.querySelectorAll('[data-map-city]')) b.onclick = () => { const city=b.dataset.mapCity; mapState = parseMapState(`?city=${city}${mapState.compare&&mapState.compare!==city?'&compare='+mapState.compare:''}`,packs); viewBoxes.a=viewBoxes.b=null; syncUrl(); renderMap(); };
     if ($('map-compare')) $('map-compare').onchange = e => { const c=e.target.value; mapState = parseMapState(`?city=${mapState.city}&layers=${mapState.layers.join(',')}${c?'&compare='+c:''}`,packs); viewBoxes.b=null; syncUrl(); renderMap(); };

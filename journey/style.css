@@ -73,3 +73,11 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .dstep h5{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.dstep p{margin:0}
 .dstep[data-step="3"] .dnum{background:var(--green)}.dstep[data-step="6"] .dnum{background:var(--blue)}
 .elsewhere{margin-top:8px}.elsewhere li{margin-bottom:6px}
+/* --- mechanism diagram --- */
+.mechdiagram{margin:14px 0;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:10px}.mechdiagram svg{display:block;width:100%;height:auto;max-height:380px}.mechdiagram figcaption{margin-top:6px}
+.d-sky{fill:#eef3f2}.d-soil{fill:#d9cdb9}.d-paving{fill:#9aa39e}.d-wall{fill:#c9c4b8}.d-roofbase{fill:#8a857a}.d-trunk{fill:#6b5a43}.d-pipe{fill:#7c8d96}.d-label{font:10px Inter,sans-serif;fill:#fff}
+.drop{stroke:#3f7aa0;stroke-width:2;stroke-linecap:round;fill:none}.sun{fill:#e0a53a}.sun.dry{fill:#c9873a}.ray{stroke:#e0a53a;stroke-width:3;stroke-linecap:round}.crack{stroke:#8a7757;stroke-width:2;fill:none}
+.g-green,.g-tree{fill:#6f9a74}.g-green.fillish{fill:none;stroke:#6f9a74;stroke-width:6}.g-shadow{fill:rgba(36,60,53,.28)}.g-vapour{fill:none;stroke:#7aa5b8;stroke-width:2.5;stroke-linecap:round}.g-flow{fill:none;stroke:#3f7aa0;stroke-width:3;stroke-linecap:round}.g-store{fill:#bcd3de;stroke:#3f7aa0;stroke-width:2}.g-store-line{stroke:#3f7aa0;stroke-width:3;fill:none}
+.mechdiagram .dim{opacity:.18}.mechdiagram .focus *{stroke-width:4}.mechdiagram .focus .g-green,.mechdiagram .focus .g-tree{fill:#2f7a45}
+.mech-btn{border:0;background:transparent;padding:0;font:inherit;font-weight:600;text-align:left;min-height:32px;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:5px}.mech-btn[aria-pressed=true]{text-decoration-style:solid;color:var(--green)}
+.mech.focus{border-color:var(--green);box-shadow:inset 4px 0 0 var(--green)}

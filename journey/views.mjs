@@ -8,6 +8,30 @@ const chip = (text, kind = '') => `<span class="chip ${esc(kind)}">${esc(text)}<
 const link = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`;
 const factIndex = facts => { const m = new Map(facts.context.map(f => [f.id, f])); for (const i of facts.interventions) { m.set(i.id, { ...i, intervention: true }); for (const f of i.facts) m.set(f.id, f); } return m; };
 
+
+// Schematic street section. No numbers, no real place: it shows where each mechanism acts. Elements carry class m-<mechanism>.
+export function conceptDiagram({ lang, ui, situation, focus }) {
+  const on = id => (!focus ? 'on' : focus === id ? 'on focus' : 'dim');
+  const ambient = situation === 'heavy-rain'
+    ? `<g class="amb">${[60, 130, 200, 270, 340, 410, 480, 550].map((x, i) => `<path d="M${x} ${20 + (i % 3) * 14}l-6 16" class="drop"/>`).join('')}</g>`
+    : situation === 'heat'
+      ? `<g class="amb"><circle cx="590" cy="38" r="20" class="sun"/>${[0, 45, 90, 135, 180, 225, 270, 315].map(a => `<path d="M${590 + Math.cos(a * Math.PI / 180) * 26} ${38 + Math.sin(a * Math.PI / 180) * 26}l${Math.cos(a * Math.PI / 180) * 10} ${Math.sin(a * Math.PI / 180) * 10}" class="ray"/>`).join('')}</g>`
+      : `<g class="amb"><circle cx="590" cy="38" r="14" class="sun dry"/><path d="M60 236l14 8 10-10 12 12M300 240l12 6 8-8 14 10" class="crack"/></g>`;
+  return `<figure class="mechdiagram" data-situation-shown="${esc(situation)}"><svg viewBox="0 0 640 300" role="img" aria-label="${esc(ui('diagram_aria'))}">
+    <rect x="0" y="0" width="640" height="300" class="d-sky"/>${ambient}
+    <rect x="0" y="206" width="640" height="94" class="d-soil"/><rect x="0" y="196" width="640" height="10" class="d-paving"/>
+    <g class="bld"><rect x="40" y="96" width="150" height="100" class="d-wall"/><rect x="34" y="88" width="162" height="10" class="d-roofbase"/></g>
+    <g class="m-retention ${on('retention')}"><rect x="34" y="78" width="162" height="10" class="g-green"/><path d="M420 196q40 16 80 0" class="g-green fillish"/></g>
+    <g class="m-shade ${on('shade')}"><ellipse cx="320" cy="100" rx="70" ry="44" class="g-tree"/><path d="M250 196h140l-30-14h-80z" class="g-shadow"/><rect x="316" y="120" width="8" height="76" class="d-trunk"/></g>
+    <g class="m-evaporation ${on('evaporation')}">${[300, 320, 340].map(x => `<path d="M${x} 66q-6-10 0-20t0-20" class="g-vapour"/>`).join('')}${[60, 110, 150].map(x => `<path d="M${x} 70q-6-8 0-16t0-16" class="g-vapour"/>`).join('')}</g>
+    <g class="m-infiltration ${on('infiltration')}"><path d="M440 200v44M458 200v52M476 200v40" class="g-flow"/><path d="M436 244l4 8 4-8M454 252l4 8 4-8M472 240l4 8 4-8" class="g-flow"/></g>
+    <g class="m-storage ${on('storage')}"><rect x="270" y="222" width="100" height="40" rx="4" class="g-store"/><path d="M286 242h68" class="g-store-line"/></g>
+    <g class="pipe"><rect x="0" y="272" width="640" height="10" class="d-pipe"/></g>
+    <text x="14" y="296" class="d-label">${esc(ui('diagram_pipe'))}</text>
+  </svg>
+  <figcaption class="small muted">${esc(ui('diagram_caption'))}</figcaption></figure>`;
+}
+
 export function conceptView({ lang, ui, content }) {
   const { concept, facts } = content;
   const idx = factIndex(facts);
@@ -18,14 +42,14 @@ export function conceptView({ lang, ui, content }) {
     const mech = concept.mechanisms.find(m => m.id === c.mechanism);
     const facts = (c.facts ?? []).map(id => content.practice.cases.find(p => p.fact === id)).filter(Boolean);
     const hl = content.conceptFocus && c.interventions.includes(content.conceptFocus);
-    return `<article class="mech${hl ? ' hl' : ''}" data-mechanism="${esc(c.mechanism)}"><h4>${esc(pick(mech.label, lang))}</h4><p class="muted">${esc(pick(mech.what, lang))}</p><p>${esc(pick(c.text, lang))}</p>
+    return `<article class="mech${hl ? ' hl' : ''}${content.mechFocus === c.mechanism ? ' focus' : ''}" data-mechanism="${esc(c.mechanism)}"><h4><button class="mech-btn" data-mech="${esc(c.mechanism)}" aria-pressed="${content.mechFocus === c.mechanism}" title="${esc(ui('diagram_focus'))}">${esc(pick(mech.label, lang))}</button></h4><p class="muted">${esc(pick(mech.what, lang))}</p><p>${esc(pick(c.text, lang))}</p>
       <p class="small"><strong>${esc(ui('interventions'))}:</strong> ${c.interventions.map(id => esc(nameOf(id))).join(' · ') || esc(ui('none_listed'))}</p>
       <p class="small"><strong>${esc(ui('needs_evidence'))}:</strong> ${c.indicators.map(id => esc(indNameLocal(content, id, lang))).join(' · ') || esc(ui('none_listed'))}</p>
       ${facts.map(f => `<p class="small example"><strong>${esc(ui('example'))}:</strong> ${esc(lang === 'de' ? f.claim_de : f.claim_en)}</p>`).join('')}</article>`;
   }).join('');
   return `<div class="view concept"><h3>${esc(ui('matrix_title'))}</h3><p class="muted">${esc(ui('matrix_hint'))}</p>
     <div class="seg" role="group" aria-label="${esc(ui('situation'))}">${concept.situations.map(x => `<button data-situation="${esc(x.id)}" aria-pressed="${x.id === s}">${esc(pick(x.label, lang))}</button>`).join('')}</div>
-    ${content.conceptFocus ? `<p class="small focus" data-focus="${esc(content.conceptFocus)}">${esc(ui('concept_focus').replace('{name}', nameOf(content.conceptFocus)))} <button data-clear-focus>×</button></p>` : ''}<p class="lead">${esc(pick(situation.question, lang))}</p><div class="cards">${cards}</div>
+    ${content.conceptFocus ? `<p class="small focus" data-focus="${esc(content.conceptFocus)}">${esc(ui('concept_focus').replace('{name}', nameOf(content.conceptFocus)))} <button data-clear-focus>×</button></p>` : ''}<p class="lead">${esc(pick(situation.question, lang))}</p>${conceptDiagram({ lang, ui, situation: s, focus: content.mechFocus })}<div class="cards">${cards}</div>
     <h3>${esc(pick(concept.chain.title, lang))}</h3><ol class="chain">${concept.chain.steps.map(x => `<li>${esc(pick(x, lang))}</li>`).join('')}</ol>
     <p class="boundary">${esc(pick(concept.boundary, lang))}</p></div>`;
 }

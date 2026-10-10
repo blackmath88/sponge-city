@@ -41,6 +41,7 @@ function mapPanel({ lang, ui, pack, geoById, state, side, selection }) {
     <div class="legends">${drawn.filter(l => l.theme !== 'boundary' || l.legend.type !== 'single').map(l => `<div class="legend" data-legend="${esc(l.id)}"><strong>${esc(pick(l.title, lang))}</strong> <span class="small muted">· ${esc(ui('cls_' + l.origin))} · ${esc(l.unit)}</span>
       <ul>${legendEntries(l, lang).map(it => `<li><i style="background:${esc(it.color)}"></i>${esc(it.label)}</li>`).join('')}</ul></div>`).join('')}
       ${drawn.length > 0 ? `<p class="small muted">${esc(ui('map_legend_note'))}</p>` : ''}</div>
+    ${drawn.length ? `<p class="small muted attribution" data-attribution="${esc(pack.city)}">© ${[...new Set(drawn.map(l => l.attribution))].map(esc).join(' · ')} · ${esc(ui('map_date'))}: ${[...new Set(drawn.map(l => l.temporal))].map(esc).join(' · ')}</p>` : ''}
   </figure>`;
 }
 
@@ -75,7 +76,8 @@ export function inspectPanel({ lang, ui, record, measureIds }) {
       <dt>${esc(ui('map_licence'))}</dt><dd><a href="${esc(record.licence_url)}" target="_blank" rel="noreferrer">${esc(record.licence)} ↗</a> · ${esc(record.attribution)}</dd>
     </dl>
     <p class="boundary small">${esc(ui('map_screening'))}</p>
-    <p class="links">${hasMeasure ? `<a href="#" data-goto="measure" data-indicator-go="${esc(record.measure_topic)}">${esc(ui('map_to_measure'))} →</a> ` : ''}<a href="#" data-goto="export">${esc(ui('map_to_investigate'))} →</a></p></div>`;
+    <p class="links">${hasMeasure ? `<a href="#" data-goto="measure" data-indicator-go="${esc(record.measure_topic)}">${esc(ui('map_to_measure'))} →</a> ` : ''}<a href="#" data-goto="export">${esc(ui('map_to_investigate'))} →</a></p>
+    <p><button class="download secondary" id="brief-md">${esc(ui('mb_export_md'))}</button> <button class="download secondary" id="brief-json">${esc(ui('mb_export_json'))}</button></p></div>`;
 }
 
 function tableView({ lang, ui, pack, geoById, state }) {
