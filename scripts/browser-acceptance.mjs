@@ -304,6 +304,18 @@ await check('evidence-state clarity: matrix flags and gap links, Basel recheck f
   }
 });
 
+await check('reproducibility: the Basel tree count is shown as reproduced locally, the paved count and area shares as recorded gaps (author-only), in both languages', async () => {
+  for (const lang of ['de', 'en']) {
+    const { page, ctx } = await open(`?stage=practice&lang=${lang}`); await settle(page, 1000);
+    const card = page.locator('[data-fact="sealed-trees"]');
+    assert(await card.locator('[data-repro="reproduced"]').count() === 1 && await card.locator('[data-repro="gap"]').count() === 1, 'sealed-trees: one reproduced, one gap');
+    assert(await page.locator('[data-fact="basel-sealed"] [data-repro="gap"]').count() === 1, 'area shares: recorded gap');
+    assert(!markers.test(await text(page)), 'no markers');
+    await page.goto(base + `?stage=measure&lang=${lang}`); await settle(page, 800); await page.click('[data-indicator="tree-pits"]'); await settle(page, 400);
+    assert(await page.locator('[data-repro="reproduced"]').count() === 1, 'the measure step shows the same reproduced count'); await ctx.close();
+  }
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');

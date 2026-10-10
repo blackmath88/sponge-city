@@ -305,7 +305,16 @@
   "sc_canton": "Kanton, nicht Stadt",
   "origin_note": "Hinweis zur Klasse",
   "quote_thin": "Beleg dünn",
-  "map_source_wording": "Methode, Einheit, Massstab, Datenstand und Abdeckung stehen im Wortlaut der Quelle (teils Englisch, nicht übersetzt)."
+  "map_source_wording": "Methode, Einheit, Massstab, Datenstand und Abdeckung stehen im Wortlaut der Quelle (teils Englisch, nicht übersetzt).",
+  "rp_reproduced": "Lokal reproduziert (Autor)",
+  "rp_gap": "Lokal nicht reproduzierbar",
+  "rp_missing": "Fehlende Eingabe",
+  "rp_expected": "Erwartete Berechnung",
+  "rp_status": "Stand",
+  "rp_result": "Ergebnis",
+  "rp_limit": "Grenze",
+  "rp_author": "Nur vom Autor ausgeführt, keine unabhängige Prüfung.",
+  "rp_source": "Quelle und Datum"
  },
  "en": {
   "skip": "Skip to content",
@@ -613,6 +622,15 @@
   "sc_canton": "Canton, not the city",
   "origin_note": "Note on the class",
   "quote_thin": "Thin evidence",
-  "map_source_wording": "Method, unit, scale, data date and coverage are in the source wording (not translated)."
+  "map_source_wording": "Method, unit, scale, data date and coverage are in the source wording (not translated).",
+  "rp_reproduced": "Reproduced locally (author)",
+  "rp_gap": "Not reproducible locally",
+  "rp_missing": "Missing input",
+  "rp_expected": "Expected computation",
+  "rp_status": "Status",
+  "rp_result": "Result",
+  "rp_limit": "Limit",
+  "rp_author": "Run by the author only; not an independent review.",
+  "rp_source": "Source and date"
  }
 }

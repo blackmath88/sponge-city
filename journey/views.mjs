@@ -57,6 +57,15 @@ export function conceptView({ lang, ui, content }) {
 export const indNameLocal = (content, id, lang) => pick(content.concept.indicator_names?.[id] ?? id, lang);
 
 // Verification record for one claim (data/verification/basel-claims.json). Evidence and limits are shown in the active language when a translation exists.
+// Reproducibility from repository-local raw data: what was recomputed, and what cannot be (with the missing input named).
+function reproBlock({ lang, ui, content }, id) {
+  const r = content.repro; if (!r) return '';
+  const hits = [...(r.reproduced ?? []).map(x => ({ ...x, kind: 'reproduced' })), ...(r.gaps ?? []).map(x => ({ ...x, kind: 'gap' }))].filter(x => x.claims.includes(id));
+  return hits.map(x => x.kind === 'reproduced'
+    ? `<p class="small" data-repro="reproduced"><strong>${chip(ui('rp_reproduced'), 'observed')} ${esc(pick(x.label, lang))}:</strong> ${esc(x.result.without_mapped_planted_polygon)} / ${esc(x.result.total)} (${esc(x.result.without_share_percent)} %), ${esc(ui('rp_limit'))}: ${esc(pick(x.limit, lang))} <code>${esc(x.script)}</code> ${esc(ui('rp_author'))}</p>`
+    : `<div class="small" data-repro="gap"><p><strong>${chip(ui('rp_gap'), 'unknown')} ${esc(x.figure)}</strong></p><ul><li><em>${esc(ui('rp_missing'))}:</em> ${esc(pick(x.missing_input, lang))}</li><li><em>${esc(ui('rp_source'))}:</em> ${link(x.source_url, x.source_url)} · ${esc(x.source_date)}</li><li><em>${esc(ui('rp_expected'))}:</em> ${esc(pick(x.expected_computation, lang))}</li><li><em>${esc(ui('rp_status'))}:</em> ${esc(pick(x.current_status, lang))} ${esc(ui('rp_author'))}</li></ul></div>`).join('');
+}
+
 export function verificationBlock({ lang, ui, content }, id) {
   const c = content.checks?.claims?.find(x => x.id === id); if (!c) return '';
   const de = lang === 'de' ? content.checksDe?.claims?.[id] : null;
@@ -67,6 +76,7 @@ export function verificationBlock({ lang, ui, content }, id) {
     <p class="small"><strong>${esc(ui('ver_evidence'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(evidence)}</span></p>
     ${limit ? `<p class="small"><strong>${esc(ui('ver_limit'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(limit)}</span></p>` : ''}
     ${c.independent_recheck ? `<p class="small" data-recheck="${esc(c.independent_recheck.state)}"><strong>${esc(ui('rc_' + c.independent_recheck.state))}:</strong> ${esc(de?.independent_recheck_note_de ?? c.independent_recheck.note)}</p>` : ''}
+    ${reproBlock({ lang, ui, content }, id)}
     ${untranslated ? `<p class="small muted">${esc(ui('ver_english'))}</p>` : ''}<p class="small">${link(c.source_url, ui('source'))}</p></details>`;
 }
 
