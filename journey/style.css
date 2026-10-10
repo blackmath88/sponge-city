@@ -17,7 +17,7 @@ header{flex-wrap:wrap}
 .cards article,.compare article,.phead,.indicator,.gate{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
 .view .eyebrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;line-height:1.6}
 .chip{display:inline-block;font:600 10px/1.4 Inter,sans-serif;letter-spacing:.04em;text-transform:none;padding:3px 8px;border-radius:99px;background:var(--sand);color:var(--ink);border:1px solid var(--line)}
-.chip.observed{background:var(--mint)}.chip.derived{background:#dde8ee}.chip.modelled{background:#e6e0ee}.chip.assumed{background:#f3e6d6}.chip.unknown,.chip.state-no_public_evidence_found{background:#fff;border:1px dashed var(--amber);color:#6d4521}
+.chip.partial{background:#fff;border:1px solid var(--green)}.chip.observed{background:var(--mint)}.chip.derived{background:#dde8ee}.chip.modelled{background:#e6e0ee}.chip.assumed{background:#f3e6d6}.chip.unknown,.chip.state-no_public_evidence_found{background:#fff;border:1px dashed var(--amber);color:#6d4521}
 .chain{display:flex;flex-wrap:wrap;gap:10px;padding-left:20px}.chain li{flex:1 1 180px}
 .indicator dl{display:grid;gap:14px;margin:12px 0 0}.field{display:grid;grid-template-columns:minmax(120px,170px) 1fr;gap:12px;border-top:1px solid var(--line);padding-top:12px;font-size:14px}.field dt{color:var(--muted);font-size:12px}.field dd{margin:0}
 .profile-heads{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0}

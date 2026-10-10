@@ -167,7 +167,7 @@
   },
   "sewer-network": {
    "name": "Kanalisation und Entwässerungsnetz (GEP)",
-   "north_star": "Leitungen, Schächte, Sammler, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz.",
+   "north_star": "Leitungen, Schächte, Strassenabläufe, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz.",
    "basel": {
     "detail": "Netzdaten in den geprüften offenen Basler und Bundesquellen nicht gefunden. Offen: das ARA-Einzugsgebiet (13 Polygone). Veröffentlicht, aber nicht als Daten: die GEP-Karte der Entwässerungsarten von 2012 (Misch, Misch mit Versickerungspflicht, modifiziertes Trennsystem) und Versickerungsverbote in Schutzzonen (PDF, 1:20 000).",
     "existence_basis": "Angenommen: Die GEP-Seite nennt Tiefbauamt und AUE als Prüfstellen des Entwässerungsplans, daher sollten Netzdaten bestehen; sie wurden nicht als offene Daten gefunden."

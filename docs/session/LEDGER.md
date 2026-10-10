@@ -20,4 +20,9 @@ Start **2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard stop 16:56. Not 
 | C1 | Journey shell, i18n, concept/practice/measure/cities/export views, checks | coordinator | direct | done | 7283092, 36148d8 |
 | T1 | Street X-Ray de/en + place overlay | standard | Agent→sonnet (claude-sonnet-5-5), worktree bilingual-w1 | done, browser-checked de | cherry-pick of 8ac0883 |
 | T2 | Rain Walk de/en | standard | Agent→sonnet, worktree bilingual-w2 | done, browser-checked de | cherry-pick of 1cc5073 |
-| T3 | Street Lab de/en | standard | Agent→sonnet, worktree bilingual-w3 | running | |
+| T3 | Street Lab de/en | standard | Agent→sonnet, worktree bilingual-w3 | done | cherry-pick of 52f6519 |
+| T4 | Data Charter map de/en + charter-de.json | standard | Agent→sonnet, worktree bilingual-w4 | done | cherry-pick of fa02c79 |
+| RV | Independent read-only review of 120956d | deep | Agent→opus (claude-opus-5-5) | done: 0 blocker, 2 major, 8 minor; 2 major + 6 minor fixed, rest deferred (see PR) | review-fixes commit |
+
+All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers used (no verified enforcing timeout). Usage not observable. Session started 14:26; final checks ~15:0x CEST (well inside budget; all accepted scope delivered).
+

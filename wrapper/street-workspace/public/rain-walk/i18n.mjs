@@ -472,7 +472,7 @@ export function initLang({win = window, onChange = () => {}} = {}) {
     try { const u = new URL(win.location.href); u.searchParams.set('lang', lang); win.history.replaceState(null, '', u); } catch { /* ignore */ }
     paint(); onChange(lang);
   }
-  win.addEventListener('message', e => e.data?.type === 'sponge-lang' && set(e.data.lang));
+  win.addEventListener('message', e => e.origin === location.origin && e.data?.type === 'sponge-lang' && set(e.data.lang));
   paint();
   return {get lang() { return lang; }, get t() { return makeT(lang); }, set};
 }

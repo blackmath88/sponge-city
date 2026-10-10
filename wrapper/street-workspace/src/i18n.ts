@@ -438,7 +438,7 @@ export function initLang(win: Window = window): Lang {
     win.document.documentElement.classList.add("embedded");
   applyDocument();
   win.addEventListener("message", (e: MessageEvent) => {
-    if (e.data?.type === "sponge-lang") setLang(e.data.lang);
+    if (e.origin === location.origin && e.data?.type === "sponge-lang") setLang(e.data.lang);
   });
   return current;
 }

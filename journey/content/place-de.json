@@ -62,7 +62,7 @@
     "groundwater-nearest": {
      "title": "Wie tief liegt das Grundwasser in der Nähe?",
      "unit": "abgeleitete Mindesttiefe bei Steinenparking (1060), 164 m entfernt",
-     "method": "Geländehöhe minus höchster Pegelstand der letzten 10 Jahre. Ablesung: 13.1 m unter Terrain an der flachsten Stelle (Steinenparking (1060), 164 m entfernt).",
+     "method": "Geländehöhe minus höchster Pegelstand der letzten 10 Jahre. Ablesung: 13,1 m unter Terrain an der flachsten Stelle (Steinenparking (1060), 164 m entfernt).",
      "limitation": "Eine Messstelle ist ein Punkt, keine Tiefenkarte. Für die Versickerung braucht es einen Test vor Ort"
     },
     "works-near": {
@@ -74,12 +74,12 @@
     "sealed-corridor-m2": {
      "title": "Wie viel versiegelter Boden liegt im Korridor?",
      "method": "1-m-Rasterproben innerhalb der halben Breite der Linie, nach dem Bodenbedeckungspolygon eingeteilt, in dem sie liegen; Strasse plus übrige Beläge",
-     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Gehwege und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
+     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Trottoirs und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
     },
     "planted-corridor-m2": {
      "title": "Wie viel bepflanzter Boden liegt im Korridor?",
      "method": "1-m-Rasterproben innerhalb der halben Breite der Linie, nach dem Bodenbedeckungspolygon eingeteilt, in dem sie liegen",
-     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Gehwege und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
+     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Trottoirs und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
     },
     "tree-planting-context": {
      "title": "Stehen diese Bäume auf kartiertem Pflanzboden?",
@@ -227,10 +227,10 @@
      "limitation": "Ein Messwert in 222 m Entfernung ist Kontext, kein Nachweis des Grundwasserabstands an der möglichen Grundfläche."
     },
     "candidate-footprint": {
-     "title": "Ein 2.4 m breiter Randstreifen könnte den Test rahmen",
+     "title": "Ein 2,4 m breiter Randstreifen könnte den Test rahmen",
      "unit": "m² Szenario-Grundfläche",
      "source": "SpongeSquad-Demo-Muster",
-     "method": "Illustratives 160-m-Segment × 2.4 m Randstreifen.",
+     "method": "Illustratives 160-m-Segment × 2,4 m Randstreifen.",
      "limitation": "Keine Vermessung, Eigentumsprüfung, Randsteinmessung oder Prüfung der Barrierefreiheit stützt diese Grundfläche."
     },
     "surface-flow-hypothesis": {

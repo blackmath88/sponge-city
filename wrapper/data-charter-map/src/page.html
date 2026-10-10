@@ -567,7 +567,7 @@
       renderAll();
     }
     $("#langs").addEventListener("click", event => { const b = event.target.closest("[data-lang]"); if (b) setLang(b.dataset.lang, true); });
-    window.addEventListener("message", e => { if (e.data?.type === "sponge-lang") setLang(e.data.lang); });
+    window.addEventListener("message", e => { if (e.origin === location.origin && e.data?.type === "sponge-lang") setLang(e.data.lang); });
 
     renderAll();
     if (map) map.on("load", addLayers);

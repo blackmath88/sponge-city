@@ -120,6 +120,7 @@ test('Unknown stays unknown: missing and restricted evidence is never presented 
     const html = measureView({ lang, ui: ui(lang), content: { ...content, measureSel: m.id } });
     const actual = html.split(ui(lang)('m_actual'))[1].split(ui(lang)('m_supports'))[0];
     if (status === 'missing' || status === 'restricted') { assert.match(actual, /chip unknown/); assert.doesNotMatch(actual, /chip observed/, `${m.id} presented as observed`); }
+    else if (status === 'partial') { assert.doesNotMatch(actual, /chip observed/); assert.match(actual, /chip partial/); }
     else assert.match(actual, /chip observed/);
     const proxyFill = charter.indicators.find(i => i.id === m.id).fill;
     if (proxyFill?.status === 'proposed') assert.match(html, /chip assumed/);
@@ -206,7 +207,7 @@ test('Exports stay in one place context, are bilingual, keep stable IDs, and car
     assert.ok(md.includes(kanon.sha256));
     assert.ok(md.includes(ui(lang)('md_status_value')));
     assert.equal(exported.engineering_recommendation, false);
-    assert.equal(exported.language, lang);
+    assert.equal(exported.language, 'en'); assert.equal(exported.ui_language, lang);
     assert.ok(!/ß/.test(md) || lang === 'en');
   }
   const de = exportMarkdown(kanon, 'de', content, ui('de'), overlay);

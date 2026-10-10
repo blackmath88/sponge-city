@@ -99,7 +99,7 @@
     "en": "Does not replace an infiltration test on site. The proxy yields no permeability values."
    },
    "next_action": {
-    "de": "Versickerungskarte des Kantons (GEP) bei Amt für Umwelt und Energie anfragen; am Standort Versickerungsversuche planen.",
+    "de": "Versickerungskarte des Kantons (GEP) beim Amt für Umwelt und Energie anfragen; am Standort Versickerungsversuche planen.",
     "en": "Ask the Canton's Office for Environment and Energy for the GEP infiltration map; plan infiltration tests on site."
    },
    "monitoring": {
@@ -151,7 +151,7 @@
    },
    "desirable": {
     "en": "Pipes, manholes, gullies, combined or separate system, overflows, catchments, with the GEP; open, at least as a simplified network.",
-    "de": "Leitungen, Schächte, Sammler, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz."
+    "de": "Leitungen, Schächte, Strassenabläufe, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz."
    },
    "actual": {
     "en": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
@@ -214,7 +214,7 @@
     "en": "Root space determines how much water a tree can store and therefore how much it transpires and shades in summer."
    },
    "supports": {
-    "de": "Bäume mit sichtbar zu wenig Raum für eine Untersuchung vorschlagen. Das Planungsumfeld ist bekannt, die Grube nicht.",
+    "de": "Bäume mit sichtbar zu wenig Raum für eine Untersuchung vorschlagen. Das Pflanzumfeld ist bekannt, die Grube nicht.",
     "en": "Propose trees with visibly too little space for investigation. The planting context is known, the pit is not."
    },
    "cannot": {

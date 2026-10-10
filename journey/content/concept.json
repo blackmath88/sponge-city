@@ -230,7 +230,7 @@
    "situation": "heat",
    "mechanism": "evaporation",
    "text": {
-    "de": "Verdunstung und Pflanzenatmung nehmen Wärme auf und kühlen die Luft nahe der Fläche. Sie brauchen verfügbares Wasser.",
+    "de": "Verdunstung und Transpiration der Pflanzen nehmen Wärme auf und kühlen die Luft nahe der Fläche. Sie brauchen verfügbares Wasser.",
     "en": "Evaporation and plant transpiration take up heat and cool the air near the surface. They need available water."
    },
    "interventions": [

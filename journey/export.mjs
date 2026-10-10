@@ -28,7 +28,7 @@ export function referenceGaps(content, lang) {
 }
 export function exportJson(place, lang, content, overlay) {
   const { record } = localizeRecord(place, lang, overlay);
-  return { ...record, language: lang, scope_note: 'Place claims describe only this place. Reference gaps are city-level and not site-specific. No Street Lab synthetic parameters or observations are included.',
+  return { ...record, language: 'en', ui_language: lang, scope_note: 'Place claims describe only this place. Reference gaps are city-level and not site-specific. No Street Lab synthetic parameters or observations are included.',
     reference_gaps: content.measurements.indicators.map(m => ({ indicator_id: m.id, scope: 'city-level-reference', status: content.charter.indicators.find(i => i.id === m.id).basel.status })) };
 }
 export function exportMarkdown(place, lang, content, ui, overlay) {

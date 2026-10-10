@@ -42,7 +42,7 @@ export function practiceView({ lang, ui, content }) {
       ${cav ? `<p class="small"><strong>${esc(ui('caveat'))}:</strong> ${esc(cav)}</p>` : ''}<p class="small">${esc(ui('mechanisms'))}: ${c.mechanisms.map(mechLabel).map(esc).join(' · ')}<br>${esc(ui('source'))}: ${link(f.source.url, f.source.label)}</p></article>`; }).join('')}</div><p class="small muted">${esc(ui('source_note'))}</p></div>`;
 }
 
-const clsOf = { open: 'observed', partial: 'observed', restricted: 'unknown', missing: 'unknown' };
+const clsOf = { open: 'observed', partial: 'partial', restricted: 'unknown', missing: 'unknown' };
 const fillCls = { run: 'derived', proposed: 'assumed', none: 'unknown' };
 export function measureView({ lang, ui, content }) {
   const byId = new Map(content.charter.indicators.map(i => [i.id, i]));
@@ -59,7 +59,7 @@ export function measureView({ lang, ui, content }) {
       ${section(ui('m_why'), t(m.why))}
       ${section(ui('m_desirable'), `${esc(pick(m.desirable, lang))}`)}
       ${section(ui('m_proxy'), m.proxy ? `${chip(ui('fill_' + ch.fill.status), fillCls[ch.fill.status])} ${esc(pick(m.proxy, lang))}<br><span class="small">${esc(pick(ch.fill.confidence ? { de: 'Vertrauen laut Quelle: ' + ch.fill.confidence + ' (englisch)', en: 'Confidence per source: ' + ch.fill.confidence } : '', lang))}</span>` : esc(ui('m_no_proxy')))}
-      ${section(ui('m_actual'), `${chip(ui('status_' + status), clsOf[status])} ${chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>`)}
+      ${section(ui('m_actual'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>`)}
       ${section(ui('m_supports'), t(m.supports))}
       ${section(ui('m_cannot'), t(m.cannot))}
       ${section(ui('m_next'), `${t(m.next_action)}${m.ask ? `<br><span class="small">${esc(ui('m_ask'))}: ${esc(pick(m.ask, lang))}</span>` : ''}`)}
