@@ -1,0 +1,318 @@
+{
+ "title": "Sponge-City-Datencharta",
+ "purpose": "Der Datensatz des Zielbilds, den eine Stadt führen, aktuell halten und offen veröffentlichen sollte, damit Schwammstadt-Grundsätze und -Massnahmen öffentlich geplant, bewertet und überwacht werden können. Jeder Indikator nennt das Ideal, den realen Stand in Basel heute und wie eine Lücke durch Ableitung gefüllt werden könnte, getrennt von realen Daten.",
+ "groups": {
+  "surface": "Oberflächen und Versiegelung",
+  "subsurface": "Untergrund und Grundwasser",
+  "water": "Entwässerung und Regen",
+  "green": "Bäume und Vegetation",
+  "heat": "Hitze",
+  "governance": "Prioritäten, Zuständigkeit und Zeitplan"
+ },
+ "real_status": {
+  "open": "Reale Daten, offen herunterladbar oder abfragbar, nahe am Zielbild",
+  "partial": "Reale offene Daten sind vorhanden, erreichen das Zielbild aber nicht (Auflösung, Abdeckung, Format oder nur als Kartenbild)",
+  "restricted": "Sollte vorhanden sein, ist aber nicht offen verfügbar; in den geprüften Basler und Bundesquellen nicht als offene Daten gefunden. Der Grund für die Erwartung steht pro Indikator und ist eine Annahme, keine überprüfte Tatsache",
+  "missing": "In den geprüften Basler und Bundesquellen keine offenen Daten gefunden"
+ },
+ "fill_status": {
+  "run": "Von uns in einem Pilot mit offenen Livedaten abgeleitet; auf der Karte als abgeleitet dargestellt, nie als real",
+  "proposed": "Bekannte indirekte Methode, Erkennungs- oder Syntheseverfahren; noch nicht durchgeführt",
+  "none": "Kein glaubwürdiger Ableitungsweg; es muss gemessen oder veröffentlicht werden"
+ },
+ "evidence_classes": {
+  "observed": "Veröffentlicht oder direkt gemessen",
+  "derived": "Deterministisch aus benannten beobachteten Eingangsdaten berechnet",
+  "modelled": "Aus einem ausdrücklichen statistischen, bildanalytischen oder physikalischen Modell",
+  "assumed": "Nur für ein erklärtes Szenario eingeführt oder ohne Überprüfung angegeben",
+  "unknown": "Keine belastbaren Belege vorhanden"
+ },
+ "permitted_uses": {
+  "explain": "Zum Erklären eines Mechanismus oder einer Datenlücke",
+  "screen": "Um zu entscheiden, wo man genauer hinschaut; nie, um zu entscheiden, was gebaut wird",
+  "prioritise": "Um Orte oder Varianten zu reihen; muss an unabhängigen Daten validiert werden",
+  "design": "Als Eingabe für den Entwurf; braucht validierte Belege auf Standortebene"
+ },
+ "claims": {
+  "tree-planting-context": {
+   "validation": "nicht validiert",
+   "limitations": [
+    "Beschreibt nur das kartierte Pflanzumfeld am Baumpunkt",
+    "Keine kartierte Pflanzfläche am Punkt beweist keinen versiegelten Belag",
+    "Sagt nichts über Grubenfläche, Bodenvolumen oder Substrat",
+    "Pflanzflächen unterhalb der Kartierschwelle der Vermessung werden nicht unterschieden"
+   ]
+  },
+  "groundwater-depth-at-stations": {
+   "validation": "nicht validiert",
+   "limitations": [
+    "Punktwerte; zwischen den Messstellen ist nichts bekannt",
+    "Der geringste beobachtete Stand ist kein Bemessungsgrundwasserstand",
+    "Lokales Schichtwasser und Baueinflüsse sind nicht abgebildet"
+   ]
+  },
+  "underground-activity-by-network": {
+   "validation": "nicht validiert",
+   "limitations": [
+    "Zeigt bewilligte Aktivität, nicht Lage, Tiefe oder Dichte der Netze",
+    "Die Stichwortregeln wurden nicht an den Bewilligungsunterlagen geprüft; gemischte Arbeiten erhalten eine Kategorie",
+    "Eine Strasse ohne Bewilligungen kann trotzdem Leitungen enthalten"
+   ]
+  },
+  "active-or-upcoming-works": {
+   "validation": "nicht validiert",
+   "limitations": [
+    "Nur Arbeiten, die bereits bewilligt sind",
+    "Kein koordinierter künftiger Arbeitsplan",
+    "Bewilligungsdaten können sich ändern"
+   ]
+  }
+ },
+ "indicators": {
+  "land-cover": {
+   "name": "Bodenbedeckung und Versiegelung",
+   "north_star": "Polygone aller versiegelten und unversiegelten Flächen (Dächer, Strassen, Trottoirs, Parkplätze, Bepflanzung), ≤ 1 m, jährlich aktualisiert, offener Vektordownload und API.",
+   "basel": {
+    "detail": "Amtliche Bodenbedeckung: 49 595 Polygone mit Klassen wie Trottoir, Strasse, Verkehrsinsel, Tramfläche, Gebäude, Garten, Wasser. CC BY 4.0, aktualisiert am 20.08.2026."
+   }
+  },
+  "sealing-fraction": {
+   "name": "Versiegelter Anteil pro Block oder Einzugsgebiet",
+   "north_star": "Versiegelter Anteil pro Block und pro Entwässerungseinzugsgebiet, jährlich, als Grundlage einer Wasserbilanz (Abfluss, Versickerung, Verdunstung).",
+   "basel": {
+    "detail": "Keine veröffentlichte Karte des versiegelten Anteils und keine Wasserbilanz. Die Eingangsdaten (Bodenbedeckung, statistische Blöcke) sind offen."
+   },
+   "fill": {
+    "method": "Bodenbedeckungsklassen pro statistischem Block (100040) aggregieren; danach könnte eine Wasserbilanz wie das Berliner ABIMO folgen.",
+    "confidence": "hoch für den versiegelten Anteil, es ist Arithmetik auf realen Polygonen"
+   }
+  },
+  "roofs": {
+   "name": "Dachform, Gründächer und Tragreserve",
+   "north_star": "Pro Gebäude: Dachform und Neigung, vorhandene Gründachfläche und -art, Auflagen des Denkmalschutzes, statische Reserve für ein Gründach; offen, mit den Baubewilligungen aktualisiert.",
+   "basel": {
+    "detail": "Offen: Solarkataster pro Dach (Modellwerte) und Dachinventar der Denkmalpflege (WMS/WFS). Nicht gefunden: ein Inventar bestehender Gründächer und die Tragfähigkeit der Dächer."
+   },
+   "fill": {
+    "method": "Gründach-Erkennung aus Orthofotos (Berliner Methode; NDVI braucht Nahinfrarot, das SWISSIMAGE RS zwar hat, aber nicht gratis). Flachdächer aus swissBUILDINGS3D plus die Pflicht nach § 72 BPG liefern eine Vorannahme. Für die Tragfähigkeit gibt es keinen Fernerkundungs-Ersatz.",
+    "confidence": "mittel für Gründächer, keine für die Tragfähigkeit"
+   },
+   "ask": "Das Gründach-Inventar veröffentlichen, falls vorhanden (Kanton Basel-Stadt)."
+  },
+  "parking": {
+   "name": "Geometrie der Parkplätze am Strassenrand",
+   "north_star": "Jedes Parkfeld am Strassenrand als Polygon mit Art und Anzahl, mit den Verkehrsanordnungen aktualisiert; offen.",
+   "basel": {
+    "detail": "Anzahlen pro Strassenabschnitt und Art (7817 Datensätze) sind offen, aber ohne Geometrie. Spezialparkplätze (Behinderte, Laden, Taxi) sind als Punkte offen."
+   },
+   "fill": {
+    "method": "Die Anzahlen pro Strasse entlang der Strassenränder verteilen (Bodenbedeckung + Strassenabschnitte) oder Parkfelder in Luftbildern erkennen (DLR-Methode); OSM-Tags parking:*, wo kartiert.",
+    "confidence": "mittel"
+   },
+   "ask": "Die Geometrie hinter 100329 veröffentlichen (Amt für Mobilität)."
+  },
+  "infiltration": {
+   "name": "Versickerungsleistung",
+   "north_star": "Eine Versickerungskarte (wie im GEP verlangt) mit gemessener Durchlässigkeit, wo vorhanden, auf Parzellen- oder Strassenebene, offen.",
+   "basel": {
+    "detail": "Keine offene Versickerungskarte und keine Durchlässigkeitsdaten gefunden. Verwandte offene Eingangsdaten: Bodentiefenklassen, Bohrungen, Grundwasserstände, Schutzzonen, Altlasten."
+   },
+   "fill": {
+    "method": "Grundwasserflurabstand, Bohrprofile, Bodentiefe und Ausschlussgebiete (Schutzzonen S1/S2, Altlasten) kombinieren; mit Versickerungstests aus Bürgerwissenschaft prüfen.",
+    "confidence": "tief bis mittel: nur zur Eingrenzung"
+   },
+   "ask": "Die GEP-Versickerungskarte veröffentlichen (Amt für Umwelt und Energie)."
+  },
+  "groundwater-depth": {
+   "name": "Grundwasserflurabstand",
+   "north_star": "Eine durchgehende Karte des Grundwasserflurabstands (Mittel- und Hochstand) plus aktuelle Stände, mit jährlichem Trend.",
+   "basel": {
+    "detail": "Real und offen an rund 80 Messstellen (stündliche Stände, 10-Jahres-Statistik); keine durchgehende Flurabstandskarte."
+   },
+   "fill": {
+    "method": "Terrainhöhe minus 10-Jahres-Höchststand ergibt den geringsten Grundwasserflurabstand pro Messstelle: 0,8 m bis 20,8 m, Median 9,8 m über 81 Messstellen. Zwischen den Messstellen nicht interpoliert.",
+    "confidence": "hoch an den Messstellen, keine dazwischen"
+   }
+  },
+  "protection": {
+   "name": "Grundwasserschutz und Altlasten",
+   "north_star": "Schutzzonen und Altlastenkataster als offene Vektordaten, laufend aktuell.",
+   "basel": {
+    "detail": "Grundwasserschutzzonen und -areale sowie das Kataster der belasteten Standorte sind offen (data.bs.ch, WMS/WFS)."
+   }
+  },
+  "soil": {
+   "name": "Bodenart und Bodentiefe",
+   "north_star": "Bodenkarte mit Textur, Tiefe und Verdichtung für offenen und versiegelten Boden, offen.",
+   "basel": {
+    "detail": "Die Bodenkarte mit Tiefenklassen ist als WMS/WFS offen, vor allem für unversiegelte Flächen; zum Untergrund unter Strassen gibt es wenig."
+   },
+   "fill": {
+    "method": "Bohrprofile (Bohrkataster) für das Material unter versiegeltem Boden.",
+    "confidence": "tief"
+   }
+  },
+  "utilities": {
+   "name": "Unterirdische Leitungen",
+   "north_star": "Mindestens eine Leitungsdichte pro Strassenabschnitt (ohne genaue Lage), offen; die Lage steht den Planenden zur Verfügung.",
+   "basel": {
+    "detail": "In den geprüften Quellen nicht als offene Daten gefunden. Offen: nur grosse Leitungen und das Fernwärmegebiet.",
+    "existence_basis": "Angenommen: Für Basel-Stadt sollte ein Leitungskataster bestehen; es wurde nicht als offene Daten gefunden."
+   },
+   "fill": {
+    "method": "Bewilligungsspur: Bewilligungen für Bauarbeiten, deren Text Leitungs-, Kanal-, Fernwärme-, Wasser-, Gas-, Strom- oder Hausanschlussarbeiten nennt (7032 Baustellen- und Grabungsbewilligungen auf der Karte; 7557 Datensätze zu Leitungsarbeiten an 666 Strassen im weiteren Pilot). Zeigt Aktivität, nicht das Netz.",
+    "confidence": "mittel als Dichtesignal; keine Positionen"
+   },
+   "ask": "Eine Dichteklasse der Leitungskorridore pro Strassenabschnitt veröffentlichen (IWB, Tiefbauamt)."
+  },
+  "sewer-network": {
+   "name": "Kanalisation und Entwässerungsnetz (GEP)",
+   "north_star": "Leitungen, Schächte, Sammler, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz.",
+   "basel": {
+    "detail": "Netzdaten in den geprüften offenen Basler und Bundesquellen nicht gefunden. Offen: das ARA-Einzugsgebiet (13 Polygone). Veröffentlicht, aber nicht als Daten: die GEP-Karte der Entwässerungsarten von 2012 (Misch, Misch mit Versickerungspflicht, modifiziertes Trennsystem) und Versickerungsverbote in Schutzzonen (PDF, 1:20 000).",
+    "existence_basis": "Angenommen: Die GEP-Seite nennt Tiefbauamt und AUE als Prüfstellen des Entwässerungsplans, daher sollten Netzdaten bestehen; sie wurden nicht als offene Daten gefunden."
+   },
+   "fill": {
+    "method": "SWMManywhere oder der Eawag-Kanalgenerator aus Strassen, Gelände und Gebäuden; Prüfung an den 96 Strassen mit Bewilligungen für Kanalarbeiten.",
+    "confidence": "tief: ein plausibles Netz, nie das echte"
+   },
+   "ask": "Strassenablauf-Punkte und ein Misch-/Trennsystem-Merkmal pro Strassenabschnitt veröffentlichen (Tiefbauamt, AUE)."
+  },
+  "gullies": {
+   "name": "Strassenabläufe und Einlaufschächte",
+   "north_star": "Jeder Strassenablauf und Einlauf als Punkt mit seinem Anschluss, offen.",
+   "basel": {
+    "detail": "Keine offenen Daten zu Strassenabläufen gefunden."
+   },
+   "fill": {
+    "method": "Erkennung in Strassenfotos (Mapillary-Klasse «Schacht», veröffentlichte Strassenablauf-Detektoren) oder in True-Orthofotos; OSM manhole=drain.",
+    "confidence": "mittel, wo Bildmaterial vorhanden ist"
+   },
+   "ask": "Teil des Wunsches zum Kanalnetz."
+  },
+  "overland-flow": {
+   "name": "Oberflächenabfluss und Überstau",
+   "north_star": "Gefährdung durch Oberflächenwasser aus einem kalibrierten Stadtmodell, plus erfasste Überstau- und Überflutungsereignisse.",
+   "basel": {
+    "detail": "Die Gefahrenkarte Oberflächenabfluss des Bundes (modelliert, vereinfacht, nicht im Feld überprüft) und die kantonalen Hochwassergefahrenkarten sind offen. Keine offene Erfassung von Überflutungsereignissen auf Strassen."
+   },
+   "ask": "Erfasste Überflutungs- und Überstauereignisse veröffentlichen."
+  },
+  "rainfall": {
+   "name": "Regen in hoher Auflösung",
+   "north_star": "Regenmesser und Radar mit ≤ 10 Minuten und ≤ 1 km, lange Reihen für Bemessungsregen und Ereignisanalysen.",
+   "basel": {
+    "detail": "MeteoSchweiz-Station Basel/Binningen (10-Minuten-Daten, lange Reihen), Radarniederschlag (letzte 14 Tage), Klimaszenarien CH2025; städtische Sensoren mit stündlichem Regen (Rohdaten)."
+   }
+  },
+  "network-monitoring": {
+   "name": "Durchfluss- und Überlaufmessung im Netz",
+   "north_star": "Durchflüsse, Pegel und Mischwasser-Überlaufereignisse an Schlüsselstellen, offen in einem FAIR-Format (z. B. WaterML-UD).",
+   "basel": {
+    "detail": "Keine offenen Daten zu Kanaldurchfluss oder Überläufen gefunden."
+   },
+   "fill": {
+    "method": "Muss von den Betreibenden gemessen und veröffentlicht werden.",
+    "confidence": "entfällt"
+   },
+   "ask": "Überlaufereignisse und Durchflüsse veröffentlichen (Betreibende von Kanalnetz und Kläranlage)."
+  },
+  "receiving-waters": {
+   "name": "Flüsse und Vorfluter",
+   "north_star": "Pegel, Abflüsse und Qualität von Flüssen und Bächen, live und offen.",
+   "basel": {
+    "detail": "Pegel und Abflüsse von Rhein, Birs und Wiese alle 5 Minuten (BAFU, CC0), Rheinüberwachungsstation, Oberflächenwasseranalysen."
+   }
+  },
+  "trees": {
+   "name": "Baumbestand",
+   "north_star": "Jeder öffentliche Baum mit Art, Alter, Grösse und Zustand, laufend aktualisiert, offen.",
+   "basel": {
+    "detail": "Baumkataster: 32 378 Bäume (12 504 Strassenbäume) mit Art, Jahren am Standort und Schutzstatus; tägliche Aktualisierung."
+   }
+  },
+  "tree-pits": {
+   "name": "Baumgrube und Wurzelraum",
+   "north_star": "Pro Baum: Grubenfläche und -volumen, Substrat, ob mit Graben verbunden oder nicht.",
+   "basel": {
+    "detail": "Das Baumkataster enthält kein Feld für Grubengrösse oder Wurzelraum."
+   },
+   "fill": {
+    "method": "Strassenbaum-Punkte mit kartierten Pflanzflächen verschneiden. 3372 Punkte liegen in einer kartierten Pflanzfläche, 9132 haben am Punkt keine kartierte Pflanzfläche. Das klassifiziert das Pflanzumfeld, nicht die Grubenmasse.",
+    "confidence": "mittel für das kartierte Pflanzumfeld; keine für die Masse einer einzelnen Grube"
+   },
+   "ask": "Ein Feld für die Grubenfläche im Baumkataster ergänzen (Stadtgärtnerei)."
+  },
+  "canopy": {
+   "name": "Baumkronenbedeckung im Zeitverlauf",
+   "north_star": "LiDAR-Baumkronenbedeckung alle 3 Jahre oder öfter, offen.",
+   "basel": {
+    "detail": "LiDAR-Baumkronenbedeckung für 2012, 2021 und 2024 (0,5 m, GeoTIFF)."
+   }
+  },
+  "soil-moisture": {
+   "name": "Bodenfeuchte und Trockenstress der Bäume",
+   "north_star": "Bodenfeuchte-Sensoren an repräsentativen Bäumen und Schwammelementen, live und offen (wie bei QTrees in Berlin).",
+   "basel": {
+    "detail": "Keine offenen Daten zu Bodenfeuchte oder Baumstress gefunden."
+   },
+   "fill": {
+    "method": "Muss gemessen werden.",
+    "confidence": "entfällt"
+   }
+  },
+  "climate-analysis": {
+   "name": "Stadtklimaanalyse",
+   "north_star": "Karten zu Hitzebelastung, Wärmeinsel und Kaltluft für heute und für Szenarien, als offene Raster.",
+   "basel": {
+    "detail": "Klimaanalyse 2019 und 2030 (PET, Wärmeinsel, Lufttemperatur, Kaltluft) offen als Kartenbilder; die Raster sind im Geodatenshop."
+   },
+   "ask": "Die Raster der Klimaanalyse als offene GeoTIFFs veröffentlichen."
+  },
+  "street-temperature": {
+   "name": "Temperatur auf Strassenhöhe",
+   "north_star": "Kalibrierte Luft- und Oberflächentemperatursensoren über alle Strassentypen, live und offen.",
+   "basel": {
+    "detail": "Rund 200 städtische Sensoren mit stündlicher Lufttemperatur, offen, aber roh (nicht qualitätsgeprüft)."
+   }
+  },
+  "priorities": {
+   "name": "Eignung und Schwerpunktgebiete",
+   "north_star": "Veröffentlichte Eignung der Strassen für Schwammmassnahmen und Schwerpunktgebiete für Hitze und Wasser.",
+   "basel": {
+    "detail": "Schwammstadt-Eignung nach Verkehrsbelastung für 6519 Strassenabschnitte und Hitze-Fokusgebiete aus dem Stadtklimakonzept."
+   }
+  },
+  "ownership": {
+   "name": "Eigentum und öffentlicher Raum",
+   "north_star": "Parzellen und Grenzen des öffentlichen Raums, offen.",
+   "basel": {
+    "detail": "Parzellen mit EGRID und Parzellen der Allmend (öffentlicher Raum) sind offen."
+   }
+  },
+  "works-calendar": {
+   "name": "Bauarbeitenkalender",
+   "north_star": "Geplante Strassen- und Leitungsarbeiten pro Abschnitt, Jahre im Voraus, offen, damit Schwammmassnahmen sich anschliessen können.",
+   "basel": {
+    "detail": "Bewilligungen für öffentlichen Grund (150 799, täglich) und Baustellen sind offen; ein koordinierter mehrjähriger Arbeitsplan ist nicht veröffentlicht."
+   },
+   "fill": {
+    "method": "Bewilligungen mit einem Enddatum ab heute zeigen laufende oder kommende bewilligte Arbeiten.",
+    "confidence": "hoch für die gezeigten Bewilligungsdaten; das ist kein koordinierter künftiger Arbeitsplan"
+   },
+   "ask": "Den koordinierten mehrjährigen Arbeitsplan veröffentlichen."
+  },
+  "measures-registry": {
+   "name": "Verzeichnis gebauter Schwamm-Massnahmen und ihrer Wirkung",
+   "north_star": "Jede gebaute Massnahme (Regengarten, Baumrigole, Entsiegelung, Gründach) mit Ort, Ausführung, Datum und überwachter Wirkung, offen.",
+   "basel": {
+    "detail": "Kein offenes Verzeichnis gefunden; nur 64 Bewilligungstexte erwähnen Entsiegelung oder Versickerung."
+   },
+   "fill": {
+    "method": "Muss von der Stadt erfasst werden.",
+    "confidence": "entfällt"
+   },
+   "ask": "Ein offenes Verzeichnis der Schwamm-Massnahmen starten (Stadtgärtnerei, Tiefbauamt)."
+  }
+ }
+}
