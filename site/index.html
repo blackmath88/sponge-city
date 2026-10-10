@@ -1,28 +1,29 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Explore a Basel place, inspect the evidence, and decide what needs investigating before a sponge-city intervention.">
-<title>Sponge City Basel · Decision Canvas</title><link rel="stylesheet" href="assets/style.css"></head>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Schwammstadt verstehen, Messgrössen mit Entscheidungen verbinden, Städte vergleichen und einen Basler Ort untersuchen. Understand sponge cities, link measurements to decisions, compare cities and investigate a Basel place.">
+<title>Schwammstadt · Sponge City</title><link rel="stylesheet" href="assets/style.css"></head>
 <body>
-<header><a class="wordmark" href="index.html">Sponge City / Basel</a><span>From a place to a next action</span><a href="evidence-atlas.html">Evidence atlas ↗</a></header>
-<main>
-  <section class="intro"><p class="eyebrow">A decision canvas for your street</p><h1>Where could water<br>stay a little longer?</h1><p>Explore what a sponge intervention could mean here.<br>Start with the evidence. Keep the missing pieces visible.</p></section>
-  <section class="workspace" aria-label="Place investigation">
-    <aside class="place-panel"><p class="eyebrow">01 / Choose a place</p><div id="places" class="places"><p>Loading place records…</p></div><p id="identity" class="small"></p>
-      <div class="coordinates" id="coordinates"></div><h2>What this record can tell us</h2><p id="place-boundary"></p>
-      <p class="small">Need, possibility and potential effect are separate questions.</p>
-      <a id="map-link" href="situation-map.html">Explore the situation map ↗</a>
+<a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
+<header><a class="wordmark" href="index.html" data-i18n="wordmark">Schwammstadt · Basel, Berlin, Kopenhagen, Zürich</a><span data-i18n="tagline">Vom Konzept zur nächsten Untersuchung</span><div id="lang-switch" class="lang-switch" role="group" data-i18n-label="language"></div><a href="evidence-atlas.html" data-i18n="atlas_link">Belegatlas (Englisch) ↗</a></header>
+<main id="main">
+  <section class="intro"><p class="eyebrow" data-i18n="intro_eyebrow">Lernen und entscheiden für Basel</p><h1 data-i18n="intro_title">Wo könnte Wasser<br>etwas länger bleiben?</h1><p data-i18n="intro_lead"></p></section>
+  <section class="workspace" id="workspace" aria-label="Untersuchung" data-i18n-label="journey_label">
+    <aside class="place-panel" id="place-panel"><p class="eyebrow" data-i18n="place_choose">Ort wählen</p><div id="places" class="places"></div><p id="identity" class="small"></p>
+      <div class="coordinates" id="coordinates"></div><h2 data-i18n="place_tells">Was dieser Eintrag aussagen kann</h2><p id="place-boundary"></p>
+      <p class="small" data-i18n="place_note"></p>
+      <a id="map-link" href="situation-map.html" data-i18n="map_link"></a>
     </aside>
     <div class="canvas-panel">
-      <div class="canvas-title"><div><p class="eyebrow">02 / Investigate</p><h2 id="place-title">One place. Connected questions.</h2></div><span class="status">Requires investigation</span></div>
-      <nav class="steps" id="steps" aria-label="Investigation stages"></nav>
-      <div class="stage-caption"><h3 id="stage-question"></h3><a id="open-module" target="_blank" rel="noreferrer">Open tool ↗</a></div>
+      <nav class="steps" id="steps" aria-label="Untersuchung" data-i18n-label="journey_label"></nav>
+      <div class="canvas-title"><div><h2 id="place-title"></h2></div><span class="status" data-i18n="status_requires">Erfordert Untersuchung</span></div>
+      <div class="stage-caption"><h3 id="stage-question"></h3><a id="open-module" target="_blank" rel="noreferrer"></a></div>
       <p id="stage-boundary" class="boundary"></p>
-      <iframe id="module-frame" title="Selected investigation module" loading="lazy" hidden></iframe>
-      <section id="decision" class="decision" hidden></section>
+      <iframe id="module-frame" title="" loading="lazy" hidden></iframe>
+      <section id="view" class="decision" hidden></section><p id="live" class="sr-only" role="status" aria-live="polite"></p>
     </div>
   </section>
-  <section class="gap-section"><div><p class="eyebrow">03 / Bridge the gap</p><h2>Two routes to better evidence.</h2><p>Compute what the sources support. Ask the people who hold the rest.</p></div><div class="gap-path"><span class="number">A</span><h3>Connect and compute</h3><p>Join open records, check geometry and compare transparent scenarios. Every derived claim keeps its sources, method and limits.</p></div><div class="gap-path"><span class="number">B</span><h3>Ask and observe</h3><p>Request utility and drainage information. Inspect the place with people who use it. Commission the tests that surface clues cannot replace.</p></div></section>
-  <section class="tools"><p class="eyebrow">Independent modules / one evidence system</p><div id="references"></div></section>
-  <footer><p>GIS calculates. Rules constrain. AI explains.</p><a href="README.md">Architecture and attribution</a><a href="wrapper/achim/connected-case/generated/klybeck-edge.case.json">Klybeck connected case · JSON</a></footer>
-</main><noscript><p>This workspace needs JavaScript. <a href="wrapper/street-xray/index.html?street=kanonengasse">Open Street X-Ray</a> or <a href="evidence-atlas.html">the evidence atlas</a>.</p></noscript>
+  <section class="gap-section"><div><p class="eyebrow" data-i18n="gap_eyebrow"></p><h2 data-i18n="gap_title"></h2><p data-i18n="gap_lead"></p></div><div class="gap-path"><span class="number">A</span><h3 data-i18n="gap_a_title"></h3><p data-i18n="gap_a_text"></p></div><div class="gap-path"><span class="number">B</span><h3 data-i18n="gap_b_title"></h3><p data-i18n="gap_b_text"></p></div></section>
+  <section class="tools"><p class="eyebrow" data-i18n="tools_eyebrow"></p><div id="references"></div></section>
+  <footer><p data-i18n="footer_tag"></p><a href="README.md" data-i18n="footer_arch"></a><a href="wrapper/achim/connected-case/generated/klybeck-edge.case.json" data-i18n="footer_case"></a></footer>
+</main><noscript><p>Diese Anwendung braucht JavaScript. This workspace needs JavaScript. <a href="wrapper/street-xray/index.html?street=kanonengasse">Street X-Ray</a> · <a href="evidence-atlas.html">Evidence atlas</a></p></noscript>
 <script type="module" src="assets/app.mjs"></script></body></html>

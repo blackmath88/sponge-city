@@ -8,6 +8,7 @@ const read = path => readFileSync(join(root, path), "utf8");
 let html = read("src/page.html");
 html = html.replace("/*__SHARED_CSS__*/", read("src/tokens.css").trim());
 html = html.replace("/*__CHARTER__*/ null", JSON.stringify(JSON.parse(read("data/data-charter.json"))));
+html = html.replace("/*__CHARTER_DE__*/ null", JSON.stringify(JSON.parse(read("data/charter-de.json"))));
 html = html.replace("/*__CHARTER_MAP__*/ null", JSON.stringify(JSON.parse(read("data/charter-map.json"))));
 if (/\/\*__[A-Z_]+__\*\/ null/.test(html)) throw new Error("Unfilled data marker in Data Charter page");
 

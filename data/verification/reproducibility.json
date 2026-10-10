@@ -1,0 +1,120 @@
+{
+ "schema_version": "sponge-reproducibility/1",
+ "note": {
+  "de": "Was sich aus den im Repository liegenden Rohdaten nachrechnen lässt und was nicht. Alle Nachrechnungen sind vom Autor ausgeführt und keine unabhängige Prüfung.",
+  "en": "What can be recomputed from raw data held in this repository and what cannot. All recomputations were run by the author and are not an independent review."
+ },
+ "reproduced": [
+  {
+   "id": "trees-without-mapped-planted-polygon",
+   "claims": [
+    "sealed-trees",
+    "measurement:tree-pits"
+   ],
+   "status": "reproduced-locally",
+   "script": "scripts/recompute-basel-trees.mjs",
+   "label": {
+    "de": "Bäume ohne erfasste Pflanzfläche am Baumstandort",
+    "en": "Trees without a mapped planted polygon at the tree point"
+   },
+   "method": {
+    "de": "Zählung von inferred_pit = 0 in der gesicherten Momentaufnahme des Baumkatasters (Datensatz 100052); die Pflanzfläche stammt aus der Bodenbedeckung (humusiert*, bestockt*), als die Momentaufnahme erstellt wurde.",
+    "en": "Count of inferred_pit = 0 in the pinned snapshot of the tree register (dataset 100052); the planted polygon came from the land cover (humusiert*, bestockt*) when the snapshot was built."
+   },
+   "limit": {
+    "de": "Das ist nicht die Zahl der Bäume in versiegelten Flächen (9046). Die Pflanzflächen-Zuordnung selbst wurde hier nicht neu berechnet, nur ihr Ergebnis gezählt.",
+    "en": "This is not the count of trees inside paved polygons (9,046). The planted-polygon assignment itself was not recomputed here; only its stored result was counted."
+   },
+   "author_only": true,
+   "result": {
+    "snapshot": {
+     "file": "wrapper/data-charter-map/data/charter-map.json",
+     "fetched_at": "2026-10-03T20:36:22.296Z",
+     "dataset": "100052",
+     "unique_ids": 12504
+    },
+    "total": 12504,
+    "in_mapped_planted_polygon": 3372,
+    "without_mapped_planted_polygon": 9132,
+    "without_share_percent": 73.03,
+    "planted_polygon_area_m2": {
+     "n": 3372,
+     "q1": 202,
+     "median": 371,
+     "q3": 787
+    }
+   }
+  }
+ ],
+ "gaps": [
+  {
+   "id": "trees-in-paved-polygons",
+   "claims": [
+    "sealed-trees"
+   ],
+   "status": "not-reproducible-locally",
+   "author_only": true,
+   "figure": "9,046 of 12,504 (about 72 %) in befestigt polygons",
+   "missing_input": {
+    "de": "Vollständiger Datensatz Bodenbedeckung (100477) mit Geometrie und Klasse; im Repository liegt nur ein Ausschnitt mit 1138 Polygonen (data/maps/basel/basel.sealing.01.geojson).",
+    "en": "The full Bodenbedeckung dataset (100477) with geometry and class; the repository holds only a 1,138-polygon window (data/maps/basel/basel.sealing.01.geojson)."
+   },
+   "source_url": "https://data.bs.ch/explore/dataset/100477/",
+   "source_date": "modified 2026-08-20 (49,595 polygons, CC BY 4.0); retrieved 2026-10-10 by the verification worker",
+   "expected_computation": {
+    "de": "Punkt-in-Polygon der 12 504 Bäume der Momentaufnahme gegen alle Polygone der Klasse befestigt.* ; erwartet 9046 (72,3 %), davon 82 Bäume in keinem Polygon.",
+    "en": "Point-in-polygon of the 12,504 snapshot trees against all polygons of class befestigt.*; expected 9,046 (72.3 %), with 82 trees in no polygon."
+   },
+   "current_status": {
+    "de": "Nur vom Verifikations-Worker berechnet (Autor-Route); die unabhängige Prüfung R2 zog eine Stichprobe von 120 Bäumen (75,8 %), vereinbar innerhalb des Stichprobenfehlers, und reproduzierte 9046 nicht.",
+    "en": "Computed only by the verification worker (author route); independent review R2 tested a 120-tree sample (75.8 %), consistent within sampling error, and did not reproduce 9,046."
+   }
+  },
+  {
+   "id": "basel-area-percentages",
+   "claims": [
+    "basel-sealed"
+   ],
+   "status": "not-reproducible-locally",
+   "author_only": true,
+   "figure": "buildings 16.56 %, paved 28.48 %, roads 9.47 %, sidewalks 4.17 %, total sealed 45.04 %",
+   "missing_input": {
+    "de": "Vollständiger Datensatz Bodenbedeckung (100477) mit Geometrie; der Ausschnitt im Repository deckt nur rund 0,8 km × 0,7 km ab und kann keine kantonsweiten Anteile liefern.",
+    "en": "The full Bodenbedeckung dataset (100477) with geometry; the repository window covers only about 0.8 km × 0.7 km and cannot give canton-wide shares."
+   },
+   "source_url": "https://data.bs.ch/explore/dataset/100477/",
+   "source_date": "modified 2026-08-20; retrieved 2026-10-10 by the verification worker",
+   "expected_computation": {
+    "de": "Flächengewichtete Summe je Klasse (äquirektangulare Näherung, Gesamtfläche 36,89 km²); erwartet 16,56 / 28,48 / 45,04 %.",
+    "en": "Area-weighted sum per class (equirectangular approximation, total 36.89 km²); expected 16.56 / 28.48 / 45.04 %."
+   },
+   "current_status": {
+    "de": "Nur vom Verifikations-Worker berechnet; R2 hat Anzahl und Datum erneut abgerufen, die Prozentwerte nicht.",
+    "en": "Computed only by the verification worker; R2 re-fetched the record count and date, not the percentages."
+   }
+  },
+  {
+   "id": "basel-hot-days",
+   "claims": [
+    "basel-hot-days"
+   ],
+   "status": "not-reproducible-locally",
+   "author_only": true,
+   "figure": "8.8 / 14.3 / 21.9 hot days per year (1961–1990, 1991–2020, 2015–2024)",
+   "missing_input": {
+    "de": "Tageswerte der Station Basel-Binningen (Datensatz 100254, 59 452 Zeilen) fehlen im Repository.",
+    "en": "The daily values of Basel-Binningen (dataset 100254, 59,452 rows) are not in the repository."
+   },
+   "source_url": "https://data.bs.ch/explore/dataset/100254/",
+   "source_date": "live dataset modified 2026-10-10; retrieved 2026-10-10 by the verification worker",
+   "expected_computation": {
+    "de": "Pro vollständigem Jahr die Tage mit tre200dx ≥ 30; Mittel je Zeitraum.",
+    "en": "Per complete year the days with tre200dx >= 30; mean per period."
+   },
+   "current_status": {
+    "de": "Vom Verifikations-Worker berechnet und von R2 unabhängig aus dem aktuellen Datensatz bestätigt (nicht aus Repository-Daten).",
+    "en": "Computed by the verification worker and independently confirmed by R2 from the live dataset (not from repository data)."
+   }
+  }
+ ]
+}

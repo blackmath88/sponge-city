@@ -1,0 +1,290 @@
+{
+ "schema_version": "sponge-city-layers/1",
+ "city": "basel",
+ "extent": {
+  "bbox": [
+   7.55466,
+   47.5193,
+   7.6938,
+   47.60092
+  ],
+  "source": "Bounding box of the Gemeinde polygons Basel, Riehen, Bettingen, data.bs.ch dataset 100017 (Grundbuch- und Vermessungsamt BS, amtliche Vermessung), https://data.bs.ch/explore/dataset/100017/"
+ },
+ "layers": [
+  {
+   "id": "basel.boundary.01",
+   "theme": "boundary",
+   "title": {
+    "de": "Gemeindegrenzen Kanton Basel-Stadt",
+    "en": "Municipal boundaries, Canton Basel-Stadt"
+   },
+   "kind": "geojson-snapshot",
+   "file": "basel.boundary.01.geojson",
+   "tiles": null,
+   "origin": "observed",
+   "method": "Hoheitsgrenzen der amtlichen Vermessung; polygons simplified (about 10 m) by scripts/maps/basel.mjs",
+   "unit": "polygon",
+   "spatial_scale": "municipality",
+   "temporal": "dataset modified 2026-08-20",
+   "retrieved": "2026-10-10",
+   "coverage": "Basel, Riehen, Bettingen (whole canton)",
+   "publisher": "Grundbuch- und Vermessungsamt Basel-Stadt",
+   "licence": "CC BY 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "source_url": "https://data.bs.ch/explore/dataset/100017/",
+   "attribution": "Grundbuch- und Vermessungsamt Basel-Stadt, Open Data Basel-Stadt, CC BY 4.0",
+   "limitations": {
+    "de": "Vereinfachte Geometrie, nicht für Vermessungszwecke.",
+    "en": "Simplified geometry, not for survey use."
+   },
+   "legend": {
+    "type": "single",
+    "items": [
+     {
+      "value": "boundary",
+      "label": {
+       "de": "Gemeindegrenze",
+       "en": "Municipal boundary"
+      },
+      "color": "#444444"
+     }
+    ]
+   },
+   "properties_shown": [
+    "name"
+   ],
+   "measure_topic": null
+  },
+  {
+   "id": "basel.sealing.01",
+   "theme": "sealing",
+   "title": {
+    "de": "Bodenbedeckung (Versiegelung) – Ausschnitt Innenstadt",
+    "en": "Land cover (sealing) – city-centre window"
+   },
+   "kind": "geojson-snapshot",
+   "file": "basel.sealing.01.geojson",
+   "tiles": null,
+   "origin": "observed",
+   "method": "Bodenbedeckung der amtlichen Vermessung (Objekte: Gebäude, befestigte, humusierte, bestockte, vegetationslose Flächen, Gewässer); Polygone mit Schwerpunkt im Fenster, vereinfacht (Toleranz 0.00003°)",
+   "unit": "land-cover class",
+   "spatial_scale": "parcel/object (cadastral survey)",
+   "temporal": "dataset modified 2026-08-20",
+   "retrieved": "2026-10-10",
+   "coverage": "Ausschnitt ca. 0.8 km × 0.7 km um Rhein/Mittlere Brücke, lon 7.5835–7.5935, lat 47.5555–47.5615; 1138 Objekte (nicht ganz Basel) / window of about 0.8 km × 0.7 km around the Rhine/Mittlere Brücke, same bbox; 1138 objects (not all of Basel)",
+   "publisher": "Grundbuch- und Vermessungsamt Basel-Stadt",
+   "licence": "CC BY 4.0",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "source_url": "https://data.bs.ch/explore/dataset/100477/",
+   "attribution": "Grundbuch- und Vermessungsamt Basel-Stadt, Open Data Basel-Stadt, CC BY 4.0",
+   "limitations": {
+    "de": "Nur ein Ausschnitt. «Befestigt» ist die Vermessungsklasse und sagt nichts über die Wasserdurchlässigkeit des Belags; Dachflächen und Bäume über Flächen sind nicht erfasst. Geometrie vereinfacht. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Window only. \"befestigt\" (paved) is the survey class and says nothing about permeability of the surface; roof types and tree canopy over surfaces are not captured. Geometry simplified. Legend colours are our choice; the publisher defines classes only."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "class",
+    "items": [
+     {
+      "value": "Gebaeude.Gebaeude",
+      "label": {
+       "de": "Gebäude",
+       "en": "Building"
+      },
+      "color": "#7a7a7a"
+     },
+     {
+      "value": "befestigt.Strasse_Weg",
+      "label": {
+       "de": "Strasse/Weg (befestigt)",
+       "en": "Road/path (paved)"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "befestigt.Trottoir",
+      "label": {
+       "de": "Trottoir (befestigt)",
+       "en": "Footway (paved)"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "befestigt.Verkehrsinsel",
+      "label": {
+       "de": "Verkehrsinsel (befestigt)",
+       "en": "Traffic island (paved)"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "befestigt.Wasserbecken",
+      "label": {
+       "de": "Wasserbecken (befestigt)",
+       "en": "Water basin (paved)"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "befestigt.uebrige_befestigte.Sportanlage_befestigt",
+      "label": {
+       "de": "Sportanlage (befestigt)",
+       "en": "Sports facility (paved)"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "befestigt.uebrige_befestigte.uebrige_befestigte",
+      "label": {
+       "de": "Übrige befestigte Fläche",
+       "en": "Other paved area"
+      },
+      "color": "#b5651d"
+     },
+     {
+      "value": "humusiert.Gartenanlage.Gartenanlage",
+      "label": {
+       "de": "Gartenanlage (humusiert)",
+       "en": "Garden (humus-covered)"
+      },
+      "color": "#7bb661"
+     },
+     {
+      "value": "humusiert.Gartenanlage.Parkanlage_Spielplatz",
+      "label": {
+       "de": "Park/Spielplatz (humusiert)",
+       "en": "Park or playground (humus-covered)"
+      },
+      "color": "#7bb661"
+     },
+     {
+      "value": "humusiert.uebrige_humusierte.Gewaesservorland_humusiert",
+      "label": {
+       "de": "Gewässervorland (humusiert)",
+       "en": "Waterside land (humus-covered)"
+      },
+      "color": "#7bb661"
+     },
+     {
+      "value": "humusiert.uebrige_humusierte.uebrige_humusierte",
+      "label": {
+       "de": "Übrige humusierte Fläche",
+       "en": "Other humus-covered area"
+      },
+      "color": "#7bb661"
+     }
+    ]
+   },
+   "properties_shown": [
+    "class"
+   ],
+   "measure_topic": "sealing-fraction"
+  },
+  {
+   "id": "basel.trees.01",
+   "theme": "trees",
+   "title": {
+    "de": "Baumkataster – Ausschnitt Innenstadt",
+    "en": "Tree register – city-centre window"
+   },
+   "kind": "geojson-snapshot",
+   "file": "basel.trees.01.geojson",
+   "tiles": null,
+   "origin": "observed",
+   "method": "Baumkataster der Stadtgärtnerei (städtisch gepflegter Baumbestand), Punkte im Fenster; Koordinaten auf 5 Dezimalen gerundet",
+   "unit": "tree (point)",
+   "spatial_scale": "single tree",
+   "temporal": "dataset modified 2026-10-10 (register is updated continuously)",
+   "retrieved": "2026-10-10",
+   "coverage": "Dasselbe Fenster wie Bodenbedeckung; 307 Bäume / same window as land cover; 307 trees",
+   "publisher": "Stadtgärtnerei Basel-Stadt",
+   "licence": "CC BY 4.0 (Datensatz-Lizenzfeld: «CC BY 4.0 + OpenStreetMap»; verlinkt ist die Erlaubnis des GVA vom 2024-08-22, CC-BY-Daten in OpenStreetMap aufzunehmen; sie enthält keine zusätzlichen Auflagen für Nutzende dieses Datensatzes)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "source_url": "https://data.bs.ch/explore/dataset/100052/",
+   "attribution": "Stadtgärtnerei Basel-Stadt, Open Data Basel-Stadt, CC BY 4.0",
+   "limitations": {
+    "de": "Nur von Stadtgärtnerei und Gemeinde Riehen gepflegte Bäume (inkl. von der Stadtgärtnerei gepflegte Privatbäume); übrige private Bäume fehlen. Ausschnitt, keine Aussage zur Kronenbedeckung. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Only trees maintained by the city gardens department and Riehen (including private trees it maintains); other private trees are missing. Window only, no statement on canopy cover. Legend colours are our choice; the publisher defines classes only."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "group",
+    "items": [
+     {
+      "value": "Strassenbäume",
+      "label": {
+       "de": "Strassenbäume",
+       "en": "Street trees"
+      },
+      "color": "#2d6a4f"
+     },
+     {
+      "value": "Öffentliche Grünflächen",
+      "label": {
+       "de": "Öffentliche Grünflächen",
+       "en": "Public green spaces"
+      },
+      "color": "#74a57f"
+     },
+     {
+      "value": "Schul- und Kindergartenareal",
+      "label": {
+       "de": "Schul- und Kindergartenareal",
+       "en": "School and kindergarten grounds"
+      },
+      "color": "#a3b18a"
+     },
+     {
+      "value": "Privatbäume gepflegt durch STG",
+      "label": {
+       "de": "Privatbäume (von der Stadtgärtnerei gepflegt)",
+       "en": "Private trees (maintained by the city gardens department)"
+      },
+      "color": "#588157"
+     }
+    ]
+   },
+   "properties_shown": [
+    "species",
+    "age_years",
+    "street",
+    "group"
+   ],
+   "measure_topic": null
+  }
+ ],
+ "gaps": [
+  {
+   "theme": "flood-hazard",
+   "reason": {
+    "de": "Gefährdungskarte Oberflächenabfluss (BAFU) ist nur als Kachel-Dienst verfügbar; die STAC-Metadaten nennen als Lizenz «proprietary», eine klare Nutzungsbedingung wurde nicht gelesen. Keine Geometrie übernommen.",
+    "en": "The FOEN overland-flow hazard map is available as tiles only; STAC metadata gives licence \"proprietary\" and no clear terms were read. No geometry included."
+   },
+   "checked": [
+    "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.bafu.gefaehrdungskarte-oberflaechenabfluss → 200, license \"proprietary\", producer FOEN",
+    "https://wmts.geo.admin.ch/1.0.0/ch.bafu.gefaehrdungskarte-oberflaechenabfluss/default/current/3857/12/2145/1434.png → 200 (tiles reachable, not used)",
+    "https://wms.geo.bs.ch/?SERVICE=WMS layer NG_Gefahrenkarten_ProzessWasser (used by the existing page as raster; vector availability not checked)"
+   ]
+  },
+  {
+   "theme": "heat",
+   "reason": {
+    "de": "Kein Hitze-/Stadtklima-Polygonlayer im Open-Data-Katalog gefunden (nur Stationsmessungen).",
+    "en": "No heat/urban-climate polygon layer found in the open-data catalogue (station measurements only)."
+   },
+   "checked": [
+    "https://data.bs.ch/api/explore/v2.1/catalog/datasets title search \"Hitze\", \"Klima\" → only 100254 (NBCN station daily data); \"Starkregen\", \"Gefahrenkarte\" → no results"
+   ]
+  },
+  {
+   "theme": "green",
+   "reason": {
+    "de": "Keine Dachbegrünungs-/Gründach-Geodaten im Katalog gefunden (Suche «Gründach», «Dachbegrünung», «Grünfläche»: keine Treffer).",
+    "en": "No green-roof geodata found in the catalogue (searches returned no results)."
+   },
+   "checked": [
+    "https://data.bs.ch/api/explore/v2.1/catalog/datasets title search → 0 results"
+   ]
+  }
+ ]
+}

@@ -1171,3 +1171,28 @@ header .journey-progress i {
     grid-template-columns: 1fr;
   }
 }
+
+.lang-switch {
+  display: inline-flex;
+  gap: 4px;
+}
+.lang-switch button {
+  padding: 4px 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.lang-switch button[aria-pressed="true"] {
+  background: #203c3b;
+  color: #f5f4ef;
+}
+.embedded header {
+  display: none;
+}
+.site-error {
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: #fbefd9;
+  border-left: 3px solid #c58a1f;
+  border-radius: 3px;
+  font-size: 13px;
+}

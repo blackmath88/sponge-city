@@ -1,4 +1,4 @@
-.PHONY: build validate smoke run fetch new test-adaptive
+.PHONY: browser build validate smoke run fetch new test-adaptive
 
 build:
 	node scripts/build.mjs
@@ -22,3 +22,6 @@ fetch:
 
 new:
 	node scripts/new-solution.mjs $(name) "$(title)"
+
+browser: build
+	node scripts/browser-acceptance.mjs

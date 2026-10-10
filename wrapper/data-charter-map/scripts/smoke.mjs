@@ -7,14 +7,17 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "dist", "index.html"), "utf8");
 const charter = JSON.parse(await readFile(join(root, "data", "data-charter.json"), "utf8"));
 const snapshot = JSON.parse(await readFile(join(root, "data", "charter-map.json"), "utf8"));
+const charterDe = JSON.parse(await readFile(join(root, "data", "charter-de.json"), "utf8"));
+const measurements = JSON.parse(await readFile(join(root, "..", "..", "journey", "content", "measurements.json"), "utf8"));
 const doc = await readFile(join(root, "docs", "DATA-CHARTER.md"), "utf8");
 const fail = message => { throw new Error(`data-charter-map: ${message}`); };
 
 const match = html.match(/<script id="map-logic">\s*([\s\S]*?)\s*<\/script>/);
 if (!match) fail("map logic script not found");
 const context = vm.createContext({ console });
-vm.runInContext(`${match[1]}\nthis.api = { CHARTER, SNAPSHOT, LAYERS, EVIDENCE, TREES, PERMITS, SCORE, scorecard, decodeTrees, decodePermits, depthColour, CLAIMS, claimSummary };`, context);
+vm.runInContext(`${match[1]}\nthis.api = { CHARTER, SNAPSHOT, LAYERS, EVIDENCE, TREES, PERMITS, SCORE, scorecard, decodeTrees, decodePermits, depthColour, CLAIMS, claimSummary, setLangCode, t, normLang, CHARTER_DE };`, context);
 const api = context.api;
+api.setLangCode("en");
 
 // Embedded data is current
 if (api.SNAPSHOT.fetched_at !== snapshot.fetched_at) fail("page does not embed the current snapshot. Run make build.");
@@ -98,5 +101,43 @@ for (const station of snapshot.groundwater) {
 if (!snapshot.permits.rows.length || !api.PERMITS.every(p => snapshot.permits.categories.includes(p.category))) fail("permit categories not decoded");
 if (api.depthColour(1) === api.depthColour(18)) fail("depth colours do not separate shallow from deep");
 if (snapshot.boundary?.geometry?.type !== "MultiPolygon" && snapshot.boundary?.geometry?.type !== "Polygon") fail("canton boundary missing");
+
+// Language layer (de default, en optional)
+if (api.normLang("xx") !== "de" || api.normLang(undefined) !== "de" || api.normLang("en") !== "en") fail("language normalisation: invalid must fall back to de");
+for (const marker of ['type === "sponge-lang"', "sponge.lang", "embedded", "data-lang"]) if (!html.includes(marker)) fail(`language layer: ${marker} missing`);
+if (/\/\*__[A-Z_]+__\*\/ null/.test(html)) fail("unfilled data marker in built page");
+const indIds = new Set(charter.indicators.map(i => i.id));
+for (const id of indIds) {
+  const e = charterDe.indicators?.[id];
+  if (!e?.name?.trim() || !e?.north_star?.trim() || !e?.basel?.detail?.trim()) fail(`charter-de.json: ${id} needs name, north_star and basel.detail`);
+  const ind = charter.indicators.find(i => i.id === id);
+  if (ind.fill && (!e.fill?.method?.trim() || !e.fill?.confidence?.trim())) fail(`charter-de.json: ${id} needs fill.method and fill.confidence`);
+  if (ind.ask && !e.ask?.trim()) fail(`charter-de.json: ${id} needs ask`);
+  if (ind.basel.existence_basis && !e.basel.existence_basis?.trim()) fail(`charter-de.json: ${id} needs basel.existence_basis`);
+}
+for (const id of Object.keys(charterDe.indicators)) if (!indIds.has(id)) fail(`charter-de.json: unknown indicator ${id}`);
+for (const g of charter.groups) if (!charterDe.groups?.[g.id]) fail(`charter-de.json: group ${g.id} missing`);
+for (const key of Object.keys(charter.real_status)) if (!charterDe.real_status?.[key]) fail(`charter-de.json: real_status ${key} missing`);
+for (const key of Object.keys(charter.fill_status)) if (!charterDe.fill_status?.[key]) fail(`charter-de.json: fill_status ${key} missing`);
+for (const key of Object.keys(charter.evidence_classes)) if (!charterDe.evidence_classes?.[key]) fail(`charter-de.json: evidence_classes ${key} missing`);
+for (const key of Object.keys(charter.permitted_uses)) if (!charterDe.permitted_uses?.[key]) fail(`charter-de.json: permitted_uses ${key} missing`);
+if (!charterDe.title || !charterDe.purpose) fail("charter-de.json: title and purpose missing");
+for (const claim of charter.claims) if (charterDe.claims?.[claim.id]?.limitations?.length !== claim.limitations.length) fail(`charter-de.json: claim ${claim.id} limitations differ in count`);
+if (JSON.stringify(charterDe).includes("ß")) fail("charter-de.json must use Swiss 'ss', never 'ß'");
+const reused = ["land-cover", "sealing-fraction", "infiltration", "sewer-network", "rainfall", "tree-pits", "soil-moisture", "measures-registry"];
+for (const id of reused) {
+  const m = measurements.indicators.find(i => i.id === id);
+  const e = charterDe.indicators[id];
+  if (e.north_star !== m.desirable.de) fail(`${id}: north_star differs from measurements.json`);
+  if (e.basel.detail !== m.actual.de) fail(`${id}: basel.detail differs from measurements.json`);
+  if ((e.fill?.method ?? null) !== (m.proxy?.de ?? null)) fail(`${id}: fill.method differs from measurements.json`);
+  if ((e.ask ?? null) !== (m.ask?.de ?? null)) fail(`${id}: ask differs from measurements.json`);
+}
+// German rendering helpers
+api.setLangCode("de");
+const claimDe = api.claimSummary(api.CLAIMS["i-pits"]);
+if (!claimDe.includes("nicht validiert") || /not validated/.test(claimDe)) fail("German claim summary is not localised");
+if (api.t("status.open") !== "offen") fail("German status label missing");
+api.setLangCode("en");
 
 console.log(`data-charter-map smoke test passed: ${charter.indicators.length} indicators, ${api.LAYERS.length} layers, ${api.TREES.length} trees.`);
