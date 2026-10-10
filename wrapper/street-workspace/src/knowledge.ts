@@ -1,4 +1,5 @@
 import type { InterventionPlan, MechanismClaim, StreetScenario } from "./types.ts";
+import { translate, type Lang } from "./i18n.ts";
 
 export const DATA_READINESS = [
   {
@@ -42,39 +43,41 @@ export const DESIGN_SOURCES = [
 export function explainMechanisms(
   plan: InterventionPlan,
   scenario: StreetScenario,
+  lang: Lang = "en",
 ): MechanismClaim[] {
+  const t = (key: Parameters<typeof translate>[1]) => translate(lang, key);
   const routingState = scenario.evidence.routing.state === "observed" ? "supported" : "illustrative";
   return [
     {
       id: "store",
-      label: "STORE",
+      label: t("mech.store.label"),
       active: plan.rainGarden,
       state: "illustrative",
       explanation: plan.rainGarden
-        ? "The garden holds water until its illustrative 12 m³ storage is full."
-        : "There is no surface storage in the sealed baseline.",
+        ? t("mech.store.on")
+        : t("mech.store.off"),
       drivers: plan.rainGarden ? ["garden.capacityM3"] : ["sealed baseline"],
     },
     {
       id: "absorb",
-      label: "ABSORB",
+      label: t("mech.absorb.label"),
       active: plan.rainGarden,
       state: "illustrative",
       explanation: plan.rainGarden
-        ? "Stored water enters the soil at the demo infiltration rate."
-        : "Sealed surfaces provide no infiltration path in this model.",
+        ? t("mech.absorb.on")
+        : t("mech.absorb.off"),
       drivers: plan.rainGarden ? ["garden.infiltrationM3PerHour", "garden-soil"] : ["sealed baseline"],
     },
     {
       id: "slow",
-      label: "SLOW",
+      label: t("mech.slow.label"),
       active: plan.connected,
       state: routingState,
       explanation: plan.connected
-        ? "The kerb opening redirects upstream runoff through the garden before overflow reaches the drain."
+        ? t("mech.slow.connected")
         : plan.rainGarden
-          ? "The garden is isolated, so street runoff still bypasses it."
-          : "Runoff follows the assumed direct route to the drain.",
+          ? t("mech.slow.isolated")
+          : t("mech.slow.off"),
       drivers: plan.connected ? ["runoff-outlet → garden", "garden-overflow → drain"] : ["runoff-outlet → drain"],
     },
   ];

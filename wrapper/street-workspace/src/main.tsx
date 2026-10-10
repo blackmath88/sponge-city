@@ -4,14 +4,35 @@ import { createDemoStreet } from "./scenario.ts";
 import { applyPlan } from "./interventions.ts";
 import { simulate } from "./simulation.ts";
 import { StreetDiagram } from "./StreetDiagram.tsx";
+import { loadEdits, saveEdits, sessionStorageOrNull } from "./edit-state.ts";
 import { parseSiteHandoff, scopingToolUrl } from "./site-context.ts";
 import { DATA_READINESS, DESIGN_SOURCES, explainMechanisms } from "./knowledge.ts";
+import {
+  LANGS,
+  assumptionTexts,
+  initLang,
+  kindLabel,
+  materialLabel,
+  routingNote,
+  setLang,
+  stateLabel,
+  useLang,
+  withLang,
+  zoneLabel,
+  type Key,
+} from "./i18n.ts";
 import type { InterventionPlan, SimulationSnapshot } from "./types.ts";
 import "./style.css";
 
+initLang();
 const handoff = parseSiteHandoff(window.location.search);
+const handoffFailed = !handoff && !!new URLSearchParams(window.location.search).get("site");
 const baseline = createDemoStreet(handoff?.site);
 const emptyPlan: InterventionPlan = { rainGarden: false, connected: false };
+// Synthetic-street edits survive a language reload; keyed by place id, separate from any site evidence.
+const editStorage = sessionStorageOrNull();
+const placeId = handoff?.site.id;
+const restored = loadEdits(editStorage, placeId);
 function WaterBalance({
   snapshot,
   label,
@@ -19,25 +40,26 @@ function WaterBalance({
   snapshot: SimulationSnapshot;
   label: string;
 }) {
+  const { t } = useLang();
   const paths = [
-    { label: "Stored", value: snapshot.storedM3, className: "stored" },
-    { label: "Soil", value: snapshot.infiltratedM3, className: "infiltrated" },
-    { label: "Sewer", value: snapshot.sewerM3, className: "sewer" },
+    { label: t("wb.stored"), aria: t("wb.storedAria", { v: snapshot.storedM3.toFixed(1) }), value: snapshot.storedM3, className: "stored" },
+    { label: t("wb.soil"), aria: t("wb.soilAria", { v: snapshot.infiltratedM3.toFixed(1) }), value: snapshot.infiltratedM3, className: "infiltrated" },
+    { label: t("wb.sewer"), aria: t("wb.sewerAria", { v: snapshot.sewerM3.toFixed(1) }), value: snapshot.sewerM3, className: "sewer" },
   ];
   return (
     <div className="water-comparison">
       <div className="water-caption">
         <strong>{label}</strong>
-        <span>{snapshot.rainM3.toFixed(1)} m³ rain</span>
+        <span>{t("wb.rain", { v: snapshot.rainM3.toFixed(1) })}</span>
       </div>
       <div
         className="water-bar"
         role="img"
-        aria-label={`${label}: ${paths.map((p) => `${p.value.toFixed(1)} cubic metres ${p.label.toLowerCase()}`).join(", ")}`}
+        aria-label={`${label}: ${paths.map((p) => p.aria).join(", ")}`}
       >
         {paths.map((p) => (
           <span
-            key={p.label}
+            key={p.className}
             className={p.className}
             style={{
               width: `${snapshot.rainM3 > 0 ? (p.value / snapshot.rainM3) * 100 : 0}%`,
@@ -47,7 +69,7 @@ function WaterBalance({
       </div>
       <div className="water-key">
         {paths.map((p) => (
-          <span key={p.label}>
+          <span key={p.className}>
             <i className={p.className} />
             {p.label} <strong>{p.value.toFixed(1)}</strong>
           </span>
@@ -56,14 +78,35 @@ function WaterBalance({
     </div>
   );
 }
+function LangSwitch() {
+  const { lang, t } = useLang();
+  return (
+    <div className="lang-switch" role="group" aria-label={t("lang.switch")}>
+      {LANGS.map((l) => (
+        <button key={l} type="button" lang={l} aria-pressed={l === lang} onClick={() => setLang(l)}>
+          {l.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
 function App() {
-  const [plan, setPlan] = useState(emptyPlan);
-  const [depthMm, setDepth] = useState(30);
+  const { lang, t } = useLang();
+  const search = window.location.search;
+  const scopingHref = withLang(scopingToolUrl(), lang, search);
+  useEffect(() => {
+    document.title = t("doc.title");
+  }, [lang]);
+  const [plan, setPlan] = useState<InterventionPlan>(restored.plan);
+  const [depthMm, setDepth] = useState(restored.depthMm);
   const [selected, select] = useState("zone-2");
   const [frame, setFrame] = useState(0);
   const [running, setRunning] = useState(false);
   const [compare, setCompare] = useState(false);
   const [showCatchments, setShowCatchments] = useState(false);
+  useEffect(() => {
+    saveEdits(editStorage, placeId, { plan, depthMm });
+  }, [plan, depthMm]);
   const world = useMemo(() => applyPlan(baseline, plan), [plan]);
   const frames = useMemo(
     () => simulate(world, { depthMm, durationMinutes: 30 }),
@@ -79,7 +122,7 @@ function App() {
   const surface = activeWorld.surfaces.find((s) => s.zoneId === selected)!;
   const end = frames.at(-1)!;
   const baseEnd = baseFrames.at(-1)!;
-  const mechanisms = explainMechanisms(plan, world);
+  const mechanisms = explainMechanisms(plan, world, lang);
   const changePlan = (next: InterventionPlan) => {
     setPlan(next);
     setRunning(false);
@@ -107,41 +150,40 @@ function App() {
   return (
     <main>
       <header>
-        <a className="brand" href={scopingToolUrl()}>
-          SPONGE SQUAD <span>/ STREET LAB</span>
+        <a className="brand" href={scopingHref}>
+          SPONGE SQUAD <span>{t("brand.suffix")}</span>
         </a>
-        <nav className="journey-progress" aria-label="Prototype journey">
-          <a href={scopingToolUrl()}>1 · Find</a><i>→</i><strong>2 · Test</strong><i>→</i><span>3 · Explain</span>
+        <nav className="journey-progress" aria-label={t("journey.label")}>
+          <a href={scopingHref}>{t("journey.find")}</a><i>→</i><strong>{t("journey.test")}</strong><i>→</i><span>{t("journey.explain")}</span>
         </nav>
-        <span className="tag">Illustrative scenario · v0.4</span>
-        <a className="tag" href="./rain-walk/">Rain Walk · collect street evidence →</a>
+        <span className="tag">{t("tag.version")}</span>
+        <a className="tag" href={withLang("./rain-walk/", lang, search)}>{t("tag.rainWalk")}</a>
+        <LangSwitch />
       </header>
       <section className="intro">
         <div>
-          <p className="eyebrow">01 / UNDERSTAND THE CONNECTION</p>
-          <h1>A street, connected.</h1>
-          <p>
-            Give rain somewhere to go. Add a garden, open the kerb, then follow
-            the water.
-          </p>
+          <p className="eyebrow">{t("intro.eyebrow")}</p>
+          <h1>{t("intro.title")}</h1>
+          <p>{t("intro.lead")}</p>
         </div>
         <div className="place">
-          {handoff ? 'SELECTED CANDIDATE' : 'BASEL-INSPIRED'}
+          {handoff ? t("place.selected") : t("place.inspired")}
           <br />
-          <strong>{handoff?.site.name ?? 'Synthetic demo street'}</strong>
+          <strong>{handoff?.site.name ?? t("place.syntheticName")}</strong>
           <br />
-          {handoff ? `${handoff.site.district} · context only` : 'No surveyed site selected'}
+          {handoff ? t("place.contextOnly", { district: handoff.site.district }) : t("place.noSite")}
         </div>
       </section>
-      {handoff && <section className="site-context" aria-label="Selected candidate context">
-        <div><p className="eyebrow">HANDOFF FROM SITE SCOPING</p><h2>{handoff.site.name}</h2><p>{handoff.provenance.note}</p></div>
-        <div><strong>Evidence leads</strong>{handoff.site.indicators.sources.map((item) => <span key={item}>{item}</span>)}</div>
-        <div><strong>Still unknown</strong>{[...handoff.site.indicators.missingData, ...handoff.site.constraints].slice(0, 4).map((item) => <span key={item}>{item}</span>)}</div>
+      {handoffFailed && <p className="site-error" role="alert">{t("site.error")}</p>}
+      {handoff && <section className="site-context" aria-label={t("site.aria")}>
+        <div><p className="eyebrow">{t("site.eyebrow")}</p><h2>{handoff.site.name}</h2><p>{handoff.provenance.note}</p></div>
+        <div><strong>{t("site.leads")}</strong>{handoff.site.indicators.sources.map((item) => <span key={item}>{item}</span>)}</div>
+        <div><strong>{t("site.unknown")}</strong>{[...handoff.site.indicators.missingData, ...handoff.site.constraints].slice(0, 4).map((item) => <span key={item}>{item}</span>)}</div>
       </section>}
-      <section className="design-controls" aria-label="Design your street">
+      <section className="design-controls" aria-label={t("design.aria")}>
         <div className="design-title">
-          <p className="eyebrow">DESIGN YOUR STREET</p>
-          <h2>Two changes. One connected system.</h2>
+          <p className="eyebrow">{t("design.eyebrow")}</p>
+          <h2>{t("design.title")}</h2>
         </div>
         <div className="design-actions">
           {" "}
@@ -155,12 +197,12 @@ function App() {
             <span className="step">1</span>
             <span>
               <strong>
-                {plan.rainGarden ? "Rain garden added" : "Add a rain garden"}
+                {plan.rainGarden ? t("iv.garden.titleOn") : t("iv.garden.titleOff")}
               </strong>
               <small>
-                Replace the north parking strip.
+                {t("iv.garden.line1")}
                 <br />
-                12 m³ storage · 3 spaces removed
+                {t("iv.garden.line2")}
               </small>
             </span>
             <b>{plan.rainGarden ? "✓" : "+"}</b>
@@ -173,42 +215,43 @@ function App() {
           >
             <span className="step">2</span>
             <span>
-              <strong>Connect street runoff</strong>
+              <strong>{t("iv.connect.title")}</strong>
               <small>
-                Open the kerb to feed the garden.
+                {t("iv.connect.line1")}
                 <br />
-                Overflow still reaches the drain.
+                {t("iv.connect.line2")}
               </small>
             </span>
             <b>{plan.connected ? "✓" : "+"}</b>
           </button>
           <p className="explanation" role="status">
             {!plan.rainGarden
-              ? "The sealed surfaces send all rainfall to the sewer. Start with one garden."
+              ? t("iv.expl.sealed")
               : !plan.connected
-                ? "The garden catches rain falling on itself. Runoff from the rest of the street still bypasses it."
-                : "Roof and street runoff now feed the garden. Water infiltrates into soil; once storage is full, the excess flows to the sewer."}
+                ? t("iv.expl.isolated")
+                : t("iv.expl.connected")}
           </p>
         </div>
       </section>
       <div className="layout">
-        <section className="workspace" aria-label="Street workspace">
+        <section className="workspace" aria-label={t("ws.aria")}>
           <div className="viewbar">
             <span>
               {compare
-                ? "BASELINE / SEALED STREET"
-                : "YOUR STREET / " +
-                  (plan.rainGarden
-                    ? plan.connected
-                      ? "CONNECTED GARDEN"
-                      : "ISOLATED GARDEN"
-                    : "SEALED")}
+                ? t("view.baseline")
+                : t("view.yours", {
+                    state: plan.rainGarden
+                      ? plan.connected
+                        ? t("view.connected")
+                        : t("view.isolated")
+                      : t("view.sealed"),
+                  })}
             </span>
             <button
               aria-pressed={compare}
               onClick={() => setCompare((v) => !v)}
             >
-              {compare ? "Show your street" : "Compare baseline"}
+              {compare ? t("view.showYours") : t("view.compare")}
             </button>
           </div>
           <StreetDiagram
@@ -223,15 +266,15 @@ function App() {
           <div className="legend">
             <span>
               <i className="blue" />
-              Drainage
+              {t("legend.drainage")}
             </span>
             <span>
               <i className="green" />
-              Infiltration
+              {t("legend.infiltration")}
             </span>
             <span>
               <i className="amber" />
-              Overflow
+              {t("legend.overflow")}
             </span>
             <label className="catchment-toggle">
               <input
@@ -239,27 +282,29 @@ function App() {
                 checked={showCatchments}
                 onChange={(e) => setShowCatchments(e.target.checked)}
               />
-              All catchment links
+              {t("legend.catchments")}
             </label>
           </div>
           <div className="selection-strip" aria-live="polite">
             <strong>
               {surface.material === "vegetated-soil"
-                ? "Rain garden"
-                : zone.label}
+                ? t("garden.name")
+                : zoneLabel(lang, zone)}
             </strong>
             <span>
-              {zone.rect.width * zone.rect.height} m² ·{" "}
-              {surface.material.replaceAll("-", " ")} · {zone.parkingSpaces}{" "}
-              parking spaces
+              {t("sel.area", {
+                area: zone.rect.width * zone.rect.height,
+                material: materialLabel(lang, surface.material),
+                n: zone.parkingSpaces,
+              })}
             </span>
           </div>
-          <div className="flow-summary" aria-label="Active water route">
+          <div className="flow-summary" aria-label={t("flow.aria")}>
             {compare || !plan.connected
-              ? "Roof & street → drain → sewer"
-              : "Roof & street → garden → soil + overflow to sewer"}
+              ? t("flow.direct")
+              : t("flow.garden")}
             {!compare && plan.rainGarden && !plan.connected && (
-              <span>Garden receives only rain on its own footprint.</span>
+              <span>{t("flow.isolatedNote")}</span>
             )}
           </div>
           <div className="storm">
@@ -272,25 +317,25 @@ function App() {
               }}
             >
               {running
-                ? "Pause rain"
+                ? t("storm.pause")
                 : frame === 30
-                  ? "Replay rain"
+                  ? t("storm.replay")
                   : frame > 0
-                    ? "Continue rain"
-                    : "Run rain"}
+                    ? t("storm.continue")
+                    : t("storm.run")}
             </button>
             <button
-              aria-label="Rewind storm"
+              aria-label={t("storm.rewindAria")}
               disabled={frame === 0 && !running}
               onClick={() => {
                 setFrame(0);
                 setRunning(false);
               }}
             >
-              Rewind
+              {t("storm.rewind")}
             </button>
             <label>
-              Rain in 30 minutes
+              {t("storm.depth")}
               <select
                 value={depthMm}
                 onChange={(e) => {
@@ -304,12 +349,12 @@ function App() {
                 <option value="60">60 mm</option>
               </select>
             </label>
-            <span className="clock">{snapshot.elapsedMinutes} / 30 min</span>
+            <span className="clock">{t("storm.clock", { t: snapshot.elapsedMinutes })}</span>
           </div>
           <label className="timeline">
-            Storm progress
+            {t("storm.progress")}
             <input
-              aria-label="Storm progress"
+              aria-label={t("storm.progress")}
               type="range"
               min="0"
               max="30"
@@ -320,12 +365,12 @@ function App() {
               }}
             />
           </label>
-          <div className="metrics" aria-label="Current water balance">
+          <div className="metrics" aria-label={t("metrics.aria")}>
             {[
-              ["Rain received", snapshot.rainM3],
-              ["Held in garden", snapshot.storedM3],
-              ["Into soil", snapshot.infiltratedM3],
-              ["Into sewer", snapshot.sewerM3],
+              [t("metrics.rain"), snapshot.rainM3],
+              [t("metrics.held"), snapshot.storedM3],
+              [t("metrics.soil"), snapshot.infiltratedM3],
+              [t("metrics.sewer"), snapshot.sewerM3],
             ].map(([name, value]) => (
               <div key={name}>
                 <span>{name}</span>
@@ -336,21 +381,20 @@ function App() {
             ))}
           </div>
           <p className="balance">
-            Rain = stored + infiltrated + sewer · Results at minute {frame}.
-            Simulation time is accelerated.
+            {t("balance.note", { t: frame })}
           </p>
         </section>
         <aside>
-          <p className="eyebrow">FOLLOW THE WATER</p>
-          <h2>Where does the rain go?</h2>
+          <p className="eyebrow">{t("aside.eyebrow")}</p>
+          <h2>{t("aside.title")}</h2>
           <p className="comparison-time">
-            Same rain. Same minute: <strong>{frame} / 30</strong>
+            {t("aside.sameMinute")} <strong>{frame} / 30</strong>
           </p>
-          <WaterBalance snapshot={baseFrames[frame]} label="Sealed street" />
-          <WaterBalance snapshot={frames[frame]} label="Your design" />
+          <WaterBalance snapshot={baseFrames[frame]} label={t("aside.sealedStreet")} />
+          <WaterBalance snapshot={frames[frame]} label={t("aside.yourDesign")} />
           {frame === 0 && (
             <p className="empty-hint">
-              Run rain or move the timeline to see water enter the system.
+              {t("aside.emptyHint")}
             </p>
           )}
           <button
@@ -360,26 +404,26 @@ function App() {
               setRunning(false);
             }}
           >
-            See complete storm
+            {t("aside.jumpEnd")}
           </button>
           <div className="forecast">
-            <span>At the end of this storm</span>
+            <span>{t("forecast.end")}</span>
             <strong>{(baseEnd.sewerM3 - end.sewerM3).toFixed(1)} m³</strong>
-            <p>less water reaches the sewer than in the baseline</p>
+            <p>{t("forecast.less")}</p>
             <table>
               <thead>
                 <tr>
-                  <th>Water path</th>
-                  <th>Before</th>
-                  <th>After</th>
+                  <th>{t("forecast.path")}</th>
+                  <th>{t("forecast.before")}</th>
+                  <th>{t("forecast.after")}</th>
                 </tr>
               </thead>
               <tbody>
                 {(
                   [
-                    ["Stored", "storedM3"],
-                    ["Infiltrated", "infiltratedM3"],
-                    ["Sewer", "sewerM3"],
+                    [t("forecast.stored"), "storedM3"],
+                    [t("forecast.infiltrated"), "infiltratedM3"],
+                    [t("forecast.sewer"), "sewerM3"],
                   ] as const
                 ).map(([label, key]) => (
                   <tr key={key}>
@@ -390,7 +434,7 @@ function App() {
                 ))}
               </tbody>
             </table>
-            <small>Volumes in m³ · illustrative parameters</small>
+            <small>{t("forecast.note")}</small>
           </div>
           <button
             className="reset"
@@ -401,15 +445,15 @@ function App() {
               select("zone-2");
             }}
           >
-            Reset street & rain
+            {t("reset")}
           </button>
         </aside>
       </div>
       <section className="details">
         <div>
-          <p className="eyebrow">LOOK UNDER THE SURFACE</p>
-          <h2>Every part has an identity.</h2>
-          <div className="zones" aria-label="Inspect zone">
+          <p className="eyebrow">{t("details.eyebrow")}</p>
+          <h2>{t("details.title")}</h2>
+          <div className="zones" aria-label={t("details.zonesAria")}>
             {activeWorld.zones.map((z) => (
               <button
                 key={z.id}
@@ -418,39 +462,36 @@ function App() {
               >
                 {activeWorld.surfaces.find((s) => s.zoneId === z.id)
                   ?.material === "vegetated-soil"
-                  ? "Rain garden"
-                  : z.label}
+                  ? t("garden.name")
+                  : zoneLabel(lang, z)}
               </button>
             ))}
           </div>
           <dl>
-            <dt>Zone</dt>
+            <dt>{t("dl.zone")}</dt>
             <dd>
-              {zone.id} · {zone.kind}
+              {zone.id} · {kindLabel(lang, zone.kind)}
             </dd>
-            <dt>Surface</dt>
-            <dd>{surface.material}</dd>
-            <dt>Area</dt>
+            <dt>{t("dl.surface")}</dt>
+            <dd>{materialLabel(lang, surface.material)}</dd>
+            <dt>{t("dl.area")}</dt>
             <dd>{zone.rect.width * zone.rect.height} m²</dd>
-            <dt>Parking spaces</dt>
+            <dt>{t("dl.parking")}</dt>
             <dd>{zone.parkingSpaces}</dd>
-            <dt>Ownership</dt>
-            <dd>Unknown — needs site evidence</dd>
+            <dt>{t("dl.ownership")}</dt>
+            <dd>{t("dl.ownershipUnknown")}</dd>
           </dl>
         </div>
         <div>
-          <h3>Model boundaries</h3>
-          <p>
-            This is an explanation of connected water systems, not a hydraulic
-            model or a site recommendation.
-          </p>
+          <h3>{t("bounds.title")}</h3>
+          <p>{t("bounds.text")}</p>
           <ul>
-            {baseline.evidence.assumptions.map((a) => (
+            {assumptionTexts(lang, baseline.evidence.assumptions).map((a) => (
               <li key={a}>{a}</li>
             ))}
           </ul>
           <details>
-            <summary>Inspect world data & water connections</summary>
+            <summary>{t("bounds.inspect")}</summary>
             <pre>
               {JSON.stringify({ plan, world: activeWorld, snapshot }, null, 2)}
             </pre>
@@ -459,48 +500,45 @@ function App() {
       </section>
       <section className="evidence-layer" aria-labelledby="evidence-title">
         <div className="evidence-heading">
-          <p className="eyebrow">FROM DEMO TO DECISION SUPPORT</p>
-          <h2 id="evidence-title">Show the mechanism. Label the evidence.</h2>
-          <p>
-            The diagram explains a connected system. Its exact volumes are demo
-            parameters; source-backed guidance and real Basel inputs stay visibly separate.
-          </p>
+          <p className="eyebrow">{t("ev.eyebrow")}</p>
+          <h2 id="evidence-title">{t("ev.title")}</h2>
+          <p>{t("ev.text")}</p>
         </div>
         <div className="mechanism-grid">
           {mechanisms.map((claim) => (
             <article key={claim.id} className={claim.active ? "mechanism active" : "mechanism"}>
-              <div><strong>{claim.label}</strong><span className={`evidence-badge ${claim.state}`}>{claim.state}</span></div>
+              <div><strong>{claim.label}</strong><span className={`evidence-badge ${claim.state}`}>{stateLabel(lang, claim.state)}</span></div>
               <p>{claim.explanation}</p>
-              <small>Driven by: {claim.drivers.join(" · ")}</small>
+              <small>{t("ev.drivenBy", { drivers: claim.drivers.join(" · ") })}</small>
             </article>
           ))}
         </div>
         <div className="evidence-columns">
           <div>
-            <h3>Routing evidence</h3>
-            <p><span className="evidence-badge illustrative">{world.evidence.routing.state}</span>{world.evidence.routing.note}</p>
-            <p className="evidence-rule">A selected candidate adds context only. It never creates pipes, gullies or flow paths.</p>
+            <h3>{t("ev.routing")}</h3>
+            <p><span className="evidence-badge illustrative">{stateLabel(lang, world.evidence.routing.state)}</span>{routingNote(lang, world.evidence.routing.note)}</p>
+            <p className="evidence-rule">{t("ev.rule")}</p>
           </div>
           <div>
-            <h3>Curb-opening references</h3>
-            {DESIGN_SOURCES.map((source) => (
+            <h3>{t("ev.refs")}</h3>
+            {DESIGN_SOURCES.map((source, i) => (
               <a className="source-row" href={source.href} target="_blank" rel="noreferrer" key={source.href}>
-                <span>{source.label}<small>{source.geography}</small></span><b aria-hidden="true">↗</b>
+                <span>{source.label}<small>{t(`src.${i}.geography` as Key)}</small></span><b aria-hidden="true">↗</b>
               </a>
             ))}
           </div>
         </div>
         <div className="data-readiness">
-          <div><p className="eyebrow">BASEL DATA ADAPTER / NEXT</p><h3>What can replace the demo inputs?</h3></div>
-          {DATA_READINESS.map((source) => {
-            const content = <><strong>{source.label}</strong><span>{source.detail}</span><i className={source.state}>{source.state}</i></>;
+          <div><p className="eyebrow">{t("ev.dataEyebrow")}</p><h3>{t("ev.dataTitle")}</h3></div>
+          {DATA_READINESS.map((source, i) => {
+            const content = <><strong>{t(`data.${i}.label` as Key)}</strong><span>{t(`data.${i}.detail` as Key)}</span><i className={source.state}>{stateLabel(lang, source.state)}</i></>;
             return "href" in source ? <a href={source.href} target="_blank" rel="noreferrer" key={source.label}>{content}</a> : <div key={source.label}>{content}</div>;
           })}
         </div>
       </section>
       <footer>
-        SpongeSquad / Hack am Rhein 2026{" "}
-        <span>Site scoping → Street model → Interventions → Water paths</span>
+        {t("footer.left")}{" "}
+        <span>{t("footer.right")}</span>
       </footer>
     </main>
   );

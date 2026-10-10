@@ -79,4 +79,34 @@ for (const street of [profile, computed]) {
 assert(page.includes("from './engine/src/profile.js'"), 'Page must take its decision rules from the engine');
 assert(!page.includes('unlocked.size'), 'The old count-based decision must not return');
 
+
+// Bilingual contract (de default, en alternative): overlay covers both profiles, page has no hard-coded English UI text.
+const overlay = JSON.parse(await readFile(join(root, '../../journey/content/place-de.json'), 'utf8'));
+assert(overlay.schema_version === 'place-de/1', 'Unexpected overlay version');
+for (const [key, street] of [['klybeck', profile], ['kanonengasse', computed]]) {
+  const place = overlay.places[key];
+  assert(place, `Overlay is missing place: ${key}`);
+  for (const claim of street.claims) assert(place.claims?.[claim.id]?.title, `Overlay ${key} lacks claim ${claim.id}`);
+  for (const id of Object.keys(place.claims)) assert(street.claims.some(claim => claim.id === id), `Overlay ${key} has unknown claim ${id}`);
+  for (const layer of street.layers) assert(place.layers?.some(item => item.id === layer.id && item.label && item.short_label && item.question && item.summary), `Overlay ${key} lacks layer ${layer.id}`);
+  assert(place.site?.boundary && place.site?.identity_status, `Overlay ${key} lacks site text`);
+  assert(place.intervention?.name && place.intervention?.why, `Overlay ${key} lacks intervention text`);
+}
+(function walk(value, path) {
+  if (typeof value === 'string') {
+    assert(value.trim() !== '', `Empty overlay string at ${path}`);
+    assert(!value.includes('\u00df'), `Overlay uses eszett at ${path}`);
+  } else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walk(v, `${path}/${k}`);
+})(overlay, '');
+const pageStripped = page.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<title>[\s\S]*?<\/title>/g, '');
+const pageText = pageStripped.replace(/<[^>]+>/g, ' ');
+assert(!/\b(the|and|of|is|this|for|not|to|what|how)\b/i.test(pageText), 'Page body contains hard-coded English text outside the dictionary');
+assert(!/aria-label="/.test(pageStripped), 'aria-label must come from the dictionary');
+assert(!page.includes('\u00df'), 'Page must not use eszett');
+assert(page.includes('<html lang="de">') && page.includes("from '../../shared/lang.js'"), 'Page must default to German via shared/lang.js');
+assert(page.includes("'sponge-lang'"), 'Page must listen for sponge-lang messages');
+const { resolveLang } = await import('../../shared/lang.js');
+const mem = value => ({ getItem: () => value });
+assert(resolveLang('', mem(null)) === 'de' && resolveLang('?lang=en', mem('de')) === 'en' && resolveLang('?lang=xx', mem('en')) === 'en' && resolveLang('?lang=xx', mem('zz')) === 'de', 'resolveLang contract broken');
+
 console.log(`Street X-Ray smoke passed: ${profile.claims.length} claims, ${treeCount} trees, station ${nearest.station.id}.`);

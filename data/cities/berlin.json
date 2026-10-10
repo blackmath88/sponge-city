@@ -1,0 +1,511 @@
+{
+ "schema_version": "sponge-city-profile/1",
+ "id": "berlin",
+ "role": "comparator",
+ "name": {
+  "de": "Berlin",
+  "en": "Berlin"
+ },
+ "country": "DE",
+ "selection": {
+  "rationale": {
+   "de": "Berlin veröffentlicht Versiegelung, einen modellierten Wasserhaushalt und Gründächer als offene Umweltatlas-Karten und hat 2026 einen Senatsbericht zum Schwammstadt-Ausbau vorgelegt.",
+   "en": "Berlin publishes sealing, a modelled water balance and green roofs as open Umweltatlas maps, and presented a Senate report on sponge-city expansion in 2026."
+  },
+  "contrast": {
+   "de": "Grossstadt mit Mischsystem im Zentrum und Trennsystem aussen; Vergleichspunkt für Datenzugang und Programmsteuerung, nicht für gemessene Wirkung.",
+   "en": "Large city with combined sewers in the centre and separate sewers outside; a comparator for data access and programme steering, not for measured effect."
+  }
+ },
+ "entries": [
+  {
+   "id": "berlin.context.01",
+   "dimension": "context",
+   "text": {
+    "de": "Berlin war 2021 zu 33,9 Prozent versiegelt (Gesamtversiegelungsgrad der Stadt; je rund ein Drittel entfällt auf Bebauung, unbebaut versiegelte Fläche und Strassen). Der Umweltatlas weist die Versiegelung je Block(teil)fläche und Strassenabschnitt aus.",
+    "en": "Berlin was 33.9 percent sealed in 2021 (total sealing degree of the city; about a third each is buildings, unbuilt sealed area and streets). The Umweltatlas maps sealing per urban block (part) and street section."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "Versiegelungsgrad (sealed share of total city area)",
+    "unit": "percent",
+    "method": "hybrid mapping: ALKIS building data plus Sentinel-2B satellite image classification, merged for Block(teil)flaechen and street sections",
+    "spatial_scale": "city-wide total (Land Berlin), mapped per Block(teil)flaeche and Strassenabschnitt",
+    "period": "2021",
+    "topic": "sealing"
+   },
+   "sources": [
+    {
+     "title": "Versiegelung 2021 - Zusammenfassung",
+     "url": "https://www.berlin.de/umweltatlas/boden/versiegelung/2021/zusammenfassung/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Im Land Berlin lag der gesamte Versiegelungsgrad der Stadt 2021 bei 33,9 Prozent, dabei entfällt jeweils rund ein Drittel auf die Bebauung, die unbebaut versiegelte Fläche sowie die Straßen.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.context.02",
+   "dimension": "context",
+   "text": {
+    "de": "Etwa drei Viertel der kanalisierten Gebiete Berlins werden im Trennsystem entwässert, ein Viertel im Mischsystem. Die Verwaltung nennt rund 48 Mio. m3 Regenwasser pro Jahr aus dem Trennsystem in die Gewässer und rund 5,5 Mio. m3 Regenwasser und 0,5 Mio. m3 Schmutzwasser pro Jahr als unbehandelte Mischwasserüberläufe; die Methode ist auf der Seite nicht angegeben.",
+    "en": "About three quarters of the sewered area in Berlin drains through separate sewers and one quarter through combined sewers. The administration reports about 48 million m3 of rainwater per year entering waters from separate sewers and about 5.5 million m3 rainwater plus 0.5 million m3 wastewater per year as untreated combined-sewer overflow; the page does not state the method."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Regenwasserableitung",
+     "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserableitung/",
+     "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Etwa drei Viertel der kanalisierten Gebiete in Berlin werden über das Trennsystem und ein Viertel über das Mischsystem entwässert. … Insgesamt werden durch das Trennentwässerungssystem rund 48 Mio. m³ Regenwasser pro Jahr in die Gewässer eingeleitet.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Regenwasserableitung",
+     "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserableitung/",
+     "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Es gelangen ca. 5,5 Mio. m³ Regenwasser und 0,5 Mio. m³ Schmutzwasser pro Jahr unbehandelt in Spree, Havel und die innerstädtischen Kanäle.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.context.03",
+   "dimension": "context",
+   "text": {
+    "de": "Die Planungshinweiskarte Stadtklima 2022 stuft für mehr als 60 Prozent des Stadtgebiets die thermische Situation als ungünstig oder weniger günstig ein. Grundlage ist eine Stadtklimamodellierung.",
+    "en": "The 2022 urban-climate planning map classes the thermal situation as unfavourable or less favourable for more than 60 percent of the urban area. It is based on urban climate modelling."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "share of urban area with thermal situation rated unfavourable or less favourable",
+    "unit": "percent (stated as more than 60)",
+    "method": "urban climate modelling (Planungshinweiskarte Stadtklima)",
+    "spatial_scale": "city-wide (Stadtgebiet Berlin)",
+    "period": "2022 edition"
+   },
+   "sources": [
+    {
+     "title": "Planungshinweise Stadtklima 2022 - Zusammenfassung",
+     "url": "https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/zusammenfassung/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Für mehr als 60 Prozent des Stadtgebietes wird diese als „ungünstig“ oder „weniger günstig“ eingestuft.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.interventions.01",
+   "dimension": "interventions",
+   "text": {
+    "de": "GründachPLUS ist ein Landesförderprogramm für Dach- und Fassadenbegrünung auf Bestandsgebäuden innerhalb einer festgelegten Kulisse. Die Kulisse deckt Gebiete mit Umweltbelastung oder besonderem Regenrückhaltebedarf ab, etwa im Mischsystem.",
+    "en": "GründachPLUS is a state funding programme for green roofs and facades on existing buildings within a defined target area. The area covers places with environmental burdens or a particular need for rainwater retention, for example in the combined-sewer area."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Drucksache 19/3340, Mitteilung zur Kenntnisnahme)",
+     "url": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-3340.pdf",
+     "publisher": "Abgeordnetenhaus von Berlin / Senat von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Mit dem landeseigenen Förderprogramm GründachPLUS fördert das Land Berlin bzw. die SenMVKU innerhalb einer festgesetzten Kulisse im Stadtgebiet Dach- und Fassadenbegrünungen auf und an Bestandsgebäuden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.interventions.02",
+   "dimension": "interventions",
+   "text": {
+    "de": "Das Bauprogramm Mischsystem von Land und Berliner Wasserbetrieben schafft unterirdischen Stauraum im Kanalnetz, um Mischwasserüberläufe zu verringern. Das Programm nennt als Ziel 300.000 m3 Stauraum bis 2024; der Landesanteil wird jährlich mit bis zu 7 Mio. Euro angegeben.",
+    "en": "The combined-sewer building programme of the state and the Berliner Wasserbetriebe creates underground storage in the sewer network to reduce overflows. The programme names a target of 300,000 m3 storage by 2024; the state share is stated as up to EUR 7 million per year."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Mischsystem (Gewässergütebauprogramm)",
+     "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/abwasser/mischsystem/",
+     "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Das Programm sieht vor, bis zum Jahr 2024 insgesamt 300.000 m³ Stauraumkapazität in der innerstädtischen Mischkanalisation zu schaffen (bisher gibt es etwa 235.000 m³ Speichervolumen).",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.interventions.03",
+   "dimension": "interventions",
+   "text": {
+    "de": "Bei Neubauten wird dezentrale Regenwasserbewirtschaftung laut Senatsbericht aufgrund gesetzlicher Verpflichtung regelhaft und nahezu vollständig umgesetzt. Im öffentlichen Raum und im Bestand bestehen laut demselben Bericht erhebliche strukturelle Defizite.",
+    "en": "For new buildings, decentralised rainwater management is, according to the Senate report, implemented routinely and almost completely because of a legal obligation. The same report states considerable structural deficits in public space and existing building stock."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Drucksache 19/3340, Mitteilung zur Kenntnisnahme)",
+     "url": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-3340.pdf",
+     "publisher": "Abgeordnetenhaus von Berlin / Senat von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Im Bereich der Neubebauung von Grundstücken führt die klare gesetzliche Verpflichtung dazu, dass Maßnahmen der dezentralen Regenwasserbewirtschaftung regelhaft und nahezu vollständig umgesetzt werden.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Drucksache 19/3340, Mitteilung zur Kenntnisnahme)",
+     "url": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-3340.pdf",
+     "publisher": "Abgeordnetenhaus von Berlin / Senat von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Insgesamt ist festzustellen, dass die bestehenden Instrumente im Neubau wirksam sind, während im öffentlichen Raum und im Bestand weiterhin erhebliche strukturelle Defizite bestehen.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.interventions.04",
+   "dimension": "interventions",
+   "text": {
+    "de": "Der Bezirk Mitte setzt ein Entsiegelungsprojekt um: rund 2000 m2 bisher versiegelter Fläche sollen wieder in den Wasserkreislauf eingebunden werden, darunter rund 50 Grüne Gullys. Das ist ein Bezirksprojekt mit Förderzeitraum bis Juli 2027 und kein stadtweites Ergebnis.",
+    "en": "The district of Mitte is running an unsealing project: about 2,000 m2 of previously sealed area is to be reconnected to the water cycle, including about 50 green gullies. This is a district project funded until July 2027, not a city-wide result."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Raum für Regen, Raum für Leben: Bezirksamt Mitte setzt neues Entsiegelungsprojekt um",
+     "url": "https://www.berlin.de/ba-mitte/aktuelles/pressemitteilungen/2026/pressemitteilung.1670269.php",
+     "publisher": "Bezirksamt Mitte von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Insgesamt werden rund 2000 Quadratmeter bislang versiegelter Flächen wieder in den natürlichen Wasserkreislauf eingebunden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.interventions.05",
+   "dimension": "interventions",
+   "text": {
+    "de": "QTrees (2021 bis 2023) sagt mit Bodensaugspannungssensoren und maschinellem Lernen den Bewässerungsbedarf von Berliner Strassenbäumen voraus. Es ist ein abgeschlossenes Forschungsprojekt in zwei Bezirken und keine Versickerungs- oder Rückhaltemassnahme.",
+    "en": "QTrees (2021 to 2023) forecasts the irrigation need of Berlin street trees using soil-suction sensors and machine learning. It is a completed research project in two districts, not an infiltration or retention measure."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Quantified Trees (QTrees) - Intelligente Bewässerungsvorhersage für Stadtbäume (Tatenbank)",
+     "url": "https://www.umweltbundesamt.de/themen/klima-energie/klimafolgen-anpassung/werkzeuge-der-anpassung/tatenbank/quantified-trees-qtrees-intelligente",
+     "publisher": "Umweltbundesamt",
+     "retrieved": "2026-10-10",
+     "quote": "Die KI-basierte Bewässerungsvorhersage nutzt eine Vielzahl öffentlicher Daten des Landes Berlin sowie Sensormesswerte von insgesamt mehr als 120 Sensoren aus zwei Berliner Bezirken.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.measurement.01",
+   "dimension": "measurement",
+   "text": {
+    "de": "Der Umweltatlas modelliert den Wasserhaushalt mit ABIMO für rund 25.000 Einzelflächen als langjährigen Durchschnitt. Danach verdunstet fast zwei Drittel des Niederschlags, vom Rest versickern zwei Drittel und ein Drittel wird über die Kanalisation abgeleitet.",
+    "en": "The Umweltatlas models the water balance with ABIMO for about 25,000 individual areas as a long-term average. According to it, almost two thirds of precipitation evaporate; of the rest, two thirds infiltrate and one third is carried away by the sewers."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "share of precipitation evaporated (almost two thirds); of the remainder, infiltrated (two thirds) and sewer-drained (one third)",
+    "unit": "fraction of precipitation (verbal, no percent given)",
+    "method": "ABIMO water-balance model (version 3.2, green roofs included), long-term mean",
+    "spatial_scale": "city-wide aggregate of about 25,000 Block(teil)flaechen",
+    "period": "2022 edition, six model years, long-term average"
+   },
+   "sources": [
+    {
+     "title": "Wasserhaushalt 2022 - Zusammenfassung",
+     "url": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/2022/zusammenfassung/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Mit dem Wasserhaushaltsmodell Berlin ABIMO wurde für insgesamt sechs Jahrgänge modelliert, was mit den Niederschlägen dort im langjährigen Durchschnitt passiert.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Wasserhaushalt 2022 - Zusammenfassung",
+     "url": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/2022/zusammenfassung/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Insgesamt verdunsten in Berlin fast zwei Drittel der Niederschläge. Vom Rest versickern wiederum zwei Drittel; das andere Drittel wird über die Kanalisation weggeführt.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.measurement.02",
+   "dimension": "measurement",
+   "text": {
+    "de": "Die Versiegelung wird seit den frühen 1980er Jahren erhoben. Für die Erhebungen 2005, 2011, 2016 und 2021 wurde ein einheitliches Verfahren genutzt, ältere Daten (1990, 2001) sind nicht direkt vergleichbar.",
+    "en": "Sealing has been surveyed since the early 1980s. A consistent method was used for the 2005, 2011, 2016 and 2021 surveys; older data (1990, 2001) are not directly comparable."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Versiegelung 2021 - Zusammenfassung",
+     "url": "https://www.berlin.de/umweltatlas/boden/versiegelung/2021/zusammenfassung/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Für die Erhebungen 2005, 2011, 2016 und 2021 wurde ein neues Verfahren genutzt, das einen flächendeckenden Vergleich der Jahre ermöglicht. Die Daten zur Versiegelung aus den Jahren 1990 und 2001 beruhen auf uneinheitlichen Methoden, deshalb ist ein direkter Vergleich nicht möglich.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.measurement.03",
+   "dimension": "measurement",
+   "text": {
+    "de": "Berlin hat eine flächendeckende Starkregenhinweiskarte; die detailliertere Starkregengefahrenkarte liegt nur für ausgewählte Gebiete vor. Beide sind modellbasierte Gefahrenkarten und keine gemessenen Wirkungsdaten.",
+    "en": "Berlin has a city-wide heavy-rain indication map; the more detailed heavy-rain hazard map exists only for selected areas. Both are model-based hazard maps, not measured effect data."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Karten zeigen Gefahren durch Starkregen",
+     "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/",
+     "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Für Berlin liegt eine flächendeckende Starkregenhinweiskarte vor.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Karten zeigen Gefahren durch Starkregen",
+     "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/",
+     "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Die Gefahrenkarte, begonnen 2021, liegt aktuell lediglich für ausgewählte Gebiete vor.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.measurement.04",
+   "dimension": "measurement",
+   "text": {
+    "de": "Zu gemessenen Versickerungs-, Rückhalte- oder Verdunstungswirkungen umgesetzter Berliner Schwammstadt-Massnahmen wurde keine öffentliche quantitative Auswertung gefunden. Gesucht wurde mit Stichworten wie Schwammstadt Berlin Monitoring, gemessene Wirkung, Versickerung, Rückhalt, Pilotprojekte und Evaluierung sowie in den gelesenen Senatsseiten und der Drucksache 19/3340; das beweist nicht, dass nicht gemessen wird.",
+    "en": "No public quantitative evaluation of measured infiltration, retention or evaporation effects of implemented Berlin sponge-city measures was found. The search used terms such as Schwammstadt Berlin Monitoring, gemessene Wirkung, Versickerung, Rückhalt, Pilotprojekte and Evaluierung, and covered the Senate pages read and Drucksache 19/3340; this does not show that nothing is measured."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "berlin.access.01",
+   "dimension": "access",
+   "text": {
+    "de": "Wasserhaushalt-Karten und Tabellen des Umweltatlas sind als PDF und XLSX herunterladbar. Für den geprüften Datensatzeintrag Wasserhaushalt 2005 gilt die Datenlizenz Deutschland Zero 2.0; die Lizenz des Jahrgangs 2022 wurde nicht geprüft.",
+    "en": "Umweltatlas water-balance maps and tables can be downloaded as PDF and XLSX. The checked metadata record for Wasserhaushalt 2005 applies the Datenlizenz Deutschland Zero 2.0; the licence of the 2022 edition was not checked."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Wasserhaushalt 2005 (Umweltatlas), Geodatensuche Berlin",
+     "url": "https://gdi.berlin.de/geonetwork/srv/api/records/d1a15528-8694-31ce-af05-a0aa00908d46",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Wasserhaushalt 2022 - Download",
+     "url": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/2022/download/",
+     "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (Umweltatlas)",
+     "retrieved": "2026-10-10",
+     "quote": "Tab. 3: Langjährige Mittelwerte der Abflussbildung mit Berücksichtigung der begrünten Dächer (ermittelt mit ABIMO 3.2), Stand 2022 XLSX-Dokument (11.6 kB)",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.outcomes.01",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Mit GründachPLUS wurden bis Ende 2025 insgesamt 19.640 m2 zusätzliche Grünfläche auf Dächern geschaffen; die Nachfrage liess zuletzt nach. Das ist eine Förderstatistik des Programms und sagt nichts über gemessenen Regenrückhalt.",
+    "en": "Through GründachPLUS a total of 19,640 m2 of additional green roof area had been created by the end of 2025; demand has recently declined. This is a programme funding statistic and says nothing about measured rainwater retention."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Drucksache 19/3340, Mitteilung zur Kenntnisnahme)",
+     "url": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-3340.pdf",
+     "publisher": "Abgeordnetenhaus von Berlin / Senat von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Bis zum 31.12.2025 konnten mit dem Förderprogramm insgesamt 19.640 m² zusätzliche Grünfläche auf Dächern geschaffen werden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.outcomes.02",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Der Senat berichtet 2026, seit Beginn des Bauprogramms Mischsystem seien rund 300.000 m3 zusätzlicher unterirdischer Stauraum geschaffen worden. Die Wirkung auf die Überlaufmengen wird in dieser Mitteilung nicht beziffert.",
+    "en": "In 2026 the Senate reports that about 300,000 m3 of additional underground storage has been created since the combined-sewer building programme began. The press release does not quantify the effect on overflow volumes."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Pressemitteilung vom 09.06.2026)",
+     "url": "https://www.berlin.de/rbmskzl/aktuelles/pressemitteilungen/2026/pressemitteilung.1679421.php",
+     "publisher": "Senatskanzlei Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Seit Beginn des Bauprogramms Mischsystem wurden bereits rund 300.000 Kubikmeter zusätzlicher Stauraum im unterirdischen Kanalnetz geschaffen.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.outcomes.03",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Eine stadtweite Gesamtfläche tatsächlich entsiegelter Flächen in Berlin wurde nicht gefunden. Gesucht wurde nach Entsiegelungsprogramm, Entsiegelung Bilanz und entsiegelte Fläche Berlin; gefunden wurden nur Teilangaben einzelner Bezirke und eine Potenzialerfassung, die derzeit pausiert.",
+    "en": "No city-wide total of area actually unsealed in Berlin was found. The search used Entsiegelungsprogramm, Entsiegelung Bilanz and entsiegelte Fläche Berlin; only partial district figures and a potential survey, currently paused, turned up."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "berlin.outcomes.04",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Zur gemessenen Wirkung geförderter Gründächer auf Abfluss, Verdunstung oder Kanalentlastung in Berlin wurde keine öffentliche Auswertung gefunden. Gesucht wurde nach GründachPLUS Bilanz und Wirkung; auffindbar waren nur geförderte Flächen, Fördersummen und Antragszahlen.",
+    "en": "No public evaluation of the measured effect of funded green roofs on runoff, evaporation or sewer relief in Berlin was found. The search used GründachPLUS Bilanz and Wirkung; only funded areas, funding amounts and application numbers were found."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "berlin.transfer.01",
+   "dimension": "transfer",
+   "text": {
+    "de": "Ob Berlins blockbezogene, modellierte Wasserhaushalts- und Versiegelungskarten als Vorbild für Basler Indikatoren taugen, ist offen. Es hängt von Basler Datengrundlagen und Zielen ab, die hier nicht geprüft wurden.",
+    "en": "Whether Berlin's block-level, modelled water-balance and sealing maps can serve as a model for Basel indicators is open. It depends on Basel data and goals, which were not checked here."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "unknown",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "berlin.transfer.02",
+   "dimension": "transfer",
+   "text": {
+    "de": "Angenommen: Die Berliner Unterscheidung zwischen verpflichtend gesteuertem Neubau und schwach gesteuertem öffentlichem Raum und Bestand könnte auch für Basel eine nützliche Leitfrage sein. Das ist eine Annahme und nicht belegt.",
+    "en": "Assumed: Berlin's distinction between legally steered new builds and weakly steered public space and existing stock might be a useful guiding question for Basel too. This is an assumption, not evidence."
+   },
+   "origin": "assumed",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt Berlin zügig ausbauen: Regenwasser für Stadtnatur nutzen (Drucksache 19/3340, Mitteilung zur Kenntnisnahme)",
+     "url": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-3340.pdf",
+     "publisher": "Abgeordnetenhaus von Berlin / Senat von Berlin",
+     "retrieved": "2026-10-10",
+     "quote": "Die derzeitige Vorgehensweise bei Planvorhaben im öffentlichen Raum ist damit strukturell nicht skalierbar: Während die Umsetzung auf privaten Flächen durch rechtliche Vorgaben „selbsttragend“ erfolgt, ist sie im öffentlichen Raum von einer kapazitätsgebundenen Einzelfallsteuerung abhängig.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "berlin.transfer.03",
+   "dimension": "transfer",
+   "text": {
+    "de": "Angenommen: Das QTrees-Schema für Bodensaugspannung in Baumgruben könnte als Entwurfsvorlage dienen, nicht als Wirkungsnachweis. Berliner Böden und Klima unterscheiden sich von Basel; ob Schwellen übertragbar sind, ist nicht belegt.",
+    "en": "Assumed: the QTrees schema for soil suction in tree pits could serve as a design template, not as proof of effect. Berlin soils and climate differ from Basel; whether thresholds transfer is not shown."
+   },
+   "origin": "assumed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Quantified Trees (QTrees) - Intelligente Bewässerungsvorhersage für Stadtbäume (Tatenbank)",
+     "url": "https://www.umweltbundesamt.de/themen/klima-energie/klimafolgen-anpassung/werkzeuge-der-anpassung/tatenbank/quantified-trees-qtrees-intelligente",
+     "publisher": "Umweltbundesamt",
+     "retrieved": "2026-10-10",
+     "quote": "Die Ergebnisse dieser Arbeiten zeigen, dass das Vorhersagemodell in der Lage ist, die aktuelle Wasserversorgung der Bäume mit Hilfe der Sensorwerten einzelner weniger Bäume zu berechnen.",
+     "quote_lang": "de"
+    }
+   ]
+  }
+ ],
+ "rubric": {
+  "official_primary_sources": {
+   "rating": "yes",
+   "reason": "Entries rest on Senate, Umweltatlas, Abgeordnetenhaus and district pages fetched on 2026-10-10."
+  },
+  "published_monitoring": {
+   "rating": "partial",
+   "reason": "City-wide sealing mapping and modelled water balance are published; no published measured infiltration or retention monitoring was found."
+  },
+  "public_data_access": {
+   "rating": "partial",
+   "reason": "Open downloads and a Zero 2.0 licence were confirmed for the 2005 water-balance record only; 2022 licence and the daten.berlin.de record (blocked, HTTP 403) were not verified."
+  },
+  "reported_outcomes": {
+   "rating": "partial",
+   "reason": "Output statistics (19,640 m2 green roof, about 300,000 m3 storage) are reported; effects on runoff, evaporation or overflows are not quantified."
+  },
+  "weaknesses": [
+   "Water balance, hazard maps and climate map are modelled; no measured validation results were read (only the titles of ABIMO comparison figures exist on the download page).",
+   "Licence for Wasserhaushalt 2022 and the Versiegelung 2021 datasets was not verified; search snippets for 2017 records gave conflicting licences (BY 2.0 versus Zero 2.0) and were not fetched.",
+   "The sewer storage target is worded inconsistently across Senate pages (over 300,000 m3 additional versus 300,000 m3 total including about 235,000 existing); the 2026 press release says about 300,000 m3 additional created.",
+   "The Senate report 19/3340 was read as text for the Beschluss and the first sections only; later sections were not fully reviewed.",
+   "Several figures (48 and 5.5 million m3 per year) come from administration pages without stated method or year.",
+   "Regenwasseragentur pages were not analysed beyond the home page; BWB primary documents were not fetched."
+  ]
+ }
+}

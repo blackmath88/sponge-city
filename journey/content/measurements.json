@@ -1,0 +1,333 @@
+{
+ "schema_version": "sponge-measurements/1",
+ "charter": "wrapper/data-charter-map/data/data-charter.json",
+ "charter_updated": "2026-10-03",
+ "indicators": [
+  {
+   "id": "land-cover",
+   "question": {
+    "de": "Welche Flächen sind versiegelt, welche offen?",
+    "en": "Which surfaces are sealed and which are open?"
+   },
+   "why": {
+    "de": "Versiegelte Flächen leiten Regen ab, offene können ihn aufnehmen und verdunsten. Das ist die Grundlage jeder Wasserbilanz.",
+    "en": "Sealed surfaces shed rain, open ones can take it up and evaporate it. It is the basis of any water balance."
+   },
+   "supports": {
+    "de": "Prüfen, wo Entsiegeln überhaupt möglich wäre, und Kandidaten für eine genauere Untersuchung finden.",
+    "en": "Screen where unsealing is possible at all and find candidates for closer investigation."
+   },
+   "cannot": {
+    "de": "Sagt nichts über Durchlässigkeit, Verdichtung oder Untergrund. Eine Grünfläche kann verdichtet sein.",
+    "en": "Says nothing about permeability, compaction or the subsurface. A green area can be compacted."
+   },
+   "next_action": {
+    "de": "Keine Lücke bei der Fläche selbst. Offen bleibt, wie durchlässig der Boden darunter ist (siehe Versickerungsleistung).",
+    "en": "No gap for the area itself. What remains open is how permeable the soil beneath is (see infiltration capacity)."
+   },
+   "monitoring": {
+    "de": "Jährlicher Vergleich der Flächenanteile vor und nach einer Massnahme zeigt, ob tatsächlich entsiegelt wurde.",
+    "en": "A yearly comparison of area shares before and after a measure shows whether unsealing actually happened."
+   },
+   "desirable": {
+    "en": "Polygons of every sealed and unsealed surface (roofs, roads, sidewalks, parking, planted), ≤ 1 m, updated yearly, open vector download and API.",
+    "de": "Polygone aller versiegelten und unversiegelten Flächen (Dächer, Strassen, Trottoirs, Parkplätze, Bepflanzung), ≤ 1 m, jährlich aktualisiert, offener Vektordownload und API."
+   },
+   "actual": {
+    "en": "Cadastral land cover: 49,595 polygons with classes such as sidewalk, road, traffic island, tram area, building, garden, water. CC BY 4.0, updated 2026-08-20.",
+    "de": "Amtliche Bodenbedeckung: 49 595 Polygone mit Klassen wie Trottoir, Strasse, Verkehrsinsel, Tramfläche, Gebäude, Garten, Wasser. CC BY 4.0, aktualisiert am 20.08.2026."
+   },
+   "proxy": null,
+   "ask": null
+  },
+  {
+   "id": "sealing-fraction",
+   "question": {
+    "de": "Wie gross ist der versiegelte Anteil pro Block oder Einzugsgebiet?",
+    "en": "What share of each block or catchment is sealed?"
+   },
+   "why": {
+    "de": "Erst der Anteil pro Einzugsgebiet erlaubt eine Aussage zu Abfluss, Versickerung und Verdunstung.",
+    "en": "Only the share per catchment allows a statement on runoff, infiltration and evaporation."
+   },
+   "supports": {
+    "de": "Vergleichen, welche Quartiere am meisten Regen schnell ableiten. Geeignet zum Eingrenzen, nicht zum Dimensionieren.",
+    "en": "Compare which districts shed the most rain quickly. Suitable for narrowing down, not for sizing."
+   },
+   "cannot": {
+    "de": "Ein Flächenanteil ist keine Wasserbilanz und enthält weder Gefälle noch Kanalnetz.",
+    "en": "An area share is not a water balance and contains neither slope nor sewer network."
+   },
+   "next_action": {
+    "de": "Rechnen: Bodenbedeckung pro statistischem Block aggregieren. Danach prüfen, ob eine Wasserbilanz sinnvoll ist.",
+    "en": "Compute: aggregate land cover per statistical block. Then check whether a water balance makes sense."
+   },
+   "monitoring": {
+    "de": "Der Anteil lässt sich jährlich neu berechnen. So wird sichtbar, ob sich ein Einzugsgebiet verändert.",
+    "en": "The share can be recomputed each year, which shows whether a catchment changes."
+   },
+   "desirable": {
+    "en": "Sealed fraction per block and per drainage catchment, yearly, as the basis of a water balance (runoff, infiltration, evaporation).",
+    "de": "Versiegelter Anteil pro Block und pro Entwässerungseinzugsgebiet, jährlich, als Grundlage einer Wasserbilanz (Abfluss, Versickerung, Verdunstung)."
+   },
+   "actual": {
+    "en": "No published sealed-share or water-balance layer. The inputs are open (land cover, statistical blocks).",
+    "de": "Keine veröffentlichte Karte des versiegelten Anteils und keine Wasserbilanz. Die Eingangsdaten (Bodenbedeckung, statistische Blöcke) sind offen."
+   },
+   "proxy": {
+    "en": "Aggregate land-cover classes per statistical block (100040); a water balance like Berlin's ABIMO could follow.",
+    "de": "Bodenbedeckungsklassen pro statistischem Block (100040) aggregieren; danach könnte eine Wasserbilanz wie das Berliner ABIMO folgen."
+   },
+   "ask": null
+  },
+  {
+   "id": "infiltration",
+   "question": {
+    "de": "Wie gut kann der Boden hier Wasser aufnehmen?",
+    "en": "How well can the soil here take up water?"
+   },
+   "why": {
+    "de": "Ohne diese Grösse bleibt offen, ob eine Versickerungsmassnahme überhaupt funktioniert.",
+    "en": "Without it, it stays open whether an infiltration measure works at all."
+   },
+   "supports": {
+    "de": "Nur eine Vorauswahl: Wo lohnt sich eine Messung vor Ort? Eine Auslegung ist damit nicht möglich.",
+    "en": "A pre-selection only: where is an on-site measurement worthwhile? It does not allow design."
+   },
+   "cannot": {
+    "de": "Ersetzt keinen Versickerungsversuch am Standort. Die Näherung liefert keine Durchlässigkeitswerte.",
+    "en": "Does not replace an infiltration test on site. The proxy yields no permeability values."
+   },
+   "next_action": {
+    "de": "Versickerungskarte des Kantons (GEP) beim Amt für Umwelt und Energie anfragen; am Standort Versickerungsversuche planen.",
+    "en": "Ask the Canton's Office for Environment and Energy for the GEP infiltration map; plan infiltration tests on site."
+   },
+   "monitoring": {
+    "de": "Wiederholte Versickerungsversuche vor und nach dem Bau zeigen, ob die Leistung hält oder durch Verstopfen sinkt.",
+    "en": "Repeated infiltration tests before and after construction show whether the performance holds or drops through clogging."
+   },
+   "desirable": {
+    "en": "An infiltration suitability map (as the GEP requires) with measured permeability where available, at parcel or street scale, open.",
+    "de": "Eine Versickerungskarte (wie im GEP verlangt) mit gemessener Durchlässigkeit, wo vorhanden, auf Parzellen- oder Strassenebene, offen."
+   },
+   "actual": {
+    "en": "No open infiltration map or permeability data found. Related open inputs: soil depth classes, boreholes, groundwater levels, protection zones, contaminated sites.",
+    "de": "Keine offene Versickerungskarte und keine Durchlässigkeitsdaten gefunden. Verwandte offene Eingangsdaten: Bodentiefenklassen, Bohrungen, Grundwasserstände, Schutzzonen, Altlasten."
+   },
+   "proxy": {
+    "en": "Combine depth to groundwater, borehole stratigraphy, soil depth and exclusions (protection zones S1/S2, contaminated sites); validate with citizen-science infiltration tests.",
+    "de": "Grundwasserflurabstand, Bohrprofile, Bodentiefe und Ausschlussgebiete (Schutzzonen S1/S2, Altlasten) kombinieren; mit Versickerungstests aus Bürgerwissenschaft prüfen."
+   },
+   "ask": {
+    "en": "Publish the GEP infiltration map (Amt für Umwelt und Energie).",
+    "de": "Die GEP-Versickerungskarte veröffentlichen (Amt für Umwelt und Energie)."
+   }
+  },
+  {
+   "id": "sewer-network",
+   "question": {
+    "de": "Wohin fliesst das Wasser, wenn die Strasse es nicht aufnimmt?",
+    "en": "Where does the water go when the street cannot take it?"
+   },
+   "why": {
+    "de": "Ob Wasser zurückgehalten oder abgeleitet werden muss, hängt vom Kanalnetz und von dessen Auslastung ab.",
+    "en": "Whether water must be held back or drained depends on the sewer network and its load."
+   },
+   "supports": {
+    "de": "Erklären, warum Rückhalt im Quartier die Kanalisation entlasten kann. Für die Platzierung braucht es das echte Netz.",
+    "en": "Explain why retention in the district can relieve the sewers. Placing measures needs the real network."
+   },
+   "cannot": {
+    "de": "Ein synthetisches Netz ist plausibel, aber nie das wirkliche. Es darf keine Entscheidung über einen Standort tragen.",
+    "en": "A synthetic network is plausible but never the real one. It must not carry a decision on a site."
+   },
+   "next_action": {
+    "de": "Anfrage an Tiefbauamt und Amt für Umwelt und Energie für den betroffenen Perimeter, mit dem Zweck «frühe Planung».",
+    "en": "Request from the Civil Engineering Office and the Office for Environment and Energy for the affected perimeter, stating the purpose «early planning»."
+   },
+   "monitoring": {
+    "de": "Überlauf- und Durchflussmessungen im Netz würden zeigen, ob Rückhalt im Quartier die Spitzen wirklich dämpft.",
+    "en": "Overflow and flow measurements in the network would show whether retention in the district really dampens peaks."
+   },
+   "desirable": {
+    "en": "Pipes, manholes, gullies, combined or separate system, overflows, catchments, with the GEP; open, at least as a simplified network.",
+    "de": "Leitungen, Schächte, Strassenabläufe, Misch- oder Trennsystem, Überläufe, Einzugsgebiete, mit GEP; offen, mindestens als vereinfachtes Netz."
+   },
+   "actual": {
+    "en": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
+    "de": "Netzdaten in den geprüften offenen Basler und Bundesquellen nicht gefunden. Offen: das ARA-Einzugsgebiet (13 Polygone). Veröffentlicht, aber nicht als Daten: die GEP-Karte der Entwässerungsarten von 2012 (Misch, Misch mit Versickerungspflicht, modifiziertes Trennsystem) und Versickerungsverbote in Schutzzonen (PDF, 1:20 000)."
+   },
+   "proxy": {
+    "en": "SWMManywhere or the Eawag sewer generator from streets, terrain and buildings; checked against the 96 streets with sewer-works permits.",
+    "de": "SWMManywhere oder der Eawag-Kanalgenerator aus Strassen, Gelände und Gebäuden; Prüfung an den 96 Strassen mit Bewilligungen für Kanalarbeiten."
+   },
+   "ask": {
+    "en": "Publish gully points and a combined/separate flag per street segment (Tiefbauamt, AUE).",
+    "de": "Strassenablauf-Punkte und ein Misch-/Trennsystem-Merkmal pro Strassenabschnitt veröffentlichen (Tiefbauamt, AUE)."
+   }
+  },
+  {
+   "id": "rainfall",
+   "question": {
+    "de": "Wie viel Regen fällt wie schnell?",
+    "en": "How much rain falls, and how fast?"
+   },
+   "why": {
+    "de": "Starkregen entscheidet, wie gross ein Rückhalt sein müsste. Mittelwerte reichen dafür nicht.",
+    "en": "Heavy rain decides how large a store would need to be. Averages are not enough for that."
+   },
+   "supports": {
+    "de": "Ereignisse beschreiben und Regen als Eingabe für spätere, geprüfte Berechnungen bereitstellen.",
+    "en": "Describe events and provide rain as input for later, validated calculations."
+   },
+   "cannot": {
+    "de": "Eine Station beschreibt nicht, wie stark es in einer bestimmten Strasse regnet. Lokale Spitzen können abweichen.",
+    "en": "One station does not describe how hard it rains in a particular street. Local peaks can differ."
+   },
+   "next_action": {
+    "de": "Keine Lücke bei der Regenmenge selbst. Für eine Strasse fehlt dagegen die Messung des tatsächlichen Abflusses.",
+    "en": "No gap for the rain amount itself. For a street, the measurement of actual runoff is missing."
+   },
+   "monitoring": {
+    "de": "Regen und Abfluss derselben Ereignisse nebeneinander zu messen würde zeigen, wie eine Massnahme Spitzen dämpft.",
+    "en": "Measuring rain and runoff of the same events side by side would show how a measure dampens peaks."
+   },
+   "desirable": {
+    "en": "Rain gauges and radar at ≤ 10 minutes and ≤ 1 km, long records for design storms and event analysis.",
+    "de": "Regenmesser und Radar mit ≤ 10 Minuten und ≤ 1 km, lange Reihen für Bemessungsregen und Ereignisanalysen."
+   },
+   "actual": {
+    "en": "MeteoSwiss Basel/Binningen station (10-minute data, long records), radar precipitation (last 14 days), climate scenarios CH2025; city sensors with hourly rain (raw).",
+    "de": "MeteoSchweiz-Station Basel/Binningen (10-Minuten-Daten, lange Reihen), Radarniederschlag (letzte 14 Tage), Klimaszenarien CH2025; städtische Sensoren mit stündlichem Regen (Rohdaten)."
+   },
+   "proxy": null,
+   "ask": null
+  },
+  {
+   "id": "tree-pits",
+   "question": {
+    "de": "Wie viel Wurzelraum hat der Baum hier?",
+    "en": "How much root space does the tree here have?"
+   },
+   "why": {
+    "de": "Wurzelraum bestimmt, wie viel Wasser ein Baum speichern kann und damit, wie viel er im Sommer verdunstet und beschattet.",
+    "en": "Root space determines how much water a tree can store and therefore how much it transpires and shades in summer."
+   },
+   "supports": {
+    "de": "Bäume mit sichtbar zu wenig Raum für eine Untersuchung vorschlagen. Das Pflanzumfeld ist bekannt, die Grube nicht.",
+    "en": "Propose trees with visibly too little space for investigation. The planting context is known, the pit is not."
+   },
+   "cannot": {
+    "de": "Die Näherung klassifiziert das Pflanzumfeld, nicht Fläche oder Volumen einer einzelnen Baumgrube.",
+    "en": "The proxy classifies the planting context, not area or volume of an individual tree pit."
+   },
+   "next_action": {
+    "de": "Ein Feld «Baumscheibenfläche» im Baumkataster ergänzen (Stadtgärtnerei); vor Ort für ausgewählte Bäume ausmessen.",
+    "en": "Add a pit-area field to the tree cadastre (Stadtgärtnerei); measure selected trees on site."
+   },
+   "monitoring": {
+    "de": "Wurzelraum, Zustand und Wassergehalt derselben Bäume über Jahre zu erfassen würde zeigen, ob grössere Gruben Vitalität und Schatten verbessern.",
+    "en": "Recording root space, condition and water content of the same trees over years would show whether larger pits improve vigour and shade."
+   },
+   "desirable": {
+    "en": "Per tree: pit area and volume, substrate, connected trench or not.",
+    "de": "Pro Baum: Grubenfläche und -volumen, Substrat, ob mit Graben verbunden oder nicht."
+   },
+   "actual": {
+    "en": "The tree cadastre has no pit size or root-space field.",
+    "de": "Das Baumkataster enthält kein Feld für Grubengrösse oder Wurzelraum."
+   },
+   "proxy": {
+    "en": "Intersect street-tree points with mapped planted land-cover polygons. 3,372 points lie inside a mapped planted polygon; 9,132 have no mapped planted polygon at the point. This classifies planting context, not pit dimensions.",
+    "de": "Strassenbaum-Punkte mit kartierten Pflanzflächen verschneiden. 3372 Punkte liegen in einer kartierten Pflanzfläche, 9132 haben am Punkt keine kartierte Pflanzfläche. Das klassifiziert das Pflanzumfeld, nicht die Grubenmasse."
+   },
+   "ask": {
+    "en": "Add a pit-area field to the tree cadastre (Stadtgärtnerei).",
+    "de": "Ein Feld für die Grubenfläche im Baumkataster ergänzen (Stadtgärtnerei)."
+   }
+  },
+  {
+   "id": "soil-moisture",
+   "question": {
+    "de": "Haben die Bäume genug Wasser?",
+    "en": "Do the trees have enough water?"
+   },
+   "why": {
+    "de": "Bodenfeuchte zeigt, ob gespeichertes Wasser im Sommer ausreicht oder Bäume unter Stress geraten.",
+    "en": "Soil moisture shows whether stored water suffices in summer or trees come under stress."
+   },
+   "supports": {
+    "de": "Beobachten, ob eine Massnahme Wasser im Wurzelraum hält. Erst mit Vorher-nachher-Reihen aussagekräftig.",
+    "en": "Observe whether a measure keeps water in the root zone. Meaningful only with before-and-after series."
+   },
+   "cannot": {
+    "de": "Ohne Sensoren gibt es keine Aussage. Fremde Messreihen (z. B. Berlin) lassen sich nicht auf Basler Böden übertragen.",
+    "en": "Without sensors there is no statement. Series from elsewhere (e.g. Berlin) cannot be transferred to Basel soils."
+   },
+   "next_action": {
+    "de": "Messen. Mit den Betreibern der Pilotstrassen klären, ob und in welcher Tiefe Sensoren geplant sind und wer die Daten hält.",
+    "en": "Measure. Clarify with the operators of the pilot streets whether sensors are planned, at which depth, and who holds the data."
+   },
+   "monitoring": {
+    "de": "Genau dafür sind Bodenfeuchte-Sensoren da: Sie würden die Leistung einer Massnahme im Betrieb zeigen.",
+    "en": "This is exactly what soil-moisture sensors are for: they would show a measure's performance in operation."
+   },
+   "desirable": {
+    "en": "Soil-moisture sensors at representative trees and sponge measures, live and open (as in Berlin's QTrees).",
+    "de": "Bodenfeuchte-Sensoren an repräsentativen Bäumen und Schwammelementen, live und offen (wie bei QTrees in Berlin)."
+   },
+   "actual": {
+    "en": "No open soil-moisture or tree-stress sensor data found.",
+    "de": "Keine offenen Daten zu Bodenfeuchte oder Baumstress gefunden."
+   },
+   "proxy": {
+    "en": "Has to be measured.",
+    "de": "Muss gemessen werden."
+   },
+   "ask": null
+  },
+  {
+   "id": "measures-registry",
+   "question": {
+    "de": "Welche Schwamm-Massnahmen gibt es schon, und was haben sie bewirkt?",
+    "en": "Which sponge measures already exist, and what did they achieve?"
+   },
+   "why": {
+    "de": "Ohne Verzeichnis kann die Stadt nicht aus eigenen Projekten lernen und nichts über Wirkung belegen.",
+    "en": "Without a registry the city cannot learn from its own projects or evidence any effect."
+   },
+   "supports": {
+    "de": "Gebaute Beispiele finden und Vergleichsorte für Messungen bestimmen.",
+    "en": "Find built examples and choose comparison sites for measurements."
+   },
+   "cannot": {
+    "de": "Ein Verzeichnis der Standorte sagt noch nichts über die Wirkung. Dafür braucht es gemessene Daten pro Massnahme.",
+    "en": "A list of sites does not by itself say anything about effect. That needs measured data per measure."
+   },
+   "next_action": {
+    "de": "Die Stadt müsste ein offenes Verzeichnis starten (Stadtgärtnerei, Tiefbauamt).",
+    "en": "The city would need to start an open registry (Stadtgärtnerei, Civil Engineering Office)."
+   },
+   "monitoring": {
+    "de": "Das Verzeichnis wäre der Ort, an dem Überwachungsdaten je Massnahme zusammenlaufen.",
+    "en": "The registry would be the place where monitoring data per measure comes together."
+   },
+   "desirable": {
+    "en": "Every built measure (rain garden, tree trench, depaving, green roof) with location, design, date and monitored effect, open.",
+    "de": "Jede gebaute Massnahme (Regengarten, Baumrigole, Entsiegelung, Gründach) mit Ort, Ausführung, Datum und überwachter Wirkung, offen."
+   },
+   "actual": {
+    "en": "No open registry found; only 64 permit texts mention unsealing or infiltration.",
+    "de": "Kein offenes Verzeichnis gefunden; nur 64 Bewilligungstexte erwähnen Entsiegelung oder Versickerung."
+   },
+   "proxy": {
+    "en": "Has to be recorded by the city.",
+    "de": "Muss von der Stadt erfasst werden."
+   },
+   "ask": {
+    "en": "Start an open registry of sponge measures (Stadtgärtnerei, Tiefbauamt).",
+    "de": "Ein offenes Verzeichnis der Schwamm-Massnahmen starten (Stadtgärtnerei, Tiefbauamt)."
+   }
+  }
+ ]
+}

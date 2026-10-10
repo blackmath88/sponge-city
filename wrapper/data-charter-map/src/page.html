@@ -27,6 +27,10 @@
     .tool { border: 1px solid var(--line); background: transparent; padding: 6px 10px; cursor: pointer; font: 12px/1 var(--mono); color: var(--muted); white-space: nowrap; }
     .tool:hover { color: var(--ink); border-color: var(--ink); }
     .tool[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .langs { display: inline-flex; }
+    .langs[hidden] { display: none; }
+    .langs .tool { padding: 6px 8px; text-transform: uppercase; }
+    .langs .tool + .tool { border-left: 0; }
     .bar a.link { font: 12px/1 var(--mono); color: var(--muted); text-decoration: none; white-space: nowrap; }
 
     #map { position: absolute; top: var(--bar); left: 0; right: 0; bottom: 0; background: var(--map-bg); }
@@ -99,25 +103,29 @@
 <body>
   <header class="bar">
     <a class="wordmark" href="../../">Sponge Squad</a>
-    <h1>Data Charter · Basel</h1>
+    <h1 id="h1" data-i18n="title">Data Charter · Basel</h1>
     <span class="spacer"></span>
-    <button class="tool" type="button" id="toggle-theme" aria-pressed="false">Control room</button>
-    <a class="link" href="docs/DATA-CHARTER.md">Charter text</a>
+    <span class="langs" id="langs" role="group" aria-label="Language">
+      <button class="tool" type="button" data-lang="de" lang="de" aria-pressed="false" aria-label="Deutsch">de</button>
+      <button class="tool" type="button" data-lang="en" lang="en" aria-pressed="false" aria-label="English">en</button>
+    </span>
+    <button class="tool" type="button" id="toggle-theme" aria-pressed="false" data-i18n="theme">Control room</button>
+    <a class="link" href="docs/DATA-CHARTER.md" data-i18n="charterText">Charter text</a>
   </header>
-  <div id="map" role="region" aria-label="Map of Basel data layers"></div>
+  <div id="map" role="region" aria-label="Map of Basel data layers" data-i18n-aria="mapAria"></div>
 
-  <aside class="panel" id="layers" aria-label="Layers">
+  <aside class="panel" id="layers" aria-label="Layers" data-i18n-aria="layersAria">
     <div class="section">
-      <span class="label">How to read this map</span>
-      <p class="rule"><span class="tag open">Real</span> published by an authority, as published. <span class="tag run">≈ Inferred</span> derived by us from real data, method shown. <span class="tag missing">Missing</span> no open data found in the sources reviewed.</p>
+      <span class="label" data-i18n="howTo">How to read this map</span>
+      <p class="rule" data-i18n-html="ruleHtml"><span class="tag open">Real</span> published by an authority, as published. <span class="tag run">≈ Inferred</span> derived by us from real data, method shown. <span class="tag missing">Missing</span> no open data found in the sources reviewed.</p>
     </div>
     <div class="section" id="layer-groups"></div>
   </aside>
 
-  <aside class="panel" id="charter" aria-label="Charter scorecard">
+  <aside class="panel" id="charter" aria-label="Charter scorecard" data-i18n-aria="charterAria">
     <div class="section">
-      <span class="label">North star → Basel today</span>
-      <p class="rule">Open-data publication coverage against this draft charter—not a score of Basel's sponge-city performance.</p>
+      <span class="label" data-i18n="northToToday">North star → Basel today</span>
+      <p class="rule" data-i18n="coverageNote">Open-data publication coverage against this draft charter—not a score of Basel's sponge-city performance.</p>
       <div class="stack" id="stack"></div>
       <div class="counts" id="counts"></div>
     </div>
@@ -129,8 +137,140 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
   <script id="map-logic">
+    // maplibre-gl 4 has no supported(); test WebGL directly.
+    const webglAvailable = () => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; } };
     const CHARTER = /*__CHARTER__*/ null;
     const SNAPSHOT = /*__CHARTER_MAP__*/ null;
+    const CHARTER_DE = /*__CHARTER_DE__*/ null;
+
+    // ---------- Language (de default; ?lang=de|en, else localStorage "sponge.lang")
+    const I18N = {
+      en: {
+        title: "Data Charter · Basel", pageTitle: "Sponge City Data Charter", theme: "Control room", charterText: "Charter text",
+        mapAria: "Map of Basel data layers", layersAria: "Layers", charterAria: "Charter scorecard", langAria: "Language",
+        howTo: "How to read this map",
+        ruleHtml: '<span class="tag open">Real</span> published by an authority, as published. <span class="tag run">≈ Inferred</span> derived by us from real data, method shown. <span class="tag missing">Missing</span> no open data found in the sources reviewed.',
+        northToToday: "North star → Basel today",
+        coverageNote: "Open-data publication coverage against this draft charter—not a score of Basel's sponge-city performance.",
+        grpReal: "Real data", grpRealHint: "published by an authority, as published",
+        grpInferred: "Inferred by us", grpInferredHint: "derived from real data; method shown, never shown as real",
+        grpMissing: "Missing", grpMissingHint: "no open data found in the reviewed Basel and federal sources; pick one to see its coverage",
+        officialModel: "official model", limitations: "Limitations",
+        "status.open": "open", "status.partial": "partial", "status.restricted": "restricted", "status.missing": "missing",
+        "fill.run": "≈ inferred", "fill.proposed": "fill proposed", "fill.none": "measure",
+        indicators: "indicators",
+        northStarH: "North star", baselH: "Basel today · real data",
+        fillRunH: "Inferred by us (not real data)", fillProposedH: "How it could be inferred (not run)", fillNoneH: "No inference route",
+        askH: "Open-data ask", refsH: "References", showOnMap: "Show on map", confidence: "Confidence", ask: "Ask",
+        layerMissingExpected: "Expected to exist (assumed), not found as open data", layerMissing: "No open data found in the reviewed sources",
+        missingWord: "Missing", noticeRestricted: "expected to exist but not found as open data in the reviewed Basel and federal sources",
+        noticeMissing: "no open data found in the reviewed Basel and federal sources", hatch: "The hatch covers the whole canton.",
+        inferredWord: "Inferred", couldInfer: "Could be inferred", clear: "clear", clearAria: "Clear the selected missing layer",
+        hud: "snapshot {date} · {n} layers on",
+        popTree: "Real · tree cadastre", popTreeLine: "Tree {id} · {years} years at site",
+        popInferred: "≈ Inferred by us",
+        popPit1: "Tree point lies in a mapped planted polygon of {area} m²; this is not a pit measurement",
+        popPit0: "No mapped planted land-cover polygon at this tree point; the actual pit remains unknown",
+        popGw: "Real · groundwater statistics", popGwLine: "Terrain {t} m a.s.l. · 10-year max level {max} m · mean {mean} m",
+        popGwDepth: "Shallowest depth to groundwater ≈ {min} m (mean ≈ {mean} m)",
+        gwMethod: "terrain height minus 10-year maximum (and mean) groundwater level",
+        popPermit: "Real · works permit", popNetwork: "Network", popKeyword: "(keyword in permit text)",
+        popUpcoming: "Active or upcoming permitted works; not a coordinated works plan",
+        mapUnavailable: "Map unavailable in this browser. Explore the data layers, evidence gaps and gatekeepers below.",
+        claimFor: "for {uses} only", claimAnd: " and ",
+        "cls.observed": "Observed", "cls.derived": "Derived", "cls.modelled": "Modelled", "cls.assumed": "Assumed", "cls.unknown": "Unknown",
+        "use.explain": "explaining", "use.screen": "screening", "use.prioritise": "prioritising", "use.design": "design",
+        "net.sewer": "sewer", "net.heat": "district heating", "net.house": "house connection", "net.water": "water", "net.gas": "gas", "net.power": "electricity", "net.utility": "utility works (unspecified)",
+        "leg.noPlanted": "no mapped planted area at tree point", "leg.planted": "in a mapped planted polygon"
+      },
+      de: {
+        title: "Datencharta · Basel", pageTitle: "Sponge-City-Datencharta", theme: "Leitstand", charterText: "Charta-Text",
+        mapAria: "Karte der Basler Datenebenen", layersAria: "Ebenen", charterAria: "Übersicht der Charta", langAria: "Sprache",
+        howTo: "So lesen Sie diese Karte",
+        ruleHtml: '<span class="tag open">Real</span> von einer Behörde so veröffentlicht, wie sie ist. <span class="tag run">≈ Abgeleitet</span> von uns aus realen Daten abgeleitet, Methode angegeben. <span class="tag missing">Fehlend</span> in den geprüften Quellen keine offenen Daten gefunden.',
+        northToToday: "Zielbild → Basel heute",
+        coverageNote: "Abdeckung der Veröffentlichung als offene Daten gemessen an diesem Entwurf der Charta, keine Bewertung der Schwammstadt-Leistung Basels.",
+        grpReal: "Reale Daten", grpRealHint: "von einer Behörde so veröffentlicht, wie sie ist",
+        grpInferred: "Von uns abgeleitet", grpInferredHint: "aus realen Daten abgeleitet; Methode angegeben, nie als real dargestellt",
+        grpMissing: "Fehlend", grpMissingHint: "in den geprüften Basler und Bundesquellen keine offenen Daten gefunden; eine wählen, um die Abdeckung zu sehen",
+        officialModel: "amtliches Modell", limitations: "Einschränkungen",
+        "status.open": "offen", "status.partial": "teilweise", "status.restricted": "eingeschränkt", "status.missing": "fehlend",
+        "fill.run": "≈ abgeleitet", "fill.proposed": "Ableitung vorgeschlagen", "fill.none": "messen",
+        indicators: "Indikatoren",
+        northStarH: "Zielbild", baselH: "Basel heute · reale Daten",
+        fillRunH: "Von uns abgeleitet (keine realen Daten)", fillProposedH: "Wie sich das ableiten liesse (nicht durchgeführt)", fillNoneH: "Kein Ableitungsweg",
+        askH: "Wunsch an die offenen Daten", refsH: "Referenzen", showOnMap: "Auf der Karte zeigen", confidence: "Verlässlichkeit", ask: "Wunsch",
+        layerMissingExpected: "Existenz angenommen, nicht als offene Daten gefunden", layerMissing: "In den geprüften Quellen keine offenen Daten gefunden",
+        missingWord: "Fehlend", noticeRestricted: "sollte vorhanden sein, wurde aber in den geprüften Basler und Bundesquellen nicht als offene Daten gefunden",
+        noticeMissing: "in den geprüften Basler und Bundesquellen keine offenen Daten gefunden", hatch: "Die Schraffur deckt den ganzen Kanton ab.",
+        inferredWord: "Abgeleitet", couldInfer: "Liesse sich ableiten", clear: "ausblenden", clearAria: "Gewählte fehlende Ebene ausblenden",
+        hud: "Stand {date} · {n} Ebenen aktiv",
+        popTree: "Real · Baumkataster", popTreeLine: "Baum {id} · {years} Jahre am Standort",
+        popInferred: "≈ Von uns abgeleitet",
+        popPit1: "Der Baumpunkt liegt in einer kartierten Pflanzfläche von {area} m²; das ist keine Messung der Baumgrube",
+        popPit0: "Am Baumpunkt gibt es keine kartierte Pflanzfläche; die tatsächliche Baumgrube bleibt unbekannt",
+        popGw: "Real · Grundwasserstatistik", popGwLine: "Terrain {t} m ü. M. · 10-Jahres-Höchststand {max} m · Mittel {mean} m",
+        popGwDepth: "Geringster Grundwasserflurabstand ≈ {min} m (Mittel ≈ {mean} m)",
+        gwMethod: "Terrainhöhe minus 10-Jahres-Höchststand (und -Mittel) des Grundwassers",
+        popPermit: "Real · Bewilligung für Bauarbeiten", popNetwork: "Netz", popKeyword: "(Stichwort im Bewilligungstext)",
+        popUpcoming: "Laufende oder kommende bewilligte Arbeiten; kein koordinierter Arbeitsplan",
+        mapUnavailable: "Karte in diesem Browser nicht verfügbar. Die Datenebenen, Belegslücken und Zuständigen sind unten abrufbar.",
+        claimFor: "nur zum {uses}", claimAnd: " und ",
+        "cls.observed": "Beobachtet", "cls.derived": "Abgeleitet", "cls.modelled": "Modelliert", "cls.assumed": "Angenommen", "cls.unknown": "Unbekannt",
+        "use.explain": "Erklären", "use.screen": "Eingrenzen", "use.prioritise": "Priorisieren", "use.design": "Entwerfen",
+        "net.sewer": "Kanalisation", "net.heat": "Fernwärme", "net.house": "Hausanschluss", "net.water": "Wasser", "net.gas": "Gas", "net.power": "Strom", "net.utility": "Leitungsarbeiten (unspezifiziert)",
+        "leg.noPlanted": "keine kartierte Pflanzfläche am Baumpunkt", "leg.planted": "in einer kartierten Pflanzfläche"
+      }
+    };
+    const LAYER_TEXT_DE = {
+      "r-landcover": ["Bodenbedeckung (amtliche Vermessung)", "Polygone von Trottoir, Strasse, Gebäude, Garten … · sichtbar ab Zoomstufe 16"],
+      "r-trees": ["Strassenbäume (Baumkataster)", "12 504 Strassenbäume · data.bs.ch 100052"],
+      "r-gwstations": ["Grundwassermessstellen", "Terrainhöhe und 10-Jahres-Stände · data.bs.ch 100180"],
+      "r-permits": ["Bewilligungen für Bauarbeiten (wie veröffentlicht)", "Baustellen und Grabungsanzeigen · data.bs.ch 100018"],
+      "r-setv": ["Schwammstadt-Eignung nach Verkehrsbelastung", "Kantonales Modell auf Basis des Verkehrs 2023 · SETV"],
+      "r-fgsk": ["Hitze-Fokusgebiete", "Stadtklimakonzept · FGSK"],
+      "r-uhi": ["Wärmeinseleffekt (Klimaanalyse 2019)", "Kantonales Modell · nur als Kartenbild"],
+      "r-runoff": ["Gefährdung durch Oberflächenabfluss", "BAFU-Modell · Grobeinschätzung, nicht im Feld überprüft"],
+      "r-hazard": ["Hochwassergefahr durch Gewässer", "Naturgefahrenkarte · geo.bs.ch"],
+      "r-gwprot": ["Grundwasserschutzzonen", "Gewässerschutzkarte · geo.bs.ch"],
+      "r-contam": ["Altlastenregister", "Kataster der belasteten Standorte · geo.bs.ch"],
+      "r-soil": ["Bodenkarte", "Überwiegend unversiegelter Boden · geo.bs.ch"],
+      "i-pits": ["≈ Pflanzumfeld der Bäume", "Baumpunkt mit kartierter Pflanzfläche verschnitten; das misst keine einzelne Baumgrube"],
+      "i-gwdepth": ["≈ Geringster Grundwasserflurabstand", "Terrain − 10-Jahres-Höchststand, pro Messstelle · nicht interpoliert"],
+      "i-underground": ["≈ Untergrundaktivität nach Netz", "Netzart aus dem Bewilligungstext gelesen (Stichwörter)"],
+      "i-digwindows": ["≈ Laufende oder kommende Arbeiten", "Bewilligungen, die nach dem Stichtag der Daten enden; kein koordinierter Arbeitsplan"]
+    };
+    const normLang = value => (value === "en" || value === "de" ? value : "de");
+    function detectLang() {
+      try {
+        if (typeof location !== "undefined") {
+          const q = new URLSearchParams(location.search);
+          if (q.has("lang")) return normLang(q.get("lang"));
+        }
+      } catch {}
+      try { if (typeof localStorage !== "undefined") { const v = localStorage.getItem("sponge.lang"); if (v) return normLang(v); } } catch {}
+      return "de";
+    }
+    let LANG = detectLang();
+    function setLangCode(lang) { LANG = normLang(lang); return LANG; }
+    function t(key, vars) {
+      let text = (I18N[LANG] && I18N[LANG][key]) ?? I18N.en[key] ?? key;
+      if (vars) for (const [k, v] of Object.entries(vars)) text = text.split(`{${k}}`).join(v);
+      return text;
+    }
+    const de = () => LANG === "de" && CHARTER_DE;
+    const deInd = ind => (de() && CHARTER_DE.indicators && CHARTER_DE.indicators[ind.id]) || null;
+    const indName = ind => deInd(ind)?.name || ind.name;
+    const indNorthStar = ind => deInd(ind)?.north_star || ind.north_star;
+    const indDetail = ind => deInd(ind)?.basel?.detail || ind.basel.detail;
+    const indBasis = ind => deInd(ind)?.basel?.existence_basis || ind.basel.existence_basis;
+    const indMethod = ind => deInd(ind)?.fill?.method || ind.fill.method;
+    const indConfidence = ind => deInd(ind)?.fill?.confidence || ind.fill.confidence;
+    const indAsk = ind => deInd(ind)?.ask || ind.ask;
+    const groupLabel = group => (de() && CHARTER_DE.groups?.[group.id]) || group.label;
+    const describe = (map, key) => (de() && CHARTER_DE[map]?.[key]) || CHARTER[map]?.[key] || "";
+    const layerTitle = layer => layer.evidence === "missing" ? indName(CHARTER.indicators.find(i => i.id === layer.indicator)) : (LANG === "de" && LAYER_TEXT_DE[layer.id]?.[0]) || layer.title;
+    const layerMeta = layer => layer.evidence === "missing" ? t(layer.restricted ? "layerMissingExpected" : "layerMissing") : (LANG === "de" && LAYER_TEXT_DE[layer.id]?.[1]) || layer.meta;
 
     const BS_WMS = "https://wms.geo.bs.ch/?SERVICE=WMS&VERSION=1.3.0";
     const BS_CREDIT = "Quelle: Geodaten Kanton Basel-Stadt (CC BY 4.0)";
@@ -143,9 +283,9 @@
     const PERMIT_COLOURS = { sewer: "#2d6fa3", heat: "#c0362c", house: "#d08a1e", water: "#3aa0c8", gas: "#8a6d3b", power: "#c9b22f", utility: "#7a4fb0" };
 
     const LEGENDS = {
-      "i-pits": [["#d0702a", "no mapped planted area at tree point"], ["#2e9d5b", "in a mapped planted polygon"]],
+      "i-pits": [["#d0702a", "leg.noPlanted"], ["#2e9d5b", "leg.planted"]],
       "i-gwdepth": [["#c0362c", "< 3 m"], ["#e0812f", "3–6 m"], ["#e6c84a", "6–10 m"], ["#6fb0e8", "10–15 m"], ["#2d4fa3", "≥ 15 m"]],
-      "i-underground": Object.entries({ sewer: "sewer", heat: "district heating", house: "house connection", water: "water", gas: "gas", power: "electricity", utility: "utility works (unspecified)" }).map(([k, label]) => [null, label, k])
+      "i-underground": ["sewer", "heat", "house", "water", "gas", "power", "utility"].map(k => [null, `net.${k}`, k])
     };
     const LAYERS = [
       { id: "r-landcover", evidence: "real", title: "Land cover (official survey)", meta: "Polygons of sidewalk, road, building, garden… · visible from zoom 16", type: "wms", wms: "Bodenbedeckung", minzoom: 16, opacity: 0.7 },
@@ -169,13 +309,17 @@
     const CLAIMS = Object.fromEntries(CHARTER.claims.map(claim => [claim.layer, claim]));
     function claimSummary(claim) {
       if (!claim) return "";
-      const cls = claim.evidence_class[0].toUpperCase() + claim.evidence_class.slice(1);
-      const verb = { explain: "explaining", screen: "screening", prioritise: "prioritising", design: "design" };
-      return `${cls} · ${claim.validation} · for ${claim.permitted_use.map(use => verb[use] || use).join(" and ")} only`;
+      const cls = t(`cls.${claim.evidence_class}`);
+      const validation = (de() && CHARTER_DE.claims?.[claim.id]?.validation) || claim.validation;
+      return `${cls} · ${validation} · ${t("claimFor", { uses: claim.permitted_use.map(use => t(`use.${use}`)).join(t("claimAnd")) })}`;
+    }
+    function claimLimitations(claim) { return (de() && CHARTER_DE.claims?.[claim.id]?.limitations) || claim.limitations; }
+    function claimTitle(claim) {
+      return [describe("evidence_classes", claim.evidence_class), ...claim.permitted_use.map(use => describe("permitted_uses", use))].filter(Boolean).join(" · ");
     }
     // Missing layers come from the charter: every indicator Basel does not have as open real data.
     for (const ind of CHARTER.indicators) {
-      if (["missing", "restricted"].includes(ind.basel.status)) LAYERS.push({ id: `m-${ind.id}`, evidence: "missing", title: ind.name, meta: ind.basel.status === "restricted" ? "Expected to exist (assumed), not found as open data" : "No open data found in the reviewed sources", type: "missing", indicator: ind.id });
+      if (["missing", "restricted"].includes(ind.basel.status)) LAYERS.push({ id: `m-${ind.id}`, evidence: "missing", title: ind.name, meta: ind.basel.status === "restricted" ? "Expected to exist (assumed), not found as open data" : "No open data found in the reviewed sources", type: "missing", indicator: ind.id, restricted: ind.basel.status === "restricted" });
     }
 
     // ---------- Pure logic (tested by smoke.mjs)
@@ -213,9 +357,9 @@
     // ---------- Layers panel
     function renderLayerPanel() {
       const groups = [
-        ["real", "Real data", "published by an authority, as published", LAYERS.filter(l => l.evidence === "real" || l.evidence === "official")],
-        ["inferred", "Inferred by us", "derived from real data; method shown, never shown as real", LAYERS.filter(l => l.evidence === "inferred")],
-        ["missing", "Missing", "no open data found in the reviewed Basel and federal sources; pick one to see its coverage", LAYERS.filter(l => l.evidence === "missing")]
+        ["real", t("grpReal"), t("grpRealHint"), LAYERS.filter(l => l.evidence === "real" || l.evidence === "official")],
+        ["inferred", t("grpInferred"), t("grpInferredHint"), LAYERS.filter(l => l.evidence === "inferred")],
+        ["missing", t("grpMissing"), t("grpMissingHint"), LAYERS.filter(l => l.evidence === "missing")]
       ];
       $("#layer-groups").innerHTML = groups.map(([key, title, hint, layers]) => `
         <div style="margin-bottom:12px">
@@ -223,7 +367,7 @@
           ${layers.map(layer => `<label class="row" data-layer="${layer.id}">
             <input type="${key === "missing" ? "radio" : "checkbox"}" name="${key === "missing" ? "missing" : layer.id}" ${key === "missing" ? (state.missing === layer.id ? "checked" : "") : (state.on.has(layer.id) ? "checked" : "")}>
             <span class="sw ${layer.evidence}"></span>
-            <span>${escapeHtml(layer.title)}${layer.evidence === "official" ? ' <span class="tag partial">official model</span>' : ""}<span class="meta">${escapeHtml(layer.meta)}</span>${CLAIMS[layer.id] ? `<span class="meta claim">${escapeHtml(claimSummary(CLAIMS[layer.id]))}</span><details class="limits"><summary>Limitations</summary><ul>${CLAIMS[layer.id].limitations.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul></details>` : ""}${LEGENDS[layer.id] ? `<span class="meta">${LEGENDS[layer.id].map(([colour, label, key]) => `<span style="display:inline-block;width:9px;height:9px;border-radius:50%;border:2px solid ${colour || PERMIT_COLOURS[key]};margin-right:4px"></span>${escapeHtml(label)}`).join("<br>")}</span>` : ""}</span>
+            <span>${escapeHtml(layerTitle(layer))}${layer.evidence === "official" ? ` <span class="tag partial">${escapeHtml(t("officialModel"))}</span>` : ""}<span class="meta">${escapeHtml(layerMeta(layer))}</span>${CLAIMS[layer.id] ? `<span class="meta claim" title="${escapeHtml(claimTitle(CLAIMS[layer.id]))}">${escapeHtml(claimSummary(CLAIMS[layer.id]))}</span><details class="limits"><summary>${escapeHtml(t("limitations"))}</summary><ul>${claimLimitations(CLAIMS[layer.id]).map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul></details>` : ""}${LEGENDS[layer.id] ? `<span class="meta">${LEGENDS[layer.id].map(([colour, label, key]) => `<span style="display:inline-block;width:9px;height:9px;border-radius:50%;border:2px solid ${colour || PERMIT_COLOURS[key]};margin-right:4px"></span>${escapeHtml(t(label))}`).join("<br>")}</span>` : ""}</span>
           </label>`).join("")}
         </div>`).join("");
     }
@@ -245,20 +389,20 @@
     // ---------- Charter panel
     function renderCharter() {
       const order = ["open", "partial", "restricted", "missing"];
-      $("#stack").innerHTML = order.map(key => `<span class="${key}" style="width:${100 * SCORE.real[key] / SCORE.total}%" title="${key}: ${SCORE.real[key]}"></span>`).join("");
-      $("#counts").innerHTML = `<span><b>${SCORE.total}</b> indicators</span>` + order.map(key => `<span><span class="tag ${key}">${key}</span> <b>${SCORE.real[key]}</b></span>`).join("") + `<span><span class="tag run">≈ inferred</span> <b>${SCORE.fill.run}</b></span><span><span class="tag proposed">fill proposed</span> <b>${SCORE.fill.proposed}</b></span>`;
-      $("#indicators").innerHTML = CHARTER.groups.map(group => `<div class="section"><span class="label">${escapeHtml(group.label)}</span>
+      $("#stack").innerHTML = order.map(key => `<span class="${key}" style="width:${100 * SCORE.real[key] / SCORE.total}%" title="${escapeHtml(t("status." + key))}: ${SCORE.real[key]} · ${escapeHtml(describe("real_status", key))}"></span>`).join("");
+      $("#counts").innerHTML = `<span><b>${SCORE.total}</b> ${escapeHtml(t("indicators"))}</span>` + order.map(key => `<span><span class="tag ${key}" title="${escapeHtml(describe("real_status", key))}">${escapeHtml(t("status." + key))}</span> <b>${SCORE.real[key]}</b></span>`).join("") + `<span><span class="tag run" title="${escapeHtml(describe("fill_status", "run"))}">${escapeHtml(t("fill.run"))}</span> <b>${SCORE.fill.run}</b></span><span><span class="tag proposed" title="${escapeHtml(describe("fill_status", "proposed"))}">${escapeHtml(t("fill.proposed"))}</span> <b>${SCORE.fill.proposed}</b></span>`;
+      $("#indicators").innerHTML = CHARTER.groups.map(group => `<div class="section"><span class="label">${escapeHtml(groupLabel(group))}</span>
         ${CHARTER.indicators.filter(ind => ind.group === group.id).map(ind => `
           <div class="ind" data-ind="${ind.id}" role="button" tabindex="0" aria-expanded="${state.open === ind.id}">
-            <span class="name">${escapeHtml(ind.name)}</span>
-            <span class="chips"><span class="tag ${ind.basel.status}">${ind.basel.status}</span>${ind.fill ? `<span class="tag ${ind.fill.status}">${ind.fill.status === "run" ? "≈ inferred" : ind.fill.status === "proposed" ? "fill proposed" : "measure"}</span>` : ""}</span>
+            <span class="name">${escapeHtml(indName(ind))}</span>
+            <span class="chips"><span class="tag ${ind.basel.status}" title="${escapeHtml(describe("real_status", ind.basel.status))}">${escapeHtml(t("status." + ind.basel.status))}</span>${ind.fill ? `<span class="tag ${ind.fill.status}" title="${escapeHtml(describe("fill_status", ind.fill.status))}">${escapeHtml(t("fill." + ind.fill.status))}</span>` : ""}</span>
             <div class="detail">
-              <h4>North star</h4><p>${escapeHtml(ind.north_star)}</p>
-              <h4>Basel today · real data</h4><div class="real-box"><p>${escapeHtml(ind.basel.detail)}</p>${ind.basel.sources.length ? `<ul>${ind.basel.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`).join("")}</ul>` : ""}</div>
-              ${ind.fill ? `<h4>${ind.fill.status === "run" ? "Inferred by us (not real data)" : ind.fill.status === "proposed" ? "How it could be inferred (not run)" : "No inference route"}</h4><div class="inferred-box"><p>${escapeHtml(ind.fill.method)}</p><p class="refs">Confidence: ${escapeHtml(ind.fill.confidence)}</p></div>` : ""}
-              ${ind.ask ? `<h4>Open-data ask</h4><p class="ask">${escapeHtml(ind.ask)}</p>` : ""}
-              ${ind.refs.length ? `<h4>References</h4><p class="refs">${ind.refs.map(id => { const r = CHARTER.references.find(x => x.id === id); return `<a href="${r.url}" target="_blank" rel="noopener">${escapeHtml(r.label.split(" (")[0])}</a>`; }).join(" · ")}</p>` : ""}
-              ${ind.layers.length ? `<button type="button" data-show="${ind.id}">Show on map</button>` : ""}
+              <h4>${escapeHtml(t("northStarH"))}</h4><p>${escapeHtml(indNorthStar(ind))}</p>
+              <h4>${escapeHtml(t("baselH"))}</h4><div class="real-box"><p>${escapeHtml(indDetail(ind))}</p>${ind.basel.sources.length ? `<ul>${ind.basel.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`).join("")}</ul>` : ""}</div>
+              ${ind.fill ? `<h4>${escapeHtml(t(ind.fill.status === "run" ? "fillRunH" : ind.fill.status === "proposed" ? "fillProposedH" : "fillNoneH"))}</h4><div class="inferred-box"><p>${escapeHtml(indMethod(ind))}</p><p class="refs">${escapeHtml(t("confidence"))}: ${escapeHtml(indConfidence(ind))}</p></div>` : ""}
+              ${ind.ask ? `<h4>${escapeHtml(t("askH"))}</h4><p class="ask">${escapeHtml(indAsk(ind))}</p>` : ""}
+              ${ind.refs.length ? `<h4>${escapeHtml(t("refsH"))}</h4><p class="refs">${ind.refs.map(id => { const r = CHARTER.references.find(x => x.id === id); return `<a href="${r.url}" target="_blank" rel="noopener">${escapeHtml(r.label.split(" (")[0])}</a>`; }).join(" · ")}</p>` : ""}
+              ${ind.layers.length ? `<button type="button" data-show="${ind.id}">${escapeHtml(t("showOnMap"))}</button>` : ""}
             </div>
           </div>`).join("")}</div>`).join("");
     }
@@ -286,12 +430,14 @@
       layers: [{ id: "base", type: "raster", source: "base", paint: state.theme === "dark" ? { "raster-brightness-min": 0.42, "raster-brightness-max": 0.06, "raster-saturation": -1 } : { "raster-opacity": 0.85 } }]
     });
     let map = null;
+    let mapUnavailable = false;
     try {
-      if (!window.maplibregl || !maplibregl.supported()) throw new Error("Map rendering unavailable");
+      if (!window.maplibregl || !webglAvailable()) throw new Error("Map rendering unavailable");
       map = new maplibregl.Map({ container: "map", style: baseStyle(), center: [7.595, 47.56], zoom: 13, maxBounds: [[7.4, 47.48], [7.8, 47.65]] });
     } catch {
       document.body.classList.add("map-unavailable");
-      $("#map").textContent = "Map unavailable in this browser. Explore the data layers, evidence gaps and gatekeepers below.";
+      mapUnavailable = true;
+      $("#map").textContent = t("mapUnavailable");
     }
     window.charterMap = map;
     if (map) {
@@ -347,10 +493,10 @@
       if (missing) {
         const layer = LAYERS.find(l => l.id === state.missing);
         const ind = CHARTER.indicators.find(i => i.id === layer.indicator);
-        notice.innerHTML = `<b>Missing · ${escapeHtml(ind.name)}</b> — ${ind.basel.status === "restricted" ? "expected to exist but not found as open data in the reviewed Basel and federal sources" : "no open data found in the reviewed Basel and federal sources"}. The hatch covers the whole canton.<br>${escapeHtml(ind.basel.detail)}${ind.basel.existence_basis ? `<br><small>${escapeHtml(ind.basel.existence_basis)}</small>` : ""}${ind.fill && ind.fill.status !== "none" ? `<br><span style="color:var(--inferred)">≈ ${ind.fill.status === "run" ? "Inferred" : "Could be inferred"}: ${escapeHtml(ind.fill.method)}</span>` : ""}${ind.ask ? `<br><span class="refs">Ask: ${escapeHtml(ind.ask)}</span>` : ""} <button type="button" class="tool" id="clear-missing">clear</button>`;
+        notice.innerHTML = `<b>${escapeHtml(t("missingWord"))} · ${escapeHtml(indName(ind))}</b> — ${escapeHtml(t(ind.basel.status === "restricted" ? "noticeRestricted" : "noticeMissing"))}. ${escapeHtml(t("hatch"))}<br>${escapeHtml(indDetail(ind))}${ind.basel.existence_basis ? `<br><small>${escapeHtml(indBasis(ind))}</small>` : ""}${ind.fill && ind.fill.status !== "none" ? `<br><span style="color:var(--inferred)">≈ ${escapeHtml(t(ind.fill.status === "run" ? "inferredWord" : "couldInfer"))}: ${escapeHtml(indMethod(ind))}</span>` : ""}${ind.ask ? `<br><span class="refs">${escapeHtml(t("ask"))}: ${escapeHtml(indAsk(ind))}</span>` : ""} <button type="button" class="tool" id="clear-missing" aria-label="${escapeHtml(t("clearAria"))}">${escapeHtml(t("clear"))}</button>`;
         notice.style.display = "block";
       } else notice.style.display = "none";
-      $("#hud").textContent = `snapshot ${SNAPSHOT.fetched_at.slice(0, 10)} · ${state.on.size} layers on`;
+      $("#hud").textContent = t("hud", { date: SNAPSHOT.fetched_at.slice(0, 10), n: state.on.size });
     }
     function setMissing(id) {
       state.missing = state.missing === id ? null : id;
@@ -366,17 +512,17 @@
       const f = hits[0];
       let html = "";
       if (["i-pits", "r-trees"].includes(f.layer.id)) {
-        const t = TREES[f.properties.i];
-        html = `<div class="pop-real"><span class="pop-k">Real · tree cadastre</span><br><b>${escapeHtml(t.species)}</b><br>Tree ${escapeHtml(t.id)} · ${t.years ?? "?"} years at site</div>
-          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>${t.pit ? `Tree point lies in a mapped planted polygon of ${t.strip?.toLocaleString("de-CH")} m²; this is not a pit measurement` : "No mapped planted land-cover polygon at this tree point; the actual pit remains unknown"}<br><small>${escapeHtml(claimSummary(CLAIMS["i-pits"]))}</small></div>`;
+        const tree = TREES[f.properties.i];
+        html = `<div class="pop-real"><span class="pop-k">${escapeHtml(t("popTree"))}</span><br><b>${escapeHtml(tree.species)}</b><br>${escapeHtml(t("popTreeLine", { id: tree.id, years: tree.years ?? "?" }))}</div>
+          <div class="pop-inferred"><span class="pop-k">${escapeHtml(t("popInferred"))}</span><br>${escapeHtml(tree.pit ? t("popPit1", { area: tree.strip?.toLocaleString("de-CH") }) : t("popPit0"))}<br><small>${escapeHtml(claimSummary(CLAIMS["i-pits"]))}</small></div>`;
       } else if (["i-gwdepth", "r-gwstations"].includes(f.layer.id)) {
         const s = SNAPSHOT.groundwater[f.properties.i];
-        html = `<div class="pop-real"><span class="pop-k">Real · groundwater statistics</span><br><b>${escapeHtml(s.name)}</b><br>Terrain ${s.real.terrain_masl} m a.s.l. · 10-year max level ${s.real.level_10y_max_masl} m · mean ${s.real.level_10y_mean_masl} m</div>
-          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>Shallowest depth to groundwater ≈ ${s.inferred.depth_min_m} m (mean ≈ ${s.inferred.depth_mean_m} m)<br><small>${escapeHtml(s.inferred.method)}<br>${escapeHtml(claimSummary(CLAIMS["i-gwdepth"]))}</small></div>`;
+        html = `<div class="pop-real"><span class="pop-k">${escapeHtml(t("popGw"))}</span><br><b>${escapeHtml(s.name)}</b><br>${escapeHtml(t("popGwLine", { t: s.real.terrain_masl, max: s.real.level_10y_max_masl, mean: s.real.level_10y_mean_masl }))}</div>
+          <div class="pop-inferred"><span class="pop-k">${escapeHtml(t("popInferred"))}</span><br>${escapeHtml(t("popGwDepth", { min: s.inferred.depth_min_m, mean: s.inferred.depth_mean_m }))}<br><small>${escapeHtml(s.inferred.method === I18N.en.gwMethod ? t("gwMethod") : s.inferred.method)}<br>${escapeHtml(claimSummary(CLAIMS["i-gwdepth"]))}</small></div>`;
       } else {
         const p = PERMITS[f.properties.i];
-        html = `<div class="pop-real"><span class="pop-k">Real · works permit</span><br>${fmtYm(p.from)} – ${fmtYm(p.to)}</div>
-          <div class="pop-inferred"><span class="pop-k">≈ Inferred by us</span><br>Network: <b>${escapeHtml(p.category)}</b> (keyword in permit text)${p.upcoming ? "<br>Active or upcoming permitted works; not a coordinated works plan" : ""}<br><small>${escapeHtml(claimSummary(CLAIMS[p.upcoming && state.on.has("i-digwindows") ? "i-digwindows" : "i-underground"]))}</small></div>`;
+        html = `<div class="pop-real"><span class="pop-k">${escapeHtml(t("popPermit"))}</span><br>${fmtYm(p.from)} – ${fmtYm(p.to)}</div>
+          <div class="pop-inferred"><span class="pop-k">${escapeHtml(t("popInferred"))}</span><br>${escapeHtml(t("popNetwork"))}: <b>${escapeHtml(t("net." + p.category))}</b> ${escapeHtml(t("popKeyword"))}${p.upcoming ? `<br>${escapeHtml(t("popUpcoming"))}` : ""}<br><small>${escapeHtml(claimSummary(CLAIMS[p.upcoming && state.on.has("i-digwindows") ? "i-digwindows" : "i-underground"]))}</small></div>`;
       }
       popup.setLngLat(event.lngLat).setHTML(html).addTo(map);
     });
@@ -392,8 +538,40 @@
     }
     $("#toggle-theme").addEventListener("click", () => setTheme(state.theme === "dark" ? "light" : "dark"));
 
-    renderLayerPanel();
-    renderCharter();
+    // ---------- Language switching
+    const EMBEDDED = (() => { try { return new URLSearchParams(location.search).get("embedded") === "1"; } catch { return false; } })();
+    function applyStaticText() {
+      document.documentElement.lang = LANG;
+      document.title = (de() && CHARTER_DE.title) || t("pageTitle");
+      for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = t(el.dataset.i18n);
+      for (const el of document.querySelectorAll("[data-i18n-html]")) el.innerHTML = t(el.dataset.i18nHtml);
+      for (const el of document.querySelectorAll("[data-i18n-aria]")) el.setAttribute("aria-label", t(el.dataset.i18nAria));
+      const purpose = (de() && CHARTER_DE.purpose) || CHARTER.purpose;
+      $("#h1").title = purpose || "";
+      $("#langs").setAttribute("aria-label", t("langAria"));
+      $("#langs").hidden = EMBEDDED;
+      for (const b of document.querySelectorAll("#langs [data-lang]")) b.setAttribute("aria-pressed", String(b.dataset.lang === LANG));
+      if (mapUnavailable) $("#map").textContent = t("mapUnavailable");
+    }
+    function renderAll() {
+      applyStaticText();
+      renderLayerPanel();
+      renderCharter();
+      applyVisibility();
+      if (!map) $("#hud").textContent = t("hud", { date: SNAPSHOT.fetched_at.slice(0, 10), n: state.on.size });
+    }
+    function setLang(lang, persist) {
+      const next = normLang(lang);
+      if (next === LANG && !persist) return;
+      setLangCode(next);
+      if (persist) { try { localStorage.setItem("sponge.lang", next); } catch {} }
+      if (popup) popup.remove();
+      renderAll();
+    }
+    $("#langs").addEventListener("click", event => { const b = event.target.closest("[data-lang]"); if (b) setLang(b.dataset.lang, true); });
+    window.addEventListener("message", e => { if (e.origin === location.origin && e.data?.type === "sponge-lang") setLang(e.data.lang); });
+
+    renderAll();
     if (map) map.on("load", addLayers);
   </script>
 </body>

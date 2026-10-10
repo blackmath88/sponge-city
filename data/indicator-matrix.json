@@ -1,0 +1,687 @@
+{
+ "schema_version": "sponge-indicator-matrix/1",
+ "note": {
+  "de": "Gemeinsame Messgrössen und der Stand je Stadt. Jede Zelle verweist auf Profileinträge und Kartenebenen. Kein Ranking: Eine fehlende Angabe ist ein Befund über öffentliche Belege, keine Aussage über die Stadt.",
+  "en": "Common indicators and the state in each city. Every cell points to profile entries and map layers. No ranking: a missing entry is a finding about public evidence, not a statement about the city."
+ },
+ "indicators": [
+  {
+   "id": "sealing",
+   "label": {
+    "de": "Versiegelter Anteil",
+    "en": "Sealed share"
+   },
+   "question": {
+    "de": "Wie viel Boden kann kein Wasser aufnehmen?",
+    "en": "How much ground cannot take up water?"
+   },
+   "featured_indicator": "sealing-fraction"
+  },
+  {
+   "id": "canopy",
+   "label": {
+    "de": "Baumkronenfläche",
+    "en": "Tree canopy"
+   },
+   "question": {
+    "de": "Wie viel Fläche beschatten und verdunsten Bäume?",
+    "en": "How much area do trees shade and evaporate over?"
+   },
+   "featured_indicator": null
+  },
+  {
+   "id": "heat",
+   "label": {
+    "de": "Hitze: Messnetz und Modell",
+    "en": "Heat: network and model"
+   },
+   "question": {
+    "de": "Wo ist es heiss, und wie belegt ist das?",
+    "en": "Where is it hot, and how well is that evidenced?"
+   },
+   "featured_indicator": null
+  },
+  {
+   "id": "pluvial",
+   "label": {
+    "de": "Starkregen-Gefahr",
+    "en": "Heavy-rain hazard"
+   },
+   "question": {
+    "de": "Wo sammelt sich Wasser bei Starkregen?",
+    "en": "Where does water collect in heavy rain?"
+   },
+   "featured_indicator": null
+  },
+  {
+   "id": "sewer",
+   "label": {
+    "de": "Kanalnetz",
+    "en": "Sewer network"
+   },
+   "question": {
+    "de": "Wohin fliesst das Wasser, und was fasst das Netz?",
+    "en": "Where does the water go, and what can the network hold?"
+   },
+   "featured_indicator": "sewer-network"
+  },
+  {
+   "id": "green-roofs",
+   "label": {
+    "de": "Gründächer",
+    "en": "Green roofs"
+   },
+   "question": {
+    "de": "Wie viel Dachfläche ist begrünt oder vorgeschrieben?",
+    "en": "How much roof area is greened or required?"
+   },
+   "featured_indicator": null
+  },
+  {
+   "id": "effect",
+   "label": {
+    "de": "Gemessene Wirkung gebauter Massnahmen",
+    "en": "Measured effect of built measures"
+   },
+   "question": {
+    "de": "Was bewirken gebaute Massnahmen tatsächlich?",
+    "en": "What do built measures actually achieve?"
+   },
+   "featured_indicator": "measures-registry"
+  }
+ ],
+ "cells": {
+  "sealing": {
+   "basel": {
+    "state": {
+     "exists": "yes",
+     "basis": "observed",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "basel.context.basel-sealed",
+     "basel.access.land-cover"
+    ],
+    "layers": [
+     "basel.sealing.01"
+    ],
+    "note": {
+     "de": "Aus den Vermessungsklassen der amtlichen Bodenbedeckung berechnet; die Karte zeigt nur einen Innenstadt-Ausschnitt.",
+     "en": "Computed from the survey classes of the cadastral land cover; the map shows a city-centre window only."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "yes",
+     "basis": "derived",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "berlin.context.01",
+     "berlin.measurement.02"
+    ],
+    "layers": [
+     "berlin.sealing.01"
+    ],
+    "note": {
+     "de": "Offene Karte in 10-Prozent-Stufen je Block; die Lizenz (Datenlizenz Deutschland Zero 2.0) steht im Dienst-Capabilities-Dokument.",
+     "en": "Open map in 10 percent steps per block; the licence (Data Licence Germany Zero 2.0) is stated in the service capabilities document."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [],
+    "layers": [],
+    "note": {
+     "de": "Kein offener Versiegelungs-Layer gefunden. Das heisst nicht, dass nicht gemessen wird.",
+     "en": "No open sealing layer found. That does not mean nothing is measured."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "yes",
+     "basis": "derived",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.context.05",
+     "zurich.context.02",
+     "zurich.outcomes.03"
+    ],
+    "layers": [
+     "zurich.sealing.01"
+    ],
+    "note": {
+     "de": "Vom Projekt aus der Biotoptypenkartierung 2020 berechnet (28,6 % versiegelt, Wald und Gewässer in der Bezugsfläche), keine amtliche Statistik. Nicht vergleichbar mit der Kantonszahl (14 %) oder mit den Zahlen anderer Städte; die Karte zeigt nur einen Ausschnitt.",
+     "en": "Computed by this project from the 2020 biotope map (28.6 percent sealed, forest and water in the reference area), not an official statistic. Not comparable with the cantonal figure (14 percent) or with the figures of other cities; the map shows a window only."
+    }
+   }
+  },
+  "canopy": {
+   "basel": {
+    "state": {
+     "exists": "yes",
+     "basis": "observed",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "basel.context.basel-canopy",
+     "basel.access.canopy"
+    ],
+    "layers": [
+     "basel.trees.01"
+    ],
+    "note": {
+     "de": "LiDAR-Kronenfläche (GeoTIFF) offen; die Karte zeigt das Baumkataster, nicht die Kronenfläche.",
+     "en": "LiDAR canopy (GeoTIFF) is open; the map shows the tree register, not canopy cover."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "unknown",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [],
+    "layers": [
+     "berlin.trees.01"
+    ],
+    "note": {
+     "de": "Strassenbaumkataster vorhanden; Kronenfläche der Stadt im Profil nicht untersucht.",
+     "en": "Street-tree register exists; city canopy cover was not researched in the profile."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "unknown",
+     "basis": "unknown",
+     "access": "partial",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [],
+    "layers": [
+     "copenhagen.trees.01"
+    ],
+    "note": {
+     "de": "Nur erhaltenswerte Bäume als Ebene; das Baumregister der Gemeinde ist ohne Lizenzangabe nicht übernommen.",
+     "en": "Only preserved trees as a layer; the municipal tree register carries no licence statement and was not taken over."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "yes",
+     "basis": "observed",
+     "access": "open",
+     "derivable": "unknown"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.measurement.01",
+     "zurich.measurement.05",
+     "zurich.outcomes.01",
+     "zurich.access.01"
+    ],
+    "layers": [
+     "zurich.trees.01"
+    ],
+    "note": {
+     "de": "Kronenfläche per Laserscan alle vier Jahre; Rückgang seit 2014 berichtet.",
+     "en": "Crown area by laser scanning every four years; decline since 2014 reported."
+    }
+   }
+  },
+  "heat": {
+   "basel": {
+    "state": {
+     "exists": "yes",
+     "basis": "observed",
+     "access": "partial",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "basel.measurement.street-temperature",
+     "basel.context.basel-hot-days"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Rund 200 Sensoren, offen aber roh (nicht qualitätsgeprüft).",
+     "en": "About 200 sensors, open but raw (not quality-checked)."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "yes",
+     "basis": "modelled",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "berlin.context.03"
+    ],
+    "layers": [
+     "berlin.heat.01"
+    ],
+    "note": {
+     "de": "Modellierte Klimabewertung 2022; ein Messnetz ist im Profil nicht belegt.",
+     "en": "Modelled climate assessment 2022; a measurement network is not evidenced in the profile."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "partial",
+     "basis": "observed",
+     "access": "not_open",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request",
+     "measure"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "copenhagen.measurement.02"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Die Verwaltung nennt grobe Satellitendaten; keine offene Hitzeebene gefunden.",
+     "en": "The administration cites coarse satellite data; no open heat layer found."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "yes",
+     "basis": "modelled",
+     "access": "partial",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.measurement.02",
+     "zurich.context.03"
+    ],
+    "layers": [
+     "zurich.heat.01"
+    ],
+    "note": {
+     "de": "Rund 90 Stationen im 15-Minuten-Takt und modellierte Massnahmengebiete; die Datensätze des meteoblue-Netzes tragen den Vermerk «Nachführung eingestellt».",
+     "en": "About 90 stations at 15-minute intervals and modelled measure areas; the meteoblue network datasets carry the flag \"Nachführung eingestellt\" (updates discontinued)."
+    }
+   }
+  },
+  "pluvial": {
+   "basel": {
+    "state": {
+     "exists": "unknown",
+     "basis": "modelled",
+     "access": "partial",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [],
+    "layers": [],
+    "note": {
+     "de": "Bundeskarte nur als Kachel-Dienst, Lizenzbedingung unklar; keine Geometrie übernommen.",
+     "en": "Federal map is a tile service only, licence terms unclear; no geometry taken over."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "partial",
+     "basis": "modelled",
+     "access": "partial",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "berlin.measurement.03"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Stadtweite Hinweiskarte; die genauere Gefahrenkarte nur für ausgewählte Gebiete.",
+     "en": "City-wide indication map; the more detailed hazard map only for selected areas."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "yes",
+     "basis": "modelled",
+     "access": "partial",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "copenhagen.measurement.01",
+     "copenhagen.access.03"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Überflutungskarten nach Einzugsgebiet (Rechnung 2012), nur als PDF. Die Karte zeigt nur die Einteilung in Einzugsgebiete und geplante Projekte, keine Überflutungsflächen.",
+     "en": "Flood maps per catchment (2012 calculation), PDF only. The map layers show only the catchment partition and planned projects, not flood extents."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "yes",
+     "basis": "modelled",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.measurement.03",
+     "zurich.measurement.06"
+    ],
+    "layers": [
+     "zurich.pluvial.01"
+    ],
+    "note": {
+     "de": "Kantonale Modellkarte (CC0, WFS), die mehr als die Stadt abdeckt; die Karte zeigt ein 100-jährliches Ereignis in einem Ausschnitt. Gemeldete Überschwemmungen als CSV (beobachtet), Ursache oft unbekannt.",
+     "en": "Cantonal model map (CC0, WFS) covering more than the city; the map shows a 100-year event in one window. Reported flooding as CSV (observed), cause often unknown."
+    }
+   }
+  },
+  "sewer": {
+   "basel": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "not_open",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [
+     "basel.access.sewer-network"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Netzdaten in den geprüften offenen Quellen nicht gefunden.",
+     "en": "Network data not found in the reviewed open sources."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "yes",
+     "basis": "derived",
+     "access": "partial",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "berlin.context.02"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Etwa drei Viertel Trennsystem, ein Viertel Mischsystem; Netz selbst nicht als Geodaten belegt.",
+     "en": "About three quarters separate, one quarter combined; the network itself is not evidenced as geodata."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "unknown",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "unspecified",
+    "entries": [
+     "copenhagen.transfer.01"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Im Profil nur als Annahme belegt: Die Mehrheit der Kanäle ist Mischsystem. Kein Netz oder Kennzahl untersucht.",
+     "en": "Evidenced in the profile only as an assumption: most sewers are combined. No network or figure researched."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "partial",
+     "basis": "observed",
+     "access": "not_open",
+     "derivable": "no"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.context.04"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Kennzahlen nur als Text (rund 1000 km, etwa 80 % Mischsystem); eine andere Quelle nennt 1500 km. Kein offenes Netz.",
+     "en": "Figures as text only (about 1,000 km, about 80 percent combined); another source says 1,500 km. No open network data."
+    }
+   }
+  },
+  "green-roofs": {
+   "basel": {
+    "state": {
+     "exists": "partial",
+     "basis": "observed",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "basel.interventions.bpg-72"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Pflicht bei Flachdächern belegt; Fläche oder Geodaten nicht gefunden.",
+     "en": "Obligation for flat roofs evidenced; area or geodata not found."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "yes",
+     "basis": "derived",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [
+     "berlin.interventions.01",
+     "berlin.outcomes.01"
+    ],
+    "layers": [
+     "berlin.green.01"
+    ],
+    "note": {
+     "de": "Gründach-Teilflächen 2020 aus Fernerkundung und Luftbildauswertung (jede bewachsene Dachfläche, nicht nur angelegte Gründächer) als Karte; getrennt davon die Programmleistung von 19 640 m² (GründachPLUS). Keine Abflusswirkung belegt.",
+     "en": "2020 green-roof sub-areas from remote sensing and aerial-image interpretation (any vegetated roof, not only designed green roofs) as a map; separately the programme output of 19,640 m² (GründachPLUS). No runoff effect evidenced."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "partial",
+     "basis": "derived",
+     "access": "open",
+     "derivable": "yes"
+    },
+    "needs": [],
+    "scale": "city-wide",
+    "entries": [],
+    "layers": [
+     "copenhagen.green.01"
+    ],
+    "note": {
+     "de": "Gebäude mit Gründach als Ebene (Ausschnitt); stadtweite Summe nicht ausgewertet.",
+     "en": "Buildings with green roofs as a layer (window); no city-wide total derived."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "partial",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request"
+    ],
+    "scale": "city-wide",
+    "entries": [
+     "zurich.interventions.03",
+     "zurich.outcomes.03"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Vorschrift in der BZO belegt; keine Gesamtfläche gefunden.",
+     "en": "Zoning rule evidenced; no total area found."
+    }
+   }
+  },
+  "effect": {
+   "basel": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request",
+     "measure",
+     "site_visit"
+    ],
+    "scale": "project",
+    "entries": [
+     "basel.outcomes.measures-registry",
+     "basel.measurement.voltanord-pilot"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Kein offenes Register; VoltaNord wird fünf Jahre wissenschaftlich begleitet (Ergebnisse stehen aus).",
+     "en": "No open registry; VoltaNord is monitored scientifically for five years (results pending)."
+    }
+   },
+   "berlin": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request",
+     "measure"
+    ],
+    "scale": "programme",
+    "entries": [
+     "berlin.measurement.04",
+     "berlin.outcomes.04"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Leistungen berichtet, gemessene Wirkung nicht.",
+     "en": "Outputs are reported, measured effect is not."
+    }
+   },
+   "copenhagen": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request",
+     "measure"
+    ],
+    "scale": "project",
+    "entries": [
+     "copenhagen.measurement.03",
+     "copenhagen.outcomes.03"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Piloten laufen; keine veröffentlichten Messungen echter Regenereignisse gefunden.",
+     "en": "Pilots are running; no published measurements of real rain events found."
+    }
+   },
+   "zurich": {
+    "state": {
+     "exists": "no_public_evidence_found",
+     "basis": "unknown",
+     "access": "unknown",
+     "derivable": "unknown"
+    },
+    "needs": [
+     "request",
+     "measure",
+     "site_visit"
+    ],
+    "scale": "project",
+    "entries": [
+     "zurich.measurement.04",
+     "zurich.outcomes.02"
+    ],
+    "layers": [],
+    "note": {
+     "de": "Keine veröffentlichte Auswertung des Pilotprojekts Giessereistrasse.",
+     "en": "No published evaluation of the Giessereistrasse pilot."
+    }
+   }
+  }
+ },
+ "reviewed_by": "coordinator, from the city profiles and layer packs in this repository (no new source fetch)"
+}

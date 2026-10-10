@@ -1,0 +1,277 @@
+{
+ "schema_version": "place-de/1",
+ "places": {
+  "kanonengasse": {
+   "site": {
+    "identity_status": "berechnete Strasse, nach Regel ausgewählt",
+    "boundary": "Geeignet nach Verkehr, mittlerer Stützpunkt in einem Fokus-Hitzegebiet, benannt; am meisten laufende oder anstehende Bewilligungen im Umkreis von 60 m (bei Gleichstand: die längere). Die Strasse und ihre Zahlen sind aus offenen Daten berechnet; die Zeichnung ist ein generisches Schema, nicht die Geometrie dieser Strasse."
+   },
+   "intervention": {
+    "name": "Baumrigole oder Regenbeet im Strassenkorridor",
+    "why": "Die Strasse wird ohnehin aufgebrochen (24 Bewilligungen für Werkleitungen in der Nähe). Ein Schwammelement könnte bei diesen Arbeiten mitgebaut werden.",
+    "scenario": {
+     "note": "Nur Regenhöhe × angenommene Elementfläche. Das ist weder zurückgehaltenes Volumen noch Hochwasserminderung noch Planungsleistung."
+    }
+   },
+   "layers": [
+    {
+     "id": "known",
+     "label": "Heute bekannt",
+     "short_label": "Bekannt",
+     "question": "Was können wir vor einem Augenschein verantwortbar sagen?",
+     "summary": "Offene Daten und ihre nachvollziehbaren Ablesungen an dieser Strasse. Sie beschreiben nicht, was darunter liegt."
+    },
+    {
+     "id": "derived",
+     "label": "Sorgfältig abgeleitet",
+     "short_label": "Abgeleitet",
+     "question": "Welche Hypothesen kann Berechnung sichtbar machen?",
+     "summary": "Flächen und Spannen im Korridor aus offengelegten Annahmen. Nicht validiert; zum Erklären und Vorprüfen."
+    },
+    {
+     "id": "ask",
+     "label": "Erfragen oder messen",
+     "short_label": "Erfragen",
+     "question": "Was verhindert, dass daraus eine Empfehlung wird?",
+     "summary": "Sieben Fakten sind beschränkt zugänglich oder brauchen eine Standortprüfung. Jedes nennt, wer es besitzt, und den nächsten Schritt."
+    }
+   ],
+   "claims": {
+    "heat-area": {
+     "title": "Liegt die Strasse in einem Hitze-Fokusgebiet?",
+     "method": "An der Strasse aus der veröffentlichten Ebene abgelesen.",
+     "limitation": "Eine veröffentlichte Ebene, an der Strasse abgelesen; sie sagt nichts darüber aus, was darunter liegt."
+    },
+    "traffic-suitability": {
+     "title": "Stuft der Kanton sie nach Verkehr als schwammstadttauglich ein?",
+     "unit": "< 2000 Fahrzeuge/Tag",
+     "method": "An der Strasse aus der veröffentlichten Ebene abgelesen. Ablesung: geeignet (< 2000 Fahrzeuge/Tag).",
+     "limitation": "Eine veröffentlichte Ebene, an der Strasse abgelesen; sie sagt nichts darüber aus, was darunter liegt."
+    },
+    "street-trees": {
+     "title": "Wie viele Kataster-Bäume stehen im Korridor?",
+     "method": "An der Strasse aus der veröffentlichten Ebene abgelesen.",
+     "limitation": "Eine veröffentlichte Ebene, an der Strasse abgelesen; sie sagt nichts darüber aus, was darunter liegt."
+    },
+    "protection-zone": {
+     "title": "Liegt die Strasse in einer Grundwasserschutzzone?",
+     "value": "keine",
+     "method": "An der Strasse aus der veröffentlichten Ebene abgelesen.",
+     "limitation": "Nur am mittleren Stützpunkt geprüft"
+    },
+    "groundwater-nearest": {
+     "title": "Wie tief liegt das Grundwasser in der Nähe?",
+     "unit": "abgeleitete Mindesttiefe bei Steinenparking (1060), 164 m entfernt",
+     "method": "Geländehöhe minus höchster Pegelstand der letzten 10 Jahre. Ablesung: 13,1 m unter Terrain an der flachsten Stelle (Steinenparking (1060), 164 m entfernt).",
+     "limitation": "Eine Messstelle ist ein Punkt, keine Tiefenkarte. Für die Versickerung braucht es einen Test vor Ort"
+    },
+    "works-near": {
+     "title": "Wird die Strasse bald ohnehin aufgebrochen?",
+     "unit": "laufende oder anstehende Bewilligungen im Umkreis von 60 m",
+     "method": "Bewilligungspunkte im Umkreis der Linie; Kategorie nach Stichwort. Ablesung: 24 laufende oder anstehende Bewilligungen im Umkreis von 60 m (24 Werkleitungen), Ende 202612, 202704.",
+     "limitation": "Bewilligungen sind kein koordinierter Bauplan. Datenstand 2026-10-03T20:36:22.296Z"
+    },
+    "sealed-corridor-m2": {
+     "title": "Wie viel versiegelter Boden liegt im Korridor?",
+     "method": "1-m-Rasterproben innerhalb der halben Breite der Linie, nach dem Bodenbedeckungspolygon eingeteilt, in dem sie liegen; Strasse plus übrige Beläge",
+     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Trottoirs und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
+    },
+    "planted-corridor-m2": {
+     "title": "Wie viel bepflanzter Boden liegt im Korridor?",
+     "method": "1-m-Rasterproben innerhalb der halben Breite der Linie, nach dem Bodenbedeckungspolygon eingeteilt, in dem sie liegen",
+     "limitation": "Korridor von 12 m beiderseits der Achse: enthält beide Trottoirs und Gebäuderänder. Bodenbedeckungsklassen sagen, was die Oberfläche ist, nicht wie sie aufgebaut ist oder wohin sie entwässert"
+    },
+    "tree-planting-context": {
+     "title": "Stehen diese Bäume auf kartiertem Pflanzboden?",
+     "value": "2 von 2",
+     "unit": "Bäume ohne kartierte Pflanzfläche",
+     "method": "Baumpunkt in einem Bodenbedeckungspolygon «bepflanzt». Ablesung: 2 von 2 haben am Punkt keine kartierte Pflanzfläche.",
+     "limitation": "Heisst nicht, dass der Belag versiegelt ist. Verrät nicht die Grösse der Baumgrube"
+    },
+    "runoff-range": {
+     "title": "30 mm Regen auf dem versiegelten Boden des Korridors",
+     "unit": "m³ Abflussspanne",
+     "method": "P × A_versiegelt × C; C 0.7–0.95 angenommen",
+     "limitation": "Wohin das Wasser fliesst. Minderung des Hochwasserrisikos"
+    },
+    "storage-range": {
+     "title": "Ein Schwammelement von 20 m² könnte aufnehmen",
+     "unit": "m³ Speicherspanne",
+     "method": "A × d × n für ein Element; Tiefe 0.25–0.45 m, Hohlraumanteil 0.2–0.35 angenommen",
+     "limitation": "Versickerung. Hydraulische Leistung. Ob das Element gebaut werden kann"
+    },
+    "drainage-system": {
+     "title": "Welches Entwässerungssystem bedient dieses Gebiet?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Tiefbauamt und Amt für Umwelt und Energie",
+     "source": "Tiefbauamt und Amt für Umwelt und Energie",
+     "unlock_action": "Die veröffentlichte GEP-Entwässerungskarte von 2012 (1:20 000) an dieser Strasse digitalisieren",
+     "decision_blocked": "Ob versickert, zurückgehalten oder ein Überlauf angeschlossen wird"
+    },
+    "utilities": {
+     "title": "Liegt eine Leitung unter der Grundfläche?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Leitungskataster (Grundbuch- und Vermessungsamt) + Netzbetreiber (Werke)",
+     "source": "Leitungskataster (Grundbuch- und Vermessungsamt) + Netzbetreiber (Werke)",
+     "unlock_action": "Einen Leitungskataster-Auszug für die Grundfläche plus 5 m bestellen, als frühe Planung deklariert",
+     "decision_blocked": "Ob Aushub hier in die Detailplanung gehen kann"
+    },
+    "utility-depth": {
+     "title": "Wie tief liegen die Leitungen?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Netzbetreiber (Werke)",
+     "source": "Netzbetreiber (Werke)",
+     "unlock_action": "Die auf dem Auszug genannten Betreiber nach den Tiefen in der Grundfläche fragen",
+     "decision_blocked": "Wie tief ein Graben oder eine Grube reichen darf"
+    },
+    "infiltration": {
+     "title": "Versickert das Wasser hier?",
+     "value": "Standortprüfung",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Qualifiziertes Feldteam",
+     "source": "Qualifiziertes Feldteam",
+     "unlock_action": "Einen Versickerungsversuch an der Grundfläche in Auftrag geben",
+     "decision_blocked": "Ob Versickerung ein glaubwürdiger Mechanismus ist"
+    },
+    "overflow-route": {
+     "title": "Wohin darf Überlaufwasser fliessen?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Tiefbauamt und Amt für Umwelt und Energie",
+     "source": "Tiefbauamt und Amt für Umwelt und Energie",
+     "unlock_action": "Das Tiefbauamt fragen, wohin der Überlauf der Grundfläche abgeleitet werden darf",
+     "decision_blocked": "Ob die Planung auf einen Überlaufanschluss zählen darf"
+    },
+    "pavement-buildup": {
+     "title": "Was liegt unter dem Asphalt?",
+     "value": "Standortprüfung",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Qualifiziertes Feldteam",
+     "source": "Qualifiziertes Feldteam",
+     "unlock_action": "Den Belag anbohren, solange die Strasse für die bewilligten Arbeiten offen ist",
+     "decision_blocked": "Aushubkosten und Dicke des neuen Bodens"
+    },
+    "gullies": {
+     "title": "Wo sind die Strassenabläufe und Randsteineinläufe?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "limitation": "In den geprüften offenen Daten nicht enthalten.",
+     "gatekeeper": "Leitungskataster (Grundbuch- und Vermessungsamt) + Anwohnende und Team",
+     "source": "Leitungskataster (Grundbuch- und Vermessungsamt) + Anwohnende und Team",
+     "unlock_action": "Sichtbare Einläufe auf dem Orthofoto markieren; den Leitungskataster-Auszug prüfen",
+     "decision_blocked": "Wo Strassenwasser ins Grün geleitet werden kann"
+    }
+   }
+  },
+  "klybeck": {
+   "site": {
+    "name": "Klybeckstrasse, Studiensegment",
+    "identity_status": "illustratives Segment, verankert am Klybeck-Kandidaten von Andy",
+    "boundary": "Der Mittelpunkt ist real. Das 160-m-Segment, seine Breite und jedes gezeichnete Objekt sind ein Demo-Muster, bis es vermessen ist."
+   },
+   "intervention": {
+    "name": "Regenbeet am Randstein + Baumrigole",
+    "why": "Das Konzept könnte Randsteinabfluss auffangen, Wurzelraum schaffen und den Schwammmechanismus sichtbar machen.",
+    "scenario": {
+     "note": "Nur Regenhöhe × illustrative Fläche. Das ist weder zurückgehaltenes Volumen noch Hochwasserminderung noch Planungsleistung."
+    }
+   },
+   "engine": {
+    "fact_sources": {
+     "protection_zone": "data.bs.ch 100292 Grundwasserschutz: keine Zone schneidet den Studienpunkt (abgefragt 2026-10-04)"
+    }
+   },
+   "layers": [
+    {
+     "id": "known",
+     "label": "Heute bekannt",
+     "short_label": "Bekannt",
+     "question": "Was können wir vor einem Augenschein verantwortbar sagen?",
+     "summary": "Offene Daten liefern Kontext rund um den Studienpunkt. Sie beschreiben weder den Strassenquerschnitt noch den Leitungsverlauf im Untergrund."
+    },
+    {
+     "id": "derived",
+     "label": "Sorgfältig abgeleitet",
+     "short_label": "Abgeleitet",
+     "question": "Welche Hypothesen kann Berechnung sichtbar machen?",
+     "summary": "Eine mögliche Grundfläche und ein Wasserweg machen die Planungsfrage greifbar. Beide bleiben nicht validierte Vorprüfungs-Hypothesen."
+    },
+    {
+     "id": "ask",
+     "label": "Erfragen oder messen",
+     "short_label": "Erfragen",
+     "question": "Was verhindert, dass daraus eine Empfehlung wird?",
+     "summary": "Leitungsfreiheit, Entwässerungsführung und lokale Versickerungsleistung sind entscheidend und im offenen Datenstand nicht verfügbar."
+    }
+   ],
+   "claims": {
+    "tree-context": {
+     "title": "16 registrierte Bäume im Umkreis von 100 m",
+     "unit": "Baumkataster-Punkte",
+     "method": "Punkte im Umkreis von 100 m um den Studienmittelpunkt im Datenstand vom 3. Oktober zählen.",
+     "limitation": "Baumpunkte in der Nähe belegen weder Baumkrone, Schatten, Qualität des Wurzelraums noch Verfügbarkeit innerhalb der vorgeschlagenen Grundfläche."
+    },
+    "groundwater-context": {
+     "title": "Die nächste Grundwassermessstelle ist 222 m entfernt",
+     "unit": "m abgeleitete Mindesttiefe an der Messstelle",
+     "method": "Geländehöhe der Messstelle minus ihr veröffentlichter höchster Grundwasserstand der letzten 10 Jahre.",
+     "limitation": "Ein Messwert in 222 m Entfernung ist Kontext, kein Nachweis des Grundwasserabstands an der möglichen Grundfläche."
+    },
+    "candidate-footprint": {
+     "title": "Ein 2,4 m breiter Randstreifen könnte den Test rahmen",
+     "unit": "m² Szenario-Grundfläche",
+     "source": "SpongeSquad-Demo-Muster",
+     "method": "Illustratives 160-m-Segment × 2,4 m Randstreifen.",
+     "limitation": "Keine Vermessung, Eigentumsprüfung, Randsteinmessung oder Prüfung der Barrierefreiheit stützt diese Grundfläche."
+    },
+    "surface-flow-hypothesis": {
+     "title": "Regen könnte sich entlang der gezeichneten Randsteinlinie sammeln",
+     "value": "prüfen",
+     "unit": "Fliesshypothese",
+     "source": "SpongeSquad-Schema",
+     "method": "Ein von Hand gesetzter Gefällepfeil zeigt die künftige Ausgabe einer Geländeanalyse.",
+     "limitation": "Für dieses Segment wurde weder ein Höhenraster noch eine Höhenkontrolle vor Ort ausgewertet."
+    },
+    "utility-clearance": {
+     "title": "Kann dieser Streifen ausgehoben werden?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "source": "Flächenbegrenzter Planungsauszug und Bestätigung der Betreiber",
+     "gatekeeper": "Katasterbehörde + zuständiger Netzbetreiber",
+     "unlock_action": "Einen flächenbegrenzten Auszug anfordern; Tiefe und Abstand vor dem Aushub bestätigen.",
+     "decision_blocked": "Ob die vorgeschlagene Grundfläche baubar ist.",
+     "limitation": "Der sichtbare Strassenraum verrät keine verlegten Netze."
+    },
+    "drainage-routing": {
+     "title": "Wohin führt der Einlauf tatsächlich?",
+     "value": "beschränkt",
+     "unit": "Entscheidungsgrundlage",
+     "source": "Entwässerungs-/GEP-Unterlagen und Kontrolle vor Ort",
+     "gatekeeper": "Tiefbauamt, Eigentümer der Entwässerung/des GEP",
+     "unlock_action": "Einlauf, Einzugsgebiet, Anschluss, Kapazität und sicheren Überlaufweg bestätigen.",
+     "decision_blocked": "Ob der Strassenabfluss sicher angeschlossen werden kann.",
+     "limitation": "Ein sichtbarer Einlauf belegt weder seinen Anschluss noch seine Kapazität."
+    },
+    "infiltration-test": {
+     "title": "Versickert das Wasser hier sicher?",
+     "value": "Standortprüfung",
+     "unit": "Entscheidungsgrundlage",
+     "source": "Qualifizierte Standortuntersuchung",
+     "gatekeeper": "Projekteigentümer + qualifizierte Fachperson",
+     "unlock_action": "Durchlässigkeit, Belagsaufbau, Belastung und Grundwasserabstand vor Ort prüfen.",
+     "decision_blocked": "Ob Versickerung ein glaubwürdiger Mechanismus ist.",
+     "limitation": "Geologie und Grundwasser in der Nähe ersetzen keinen lokalen Test."
+    }
+   }
+  }
+ }
+}

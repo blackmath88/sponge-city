@@ -1,0 +1,217 @@
+{
+ "schema_version": "sponge-practice/1",
+ "note": "Each case points at a fact in data/sponge-facts.json. claim_en must equal the catalogue text; claim_de is a translation. Source titles stay as published.",
+ "cases": [
+  {
+   "fact": "basel-sealed",
+   "scope": "city-wide",
+   "mechanisms": [
+    "infiltration",
+    "evaporation"
+   ],
+   "lesson": {
+    "de": "Ausgangslage: Fast die Hälfte des Bodens kann kein Wasser aufnehmen.",
+    "en": "Starting point: almost half of the ground cannot take up water."
+   },
+   "claim_en": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %.",
+   "claim_de": "45 % des Bodens von Basel-Stadt sind versiegelt: 16,6 % Gebäude und 28,5 % befestigte Flächen. Allein Strassen decken 9,5 %, Trottoirs 4,2 %.",
+   "caveat_en": "Planted areas include gardens and parks; 'unsealed' is not the same as 'absorbs well' (see compaction).",
+   "caveat_de": "Bepflanzte Flächen umfassen Gärten und Parks. «Unversiegelt» heisst nicht «nimmt gut Wasser auf» (siehe Verdichtung)."
+  },
+  {
+   "fact": "basel-hot-days",
+   "scope": "city-wide",
+   "mechanisms": [
+    "shade",
+    "evaporation"
+   ],
+   "lesson": {
+    "de": "Ausgangslage: Hitzetage haben in Basel deutlich zugenommen.",
+    "en": "Starting point: hot days have become clearly more frequent in Basel."
+   },
+   "claim_en": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024.",
+   "claim_de": "Basel-Binningen hatte 8,8 Hitzetage (≥ 30 °C) pro Jahr in 1961–1990, 14,3 in 1991–2020 und 21,9 in 2015–2024.",
+   "caveat_en": "Series is not homogenised.",
+   "caveat_de": "Die Reihe ist nicht homogenisiert."
+  },
+  {
+   "fact": "sealed-trees",
+   "scope": "city-wide",
+   "mechanisms": [
+    "storage",
+    "shade"
+   ],
+   "lesson": {
+    "de": "Viele Strassenbäume haben sehr wenig Wurzelraum.",
+    "en": "Many street trees have very little root space."
+   },
+   "claim_en": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
+   "claim_de": "Rund 72 % der Basler Strassenbäume (9046 von 12 504, am 10.10.2026 aus den offenen Datensätzen neu berechnet) stehen auf Flächen, die in der amtlichen Vermessung als versiegelt gelten, ihre Baumscheibe ist also vermutlich zu klein, um erfasst zu werden. Die übrigen stehen in erfassten Pflanzstreifen.",
+   "caveat_en": "An enlarged pit still below the mapping threshold counts as sealed.",
+   "caveat_de": "Eine vergrösserte Baumscheibe unterhalb der Erfassungsschwelle zählt weiterhin als versiegelt.",
+   "status_note_en": "Two counts exist: this card counts trees inside polygons classed as paved or built (recomputed on 2026-10-10: 9,046); the Data Charter counts trees without a mapped planted polygon (9,132). The recomputation is recorded in data/verification/basel-claims.json.",
+   "status_note_de": "Es gibt zwei Zählungen: Diese Karte zählt Bäume innerhalb von Flächen der Klasse befestigt oder Gebäude (am 10.10.2026 neu berechnet: 9046); die Datencharta zählt Bäume ohne erfasste Pflanzfläche (9132). Die Neuberechnung steht in data/verification/basel-claims.json."
+  },
+  {
+   "fact": "bern-36",
+   "scope": "programme",
+   "mechanisms": [
+    "storage"
+   ],
+   "lesson": {
+    "de": "Eine Stadt kann Wurzelraum als Richtwert festlegen.",
+    "en": "A city can set root space as a design target."
+   },
+   "claim_en": "Bern's guidance sets a target root space of 36 m³ per street tree, with pits at least 1 m deep (1.5 m where needed).",
+   "claim_de": "Die Berner Arbeitshilfe nennt einen Zielwert von 36 m³ Wurzelraum pro Strassenbaum, mit Gruben von mindestens 1 m Tiefe (wo nötig 1,5 m).",
+   "caveat_en": null,
+   "caveat_de": null
+  },
+  {
+   "fact": "engelgasse",
+   "scope": "project",
+   "mechanisms": [
+    "storage",
+    "shade"
+   ],
+   "lesson": {
+    "de": "Basler Projektbeispiel: Baumgruben vergrössern und neu pflanzen.",
+    "en": "Basel project example: enlarge tree pits and replant."
+   },
+   "claim_en": "In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.",
+   "claim_de": "Basel kündigte 2016 an, die Baumgruben der Engelgasse zu vergrössern und in 50 neuen, grösseren Gruben je einen jungen Baum zu pflanzen, weil die alten Gruben zu wenig Wurzelraum boten. Der Abschluss ist nicht belegt.",
+   "status_note_en": "The cited source is a 2016 announcement of the works. No source checked on 2026-10-10 shows they were completed or what they achieved.",
+   "status_note_de": "Die zitierte Quelle ist eine Ankündigung der Arbeiten von 2016. Keine am 10.10.2026 geprüfte Quelle belegt Abschluss oder Wirkung."
+  },
+  {
+   "fact": "sevogel",
+   "scope": "project",
+   "mechanisms": [
+    "infiltration",
+    "evaporation",
+    "shade"
+   ],
+   "lesson": {
+    "de": "Basler Projektbeispiel: Asphalt entfernen, Beete und Bäume pflanzen. Die Wirkung ist noch nicht gemessen.",
+    "en": "Basel project example: remove asphalt, plant beds and trees. The effect is not yet measured."
+   },
+   "claim_en": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026).",
+   "claim_de": "An der Sevogelstrasse werden rund 1000 m² Asphalt entsiegelt und rund 600 m² werden zu Grünraum, mit 32 neuen Bäumen (ab Frühling 2026).",
+   "status_note_en": "A plan approved in 2025, not a built result and not a measured effect.",
+   "status_note_de": "Ein 2025 bewilligtes Vorhaben, kein gebautes Ergebnis und keine gemessene Wirkung."
+  },
+  {
+   "fact": "voltanord-pilot",
+   "scope": "project",
+   "mechanisms": [
+    "retention",
+    "infiltration",
+    "storage"
+   ],
+   "lesson": {
+    "de": "Basel plant, Elemente fünf Jahre lang wissenschaftlich zu überwachen. Ergebnisse stehen noch aus.",
+    "en": "Basel plans to monitor elements scientifically for five years. Results are still to come."
+   },
+   "claim_en": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved).",
+   "claim_de": "Basel testet Schwammstadt-Elemente in den neuen Strassen im VoltaNord und überwacht sie fünf Jahre lang wissenschaftlich (CHF 280 000 bewilligt).",
+   "status_note_en": "A funded monitoring plan; no results are published yet.",
+   "status_note_de": "Ein bewilligtes Monitoring-Vorhaben; Ergebnisse liegen noch nicht vor."
+  },
+  {
+   "fact": "interception-season",
+   "scope": "research-other-setting",
+   "mechanisms": [
+    "retention",
+    "shade"
+   ],
+   "lesson": {
+    "de": "Forschung aus einem anderen Klima: Blätter machen den Unterschied.",
+    "en": "Research from another climate: leaves make the difference."
+   },
+   "claim_en": "The same large plane tree intercepted about 15 % of a 22 mm winter storm (no leaves) but about 80 % of a 20 mm summer storm.",
+   "claim_de": "Dieselbe grosse Platane fing etwa 15 % eines 22-mm-Wintersturms (ohne Laub) ab, aber etwa 80 % eines 20-mm-Sommersturms.",
+   "caveat_en": null,
+   "caveat_de": null
+  },
+  {
+   "fact": "retention-50",
+   "scope": "research-other-setting",
+   "mechanisms": [
+    "retention",
+    "storage",
+    "evaporation"
+   ],
+   "lesson": {
+    "de": "Forschung: Gründächer halten viel Regen zurück, aber vor allem bei kleinen Ereignissen.",
+    "en": "Research: green roofs hold back much rain, but mostly in small events."
+   },
+   "claim_en": "Extensive green roofs in Southern Ontario retain 60–70 % of rain in the warm season and about 50 % over a full year; a roof in Syracuse retained 56 % over 21 months.",
+   "claim_de": "Extensive Gründächer in Süd-Ontario halten 60–70 % des Regens in der warmen Jahreszeit und etwa 50 % über ein ganzes Jahr zurück; ein Dach in Syracuse hielt über 21 Monate 56 % zurück.",
+   "caveat_en": "North American climates; most is retained in small storms, much less in long heavy rain.",
+   "caveat_de": "Nordamerikanisches Klima. Das meiste wird bei kleinen Regenereignissen zurückgehalten, bei langem Starkregen deutlich weniger."
+  },
+  {
+   "fact": "compaction",
+   "scope": "research-other-setting",
+   "mechanisms": [
+    "infiltration"
+   ],
+   "lesson": {
+    "de": "Forschung: Entsiegeln allein genügt nicht, der Boden muss auch durchlässig sein.",
+    "en": "Research: unsealing alone is not enough, the soil must also be permeable."
+   },
+   "claim_en": "Compaction by construction cut soil infiltration by 70–99 % in a Florida study; without deliberate restoration, recovery can take decades.",
+   "claim_de": "Verdichtung durch Bauarbeiten senkte die Versickerung in einer Studie in Florida um 70–99 %; ohne gezielte Wiederherstellung kann die Erholung Jahrzehnte dauern.",
+   "caveat_en": "Sandy Florida soils; the point is that unsealing alone is not enough, the soil must be loosened.",
+   "caveat_de": "Sandige Böden in Florida. Entscheidend ist: Entsiegeln allein genügt nicht, der Boden muss gelockert werden."
+  },
+  {
+   "fact": "clogging",
+   "scope": "research-other-setting",
+   "mechanisms": [
+    "infiltration"
+   ],
+   "lesson": {
+    "de": "Forschung: Durchlässige Beläge brauchen Unterhalt.",
+    "en": "Research: permeable surfaces need upkeep."
+   },
+   "claim_en": "Studies report the infiltration capacity of permeable pavements falling by 63–100 % over time as joints clog; with regular cleaning, systems still performed after eight years.",
+   "claim_de": "Studien berichten, dass die Versickerungsleistung durchlässiger Beläge im Lauf der Zeit um 63–100 % sinkt, wenn die Fugen verstopfen; mit regelmässiger Reinigung funktionierten Systeme auch nach acht Jahren noch.",
+   "caveat_en": "Figures compiled from several studies; maintenance makes the difference.",
+   "caveat_de": "Zahlen aus mehreren Studien zusammengestellt. Den Unterschied macht der Unterhalt."
+  },
+  {
+   "fact": "benthemplein",
+   "scope": "project",
+   "mechanisms": [
+    "retention"
+   ],
+   "lesson": {
+    "de": "Ausländisches Projektbeispiel: ein Platz, der bei Starkregen Wasser aufnimmt.",
+    "en": "Foreign project example: a square that takes in water in heavy rain."
+   },
+   "claim_en": "Rotterdam's Benthemplein water square can store about 1,800 m³ of rainwater.",
+   "claim_de": "Der Wasserplatz Benthemplein in Rotterdam kann rund 1800 m³ Regenwasser speichern.",
+   "caveat_en": null,
+   "caveat_de": null
+  }
+ ],
+ "scopes": {
+  "city-wide": {
+   "de": "Stadtweite Daten",
+   "en": "City-wide data"
+  },
+  "programme": {
+   "de": "Programm oder Richtlinie",
+   "en": "Programme or guideline"
+  },
+  "project": {
+   "de": "Einzelprojekt",
+   "en": "Single project"
+  },
+  "research-other-setting": {
+   "de": "Studie aus anderem Umfeld",
+   "en": "Study from another setting"
+  }
+ }
+}

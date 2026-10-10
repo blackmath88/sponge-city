@@ -1,6 +1,6 @@
 {
   "schema_version": "sponge-facts/0.1",
-  "updated": "2026-10-03",
+  "updated": "2026-10-10",
   "title": "Sponge City fact cards",
   "purpose": "Short, sourced facts that explain each sponge-city intervention or action, for visual explainers. Every fact carries exactly one evidence class; numbers are quoted as their source states them, with the caveat that matters.",
   "evidence": {
@@ -161,7 +161,7 @@
       "facts": [
         {
           "id": "sealed-trees",
-          "claim": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
+          "claim": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
           "evidence": "basel-data",
           "visual": "share",
           "source": {
@@ -193,7 +193,7 @@
         },
         {
           "id": "engelgasse",
-          "claim": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
+          "claim": "In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.",
           "evidence": "official",
           "visual": "slice",
           "source": {

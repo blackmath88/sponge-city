@@ -1,0 +1,69 @@
+{
+ "schema_version": "sponge-claim-checks-de/1",
+ "claims": {
+  "basel-sealed": {
+   "verification_limit_de": "Dynamischer Datensatz (aus dem Live-Export neu berechnet). Eigene Flächenberechnung, nicht jene des Portals: Gesamtfläche 36.89 km² gegenüber 36.6 km² in der Methodenbeschreibung des Katalogs (220 reine Linien-Geometrien und 19 leere Geometrien ausgeschlossen; planare Näherung). Die Prozentwerte stimmen auf die angegebenen Dezimalstellen überein. «Versiegelt» = Klassen befestigt + Gebaeude gemäss Definition im Katalog, keine amtliche Versiegelungszahl.",
+   "evidence_de": "Datensatz 100477 (Bodenbedeckung, CC BY 4.0, geändert 2026-08-20, 49,595 Datensätze), Feld bodenbedeckungsart; GeoJSON-Export, flächengewichtet nach Klasse (äquirektanguläre Näherung): Gebaeude.Gebaeude+Gebaeude.Tank 16.56 %; alle befestigt.* 28.48 % (inkl. Wasserbecken 0.41 %); Summe 45.04 %; befestigt.Strasse_Weg 9.47 %; befestigt.Trottoir 4.17 %."
+  },
+  "basel-hot-days": {
+   "verification_limit_de": "Live-Datensatz (geändert 2026-10-10); Neuberechnung durch den Bearbeiter, keine publizierte Statistik. Die Reihe ist nicht homogenisiert (wie im Vorbehalt vermerkt). Jahre mit weniger als 365 Tageswerten wurden ausgeschlossen; in 1961–2024 gab es keine.",
+   "evidence_de": "Datensatz 100254 (NBCN Basel-Binningen, 59,452 Tageszeilen ab 1876), Feld tre200dx >= 30, Anzahl pro Jahr, Mittel über vollständige Jahre: 1961–1990 = 8.80 (30 Jahre); 1991–2020 = 14.27 (30 Jahre, gerundet 14.3); 2015–2024 = 21.90 (10 Jahre)."
+  },
+  "sealed-trees": {
+   "verification_limit_de": "Die Zahl weicht ab: Behauptung 9,132 (73 %) gegenüber neu berechneten 9,046 (72.3 %); die Differenz von 86 stammt wahrscheinlich von den nicht zugeordneten Punkten, Grenzfällen und seither aktualisierten Datensätzen (Baumdaten geändert 2026-10-10, Bodenbedeckung 2026-08-20) – Ursache nicht geklärt. Der Median von 371 m² der Pflanzstreifen wurde nicht geprüft. «Strassenbaum» = nur ba_gruppe 'Strassenbäume' (die separate Gruppe 'Verkehrsgrün / Strassenbäume' mit 1,530 Bäumen ist ausgeschlossen). Der Schluss «Baumgrube zu klein, um kartiert zu werden» ist eine Interpretation und geht nicht aus den Daten hervor.",
+   "evidence_de": "Datensatz 100052 (Baumkataster), ba_gruppe = 'Strassenbäume': 12,504 Punkte (stimmt überein). Punkt-in-Polygon gegen 100477: 9,046 Bäume (72.3 %) in befestigt.*-Polygonen (8,062 Trottoir, 427 uebrige_befestigte, 363 Verkehrsinsel, 183 Strasse_Weg, 11 andere); 3,376 anderswo, davon 82 in keinem Polygon (9,046+82 = 9,128, nahe an den behaupteten 9,132)."
+  },
+  "bern-36": {
+   "verification_limit_de": "PDF abgerufen (4.1 MB). Nuance: 1.5 m sind erlaubt, um das Ziel von 36 m³ zu erreichen, wenn 1.0 m nicht ausreicht («bei Bedarf» ist eine faire Paraphrase). Szenario 1 (gewachsener Boden in Grünflächen) nutzt den bestehenden Boden statt einer Grube von 36 m³. Richtlinie einer anderen Stadt (Bern), Versionsdatum nicht geprüft.",
+   "evidence_de": "PDF-Text: «Es soll eine Tiefe von mindestens 1,0 m erreicht werden. Wenn damit das Zielvolumen von 36 m³ nicht erreicht werden kann, kann die Tiefe auf 1,5 m vergrössert werden.» (Abschnitt 'Tiefe der Baumgruben'); «Szenario 2 … Wurzelraum von 36 m³, der strukturstabil, aber nicht überbaubar ist»."
+  },
+  "engelgasse": {
+   "verification_limit_de": "Die Seite ist eine Ankündigung von 2016 (Futur, Bauarbeiten bis ca. Mitte 2018); sie berichtet keinen Abschluss. Die Behauptung stellt es als erledigt dar («vergrössert … 50 Jungbäume gepflanzt»). Der Abschluss ist durch keine der abgerufenen Quellen belegt. Keine gemessene Wirkung auf das Baumwachstum.",
+   "evidence_de": "Medienmitteilung vom 26.01.2016: «Ihr Wurzelraum ist zu eng und hemmt ein gesundes Wachstum» … «die Baumrabatten zu vergrössern, die Bäume zu ersetzen» … «Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.» (76 alte Bäume; 26 entfernte Bäume sollen gemäss Baumschutzgesetz in der Nähe neu gepflanzt werden)."
+  },
+  "sevogel": {
+   "verification_limit_de": "Planungsankündigung (Pläne im November 2025 zur öffentlichen Mitwirkung aufgelegt); «ab Frühjahr 2026» bezieht sich auf die Fernwärmearbeiten der IWB. Ob die Entsiegelung umgesetzt wurde, ist nicht geprüft (Stand nach November 2025 nicht abgeklärt). Keine gemessene Wirkung.",
+   "evidence_de": "Medienmitteilung vom 07.11.2025: «32 Bäume auf beiden Strassenseiten …»; «Rund 1000 Quadratmeter Asphalt werden neu entsiegelt und davon rund 600 Quadratmeter neu begrünt.»; «IWB baut ab dem Frühjahr 2026 …» (Arbeiten bis Mitte 2027)."
+  },
+  "voltanord-pilot": {
+   "verification_limit_de": "Die zitierte Einstiegsseite zeigt nur den Titel; die Zahlen stehen im verlinkten einseitigen PDF (abgerufen). Es handelt sich um eine Ausgabenbewilligung bzw. einen Plan: Sie belegt weder, dass das Monitoring begonnen hat, noch irgendein Ergebnis.",
+   "evidence_de": "Seite: P251765 «Ausgabenbewilligung betreffend Monitoring von Schwammstadt-Pilotprojekten im Areal VoltaNord», Sitzung 18.11.2025. Verlinktes Beschluss-PDF (/api/government-resolutions/document/b22c031c…-332/4/Dokument): «Gesamtausgaben in der Höhe von Fr. 280'000»; «Die entsprechenden Pilotprojekte werden … jeweils über eine Zeitdauer von fünf Jahren wissenschaftlich begleitet und ausgewertet.»"
+  },
+  "interception-season": {
+   "verification_limit_de": "Gelesen wurde nur die Zusammenfassung auf einer Literaturseite, nicht die Studie selbst. Die Behauptung rundet 21.7→22 mm und 20.3→20 mm; «ohne Blätter» im Winter ist durch «deciduous» (laubabwerfend) impliziert, steht aber nicht in der Zusammenfassung. Santa Monica, Kalifornien (mediterranes Klima), mit einem Modell simuliert: ein modellierter Effekt, keine Messung in Basel.",
+   "evidence_de": "Zusammenfassung (Xiao & McPherson, Urban Ecosystems 6(4):291–302, 2002): «interception … varied seasonally, averaging 14.8% during a 21.7 mm winter storm and 79.5% during a 20.3 mm summer storm for a large, deciduous Platanus acerifolia tree.»"
+  },
+  "retention-50": {
+   "verification_limit_de": "Behauptung gegen keine Quelle geprüft; es wurde keine Ersatzquelle verwendet, da nur die zitierte Quelle im Umfang lag. Die Zahlen stammen aus anderen Klimazonen und Umgebungen; die Bandbreiten sind nicht überprüft.",
+   "evidence_de": "Nicht abgerufen. HTTP 403 (Cloudflare-Prüfseite 'Just a moment') bei curl und bei WebFetch; die URL ist eine Wiki-Diff-Ansicht (Special:MobileDiff/15606), keine stabile Artikelseite."
+  },
+  "compaction": {
+   "verification_limit_de": "Behauptung gegen keine Quelle geprüft; es wurde keine Ersatzquelle verwendet, da nur die zitierte Quelle im Umfang lag. Die Zahlen stammen aus anderen Klimazonen und Umgebungen; die Bandbreiten sind nicht überprüft.",
+   "evidence_de": "Nicht abgerufen. HTTP 404 (auch mit entferntem Leerzeichen im Pfad)."
+  },
+  "clogging": {
+   "verification_limit_de": "Behauptung gegen keine Quelle geprüft; es wurde keine Ersatzquelle verwendet, da nur die zitierte Quelle im Umfang lag. Die Zahlen stammen aus anderen Klimazonen und Umgebungen; die Bandbreiten sind nicht überprüft.",
+   "evidence_de": "Nicht abgerufen. HTTP 404."
+  },
+  "benthemplein": {
+   "verification_limit_de": "Behauptung gegen keine Quelle geprüft; es wurde keine Ersatzquelle verwendet, da nur die zitierte Quelle im Umfang lag. Auslegungskapazität eines ausländischen Projekts, kein gemessenes Ergebnis.",
+   "evidence_de": "Nicht abgerufen. HTTP 404 (curl und WebFetch); die Stammseite /en/ lässt sich laden, die Seite wurde also verschoben oder entfernt."
+  },
+  "measurement:land-cover": {
+   "verification_limit_de": "Live-Datensatz; Anzahl und Datum gelten per 2026-10-10 und ändern sich mit der nächsten Aktualisierung. Die Aussage steht in journey/content/measurements.json (Indikator land-cover, Feld actual).",
+   "evidence_de": "Metadaten des Datensatzes 100477: records_count 49,595; modified 2026-08-20; Lizenz CC BY 4.0; das Feld bodenbedeckungsart enthält befestigt.Trottoir, befestigt.Strasse_Weg, befestigt.Verkehrsinsel, befestigt.Bahn.Tramareal, Gebaeude.Gebaeude, humusiert.Gartenanlage.*, Gewaesser.*."
+  },
+  "measurement:sealing-fraction": {
+   "verification_limit_de": "Abwesenheitsbehauptung: Geprüft wurde nur der Katalog von data.bs.ch per Stichwort (deutsche Begriffe); andere Portale, geo.bs.ch/MapBS-Layer und Bundesquellen wurden nicht durchsucht. Schwächer als eine positive Bestätigung.",
+   "evidence_de": "Negativbehauptung: Die Katalogsuche auf data.bs.ch (API v2.1, search()) nach 'Versiegel' und 'Wasserbilanz' ergab 0 Datensätze. Die Grundlagen sind offen: 100477 Bodenbedeckung (49,595 Polygone) und 100040 'Statistische Raumeinheiten: Blöcke' (1,490 Datensätze)."
+  },
+  "measurement:tree-pits": {
+   "verification_limit_de": "Prüft das Schema des offenen Datensatzes per 2026-10-10; interne (nicht offene) Baumverwaltungsdaten wurden nicht untersucht.",
+   "evidence_de": "Feldliste des Datensatzes 100052: geo_point_2d, geo_shape, gml_id, ba_baumnr, ba_art, baumart_lateinisch, baumart_deutsch, timeposition, ba_baumalter, ba_standjahr, ba_schutzstatus, ba_strasse, ba_kreis, ba_gruppe, ba_gemeinde, map_links – kein Feld für Grubengrösse oder Wurzelraum. Katalogsuche 'Baumgrube' und 'Wurzelraum': 0 Treffer."
+  },
+  "measurement:sewer-network": {
+   "verification_limit_de": "Geprüft wurde nur der Teil data.bs.ch. NICHT geprüft (nicht abgerufen): die Bundesquellen sowie die behauptete GEP-Karte der Entwässerungssysteme von 2012 bzw. die Karte der Versickerungsverbote (PDF, 1:20,000). Abwesenheitsbehauptung per Stichwortsuche.",
+   "evidence_de": "Katalogsuche auf data.bs.ch: 'Abwasser'/'ARA' → 100336 'Einzugsgebiet der ARA Basel' (13 Datensätze) sowie zwei Datensätze zum Abwasser-Monitoring (Gesundheit); 'Kanalisation', 'Entwässerung', 'Leitung' → kein Datensatz zum Kanalnetz."
+  }
+ }
+}

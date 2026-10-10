@@ -1,0 +1,534 @@
+{
+ "schema_version": "sponge-city-profile/1",
+ "id": "copenhagen",
+ "role": "comparator",
+ "name": {
+  "de": "Kopenhagen",
+  "en": "Copenhagen"
+ },
+ "country": "DK",
+ "selection": {
+  "rationale": {
+   "de": "Kopenhagen hat nach dem Starkregen vom 2. Juli 2011 einen stadtweiten Starkregenplan (2012) mit Zielwert, Priorisierung und offen publizierten Plandaten entwickelt.",
+   "en": "After the cloudburst of 2 July 2011 Copenhagen developed a city-wide cloudburst plan (2012) with a stated target, prioritisation and openly published plan data."
+  },
+  "contrast": {
+   "de": "Kontrast zu Basel: überwiegend Mischkanalisation, flache Topografie und ein dänischer Tarif- und Rechtsrahmen; die Übertragbarkeit ist nicht belegt.",
+   "en": "Contrast with Basel: mostly combined sewers, flat topography and a Danish tariff and legal framework; transferability is not evidenced."
+  }
+ },
+ "entries": [
+  {
+   "id": "copenhagen.context.01",
+   "dimension": "context",
+   "text": {
+    "de": "Der Cloudburst Management Plan 2012 setzt als Ziel, schadenbringende Überflutungen bei Starkregen auf Ereignisse zu begrenzen, die statistisch nur einmal in 100 Jahren auftreten (Schadenschwelle: rund 10 cm Wasser auf der Strasse). Kopenhagen und Frederiksberg erarbeiteten den Plan auf Basis des Klimaanpassungsplans.",
+    "en": "The 2012 Cloudburst Management Plan sets the aim of limiting damaging floods from extreme rainfall to events that statistically occur only once every 100 years (damage threshold: about 10 cm of water in the street). Copenhagen and Frederiksberg drew it up on the basis of the Climate Adaptation Plan."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "Copenhagen must attain a level of resilience which limits potentially damaging floods from extreme rainfall events to the type which, statistically, occurs only once every 100 years.",
+     "quote_lang": "en"
+    },
+    {
+     "title": "Klimatilpasning i København",
+     "url": "https://www.kk.dk/politik/politikker-og-indsatser/klima-og-miljoe/klimatilpasning",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Københavns Kommune og Frederiksberg Kommune har i 2012 lavet en skybrudsplan på baggrund af Københavns Kommunes klimatilpasningsplan.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.context.02",
+   "dimension": "context",
+   "text": {
+    "de": "Das Überflutungsrisiko wurde in Kopenhagen als Risikokarte in Geldwert (DKK) ausgewiesen, um Gebiete mit der grössten Wirkung von Anpassungsmassnahmen zu priorisieren. Die Plangrundlage nennt dazu technische und wirtschaftliche Unsicherheiten.",
+    "en": "Copenhagen expressed flood risk as a risk map in monetary terms (DKK) to prioritise areas where adaptation would have the biggest effect. The plan itself notes technical and economic uncertainties in its calculations."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "The results were presented as a risk map pinpointing the city areas with the highest risk of flooding (expressed in DKK)",
+     "quote_lang": "en"
+    },
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "Calculations in the Cloudburst Management Plan contain both technical and economic uncertainties",
+     "quote_lang": "en"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.context.03",
+   "dimension": "context",
+   "text": {
+    "de": "Seit dem 1. Januar 2021 gelten neue nationale Regeln, nach denen Kopenhagen nur noch in Teilen der Stadt auf ein 100-jährliches Ereignis, andernorts auf ein 10-jährliches Ereignis schützt. Das ist eine Änderung gegenüber dem Plan von 2012.",
+    "en": "New national rules in force since 1 January 2021 mean Copenhagen now protects to a 100-year event only in parts of the city and to a 10-year event elsewhere. This differs from the 2012 plan."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Skybrud (kk.dk)",
+     "url": "https://www.kk.dk/skybrud",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Folketinget har imidlertid vedtaget nye regler, der trådte i kraft den 1. januar 2021, som betyder, at kommunen fremover kommer til at skybrudssikre til et lavere niveau end hidtil. I København vil der blive sikret til en 100-årshændelse i dele af byen. I andre dele af byen vil der blive sikret til en 10-årshændelse",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.interventions.01",
+   "dimension": "interventions",
+   "text": {
+    "de": "Programm: Kopenhagen hat rund 300 Oberflächenprojekte zur Starkregenvorsorge geplant, die HOFOR über die Abwassertarife nach besonderen Mitfinanzierungsregeln bezahlt. Der Stand betrifft Ende 2021.",
+    "en": "Programme: Copenhagen has planned about 300 surface cloudburst projects, financed by HOFOR through wastewater tariffs under special co-financing rules. The status refers to the end of 2021."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Københavns Kommune har planlagt at etablere ca. 300 skybrudsprojekter som overfladeprojekter, der finansieres af HOFOR via spildevandstaksterne efter særlige regler om medfinansiering.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.interventions.02",
+   "dimension": "interventions",
+   "text": {
+    "de": "Planstrategie: Wo Platz ist, wird Regenwasser bodennah abgeleitet und mit Pflanzen und Bäumen kombiniert; in dicht bebauten Gebieten sind unterirdische Tunnel vorgesehen. Die Aussage beschreibt den Plan von 2012, nicht gebaute Anlagen.",
+    "en": "Plan strategy: where space allows, stormwater is drained at ground level and combined with plants and trees; in densely built-up areas subterranean tunnels are foreseen. This describes the 2012 plan, not built facilities."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "The green and blue solutions are not suitable in densely built-up areas. In certain areas, therefore, we will be implementing adaptive measures by means of subterranean tunnels.",
+     "quote_lang": "en"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.interventions.03",
+   "dimension": "interventions",
+   "text": {
+    "de": "Projekt: Für die Starkregenlösungen Bryggervangen und Skt. Kjelds Plads (Østerbro) beantragte der Ausschuss 2017 eine Baubewilligung von 12,23 Mio. DKK. Der Betrag gilt für dieses eine Projekt.",
+    "en": "Project: In 2017 the committee recommended a construction appropriation of DKK 12.23 million for the cloudburst solutions at Bryggervangen and Skt. Kjelds Plads (Østerbro). The figure applies to this single project."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Optagelse af byggelån og frigivelse af anlægsmidler til skybrudsløsninger på Bryggervangen og Skt. Kjelds Plads, Østerbro (Teknik- og Miljøudvalget, 08.05.2017)",
+     "url": "https://www.kk.dk/dagsordener-og-referater/Teknik-%20og%20Milj%C3%B8udvalget/m%C3%B8de-08052017/referat/punkt-14",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "anbefaler, at der afsættes et rådighedsbeløb og frigives en anlægsbevilling på 12,23 mio. kr. til skybrudsløsningerne på Bryggervangen og Skt. Kjelds Plads.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.interventions.04",
+   "dimension": "interventions",
+   "text": {
+    "de": "Pilot: HOFOR baut sogenannte grüne Strassen mit bepflanzten Anlagen zur lokalen Versickerung oder Verzögerung von Regenwasser; bis zum Berichtsstand waren Projekte mit sechs privaten Grundeigentümervereinen umgesetzt.",
+    "en": "Pilot: HOFOR builds so-called green roads with planted facilities that infiltrate or delay rainwater locally; projects with six private landowner associations had been completed at the time of the report."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "De grønne veje håndterer regnvand lokalt ved at rense og nedsive eller forsinke vandet for herefter at drosle det til kloak",
+     "quote_lang": "da"
+    },
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Der er på nuværende tidspunkt gennemført projekter med seks private grundejerforeninger",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.measurement.01",
+   "dimension": "measurement",
+   "text": {
+    "de": "Die Überflutungsszenarien der sieben Einzugsgebiete beruhen laut Stadt auf Berechnungen von 2012; sie sind modellierte, keine gemessenen Werte. Die Quelle nennt Modell und Raster nicht.",
+    "en": "The city states that the flood scenarios for the seven catchments are based on 2012 calculations, i.e. modelled rather than measured values. The source does not name the model or grid."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Oversvømmelsesscenarier for vandoplande",
+     "url": "https://www.opendata.dk/city-of-copenhagen/oversvommelsesscenarier-for-vandoplande",
+     "publisher": "OS2opendatadk / Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Oversvømmelsesscenarier fra skybrudskonkretiseringerne for vandoplande. Basaseret på beregninger 2012.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.measurement.02",
+   "dimension": "measurement",
+   "text": {
+    "de": "Hitze: Die Verwaltung stellte 2024 fest, dass ihre vorhandenen Hitzeinseldaten auf grob aufgelösten Satellitendaten beruhen, die nicht die ganze Stadt abdecken; ein Datenbestand für die Planung fehlt. Eine Kartierung und ein Monitoring wurden zur Finanzierung vorgeschlagen.",
+    "en": "Heat: in 2024 the administration stated that its existing heat-island data rely on coarse-resolution satellite data that do not cover the whole city, and that no planning-grade data basis exists. Mapping and monitoring were proposed, subject to funding."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Indsats mod varmeøer i København (Teknik- og Miljøudvalget, 19.08.2024)",
+     "url": "https://www.kk.dk/dagsordener-og-referater/Teknik-%20og%20Milj%C3%B8udvalget/m%C3%B8de-19082024/referat/punkt-5",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Teknik- og Miljøforvaltningens eksisterende data om varmeøer bygger på satellitdata i en grov opløsning, der ikke dækker hele byen.",
+     "quote_lang": "da"
+    },
+    {
+     "title": "Indsats mod varmeøer i København (Teknik- og Miljøudvalget, 19.08.2024)",
+     "url": "https://www.kk.dk/dagsordener-og-referater/Teknik-%20og%20Milj%C3%B8udvalget/m%C3%B8de-19082024/referat/punkt-5",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Derfor findes der ikke det nødvendige datagrundlag eller viden om og erfaring med konkrete løsninger",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.measurement.03",
+   "dimension": "measurement",
+   "text": {
+    "de": "Gesucht wurde nach veröffentlichten Messungen oder Evaluierungen der Wirkung gebauter Starkregenprojekte bei realen Regenereignissen (Pegel, Beckenfüllstände, Nachereignis-Berichte) auf kk.dk und über Websuche auf Dänisch und Englisch. Es wurde nichts Derartiges gefunden; das heisst nicht, dass nicht gemessen wird.",
+    "en": "Searched for published measurements or evaluations of built cloudburst projects during real rain events (water levels, basin fill levels, post-event reports) on kk.dk and via Danish and English web search. None were found; this does not mean nothing is measured."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "copenhagen.measurement.04",
+   "dimension": "measurement",
+   "text": {
+    "de": "HOFOR führt eine dreijährige Pilotphase der grünen Strassen durch, um Erfahrung und Wissen über deren Wirkung auf das gesamte Abwassersystem zu gewinnen. Messresultate aus dem Pilot sind in der Quelle nicht angegeben.",
+    "en": "HOFOR runs a three-year pilot of the green roads to gain experience and knowledge of their effect on the overall wastewater system. The source gives no pilot measurement results."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "HOFOR er godt i gang med en treårig pilotperiode, der skal give erfaring til brug for at skalere indsatsen og viden om effekten af de grønne veje på det samlede spildevandssystem.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.access.01",
+   "dimension": "access",
+   "text": {
+    "de": "Kopenhagen veröffentlicht sechs Datensätze mit dem Tag skybrud (u. a. Planungsprojekte, Masterplan-Gebiete, begonnene und abgeschlossene Projekte) unter der Lizenz Creative Commons Attribution 4.0; fünf davon werden jährlich aktualisiert.",
+    "en": "Copenhagen publishes six datasets tagged skybrud (including planned projects, master-plan areas, started and completed projects) under Creative Commons Attribution 4.0; five are updated annually."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Åbne data fra Københavns Kommune, søgning: tag skybrud",
+     "url": "https://www.opendata.dk/search?q=tags:skybrud%20organization:city-of-copenhagen",
+     "publisher": "OS2opendatadk / Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Licens Creative Commons Attribution 4.0 6 Opdateringsfrekvens Årligt 5 Løbende 1",
+     "quote_lang": "da"
+    },
+    {
+     "title": "Åbne data fra Københavns Kommune, søgning: tag skybrud",
+     "url": "https://www.opendata.dk/search?q=tags:skybrud%20organization:city-of-copenhagen",
+     "publisher": "OS2opendatadk / Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Skybrudsplan - bassiner og pladser Københavns Kommune Datasættet viser de planlagte klimatilpasningsprojekter der skal etableres på sigt",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.access.02",
+   "dimension": "access",
+   "text": {
+    "de": "Mindestens der Datensatz Skybrudsplan - veje og tunneller wird als GeoJSON und CSV und über eine CKAN-Datenschnittstelle (API) angeboten.",
+    "en": "At least the dataset Skybrudsplan - veje og tunneller is offered as GeoJSON and CSV and through a CKAN data API."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Skybrudsplan - veje og tunneller",
+     "url": "https://www.opendata.dk/city-of-copenhagen/skybrudsplan-veje-og-tunneller",
+     "publisher": "OS2opendatadk / Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Tilgå ressourcens data via et web-API med kraftfuld query-support.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.access.03",
+   "dimension": "access",
+   "text": {
+    "de": "Die Überflutungskarten der Einzugsgebiete (Stand Berechnungen 2012) liegen nur als PDF-Dateien je Gebiet vor. Unter den sechs Skybrud-Datensätzen fand sich kein Raster mit Wassertiefen oder Modellausgaben; ob solche Daten anderswo (z. B. bei HOFOR) öffentlich sind, wurde nicht geklärt.",
+    "en": "The catchment flood maps (2012 calculations) are provided only as one PDF file per area. Among the six skybrud datasets no gridded water-depth or model-output data were found; whether such data are public elsewhere (e.g. at HOFOR) was not established."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Oversvømmelsesscenarier for vandoplande",
+     "url": "https://www.opendata.dk/city-of-copenhagen/oversvommelsesscenarier-for-vandoplande",
+     "publisher": "OS2opendatadk / Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "oversvømmelseskort_amager.pdf pdf 13266563 Download",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.outcomes.01",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Programm: Die bis 2021 gebauten Starkregenprojekte haben das Überflutungsrisiko in der Stadt laut Redegørelse um ca. 7-9 % verringert (ca. 6000 Personen bzw. 3500 Haushalte und 2300-3300 Betriebe geschützt). Die Methode ist an der gelesenen Stelle nicht angegeben.",
+    "en": "Programme: according to the 2021 report, the cloudburst projects built so far reduced flood risk in the city by about 7-9 % (about 6,000 people or 3,500 households and 2,300-3,300 businesses protected). The method is not stated where read."
+   },
+   "origin": "unknown",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "har reduceret risikoen for oversvømmelse i byen med ca. 7-9 %, hvilket anslås til, at ca. 6.000 københavnere",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.outcomes.02",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Programm: Von 48 kritischen Überflutungsbereichen im strategischen Strassennetz waren bis zum Berichtsstand vier durch bauliche Massnahmen gelöst.",
+    "en": "Programme: of 48 critical flooding areas on the strategic road network, four had been resolved by physical measures at the time of the report."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "identificeret 48 kritiske oversvømmelsesområder på det strategiske vejnet",
+     "quote_lang": "da"
+    },
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "fire af områderne med kritiske oversvømmelser på det strategiske vejnet løst med fysiske tiltag",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.outcomes.03",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Gesucht wurde nach gemessenen Ergebnissen für das Projekt Bryggervangen / Skt. Kjelds Plads (Wasserstände, Rückhalt bei Starkregen, Hitzewirkung) auf kk.dk und via Websuche. Gefunden wurden nur Kosten- und Entwurfsangaben, keine Messresultate.",
+    "en": "Searched for measured results of the Bryggervangen / Skt. Kjelds Plads project (water levels, retention in heavy rain, heat effect) on kk.dk and via web search. Only cost and design information was found, no measured results."
+   },
+   "origin": "unknown",
+   "scope": "project",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "copenhagen.outcomes.04",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Der Plan von 2012 nennt für die Massnahmen Baukosten von 3,8 Mrd. DKK bis 2033 (Preise zur Zeit des Plans) und eine erwartete Schutzwirkung gegen 100-jährliche Ereignisse; das ist eine Planaussage, kein Ergebnis. Die Investitionsrahmen wurde später auf 11 Mrd. und 2021 auf 13,4 Mrd. DKK geschätzt.",
+    "en": "The 2012 plan states construction costs of DKK 3.8 bn up to 2033 (prices at the time of the plan) and an expected protection against 100-year events; this is a plan statement, not a result. The investment frame was later given as DKK 11 bn and, in 2021, DKK 13.4 bn."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "The initiatives set out in this Plan cost DKK 3.8 bn and will protect the city against extreme rainfall events of an intensity seen only once in a hundred years.",
+     "quote_lang": "en"
+    },
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "Estimated construction costs up to 2033 amount to a total of DKK 3.8 bn in present-day prices.",
+     "quote_lang": "en"
+    },
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "Den samlede investeringsramme estimeres nu til 13,4 mia. kr.",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.transfer.01",
+   "dimension": "transfer",
+   "text": {
+    "de": "Annahme: Kopenhagens Ansatz (Strassen als Abflusswege, Tunnel, Finanzierung über Abwassertarife) baut auf einem überwiegend Mischkanalsystem und dem dänischen Tarif- und Rechtsrahmen auf. Ob Basels Kanalisation und Finanzierung vergleichbar sind, wurde nicht geprüft.",
+    "en": "Assumption: Copenhagen's approach (roads as flow routes, tunnels, financing via wastewater tariffs) rests on a mostly combined sewer system and the Danish tariff and legal framework. Whether Basel's sewers and financing are comparable was not checked."
+   },
+   "origin": "assumed",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "The City of Copenhagen Cloudburst Management Plan 2012",
+     "url": "https://climate-adapt.eea.europa.eu/en/metadata/case-studies/the-economics-of-managing-heavy-rains-and-stormwater-in-copenhagen-2013-the-cloudburst-management-plan/cloudburst_management_plan_2012.pdf/@@download/file",
+     "publisher": "City of Copenhagen (hosted by EEA Climate-ADAPT)",
+     "retrieved": "2026-10-10",
+     "quote": "In Copenhagen, the majority of the sewerage system is still a combined system where waste water and rainwater flow in the same sewer pipes.",
+     "quote_lang": "en"
+    },
+    {
+     "title": "Klimatilpasningsredegørelse 2021",
+     "url": "https://www.kk.dk/sites/default/files/2026-06/klimatilpasningsredegrelse-2021-_2373.pdf",
+     "publisher": "Københavns Kommune",
+     "retrieved": "2026-10-10",
+     "quote": "finansieres af HOFOR via spildevandstaksterne efter særlige regler om medfinansiering",
+     "quote_lang": "da"
+    }
+   ]
+  },
+  {
+   "id": "copenhagen.transfer.02",
+   "dimension": "transfer",
+   "text": {
+    "de": "Offene Frage: Wie weit lassen sich Kopenhagens Abflusswege-Konzepte auf Basels Topografie und Untergrund (Hanglagen, Grundwasser, Versickerungsfähigkeit) übertragen?",
+    "en": "Open question: how far can Copenhagen's flow-route concepts be transferred to Basel's topography and subsurface (slopes, groundwater, infiltration capacity)?"
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "unknown",
+   "measure": null,
+   "sources": []
+  }
+ ],
+ "rubric": {
+  "official_primary_sources": {
+   "rating": "yes",
+   "reason": "Plan (2012), annual climate-adaptation report (2021), committee minutes and the open data portal are all City of Copenhagen publications."
+  },
+  "published_monitoring": {
+   "rating": "partial",
+   "reason": "Annual programme status is published; no measured performance monitoring of built projects in rain events was found, and heat data are acknowledged as lacking."
+  },
+  "public_data_access": {
+   "rating": "partial",
+   "reason": "Six skybrud datasets under CC BY 4.0 with CKAN API, but they hold plan and status data; flood scenarios are PDFs from 2012 calculations."
+  },
+  "reported_outcomes": {
+   "rating": "partial",
+   "reason": "Programme-level figures exist (7-9 % risk reduction, 4 of 48 critical areas) with method not stated; no project-level measured outcomes found."
+  },
+  "weaknesses": [
+   "Programme risk-reduction figure has no stated method in the passage read.",
+   "Flood scenario maps date from 2012 calculations and are PDF only.",
+   "No measured post-event performance evidence found for any project.",
+   "Heat dimension: the city itself reports no planning-grade data basis (2024).",
+   "2021 national rules lowered the service level in parts of the city, so the 2012 target is not city-wide current policy.",
+   "Searches covered kk.dk, opendata.dk and open web only; HOFOR pages were not retrievable (404) and its data were not checked.",
+   "The 2012 plan PDF was read from the Climate-ADAPT mirror, not from kk.dk."
+  ]
+ }
+}
