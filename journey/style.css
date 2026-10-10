@@ -64,3 +64,5 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .door-list button:hover:not(:disabled){border-color:var(--green);background:var(--mint)}.door-list button:disabled{opacity:.5;cursor:not-allowed}
 .door-list.compact{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .mech.hl{border-color:var(--green);box-shadow:inset 4px 0 0 var(--green)}.focus button{border:0;background:transparent;font-size:16px;min-width:32px;min-height:32px}
+/* --- indicator matrix --- */
+.matrix{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}.matrix th,.matrix td{border-top:1px solid var(--line);padding:10px;vertical-align:top;text-align:left}.matrix thead th{font-size:12px;color:var(--muted);border-top:0}.matrix tbody th{width:20%;font-weight:600}

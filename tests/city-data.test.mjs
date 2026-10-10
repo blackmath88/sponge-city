@@ -55,3 +55,34 @@ test('profile references: layer titles and gaps are bilingual and Swiss-spelled'
     for (const g of pack.gaps ?? []) { assert.ok(g.reason.de && g.reason.en); assert.ok(!/ß/.test(g.reason.de)); }
   }
 });
+
+import { matrixView } from '../journey/views.mjs';
+test('indicator matrix: complete, every reference resolves, states are consistent', () => {
+  const matrix = read('data/indicator-matrix.json');
+  const profiles = Object.fromEntries(CITIES.map(id => [id, read(`data/cities/${id}.json`)]));
+  const packs = Object.fromEntries(CITIES.map(id => [id, read(`data/maps/${id}/layers.json`)]));
+  const EX = ['yes', 'partial', 'no_public_evidence_found', 'unknown'], BASIS = ['observed', 'derived', 'modelled', 'assumed', 'unknown'], AC = ['open', 'partial', 'not_open', 'unknown'], DV = ['yes', 'no', 'unknown'], NEEDS = ['request', 'measure', 'site_visit'];
+  for (const ind of matrix.indicators) {
+    if (ind.featured_indicator) assert.ok(indicators.includes(ind.featured_indicator), `${ind.id}: featured_indicator`);
+    assert.ok(ind.label.de && ind.label.en && ind.question.de && ind.question.en);
+    for (const id of CITIES) {
+      const cell = matrix.cells[ind.id]?.[id]; const where = `${ind.id}.${id}`;
+      assert.ok(cell, `${where}: missing cell`);
+      assert.ok(EX.includes(cell.state.exists) && BASIS.includes(cell.state.basis) && AC.includes(cell.state.access) && DV.includes(cell.state.derivable), `${where}: state vocabulary`);
+      assert.ok(cell.needs.every(n => NEEDS.includes(n)), `${where}: needs`);
+      assert.ok(cell.note.de && cell.note.en && !/ß/.test(cell.note.de), `${where}: note`);
+      for (const e of cell.entries) assert.ok(profiles[id].entries.some(x => x.id === e), `${where}: entry ${e} not in ${id} profile`);
+      for (const l of cell.layers) assert.ok(packs[id].layers.some(x => x.id === l), `${where}: layer ${l} not in ${id} pack`);
+      if (cell.state.exists === 'yes') assert.ok(cell.entries.length + cell.layers.length > 0, `${where}: exists without evidence`);
+      if (cell.state.exists === 'no_public_evidence_found') assert.ok(cell.state.access !== 'open' && cell.state.derivable !== 'yes', `${where}: absent evidence cannot be open/derivable`);
+      if (cell.state.derivable === 'yes') assert.ok(['open', 'partial'].includes(cell.state.access), `${where}: derivable needs accessible inputs`);
+      if (cell.state.basis === 'observed' && cell.layers.some(l => packs[id].layers.find(x => x.id === l).origin === 'modelled')) assert.fail(`${where}: observed cell cites a modelled layer`);
+    }
+  }
+  const ui = JSON.parse(readFileSync(new URL('../journey/content/ui.json', import.meta.url)));
+  for (const lang of ['de', 'en']) {
+    const html = matrixView({ lang, ui: k => ui[lang][k] ?? `[${lang}:${k}]`, content: { matrix, cities: CITIES.map(id => profiles[id]) } });
+    assert.ok(!/\[(de|en)[:?]/.test(html), `marker in ${lang}`); assert.match(html, /data-cell="sealing.zurich"/);
+    assert.ok(!/\b(rank|score|best)\b/i.test(html));
+  }
+});

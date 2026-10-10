@@ -72,6 +72,21 @@ const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.i
   ${e.measure ? `<p class="small"><em>${esc(ui('measure_def'))}:</em> <strong>${esc(e.measure.quantity)}</strong> · ${esc(e.measure.unit)} · ${esc(e.measure.method)} · ${esc(e.measure.spatial_scale)}${e.measure.period ? ' · ' + esc(e.measure.period) : ''}</p>` : ''}
   ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote></details>`).join('')}</article>`;
 
+export function matrixView({ lang, ui, content }) {
+  const m = content.matrix; if (!m) return '';
+  const name = id => pick(content.cities.find(c => c.id === id).name, lang);
+  const ids = content.cities.map(c => c.id);
+  const cell = (ind, id) => { const c = m.cells[ind.id]?.[id]; if (!c) return '<td>—</td>';
+    const s = c.state;
+    return `<td data-cell="${esc(ind.id)}.${esc(id)}"><p class="eyebrow">${chip(ui('ex_' + s.exists), s.exists === 'yes' ? 'observed' : s.exists === 'partial' ? 'partial' : 'unknown')} ${s.basis !== 'unknown' ? chip(ui('cls_' + s.basis), s.basis) : chip(ui('cls_unknown'), 'unknown')}</p>
+      <p class="small">${esc(ui('mx_access'))}: ${esc(ui('ac_' + s.access))} · ${esc(ui('mx_derivable'))}: ${esc(ui('dv_' + s.derivable))}</p>
+      <p class="small">${esc(ui('mx_needs'))}: ${c.needs.length ? c.needs.map(n => esc(ui('need_' + n))).join(', ') : esc(ui('mx_none'))}</p>
+      <details><summary class="small">${esc(ui('mx_refs'))}</summary><p class="small">${esc(pick(c.note, lang))}</p><p class="small muted">${[...c.entries, ...c.layers].map(esc).join(' · ') || '—'}</p></details></td>`; };
+  return `<h3>${esc(ui('mx_title'))}</h3><p class="muted">${esc(ui('mx_lead'))}</p><div class="scroll"><table class="matrix"><thead><tr><th></th>${ids.map(id => `<th scope="col">${esc(name(id))}</th>`).join('')}</tr></thead><tbody>
+    ${m.indicators.map(ind => `<tr data-indicator-row="${esc(ind.id)}"><th scope="row">${esc(pick(ind.label, lang))}<br><span class="small muted">${esc(pick(ind.question, lang))}</span></th>${ids.map(id => cell(ind, id)).join('')}</tr>`).join('')}</tbody></table></div>
+    <p class="small muted">${esc(ui('mx_reviewed'))}</p>`;
+}
+
 export function citiesView({ lang, ui, content }) {
   const profiles = content.cities;
   const dimSel = content.cityDim ?? 'context';
@@ -83,6 +98,7 @@ export function citiesView({ lang, ui, content }) {
     <div class="seg wrap" role="group">${DIMENSIONS.map(d => `<button data-dim="${d}" aria-pressed="${d === dimSel}">${esc(ui('dim_' + d))}</button>`).join('')}</div>
     <div class="compare" style="--cols:${profiles.length}">${profiles.map(p => `<section aria-label="${esc(pick(p.name, lang))}"><h4>${esc(pick(p.name, lang))}</h4>${entriesFor(p, dimSel).map(e => entryCard(e, lang, ui)).join('') || `<p class="small muted">${esc(ui('st_unknown'))}</p>`}</section>`).join('')}</div>
     <h3>${esc(ui('measures_head'))}</h3><p class="muted">${esc(ui('measures_lead'))}</p><ul class="pairs">${pairHtml}</ul>
+    ${matrixView({ lang, ui, content })}
     ${content.citiesNote ? `<p class="small muted">${esc(pick(content.citiesNote, lang))}</p>` : ''}</div>`;
 }
 

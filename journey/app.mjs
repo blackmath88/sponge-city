@@ -12,8 +12,8 @@ const load = async path => {const r=await fetch(new URL(path,import.meta.url));i
 let ui = key => key;
 try {
   const names = ['ui','concept','practice','measurements'];
-  const [manifest,data,dict,concept,practice,measurements,charter,facts,basel,berlin,copenhagen,overlay] = await Promise.all([
-    load('modules.json'),load('places.json'),load('content/ui.json'),load('content/concept.json'),load('content/practice.json'),load('content/measurements.json'),
+  const [matrix,manifest,data,dict,concept,practice,measurements,charter,facts,basel,berlin,copenhagen,overlay] = await Promise.all([
+    load('content/indicator-matrix.json'),load('modules.json'),load('places.json'),load('content/ui.json'),load('content/concept.json'),load('content/practice.json'),load('content/measurements.json'),
     load('content/charter.json'),load('content/sponge-facts.json'),load('content/cities/basel.json'),load('content/cities/berlin.json'),load('content/cities/copenhagen.json'),
     load('content/place-de.json').catch(()=>null)]);
   const extraCities = (await Promise.all(['zurich'].map(id=>load(`content/cities/${id}.json`).catch(()=>null)))).filter(Boolean);
@@ -23,7 +23,7 @@ try {
     if (pack) packs[profile.id] = {...pack, city: profile.id, name: profile.name, context: profile.selection.rationale};
   }
   void names;
-  const content = {concept,practice,measurements,charter,facts,cities:[basel,berlin,copenhagen,...extraCities],citiesNote:null,indicatorNames:{}};
+  const content = {matrix,concept,practice,measurements,charter,facts,cities:[basel,berlin,copenhagen,...extraCities],citiesNote:null,indicatorNames:{}};
   ui = key => dict[lang]?.[key] ?? `[${lang}:${key}]`;
   const params = new URLSearchParams(location.search);
   let place = data.places.find(p=>p.key===params.get('place')) || data.places.find(p=>p.key===manifest.default_place);
