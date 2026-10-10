@@ -1,4 +1,5 @@
 import type { KeyboardEvent } from "react";
+import { nodeLabel, useLang, zoneLabel } from "./i18n.ts";
 import type { SimulationSnapshot, StreetScenario } from "./types.ts";
 
 type Props = {
@@ -39,6 +40,7 @@ export function StreetDiagram({
   showCatchments,
   onSelect,
 }: Props) {
+  const { lang, t } = useLang();
   const nodes = new Map(world.nodes.map((node) => [node.id, node]));
   const materialFor = (zoneId: string) =>
     world.surfaces.find((surface) => surface.zoneId === zoneId)!.material;
@@ -50,11 +52,8 @@ export function StreetDiagram({
         role="img"
         aria-labelledby="street-diagram-title street-diagram-description"
       >
-        <title id="street-diagram-title">Interactive sponge street</title>
-        <desc id="street-diagram-description">
-          A schematic sixty by thirty metre street. Select a zone to inspect it.
-          Blue lines show drainage, green lines infiltration and amber lines overflow.
-        </desc>
+        <title id="street-diagram-title">{t("diagram.title")}</title>
+        <desc id="street-diagram-description">{t("diagram.desc")}</desc>
         <defs>
           {(["flow", "infiltration", "overflow"] as const).map((kind) => (
             <marker
@@ -103,7 +102,7 @@ export function StreetDiagram({
                 className={`zone ${zone.id === selected ? "selected" : ""}`}
                 role="button"
                 tabIndex={0}
-                aria-label={`Inspect ${zone.label}`}
+                aria-label={t("diagram.inspect", { zone: zoneLabel(lang, zone) })}
                 onClick={() => onSelect(zone.id)}
                 onKeyDown={(event) => activateZone(event, () => onSelect(zone.id))}
               >
@@ -116,7 +115,7 @@ export function StreetDiagram({
                 })}
                 {material === "vegetated-soil" && <g className="planting" aria-hidden="true">{Array.from({ length: 15 }, (_, index) => <g key={index} transform={`translate(${x + 42 + index * 48} ${y + height / 2})`}><circle r="8" /><circle cx="6" cy="-6" r="5" /></g>)}</g>}
                 <text x={x + 14} y={y + (zone.kind === "parking" ? -6 : 20)} className={`zone-label ${material === "asphalt" ? "on-dark" : ""}`}>
-                  {zone.id === "zone-2" && material === "vegetated-soil" ? "RAIN GARDEN · FORMER PARKING" : zone.label.toUpperCase()}
+                  {zone.id === "zone-2" && material === "vegetated-soil" ? t("diagram.gardenLabel") : zoneLabel(lang, zone).toLocaleUpperCase(lang)}
                 </text>
               </g>
             );
@@ -164,11 +163,11 @@ export function StreetDiagram({
             const hasAsset = world.assets.some((asset) => asset.nodeId === node.id);
             return <g key={node.id} transform={`translate(${px(node.position.x)} ${py(node.position.y)})`} className={`hydro-node ${node.kind}`}>
               {!hasAsset && <circle r="6" />}
-              <text x="-27" y="28">{node.label}</text>
+              <text x="-27" y="28">{nodeLabel(lang, node)}</text>
             </g>;
           })}
         </g>
-        <text x="30" y="492" className="plan-caption">PLAN VIEW / 60 × 30 M ILLUSTRATIVE BLOCK</text>
+        <text x="30" y="492" className="plan-caption">{t("diagram.caption")}</text>
       </svg>
     </div>
   );
