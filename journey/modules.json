@@ -9,6 +9,23 @@
  ],
  "modules": [
   {
+   "id": "start",
+   "kind": "start",
+   "group": "learn",
+   "label": {
+    "de": "Einstieg",
+    "en": "Start"
+   },
+   "question": {
+    "de": "Wo möchten Sie beginnen?",
+    "en": "Where would you like to start?"
+   },
+   "boundary": {
+    "de": "Eine Stadt, eine Frage oder eine Massnahme führen in dieselbe Untersuchung.",
+    "en": "A city, a question or an intervention lead into the same investigation."
+   }
+  },
+  {
    "id": "concept",
    "kind": "view",
    "group": "learn",

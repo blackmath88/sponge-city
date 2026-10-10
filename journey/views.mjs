@@ -17,14 +17,15 @@ export function conceptView({ lang, ui, content }) {
   const cards = concept.cells.filter(c => c.situation === s).map(c => {
     const mech = concept.mechanisms.find(m => m.id === c.mechanism);
     const facts = (c.facts ?? []).map(id => content.practice.cases.find(p => p.fact === id)).filter(Boolean);
-    return `<article class="mech" data-mechanism="${esc(c.mechanism)}"><h4>${esc(pick(mech.label, lang))}</h4><p class="muted">${esc(pick(mech.what, lang))}</p><p>${esc(pick(c.text, lang))}</p>
+    const hl = content.conceptFocus && c.interventions.includes(content.conceptFocus);
+    return `<article class="mech${hl ? ' hl' : ''}" data-mechanism="${esc(c.mechanism)}"><h4>${esc(pick(mech.label, lang))}</h4><p class="muted">${esc(pick(mech.what, lang))}</p><p>${esc(pick(c.text, lang))}</p>
       <p class="small"><strong>${esc(ui('interventions'))}:</strong> ${c.interventions.map(id => esc(nameOf(id))).join(' · ') || esc(ui('none_listed'))}</p>
       <p class="small"><strong>${esc(ui('needs_evidence'))}:</strong> ${c.indicators.map(id => esc(indNameLocal(content, id, lang))).join(' · ') || esc(ui('none_listed'))}</p>
       ${facts.map(f => `<p class="small example"><strong>${esc(ui('example'))}:</strong> ${esc(lang === 'de' ? f.claim_de : f.claim_en)}</p>`).join('')}</article>`;
   }).join('');
   return `<div class="view concept"><h3>${esc(ui('matrix_title'))}</h3><p class="muted">${esc(ui('matrix_hint'))}</p>
     <div class="seg" role="group" aria-label="${esc(ui('situation'))}">${concept.situations.map(x => `<button data-situation="${esc(x.id)}" aria-pressed="${x.id === s}">${esc(pick(x.label, lang))}</button>`).join('')}</div>
-    <p class="lead">${esc(pick(situation.question, lang))}</p><div class="cards">${cards}</div>
+    ${content.conceptFocus ? `<p class="small focus" data-focus="${esc(content.conceptFocus)}">${esc(ui('concept_focus').replace('{name}', nameOf(content.conceptFocus)))} <button data-clear-focus>×</button></p>` : ''}<p class="lead">${esc(pick(situation.question, lang))}</p><div class="cards">${cards}</div>
     <h3>${esc(pick(concept.chain.title, lang))}</h3><ol class="chain">${concept.chain.steps.map(x => `<li>${esc(pick(x, lang))}</li>`).join('')}</ol>
     <p class="boundary">${esc(pick(concept.boundary, lang))}</p></div>`;
 }

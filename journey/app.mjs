@@ -1,6 +1,7 @@
 import {moduleUrl} from './context.mjs';
 import {resolveLang,persistLang,pick,LANGS} from './i18n.mjs';
 import {conceptView,practiceView,measureView,citiesView,exportView,esc} from './views.mjs';
+import {startView} from './startview.mjs';
 import {mapView,inspectRecord,inspectPanel} from './mapview.mjs';
 import {parseMapState,writeMapState} from './map.mjs';
 import {exportJson,exportMarkdown,localizeRecord,referenceGaps} from './export.mjs';
@@ -51,6 +52,7 @@ try {
   };
   const bindView = () => {
     for (const b of document.querySelectorAll('[data-situation]')) b.onclick = () => {content.conceptSituation=b.dataset.situation;render();};
+    for (const b of document.querySelectorAll('[data-clear-focus]')) b.onclick = () => {content.conceptFocus=null;render();};
     for (const b of document.querySelectorAll('[data-filter]')) b.onclick = () => {content.practiceFilter=b.dataset.filter;render();};
     for (const b of document.querySelectorAll('[data-indicator]')) b.onclick = () => {content.measureSel=b.dataset.indicator;render();};
     for (const b of document.querySelectorAll('[data-dim]')) b.onclick = () => {content.cityDim=b.dataset.dim;render();};
@@ -83,6 +85,7 @@ try {
       $('module-frame').removeAttribute('src'); delete $('module-frame').dataset.src;
       const ctx = {lang,ui,content};
       if (stage.kind==='map') { renderMap(); return; }
+      if (stage.kind==='start') { view.innerHTML = startView({lang,ui,content,packs}); bindStart(); return; }
       const html = stage.id==='concept'?conceptView(ctx):stage.id==='practice'?practiceView(ctx):stage.id==='measure'?measureView(ctx):stage.id==='cities'?citiesView(ctx)
         : exportView({lang,ui,place,record:{unresolved:localizeRecord(place,lang,overlay).unresolved},refGaps:referenceGaps(content,lang)});
       view.innerHTML = html; bindView();
@@ -147,6 +150,12 @@ try {
     svg.onpointermove = e => { if(!drag)return; const r=svg.getBoundingClientRect(); const dx=(e.clientX-drag.x), dy=(e.clientY-drag.y); if(Math.abs(dx)+Math.abs(dy)>4){moved=true; pan(-dx/r.width*vb[2],-dy/r.height*vb[3]); drag={x:e.clientX,y:e.clientY};} };
     svg.onpointerup = svg.onpointerleave = () => { drag=null; };
     svg.onclick = e => { if (moved) { moved=false; return; } const t=e.target.closest('[data-f]'); if (t) pickFeature(t.dataset.layer,Number(t.dataset.f)); };
+  }
+  function bindStart() {
+    const go = id => { stage = manifest.modules.find(m=>m.id===id); update(); };
+    for (const b of document.querySelectorAll('[data-go-city]')) b.onclick = () => { mapState = parseMapState(`?city=${b.dataset.goCity}`,packs); viewBoxes.a=viewBoxes.b=null; go('map'); syncUrl(); };
+    for (const b of document.querySelectorAll('[data-go-stage]')) b.onclick = () => go(b.dataset.goStage);
+    for (const b of document.querySelectorAll('[data-go-intervention]')) b.onclick = () => { content.conceptFocus = b.dataset.goIntervention; content.conceptSituation = b.dataset.sit; go('concept'); };
   }
   function setLang(next) { lang = next; persistLang(lang,store); const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState(null,'',u); render(); }
   function update() {const next=new URL(location.href);next.searchParams.set('place',place.key);next.searchParams.set('stage',stage.id);next.searchParams.set('lang',lang);history.replaceState(null,'',next);render();}

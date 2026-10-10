@@ -30,7 +30,7 @@ for (const path of ['wrapper/street-xray','wrapper/sponge-catalogue','wrapper/ac
 rmSync(join(output,'wrapper/data-charter-map'),{recursive:true,force:true});
 cpSync(join(root,'wrapper/data-charter-map/dist'),join(output,'wrapper/data-charter-map'),{recursive:true});
 mkdirSync(join(output,'assets'),{recursive:true});
-for (const file of ['app.mjs','context.mjs','i18n.mjs','views.mjs','cities.mjs','map.mjs','mapview.mjs','export.mjs','style.css','modules.json']) copy('journey/'+file,'assets/'+file);
+for (const file of ['app.mjs','context.mjs','i18n.mjs','views.mjs','cities.mjs','map.mjs','mapview.mjs','startview.mjs','export.mjs','style.css','modules.json']) copy('journey/'+file,'assets/'+file);
 copy('journey/content','assets/content');
 copy('data/cities','assets/content/cities');
 if (existsSync(join(root,'data/maps'))) copy('data/maps','assets/content/maps');
