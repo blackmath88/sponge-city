@@ -444,7 +444,24 @@
    "scope": "unspecified",
    "evidence_state": "no_public_evidence_found",
    "measure": null,
-   "sources": []
+   "sources": [
+    {
+     "title": "Medienmitteilung 3.12.2020: Pilotprojekt Giessereistrasse",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/medienmitteilungen/2020/12/201203a.html",
+     "publisher": "Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Das wissenschaftliche Monitoring der Massnahmen wird durch die Zürcher Hochschule für Angewandte Wissenschaften (ZHAW) bis 2024 sichergestellt.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Grundlagen des Regenwasser-Managements ableiten in Schwammstadt-Baustein an der Giessereistrasse Zürich",
+     "url": "https://www.zhaw.ch/de/forschung/projekt/72564",
+     "publisher": "ZHAW",
+     "retrieved": "2026-10-10",
+     "quote": "Projektstatus abgeschlossen, 06/2020 - 07/2025",
+     "quote_lang": "de"
+    }
+   ]
   },
   {
    "id": "zurich.access.01",
@@ -654,8 +671,8 @@
    "id": "zurich.measurement.06",
    "dimension": "measurement",
    "text": {
-    "de": "Open Data Zürich führt Überschwemmungsmeldungen an Schutz & Rettung und ERZ von 1976 bis 2025 (3684 Meldungen in 2496 Zeilen nach Zählung des Projekts); die Ursache ist sehr oft unbekannt. Die Zahlen hängen vom Meldeverhalten ab und sind kein Mass für Starkregen oder Kanalkapazität.",
-    "en": "Open Data Zürich lists flood reports received by Schutz & Rettung and ERZ from 1976 to 2025 (3,684 reports in 2,496 rows by this project's count); the cause is very often unknown. The numbers depend on reporting behaviour and are not a measure of heavy rain or sewer capacity."
+    "de": "Open Data Zürich führt Überschwemmungsmeldungen an Schutz & Rettung und ERZ von 1976 bis 2025 (3684 Meldungen in 2496 Zeilen nach Zählung des Projekts); die Ursache ist sehr oft unbekannt. Die Zahlen hängen vom Meldeverhalten ab und sind kein Mass für Starkregen oder Kanalkapazität. Die Datensatzseite nennt den Zeitraum 1977 bis 2024, die CSV-Zeilen reichen aber vom 10.6.1976 bis 9.11.2025.",
+    "en": "Open Data Zürich lists flood reports received by Schutz & Rettung and ERZ from 1976 to 2025 (3,684 reports in 2,496 rows by this project's count); the cause is very often unknown. The numbers depend on reporting behaviour and are not a measure of heavy rain or sewer capacity. The dataset page header states the period 1977 to 2024, while the CSV rows run from 1976-06-10 to 2025-11-09."
    },
    "origin": "observed",
    "scope": "city-wide",

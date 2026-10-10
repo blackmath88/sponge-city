@@ -3,12 +3,12 @@
  "city": "zurich",
  "extent": {
   "bbox": [
-   8.44689,
-   47.319033,
-   8.627212,
-   47.435141
+   8.448018,
+   47.320218,
+   8.625453,
+   47.434665
   ],
-  "source": "Bounding box of the Stadtkreise WFS response (https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise, adm_stadtkreise_v), fetched 2026-10-10"
+  "source": "Bounding box of the Stadtkreise WFS response (https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise, adm_stadtkreise_v), fetched 2026-10-10 (bbox = bounds of the Stadtkreise polygons, rounded to 6 decimals)"
  },
  "layers": [
   {

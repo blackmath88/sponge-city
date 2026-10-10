@@ -174,8 +174,8 @@
    "coverage": "Whole Copenhagen plan (974 line segments)",
    "source_url": "https://admin.opendata.dk/dataset/skybrudsplan-veje-og-tunneller",
    "limitations": {
-    "de": "Planung, kein Baustand; Linien vereinfacht (ca. 3 m). Kategorienamen dänisch wie veröffentlicht.",
-    "en": "A plan, not build status; lines simplified (about 3 m). Category names are Danish as published."
+    "de": "Planung, kein Baustand; Linien vereinfacht (ca. 3 m). Kategorienamen dänisch wie veröffentlicht. Der Ausschnitt enthält 974 der 976 Objekte, die der Dienst am 10.10.2026 lieferte; zwei fehlen im Ausschnitt.",
+    "en": "A plan, not build status; lines simplified (about 3 m). Category names are Danish as published. The snapshot holds 974 of the 976 features the live service returned on 2026-10-10; two are not in the snapshot."
    },
    "legend": {
     "type": "categorical",
@@ -261,8 +261,8 @@
    "coverage": "Ausschnitt lon 12.5450–12.5850, lat 55.6700–55.6950; 93 Gebäude im Fenster (gesamter Datensatz 2029) / window lon 12.5450–12.5850, lat 55.6700–55.6950; 93 buildings (whole dataset 2029)",
    "source_url": "https://admin.opendata.dk/dataset/gronne-tage",
    "limitations": {
-    "de": "Nur ein Ausschnitt. Aus BBR und Luftbild abgeleitet, nicht vor Ort geprüft; Aufbau und Retention nicht erfasst. Klassennamen im Datensatz dänisch (Legende übersetzt). Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
-    "en": "Window only. Derived from the building register (BBR) and aerial photos, not field verified; build-up and retention not captured. Classes are Danish as published. Legend colours are our choice; the publisher defines classes only."
+    "de": "Nur ein Ausschnitt. Aus BBR und Luftbild abgeleitet, nicht vor Ort geprüft; Aufbau und Retention nicht erfasst. Klassennamen im Datensatz dänisch (Legende übersetzt). Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen. 13 der 93 Gebäude tragen die Klasse «Andet tagkonstruktion» (andere Dachkonstruktion): Sie sind als Gründach in primärer oder sekundärer Dachkonstruktion erfasst und nicht notwendigerweise vollständig bepflanzt.",
+    "en": "Window only. Derived from the building register (BBR) and aerial photos, not field verified; build-up and retention not captured. Classes are Danish as published. Legend colours are our choice; the publisher defines classes only. 13 of the 93 buildings carry the class \"Andet tagkonstruktion\" (other roof construction): they are registered as green roof as a primary or secondary roof construction and may not be fully planted."
    },
    "legend": {
     "type": "categorical",

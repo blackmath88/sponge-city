@@ -141,7 +141,7 @@
   "md_sha": "Prüfsumme der Quelle",
   "measure_def": "Messdefinition (Begriffe der Quelle)",
   "map_extent": "Ausschnitt",
-  "map_aria": "Karte {city}: gewählte Ebenen als Vektorgrafik. Dieselben Daten stehen in der Tabellenansicht.",
+  "map_aria": "Karte {city}: gewählte Ebenen als Vektorgrafik. Alle Objekte stehen seitenweise in der Tabellenansicht.",
   "map_zoom": "Zoom",
   "map_zoom_in": "Vergrössern",
   "map_zoom_out": "Verkleinern",
@@ -182,7 +182,7 @@
   "map_shared": "Link kopiert.",
   "map_share_fail": "Adresse in der Adressleiste kopieren.",
   "map_summary": "{d} zeichenbare Ebenen · {e} externe Dienste · {g} Datenlücken",
-  "map_compare_note": "Zwei Städte nebeneinander: Jede Karte hat eigene Legende und Quelle. Ebenen gleichen Themas sind nur bei gleicher Methode, Einheit und Massstab vergleichbar.",
+  "map_compare_note": "Zwei Städte nebeneinander: Jede Karte hat eigene Legende und Quelle. Ebenen gleichen Themas sind nur bei gleicher Methode, Einheit, Massstab, Herkunft und Datenstand vergleichbar.",
   "theme_sealing": "Versiegelung",
   "theme_green": "Grün",
   "theme_trees": "Bäume",
@@ -278,7 +278,15 @@
   "ct_context": "Ausgangslage",
   "ct_study-elsewhere": "Studie aus anderem Umfeld",
   "status_note": "Umsetzungsstand",
-  "map_places": "Orte für die Untersuchung (Kontextpunkte, keine vermessene Geometrie)"
+  "map_places": "Orte für die Untersuchung (Kontextpunkte, keine vermessene Geometrie)",
+  "map_rows": "Zeilen {from}–{to} von {total}",
+  "map_prev": "Zurück",
+  "map_next": "Weiter",
+  "map_page": "Seite {n} von {pages}",
+  "map_keys": "Tastatur: Karte fokussieren, dann + und − zoomen, Pfeiltasten verschieben, 0 setzt zurück. Alle Objekte stehen in der Tabellenansicht.",
+  "map_to_matrix": "Zur Messgrössen-Matrix der Städte",
+  "m_class_source": "Evidenzklasse je Datensatz: siehe Quelle.",
+  "mb_context": "Stand der Daten (nichts offen)"
  },
  "en": {
   "skip": "Skip to content",
@@ -422,7 +430,7 @@
   "md_sha": "Source SHA-256",
   "measure_def": "Measure definition (source terms)",
   "map_extent": "Extent",
-  "map_aria": "Map of {city}: selected layers as vector graphic. The same data is in the table view.",
+  "map_aria": "Map of {city}: selected layers as vector graphic. Every object is listed page by page in the table view.",
   "map_zoom": "Zoom",
   "map_zoom_in": "Zoom in",
   "map_zoom_out": "Zoom out",
@@ -463,7 +471,7 @@
   "map_shared": "Link copied.",
   "map_share_fail": "Copy the address from the address bar.",
   "map_summary": "{d} drawable layers · {e} external services · {g} data gaps",
-  "map_compare_note": "Two cities side by side: each map has its own legend and source. Layers on the same theme are comparable only with the same method, unit and scale.",
+  "map_compare_note": "Two cities side by side: each map has its own legend and source. Layers on the same theme are comparable only with the same method, unit, scale, origin and data date.",
   "theme_sealing": "Sealing",
   "theme_green": "Green",
   "theme_trees": "Trees",
@@ -559,6 +567,14 @@
   "ct_context": "Context",
   "ct_study-elsewhere": "Study from elsewhere",
   "status_note": "Implementation status",
-  "map_places": "Places for investigation (context points, not surveyed geometry)"
+  "map_places": "Places for investigation (context points, not surveyed geometry)",
+  "map_rows": "rows {from}–{to} of {total}",
+  "map_prev": "Previous",
+  "map_next": "Next",
+  "map_page": "Page {n} of {pages}",
+  "map_keys": "Keyboard: focus the map, then + and − zoom, arrow keys pan, 0 resets. Every object is listed in the table view.",
+  "map_to_matrix": "To the city indicator matrix",
+  "m_class_source": "Evidence class per dataset: see the source.",
+  "mb_context": "State of the data (nothing outstanding)"
  }
 }

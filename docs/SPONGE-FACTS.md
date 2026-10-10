@@ -81,7 +81,7 @@ Enlarge the planted area and the soil volume around a street tree, so roots get 
 
 Mechanisms: SWEAT · SHADE · ABSORB · knowledge catalogue: `enlarged-tree-pit`
 
-- **Basel data** · 73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).
+- **Basel data** · About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.
   Source: [data.bs.ch 100052 + 100477](https://data.bs.ch/explore/dataset/100052/).
   Method: Tree point inside sealed vs planted land-cover polygon.
   Caveat: An enlarged pit still below the mapping threshold counts as sealed.
@@ -95,7 +95,7 @@ Mechanisms: SWEAT · SHADE · ABSORB · knowledge catalogue: `enlarged-tree-pit`
   Source: [TU München press release, 14 Sept 2016 (Rahman et al.)](https://www.tum.de/en/about-tum/news/press-releases/details/33394/).
   Visual: bars · id `small-pits-cool-less`
 
-- **Official** · Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.
+- **Official** · In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.
   Source: [Basel-Stadt media release 2016, Engelgasse](https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse).
   Visual: slice · id `engelgasse`
 

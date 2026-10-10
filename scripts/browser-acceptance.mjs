@@ -154,30 +154,55 @@ for (const lang of ['de', 'en']) {
   });
 }
 
-await check('map: city switch, layer toggle, click-to-inspect, table view, share link restore, compare', async () => {
+await check('map: city switch, real layer toggle, click-to-inspect, share link (button + restore), table paging, compare', async () => {
   const { page, ctx } = await open('?stage=map&lang=en&city=basel'); await settle(page, 1200);
-  const cities = await page.$$eval('[data-map-city]', els => els.map(e => e.dataset.mapCity)); assert(cities.length >= 3, 'cities listed');
+  const cities = await page.$$eval('[data-map-city]', els => els.map(e => e.dataset.mapCity)); assert(cities.length === 4, `four cities listed, got ${cities}`);
   for (const c of cities) {
     await page.click(`[data-map-city="${c}"]`); await settle(page, 900);
     assert(await page.$(`.mapview[data-city="${c}"]`), `view for ${c}`);
     const drawn = await page.$$eval(`.mapview[data-city="${c}"] .mapsvg [data-f]`, els => els.length);
-    const gaps = await page.$$eval('.gaps li, .layers li', els => els.length);
+    const gaps = await page.$$eval('.gaps li', els => els.length);
     assert(drawn > 0 || gaps > 0, `${c}: neither features nor a stated gap`);
+    assert(await page.$eval('.attribution', e => e.innerText.includes('©')).catch(() => false) || drawn === 0, `${c}: drawn map shows attribution`);
   }
   await page.click(`[data-map-city="${cities[0]}"]`); await settle(page, 900);
+  // a real layer toggle: switch the tree register on and off and watch the drawn group appear and disappear
+  const toggle = page.locator('[data-layer-toggle="basel.trees.01"]'); assert(await toggle.count(), 'tree layer checkbox');
+  assert(!(await page.$('[data-layer-group="basel.trees.01"]')), 'trees initially off');
+  await toggle.check(); await settle(page, 700); assert(await page.$('[data-layer-group="basel.trees.01"]'), 'trees drawn after toggle on');
+  assert(/trees\.01/.test(page.url()), 'layer state in the url');
+  await page.locator('[data-layer-toggle="basel.trees.01"]').uncheck(); await settle(page, 700); assert(!(await page.$('[data-layer-group="basel.trees.01"]')), 'trees gone after toggle off');
   const first = await page.$('.mapsvg [data-f]'); assert(first, 'a feature');
   await first.dispatchEvent('click'); await settle(page, 300);
   const insp = await page.innerText('#inspect'); assert(/Licence|Lizenz/.test(insp) && /Method|Methode/.test(insp), 'inspect shows provenance');
+  await page.click('#map-share'); await settle(page, 300); assert((await page.innerText('#map-share-note')).trim().length > 0, 'share button gives feedback');
   const url = page.url(); assert(/sel=/.test(url) && /city=/.test(url) && /layers=/.test(url), 'state in url');
   await page.goto(url); await settle(page, 1200);
   assert(/Licence/.test(await page.innerText('#inspect')), 'selection restored from link');
   await page.click('[data-map-mode="table"]'); await settle(page, 300);
-  assert((await page.$$('[data-layer-row]')).length > 0, 'table lists layers'); assert((await page.$$('[data-pick]')).length > 0, 'table lists features');
+  assert((await page.$$('[data-layer-row]')).length > 0, 'table lists layers');
+  const firstPage = await page.$$eval('[data-pick]', els => els.map(e => e.dataset.pick));
+  const perLayer = {}; for (const k of firstPage) { const l = k.replace(/:\d+$/, ''); perLayer[l] = (perLayer[l] ?? 0) + 1; }
+  assert(firstPage.length > 0 && Math.max(...Object.values(perLayer)) <= 50, `table is paged (at most 50 rows per layer), got ${JSON.stringify(perLayer)}`);
+  await page.click('[data-table-page$=":1"]:not([disabled])'); await settle(page, 400);
+  const secondPage = await page.$$eval('[data-pick]', els => els.map(e => e.dataset.pick));
+  assert(secondPage.length > 0 && secondPage.some(k => !firstPage.includes(k)), 'next page shows other objects');
   await page.click('[data-map-mode="map"]'); await settle(page, 600);
   await page.selectOption('#map-compare', cities[1]); await settle(page, 1200);
   assert((await page.$$('.mappanel')).length === 2, 'two panels');
-  await shot(page, 'map-compare-en');
-  await page.keyboard.press('Tab'); await ctx.close();
+  await shot(page, 'map-compare-en'); await ctx.close();
+});
+
+await check('keyboard focus survives a re-render (layer toggle, city button, mode button) and the view is not a live region', async () => {
+  const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
+  assert(await page.getAttribute('#view', 'aria-live') === null, '#view must not be aria-live');
+  await page.focus('[data-layer-toggle="basel.trees.01"]'); await page.keyboard.press('Space'); await settle(page, 700);
+  assert(await page.evaluate(() => document.activeElement?.dataset?.layerToggle) === 'basel.trees.01', 'focus kept on the layer checkbox');
+  await page.focus('[data-map-mode="table"]'); await page.keyboard.press('Enter'); await settle(page, 700);
+  assert(await page.evaluate(() => document.activeElement?.dataset?.mapMode) === 'table', 'focus kept on the mode button');
+  await page.focus('[data-stage="cities"]'); await page.keyboard.press('Enter'); await settle(page, 700);
+  assert(await page.evaluate(() => document.activeElement?.dataset?.stage) === 'cities', 'focus kept on the step button');
+  assert((await page.innerText('#live')).trim().length > 0, 'the polite status line announces the step'); await ctx.close();
 });
 
 await check('export after a live language switch reports the new language and the same place', async () => {
@@ -188,20 +213,28 @@ await check('export after a live language switch reports the new language and th
   assert(json.ui_language === 'en', 'ui_language en after switch'); assert(/kanonengasse/i.test(JSON.stringify(json)), 'place kept'); await ctx.close();
 });
 
-await check('reduced motion is respected (no animation or smooth scroll)', async () => {
-  const ctx = await browser.newContext({ reducedMotion: 'reduce' }); const page = await ctx.newPage(); await page.goto(base + '?stage=map&city=basel'); await page.waitForTimeout(800);
-  const v = await page.evaluate(() => { const s = getComputedStyle(document.querySelector('.mapview *') || document.body); return [s.animationName, s.transitionDuration, getComputedStyle(document.documentElement).scrollBehavior].join('|'); });
-  assert(!/smooth/.test(v), `smooth scroll under reduced motion: ${v}`); await ctx.close();
+await check('reduced motion: the stylesheet switches animation, transition and smooth scrolling off, and nothing runs', async () => {
+  const run = async reducedMotion => {
+    const ctx = await browser.newContext({ reducedMotion }); const page = await ctx.newPage(); await page.goto(base + '?stage=concept&lang=de'); await page.waitForTimeout(800);
+    await page.addStyleTag({ content: '.probe{transition:opacity 5s;animation:none}' }); await page.evaluate(() => { const e = document.createElement('div'); e.className = 'probe'; document.body.append(e); });
+    const v = await page.evaluate(() => { const s = getComputedStyle(document.querySelector('.probe')); return { transition: s.transitionDuration, anims: document.getAnimations().length, rule: [...document.styleSheets].some(sh => { try { return [...sh.cssRules].some(r => r.media && /prefers-reduced-motion/.test(r.media.mediaText) && /animation/.test(r.cssText)); } catch { return false; } }) }; });
+    await ctx.close(); return v;
+  };
+  const reduced = await run('reduce'); const normal = await run('no-preference');
+  assert(reduced.rule, 'a prefers-reduced-motion rule that disables animation exists in the stylesheet');
+  assert(reduced.transition === '0s', `transitions are off under reduced motion, got ${reduced.transition}`);
+  assert(normal.transition !== '0s', `control run: the same element does transition without the preference (got ${normal.transition}); otherwise the check proves nothing`);
+  assert(reduced.anims === 0, 'no running animations under reduced motion');
 });
 
 await check('map brief: selecting an object exports a city-isolated brief in the active language', async () => {
-  const { page, ctx } = await open('?stage=map&lang=de&city=zurich'); await settle(page, 1200);
-  await (await page.$('.mapsvg [data-f]')).dispatchEvent('click'); await settle(page, 300);
+  const { page, ctx } = await open('?stage=map&lang=de&city=zurich&layers=zurich.boundary.01,zurich.sealing.01'); await settle(page, 1200);
+  await (await page.$('.mapsvg [data-layer="zurich.sealing.01"][data-f]')).dispatchEvent('click'); await settle(page, 300);
   assert((await page.innerText('.attribution')).includes('©'), 'attribution visible on the map');
   const [d] = await Promise.all([page.waitForEvent('download'), page.click('#brief-json')]);
   const rec = JSON.parse(readFileSync(await d.path(), 'utf8'));
   assert(rec.city.id === 'zurich' && rec.ui_language === 'de', 'city and language');
-  assert(!/berlin|basel|copenhagen/i.test(JSON.stringify(rec)), 'no other city in a zurich brief');
+  assert(rec.selection.layer_id === 'zurich.sealing.01', 'the sealing layer is selected'); assert(!/berlin|basel|copenhagen|kopenhagen/i.test(JSON.stringify(rec)), 'no other city named in a zurich brief'); assert(rec.related_indicator === null, 'no Basel charter guidance in a Zürich brief');
   assert(rec.unresolved_checks.length >= 1 && rec.status === 'requires-investigation', 'unresolved checks kept');
   const [m] = await Promise.all([page.waitForEvent('download'), page.click('#brief-md')]);
   const md = readFileSync(await m.path(), 'utf8'); assert(/Untersuchungsnotiz/.test(md) && !markers.test(md), 'german markdown'); await ctx.close();
@@ -240,7 +273,8 @@ for (const [w, h, label] of [[390, 844, 'mobile'], [1280, 900, 'desktop']]) {
 }
 
 let axeSource = null; try { axeSource = readFileSync(createRequire(pwDir).resolve('axe-core/axe.min.js'), 'utf8'); } catch {}
-if (axeSource) await check('accessibility (axe, WCAG 2 A/AA incl. contrast): no serious or critical violations on the native steps, both languages', async () => {
+await check('accessibility (axe, WCAG 2 A/AA incl. contrast): no serious or critical violations on the native steps, both languages', async () => {
+  assert(axeSource, 'axe-core could not be resolved from PLAYWRIGHT_DIR: the accessibility check cannot run (counted as a failure, not skipped)');
   const bad = [];
   for (const lang of ['de', 'en']) for (const [stage, extra] of [['start', ''], ['concept', ''], ['practice', ''], ['measure', ''], ['cities', ''], ['map', '&city=zurich'], ['export', '']]) {
     const { page, ctx } = await open(`?stage=${stage}&lang=${lang}${extra}`); await settle(page, 1000);
@@ -249,7 +283,7 @@ if (axeSource) await check('accessibility (axe, WCAG 2 A/AA incl. contrast): no 
     for (const v of res.violations.filter(v => ['serious', 'critical'].includes(v.impact))) bad.push(`${stage}/${lang}: ${v.id} (${v.nodes.length}) ${v.nodes[0].target.join(' ')}`);
     await ctx.close();
   }
-  assert(!bad.length, bad.slice(0, 8).join('\n      '));
+  assert(!bad.length, bad.slice(0, 8).join(' | '));
 });
 
 await check('keyboard: Tab reaches the language switch and the step buttons with a visible focus style', async () => {

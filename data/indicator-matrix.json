@@ -95,7 +95,7 @@
    "basel": {
     "state": {
      "exists": "yes",
-     "basis": "derived",
+     "basis": "observed",
      "access": "open",
      "derivable": "yes"
     },
@@ -119,7 +119,7 @@
     "state": {
      "exists": "yes",
      "basis": "derived",
-     "access": "partial",
+     "access": "open",
      "derivable": "yes"
     },
     "needs": [
@@ -134,8 +134,8 @@
      "berlin.sealing.01"
     ],
     "note": {
-     "de": "Offene Karte in 10-Prozent-Stufen je Block; Lizenz der Version 2021 nicht geprüft.",
-     "en": "Open map in 10 percent steps per block; licence of the 2021 version not verified."
+     "de": "Offene Karte in 10-Prozent-Stufen je Block; die Lizenz (Datenlizenz Deutschland Zero 2.0) steht im Dienst-Capabilities-Dokument.",
+     "en": "Open map in 10 percent steps per block; the licence (Data Licence Germany Zero 2.0) is stated in the service capabilities document."
     }
    },
    "copenhagen": {
@@ -174,8 +174,8 @@
      "zurich.sealing.01"
     ],
     "note": {
-     "de": "Vom Projekt aus der Biotoptypenkartierung 2020 berechnet (28,6 % versiegelt, Wald und Gewässer in der Bezugsfläche), keine amtliche Statistik. Nicht vergleichbar mit der Kantonszahl (14 %) oder mit Basel; die Karte zeigt nur einen Ausschnitt.",
-     "en": "Computed by this project from the 2020 biotope map (28.6 percent sealed, forest and water in the reference area), not an official statistic. Not comparable with the cantonal figure (14 percent) or with Basel; the map shows a window only."
+     "de": "Vom Projekt aus der Biotoptypenkartierung 2020 berechnet (28,6 % versiegelt, Wald und Gewässer in der Bezugsfläche), keine amtliche Statistik. Nicht vergleichbar mit der Kantonszahl (14 %) oder mit den Zahlen anderer Städte; die Karte zeigt nur einen Ausschnitt.",
+     "en": "Computed by this project from the 2020 biotope map (28.6 percent sealed, forest and water in the reference area), not an official statistic. Not comparable with the cantonal figure (14 percent) or with the figures of other cities; the map shows a window only."
     }
    }
   },
@@ -246,7 +246,7 @@
      "exists": "yes",
      "basis": "observed",
      "access": "open",
-     "derivable": "yes"
+     "derivable": "unknown"
     },
     "needs": [],
     "scale": "city-wide",
@@ -330,7 +330,7 @@
     "state": {
      "exists": "yes",
      "basis": "modelled",
-     "access": "open",
+     "access": "partial",
      "derivable": "yes"
     },
     "needs": [],
@@ -343,8 +343,8 @@
      "zurich.heat.01"
     ],
     "note": {
-     "de": "Rund 90 Stationen im 15-Minuten-Takt und modellierte Massnahmengebiete.",
-     "en": "About 90 stations at 15-minute intervals and modelled measure areas."
+     "de": "Rund 90 Stationen im 15-Minuten-Takt und modellierte Massnahmengebiete; die Datensätze des meteoblue-Netzes tragen den Vermerk «Nachführung eingestellt».",
+     "en": "About 90 stations at 15-minute intervals and modelled measure areas; the meteoblue network datasets carry the flag \"Nachführung eingestellt\" (updates discontinued)."
     }
    }
   },
@@ -402,12 +402,10 @@
      "copenhagen.measurement.01",
      "copenhagen.access.03"
     ],
-    "layers": [
-     "copenhagen.catchments.01"
-    ],
+    "layers": [],
     "note": {
-     "de": "Überflutungskarten nach Einzugsgebiet (Rechnung 2012), nur als PDF; geplante Projekte als Geodaten.",
-     "en": "Flood maps per catchment (2012 calculation), PDF only; planned projects as geodata."
+     "de": "Überflutungskarten nach Einzugsgebiet (Rechnung 2012), nur als PDF. Die Karte zeigt nur die Einteilung in Einzugsgebiete und geplante Projekte, keine Überflutungsflächen.",
+     "en": "Flood maps per catchment (2012 calculation), PDF only. The map layers show only the catchment partition and planned projects, not flood extents."
     }
    },
    "zurich": {
@@ -427,8 +425,8 @@
      "zurich.pluvial.01"
     ],
     "note": {
-     "de": "Kantonale Modellkarte (CC0, WFS); die Karte zeigt ein 100-jährliches Ereignis in einem Ausschnitt. Gemeldete Überschwemmungen als CSV (beobachtet), Ursache oft unbekannt.",
-     "en": "Cantonal model map (CC0, WFS); the map shows a 100-year event in one window. Reported flooding as CSV (observed), cause often unknown."
+     "de": "Kantonale Modellkarte (CC0, WFS), die mehr als die Stadt abdeckt; die Karte zeigt ein 100-jährliches Ereignis in einem Ausschnitt. Gemeldete Überschwemmungen als CSV (beobachtet), Ursache oft unbekannt.",
+     "en": "Cantonal model map (CC0, WFS) covering more than the city; the map shows a 100-year event in one window. Reported flooding as CSV (observed), cause often unknown."
     }
    }
   },
@@ -484,18 +482,20 @@
      "request"
     ],
     "scale": "unspecified",
-    "entries": [],
+    "entries": [
+     "copenhagen.transfer.01"
+    ],
     "layers": [],
     "note": {
-     "de": "Im Profil nicht untersucht.",
-     "en": "Not researched in the profile."
+     "de": "Im Profil nur als Annahme belegt: Die Mehrheit der Kanäle ist Mischsystem. Kein Netz oder Kennzahl untersucht.",
+     "en": "Evidenced in the profile only as an assumption: most sewers are combined. No network or figure researched."
     }
    },
    "zurich": {
     "state": {
      "exists": "partial",
      "basis": "observed",
-     "access": "partial",
+     "access": "not_open",
      "derivable": "no"
     },
     "needs": [
@@ -536,7 +536,7 @@
    "berlin": {
     "state": {
      "exists": "yes",
-     "basis": "observed",
+     "basis": "derived",
      "access": "open",
      "derivable": "yes"
     },
@@ -550,8 +550,8 @@
      "berlin.green.01"
     ],
     "note": {
-     "de": "Programmleistung 19 640 m² und Gründach-Teilflächen als Karte; kein Beleg einer Abflusswirkung.",
-     "en": "Programme output 19,640 m² and green-roof parts as a map; no evidence of a runoff effect."
+     "de": "Gründach-Teilflächen 2020 aus Fernerkundung und Luftbildauswertung (jede bewachsene Dachfläche, nicht nur angelegte Gründächer) als Karte; getrennt davon die Programmleistung von 19 640 m² (GründachPLUS). Keine Abflusswirkung belegt.",
+     "en": "2020 green-roof sub-areas from remote sensing and aerial-image interpretation (any vegetated roof, not only designed green roofs) as a map; separately the programme output of 19,640 m² (GründachPLUS). No runoff effect evidenced."
     }
    },
    "copenhagen": {
@@ -575,7 +575,7 @@
    "zurich": {
     "state": {
      "exists": "partial",
-     "basis": "observed",
+     "basis": "unknown",
      "access": "unknown",
      "derivable": "unknown"
     },
@@ -599,8 +599,8 @@
     "state": {
      "exists": "no_public_evidence_found",
      "basis": "unknown",
-     "access": "not_open",
-     "derivable": "no"
+     "access": "unknown",
+     "derivable": "unknown"
     },
     "needs": [
      "request",
@@ -622,8 +622,8 @@
     "state": {
      "exists": "no_public_evidence_found",
      "basis": "unknown",
-     "access": "not_open",
-     "derivable": "no"
+     "access": "unknown",
+     "derivable": "unknown"
     },
     "needs": [
      "request",
@@ -644,8 +644,8 @@
     "state": {
      "exists": "no_public_evidence_found",
      "basis": "unknown",
-     "access": "not_open",
-     "derivable": "no"
+     "access": "unknown",
+     "derivable": "unknown"
     },
     "needs": [
      "request",
@@ -666,8 +666,8 @@
     "state": {
      "exists": "no_public_evidence_found",
      "basis": "unknown",
-     "access": "not_open",
-     "derivable": "no"
+     "access": "unknown",
+     "derivable": "unknown"
     },
     "needs": [
      "request",

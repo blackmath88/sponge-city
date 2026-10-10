@@ -64,7 +64,15 @@ try {
     if ($('export-json')) $('export-json').onclick = () => download(`${place.key}-investigation.${lang}.json`,'application/json',JSON.stringify(exportJson(place,lang,content,overlay),null,2)+'\n');
     if ($('export-md')) $('export-md').onclick = () => download(`${place.key}-investigation.${lang}.md`,'text/markdown',exportMarkdown(place,lang,content,ui,overlay));
   };
-  const render = () => {
+  // Keyboard focus survives re-rendering: remember the focused control by id or data-attribute and restore it.
+  const focusKey = () => { const a = document.activeElement; if (!a || a === document.body || !a.getAttributeNames) return null; if (a.id) return '#' + CSS.escape(a.id);
+    const skip = new Set(['data-i18n','data-i18n-label','data-f','data-layer','data-lang']); const attrs = a.getAttributeNames().filter(n => n.startsWith('data-') && !skip.has(n));
+    return attrs.length ? attrs.map(n => `[${n}="${a.getAttribute(n).replace(/"/g,'\\"')}"]`).join('') : (a.dataset.lang ? `[data-lang="${a.dataset.lang}"]` : null); };
+  const restoreFocus = key => { if (!key) return; try { document.querySelector(key)?.focus({preventScroll:true}); } catch {} };
+  const announce = text => { const el = $('live'); if (el) el.textContent = text; };
+  let pendingFocus = null;
+  const render = () => { pendingFocus = focusKey(); renderInner(); if (stage.kind !== 'map') { restoreFocus(pendingFocus); pendingFocus = null; } announce(pick(stage.label,lang)); };
+  const renderInner = () => {
     applyStatic(); renderSteps(); renderPlaces();
     const site = lang==='de' ? {...place.profile.site,...(overlay?.places?.[place.key]?.site??{})} : place.profile.site;
     $('place-panel').hidden = !stage.needs_place;
@@ -100,7 +108,7 @@ try {
 
   // ---- map step ---------------------------------------------------------------------------
   let mapState = parseMapState(location.search, packs); let mapMode = new URLSearchParams(location.search).get('mapview')==='table'?'table':'map';
-  const geoCache = new Map(); const viewBoxes = {a:null,b:null}; let mapToken = 0;
+  const geoCache = new Map(); const tablePages = {}; const viewBoxes = {a:null,b:null}; let mapToken = 0;
   const layerOf = id => Object.values(packs).flatMap(p=>p.layers).find(l=>l.id===id);
   const loadGeo = async (city,id) => {
     if (geoCache.has(id)) return;
@@ -116,13 +124,15 @@ try {
   const measureIds = () => content.measurements.indicators.map(i=>i.id);
   const syncUrl = () => { const u = writeMapState(location.href, mapState); mapMode==='table'?u.searchParams.set('mapview','table'):u.searchParams.delete('mapview'); history.replaceState(null,'',u); };
   async function renderMap() {
-    const token = ++mapToken; const st = mapState;
-    $('view').innerHTML = `<p class="muted" role="status">${esc(ui('loading'))}</p>`;
+    const token = ++mapToken; const st = mapState; const focusAt = pendingFocus ?? focusKey(); pendingFocus = null;
+    if (!$('view').querySelector('.mapview')) $('view').innerHTML = `<p class="muted">${esc(ui('loading'))}</p>`;
+    try {
     const need = [...st.layers.map(id=>[st.city,id]), ...(st.compare?(st.layersCompare??[]).map(id=>[st.compare,id]):[]), ...(st.sel?[[Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===st.sel.layer)),st.sel.layer]]:[])];
     await Promise.all(need.map(([c,id])=>loadGeo(c,id)));
     if (token !== mapToken || stage.kind!=='map') return;
-    $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
-    bindMap(); markSelected();
+    $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,tablePages,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
+    bindMap(); markSelected(); restoreFocus(focusAt); announce(`${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
+    } catch (error) { console.error(error); if (token === mapToken) { $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
   const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); bindGoto(); syncUrl(); };
@@ -135,6 +145,7 @@ try {
   function bindMap() {
     for (const b of document.querySelectorAll('[data-map-city]')) b.onclick = () => { const city=b.dataset.mapCity; mapState = parseMapState(`?city=${city}${mapState.compare&&mapState.compare!==city?'&compare='+mapState.compare:''}`,packs); viewBoxes.a=viewBoxes.b=null; syncUrl(); renderMap(); };
     if ($('map-compare')) $('map-compare').onchange = e => { const c=e.target.value; mapState = parseMapState(`?city=${mapState.city}&layers=${mapState.layers.join(',')}${c?'&compare='+c:''}`,packs); viewBoxes.b=null; syncUrl(); renderMap(); };
+    for (const b of document.querySelectorAll('[data-table-page]')) b.onclick = () => { const [l,d]=b.dataset.tablePage.split(/:(-?\d+)$/); tablePages[l]=Math.max(0,(tablePages[l]??0)+Number(d)); renderMap(); };
     for (const b of document.querySelectorAll('[data-map-mode]')) b.onclick = () => { mapMode=b.dataset.mapMode; syncUrl(); renderMap(); };
     for (const c of document.querySelectorAll('[data-layer-toggle]')) c.onchange = () => {
       const key = c.dataset.side==='b'?'layersCompare':'layers'; const set = new Set(mapState[key]??[]); c.checked?set.add(c.dataset.layerToggle):set.delete(c.dataset.layerToggle);
@@ -158,7 +169,7 @@ try {
     svg.onkeydown = e => { const k=e.key; const step=vb[2]*0.15; if(k==='+'||k==='=')zoom(0.7); else if(k==='-')zoom(1/0.7); else if(k==='0')(vb=[0,0,W,H],apply()); else if(k==='ArrowLeft')pan(-step,0); else if(k==='ArrowRight')pan(step,0); else if(k==='ArrowUp')pan(0,-step); else if(k==='ArrowDown')pan(0,step); else return; e.preventDefault(); };
     svg.addEventListener('wheel', e => { if(!e.ctrlKey&&!e.metaKey)return; e.preventDefault(); const r=svg.getBoundingClientRect(); zoom(e.deltaY<0?0.8:1.25, vb[0]+(e.clientX-r.left)/r.width*vb[2], vb[1]+(e.clientY-r.top)/r.height*vb[3]); },{passive:false});
     let drag=null, moved=false;
-    svg.onpointerdown = e => { drag={x:e.clientX,y:e.clientY}; moved=false; };
+    svg.onpointerdown = e => { if (e.pointerType === 'touch') return; drag={x:e.clientX,y:e.clientY}; moved=false; };
     svg.onpointermove = e => { if(!drag)return; const r=svg.getBoundingClientRect(); const dx=(e.clientX-drag.x), dy=(e.clientY-drag.y); if(Math.abs(dx)+Math.abs(dy)>4){moved=true; pan(-dx/r.width*vb[2],-dy/r.height*vb[3]); drag={x:e.clientX,y:e.clientY};} };
     svg.onpointerup = svg.onpointerleave = () => { drag=null; };
     svg.onclick = e => { if (moved) { moved=false; return; } const t=e.target.closest('[data-f]'); if (t) pickFeature(t.dataset.layer,Number(t.dataset.f)); };
@@ -174,7 +185,8 @@ try {
   render();
 } catch(error) {
   document.documentElement.lang = lang;
-  $('places').textContent=error.message;
+  console.error(error);
+  $('places').textContent=lang==='de'?'Inhalte konnten nicht geladen werden.':'Content could not be loaded.';
   $('stage-boundary').textContent=lang==='de'?'Die Untersuchung konnte nicht geladen werden. Öffnen Sie den Belegatlas oder die Strassenansicht direkt.':'The investigation could not load. Open the evidence atlas or Street X-Ray directly.';
   $('stage-boundary').classList.add('error');
 }

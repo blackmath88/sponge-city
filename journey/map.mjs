@@ -39,7 +39,7 @@ export function validateLayerPack(pack, files = {}) {
         if (geo.type !== 'FeatureCollection') add(`${where}: snapshot must be a FeatureCollection`);
         const b = pack.extent?.bbox;
         // coordinates must lie near the city extent: catches another city's data under this label
-        const pad = 0.5; let outside = 0;
+        const span = b ? Math.max(b[2] - b[0], b[3] - b[1]) : 0; const pad = Math.max(0.02, span * 0.1); let outside = 0; // a city's own data cannot lie far outside its extent
         walkCoords(geo, ([x, y]) => { if (b && (x < b[0] - pad || x > b[2] + pad || y < b[1] - pad || y > b[3] + pad)) outside++; });
         if (outside) add(`${where}: ${outside} coordinates outside the city extent`);
       }
@@ -80,7 +80,7 @@ export function parseMapState(search, packs) {
   const layersCompare = compare ? (p.has('layers2') ? p.get('layers2').split(',').filter(id => knownB.has(id)) : defaultLayers(packs[compare])) : null;
   let sel = null;
   const m = /^(.+):(\d+)$/.exec(p.get('sel') ?? '');
-  if (m && known.has(m[1])) sel = { layer: m[1], index: Number(m[2]) };
+  if (m && (known.has(m[1]) || knownB.has(m[1]))) sel = { layer: m[1], index: Number(m[2]) };
   return { city, layers, compare, layersCompare, sel };
 }
 export function defaultLayers(pack) {
@@ -141,7 +141,7 @@ export function inspectRecord(layer, feature, lang) {
   const props = feature?.properties ?? {};
   const shown = (layer.properties_shown?.length ? layer.properties_shown : Object.keys(props)).filter(k => k in props);
   return {
-    layer: layer.id, title: pick(layer.title, lang),
+    layer: layer.id, city: layer.id.split('.')[0], title: pick(layer.title, lang),
     origin: layer.origin, theme: layer.theme,
     props: shown.map(k => [k, props[k]]),
     method: layer.method, unit: layer.unit, spatial_scale: layer.spatial_scale, temporal: layer.temporal,

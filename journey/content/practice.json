@@ -45,8 +45,8 @@
     "de": "Viele Strassenbäume haben sehr wenig Wurzelraum.",
     "en": "Many street trees have very little root space."
    },
-   "claim_en": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
-   "claim_de": "73 % der Basler Strassenbäume (9132 von 12 504) stehen auf Flächen, die in der amtlichen Vermessung als versiegelt gelten: Ihre Baumscheibe ist zu klein, um erfasst zu werden. Die übrigen stehen in erfassten Pflanzstreifen (Median 371 m²).",
+   "claim_en": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
+   "claim_de": "Rund 72 % der Basler Strassenbäume (9046 von 12 504, am 10.10.2026 aus den offenen Datensätzen neu berechnet) stehen auf Flächen, die in der amtlichen Vermessung als versiegelt gelten, ihre Baumscheibe ist also vermutlich zu klein, um erfasst zu werden. Die übrigen stehen in erfassten Pflanzstreifen.",
    "caveat_en": "An enlarged pit still below the mapping threshold counts as sealed.",
    "caveat_de": "Eine vergrösserte Baumscheibe unterhalb der Erfassungsschwelle zählt weiterhin als versiegelt."
   },
@@ -76,8 +76,8 @@
     "de": "Basler Projektbeispiel: Baumgruben vergrössern und neu pflanzen.",
     "en": "Basel project example: enlarge tree pits and replant."
    },
-   "claim_en": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
-   "claim_de": "Basel hat die Baumgruben der Engelgasse vergrössert und 50 junge Bäume neu gepflanzt, weil die alten Gruben zu wenig Wurzelraum boten.",
+   "claim_en": "In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.",
+   "claim_de": "Basel kündigte 2016 an, die Baumgruben der Engelgasse zu vergrössern und in 50 neuen, grösseren Gruben je einen jungen Baum zu pflanzen, weil die alten Gruben zu wenig Wurzelraum boten. Der Abschluss ist nicht belegt.",
    "status_note_en": "The cited source is a 2016 announcement of the works. No source checked on 2026-10-10 shows they were completed or what they achieved.",
    "status_note_de": "Die zitierte Quelle ist eine Ankündigung der Arbeiten von 2016. Keine am 10.10.2026 geprüfte Quelle belegt Abschluss oder Wirkung."
   },

@@ -119,9 +119,10 @@ test('Unknown stays unknown: missing and restricted evidence is never presented 
     const status = charter.indicators.find(i => i.id === m.id).basel.status;
     const html = measureView({ lang, ui: ui(lang), content: { ...content, measureSel: m.id } });
     const actual = html.split('data-step="3"')[1].split('data-step="4"')[0];
-    if (status === 'missing' || status === 'restricted') { assert.match(actual, /chip unknown/); assert.doesNotMatch(actual, /chip observed/, `${m.id} presented as observed`); }
-    else if (status === 'partial') { assert.doesNotMatch(actual, /chip observed/); assert.match(actual, /chip partial/); }
-    else assert.match(actual, /chip observed/);
+    assert.doesNotMatch(actual, /chip (observed|derived|modelled|assumed)/, `${m.id}: access status must not be shown as an evidence class`);
+    if (status === 'missing' || status === 'restricted') assert.match(actual, /chip unknown/);
+    else if (status === 'partial') assert.match(actual, /chip partial/);
+    else assert.match(actual, /chip open/);
     const proxyFill = charter.indicators.find(i => i.id === m.id).fill;
     if (proxyFill?.status === 'proposed') assert.match(html, /chip assumed/);
     if (proxyFill?.status === 'none') assert.match(html, /chip unknown/);
@@ -136,8 +137,11 @@ test('City profiles are valid, source-pinned and keep unknown evidence distinct 
     assert.deepEqual(validateProfile(p), []);
     assert.ok(p.entries.length >= 14, `${p.id} too thin`);
     for (const e of p.entries) {
-      if (e.evidence_state === 'no_public_evidence_found') { assert.equal(e.origin, 'unknown'); assert.deepEqual(e.sources.every(s => s.url) , true); assert.doesNotMatch(e.text.en, /\bnot measured\b/i, `${e.id}: must not claim "not measured"`); }
-      if (e.scope === 'project') assert.doesNotMatch(e.text.en, /(?<!not a )\bcity-wide\b/i, `${e.id}: project example phrased as city-wide`);
+      if (e.evidence_state === 'no_public_evidence_found') { assert.equal(e.origin, 'unknown'); assert.deepEqual(e.sources.every(s => s.url) , true); assert.doesNotMatch(e.text.en, /\bnot measured\b/i, `${e.id}: must not claim "not measured"`); assert.doesNotMatch(e.text.de, /(?<!dass )(?<!, dass )\b(wird|werden|wurde|wurden) nicht gemessen\b|(?<!dass )\bnicht gemessen (wird|werden)\b/i, `${e.id}: must not claim "nicht gemessen"`); }
+      if (e.scope === 'project') {
+        assert.doesNotMatch(e.text.en, /(?<!not a )\b(city-?wide|citywide)\b/i, `${e.id}: project example phrased as city-wide`);
+        assert.doesNotMatch(e.text.de, /(?<!kein )(?<!keine )\b(stadtweit\w*|flächendeckend\w*)\b/i, `${e.id}: Projektbeispiel als stadtweit formuliert`);
+      }
     }
     assert.ok(p.entries.some(e => e.evidence_state === 'no_public_evidence_found'), `${p.id} should record at least one searched gap`);
   }
@@ -159,7 +163,7 @@ test('Comparable versus incompatible measures are decided by exact quantity, uni
   for (const lang of ['de', 'en']) {
     const html = citiesView({ lang, ui: ui(lang), content });
     assert.match(html, new RegExp(ui(lang)('not_comparable')));
-    assert.doesNotMatch(html, /\b(ranking|score|best)\b:/i);
+    assert.doesNotMatch(html, /(?<!kein )(?<!no )\b(ranking|rank|score|best city|league)\b|(?<!kein )rangliste|spitzenreiter|bestes? stadt/i);
     assert.ok(!/\[(de|en)[?:]/.test(html));
   }
 });

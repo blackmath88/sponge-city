@@ -22,8 +22,8 @@
    "id": "berlin.context.01",
    "dimension": "context",
    "text": {
-    "de": "Berlin war 2021 zu 33,9 Prozent versiegelt (inklusive Gewässer und Strassenland). Der Umweltatlas weist die Versiegelung je Block(teil)fläche und Strassenabschnitt aus.",
-    "en": "Berlin was 33.9 percent sealed in 2021 (including water bodies and street land). The Umweltatlas maps sealing per urban block (part) and street section."
+    "de": "Berlin war 2021 zu 33,9 Prozent versiegelt (Gesamtversiegelungsgrad der Stadt; je rund ein Drittel entfällt auf Bebauung, unbebaut versiegelte Fläche und Strassen). Der Umweltatlas weist die Versiegelung je Block(teil)fläche und Strassenabschnitt aus.",
+    "en": "Berlin was 33.9 percent sealed in 2021 (total sealing degree of the city; about a third each is buildings, unbuilt sealed area and streets). The Umweltatlas maps sealing per urban block (part) and street section."
    },
    "origin": "derived",
    "scope": "city-wide",
@@ -51,8 +51,8 @@
    "id": "berlin.context.02",
    "dimension": "context",
    "text": {
-    "de": "Etwa drei Viertel der kanalisierten Gebiete Berlins werden im Trennsystem entwässert, ein Viertel im Mischsystem. Die Verwaltung nennt rund 48 Mio. m3 Regenwasser pro Jahr aus dem Trennsystem in die Gewässer und rund 5,5 Mio. m3 Regenwasser pro Jahr als unbehandelte Mischwasserüberläufe; die Methode ist auf der Seite nicht angegeben.",
-    "en": "About three quarters of the sewered area in Berlin drains through separate sewers and one quarter through combined sewers. The administration reports about 48 million m3 of rainwater per year entering waters from separate sewers and about 5.5 million m3 per year as untreated combined-sewer overflow; the page does not state the method."
+    "de": "Etwa drei Viertel der kanalisierten Gebiete Berlins werden im Trennsystem entwässert, ein Viertel im Mischsystem. Die Verwaltung nennt rund 48 Mio. m3 Regenwasser pro Jahr aus dem Trennsystem in die Gewässer und rund 5,5 Mio. m3 Regenwasser und 0,5 Mio. m3 Schmutzwasser pro Jahr als unbehandelte Mischwasserüberläufe; die Methode ist auf der Seite nicht angegeben.",
+    "en": "About three quarters of the sewered area in Berlin drains through separate sewers and one quarter through combined sewers. The administration reports about 48 million m3 of rainwater per year entering waters from separate sewers and about 5.5 million m3 rainwater plus 0.5 million m3 wastewater per year as untreated combined-sewer overflow; the page does not state the method."
    },
    "origin": "derived",
    "scope": "city-wide",
@@ -64,7 +64,7 @@
      "url": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserableitung/",
      "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt, Berlin",
      "retrieved": "2026-10-10",
-     "quote": "Etwa drei Viertel der kanalisierten Gebiete in Berlin werden über das Trennsystem und ein Viertel über das Mischsystem entwässert.",
+     "quote": "Etwa drei Viertel der kanalisierten Gebiete in Berlin werden über das Trennsystem und ein Viertel über das Mischsystem entwässert. … Insgesamt werden durch das Trennentwässerungssystem rund 48 Mio. m³ Regenwasser pro Jahr in die Gewässer eingeleitet.",
      "quote_lang": "de"
     },
     {
@@ -237,7 +237,7 @@
     "quantity": "share of precipitation evaporated (almost two thirds); of the remainder, infiltrated (two thirds) and sewer-drained (one third)",
     "unit": "fraction of precipitation (verbal, no percent given)",
     "method": "ABIMO water-balance model (version 3.2, green roofs included), long-term mean",
-    "spatial_scale": "city-wide aggregate of about 25,000 Block(teil)flaechen (plus about 32,000 street areas)",
+    "spatial_scale": "city-wide aggregate of about 25,000 Block(teil)flaechen",
     "period": "2022 edition, six model years, long-term average"
    },
    "sources": [

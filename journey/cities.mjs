@@ -69,7 +69,7 @@ export function validateProfile(profile) {
       for (const field of COMPARE_FIELDS) if (!entry.measure[field]) add(`${where}: measure.${field} missing`);
       if (entry.evidence_state !== 'found') add(`${where}: measure requires found evidence`);
     }
-    if (/\b(?:rank|score|best city)\b/i.test(entry.text?.en ?? '')) add(`${where}: ranking language`);
+    if (/\b(?:rank\w*|score\w*|best city|league)\b/i.test(entry.text?.en ?? '') || /\b(?:rangliste|spitzenreiter\w*|bestes? stadt|punktzahl|rangfolge)\b/i.test(entry.text?.de ?? '')) add(`${where}: ranking language`);
   }
   for (const dim of DIMENSIONS) if (!(profile.entries ?? []).some(e => e.dimension === dim)) add(`no entry for ${dim}`);
   return problems;

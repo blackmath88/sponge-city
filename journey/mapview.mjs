@@ -54,7 +54,7 @@ function layerControls({ lang, ui, pack, state, side }) {
       <span class="small muted">${esc(l.temporal)} · ${esc(l.coverage)}</span>${drawable ? '' : `<a class="small" href="${esc(l.source_url)}" target="_blank" rel="noreferrer">${esc(ui('map_open_source'))} ↗</a>`}</li>`;
   }).join('');
   const gaps = (pack.gaps ?? []).map(g => `<li class="gap" data-gap="${esc(g.theme)}"><strong>${esc(ui('theme_' + g.theme))}</strong> ${g.state === 'not_checked' ? chip(ui('map_not_checked'), 'unknown') : ''} ${esc(pick(g.reason, lang))}
-    <details><summary class="small">${esc(ui('map_checked'))}</summary><ul class="small">${g.checked.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details></li>`).join('');
+    <details><summary class="small">${esc(ui('map_checked'))}</summary><ul class="small">${(g.checked ?? []).map(c => `<li>${esc(c)}</li>`).join('')}</ul></details></li>`).join('');
   return `<div class="layerbox" data-side="${side}"><h4>${esc(pick(pack.name, lang))}</h4>
     <ul class="layers">${rows || `<li class="small muted">${esc(ui('map_no_snapshot'))}</li>`}</ul>
     ${gaps ? `<h5>${esc(ui('map_gaps'))}</h5><ul class="gaps">${gaps}</ul>` : ''}</div>`;
@@ -63,7 +63,7 @@ function layerControls({ lang, ui, pack, state, side }) {
 export function inspectPanel({ lang, ui, record, measureIds }) {
   if (!record) return `<div class="inspect empty" id="inspect"><h4>${esc(ui('map_inspect'))}</h4><p class="muted">${esc(ui('map_inspect_hint'))}</p></div>`;
   const rows = record.props.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('');
-  const hasMeasure = record.measure_topic && measureIds.includes(record.measure_topic);
+  const isBasel = record.city === 'basel'; const hasMeasure = isBasel && record.measure_topic && measureIds.includes(record.measure_topic);
   return `<div class="inspect" id="inspect" data-inspect-layer="${esc(record.layer)}"><h4>${esc(record.title)}</h4>
     <p>${chip(ui('cls_' + record.origin), record.origin)} ${chip(ui('theme_' + record.theme))}</p>
     ${rows ? `<table class="props"><tbody>${rows}</tbody></table>` : `<p class="small muted">${esc(ui('map_no_props'))}</p>`}
@@ -77,24 +77,27 @@ export function inspectPanel({ lang, ui, record, measureIds }) {
       <dt>${esc(ui('map_licence'))}</dt><dd><a href="${esc(record.licence_url)}" target="_blank" rel="noreferrer">${esc(record.licence)} ↗</a> · ${esc(record.attribution)}</dd>
     </dl>
     <p class="boundary small">${esc(ui('map_screening'))}</p>
-    <p class="links">${hasMeasure ? `<a href="#" data-goto="measure" data-indicator-go="${esc(record.measure_topic)}">${esc(ui('map_to_measure'))} →</a> ` : ''}<a href="#" data-goto="export">${esc(ui('map_to_investigate'))} →</a></p>
+    <p class="links">${hasMeasure ? `<a href="#" data-goto="measure" data-indicator-go="${esc(record.measure_topic)}">${esc(ui('map_to_measure'))} →</a> ` : ''}${!isBasel && record.measure_topic ? `<a href="#" data-goto="cities">${esc(ui('map_to_matrix'))} →</a> ` : ''}<a href="#" data-goto="export">${esc(ui('map_to_investigate'))} →</a></p>
     <p><button class="download secondary" id="brief-md">${esc(ui('mb_export_md'))}</button> <button class="download secondary" id="brief-json">${esc(ui('mb_export_json'))}</button></p></div>`;
 }
 
-function tableView({ lang, ui, pack, geoById, state }) {
+const PAGE = 50;
+function tableView({ lang, ui, pack, geoById, state, tablePages = {} }) {
   const layers = pack.layers.map(l => `<tr data-layer-row="${esc(l.id)}"><th scope="row">${esc(pick(l.title, lang))}</th><td>${esc(ui('cls_' + l.origin))}</td><td>${esc(l.method)}</td><td>${esc(l.unit)}</td><td>${esc(l.spatial_scale)}</td><td>${esc(l.temporal)}</td><td>${esc(l.coverage)}</td><td>${esc(l.publisher)}</td><td><a href="${esc(l.licence_url)}" target="_blank" rel="noreferrer">${esc(l.licence)}</a></td></tr>`).join('');
   const sel = pack.layers.filter(l => state.layers.includes(l.id) && geoById.get(l.id));
   const feats = sel.map(l => {
-    const f = geoById.get(l.id).features.slice(0, 25);
-    const keys = (l.properties_shown?.length ? l.properties_shown : Object.keys(f[0]?.properties ?? {})).slice(0, 4);
-    return `<h5>${esc(pick(l.title, lang))} <span class="small muted">(${esc(ui('map_first_n').replace('{n}', f.length).replace('{total}', geoById.get(l.id).features.length))})</span></h5>
-      <div class="scroll"><table><thead><tr><th>#</th>${keys.map(k => `<th>${esc(k)}</th>`).join('')}<th></th></tr></thead><tbody>${f.map((x, i) => `<tr><td>${i}</td>${keys.map(k => `<td>${esc(x.properties?.[k])}</td>`).join('')}<td><button data-pick="${esc(l.id)}:${i}">${esc(ui('map_inspect_btn'))}</button></td></tr>`).join('')}</tbody></table></div>`;
+    const all = geoById.get(l.id).features; const pages = Math.max(1, Math.ceil(all.length / PAGE));
+    const page = Math.min(tablePages[l.id] ?? 0, pages - 1); const from = page * PAGE; const f = all.slice(from, from + PAGE);
+    const keys = (l.properties_shown?.length ? l.properties_shown : Object.keys(all[0]?.properties ?? {})).slice(0, 4);
+    return `<h5>${esc(pick(l.title, lang))} <span class="small muted">(${esc(ui('map_rows').replace('{from}', all.length ? from + 1 : 0).replace('{to}', from + f.length).replace('{total}', all.length))})</span></h5>
+      <div class="tablenav" data-table-nav="${esc(l.id)}"><button data-table-page="${esc(l.id)}:-1" ${page === 0 ? 'disabled' : ''}>← ${esc(ui('map_prev'))}</button><span class="small" role="status">${esc(ui('map_page').replace('{n}', page + 1).replace('{pages}', pages))}</span><button data-table-page="${esc(l.id)}:1" ${page >= pages - 1 ? 'disabled' : ''}>${esc(ui('map_next'))} →</button></div>
+      <div class="scroll"><table><thead><tr><th>#</th>${keys.map(k => `<th>${esc(k)}</th>`).join('')}<th></th></tr></thead><tbody>${f.map((x, i) => `<tr><td>${from + i}</td>${keys.map(k => `<td>${esc(x.properties?.[k])}</td>`).join('')}<td><button data-pick="${esc(l.id)}:${from + i}">${esc(ui('map_inspect_btn'))}</button></td></tr>`).join('')}</tbody></table></div>`;
   }).join('');
   return `<div class="tableview"><h4>${esc(pick(pack.name, lang))} · ${esc(ui('map_table_layers'))}</h4>
     <div class="scroll"><table><thead><tr><th>${esc(ui('map_layer'))}</th><th>${esc(ui('map_origin'))}</th><th>${esc(ui('map_method'))}</th><th>${esc(ui('map_unit'))}</th><th>${esc(ui('map_scale'))}</th><th>${esc(ui('map_date'))}</th><th>${esc(ui('map_coverage'))}</th><th>${esc(ui('source'))}</th><th>${esc(ui('map_licence'))}</th></tr></thead><tbody>${layers}</tbody></table></div>${feats}</div>`;
 }
 
-export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measureIds = [], record = null, places = [] }) {
+export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measureIds = [], record = null, places = [], tablePages = {} }) {
   const ids = Object.keys(packs);
   const pack = packs[state.city];
   const other = state.compare ? packs[state.compare] : null;
@@ -116,8 +119,9 @@ export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measure
     <p class="small muted">${esc(pick(pack.context, lang))} · ${esc(ui('map_summary').replace('{d}', sum.drawable).replace('{e}', sum.external).replace('{g}', sum.gaps))}</p>
     ${compareNote}
     ${mode === 'table'
-      ? `<div class="tablewrap">${tableView({ lang, ui, pack, geoById, state })}${other ? tableView({ lang, ui, pack: other, geoById, state: otherState }) : ''}</div>`
+      ? `<div class="tablewrap">${tableView({ lang, ui, pack, geoById, state, tablePages })}${other ? tableView({ lang, ui, pack: other, geoById, state: otherState, tablePages }) : ''}</div>`
       : `<div class="mapgrid ${other ? 'two' : ''}">${mapPanel({ lang, ui, pack, geoById, state, side: 'a', places: state.city === 'basel' ? places : [] })}${other ? mapPanel({ lang, ui, pack: other, geoById, state: otherState, side: 'b', places: state.compare === 'basel' ? places : [] }) : ''}</div>`}
+    ${mode === 'map' ? `<p class="small muted mapkeys">${esc(ui('map_keys'))}</p>` : ''}
     ${state.city === 'basel' || state.compare === 'basel' ? `<p class="small placelinks" data-placelinks>${esc(ui('map_places'))}: ${places.map(pl => `<a href="#" data-goto-place="${esc(pl.key)}">${esc(pl.name)} →</a>`).join(' · ')}</p>` : ''}
     <div class="mapside"><div class="controls">${layerControls({ lang, ui, pack, state, side: 'a' })}${other ? layerControls({ lang, ui, pack: other, state: otherState, side: 'b' }) : ''}</div>
       ${inspectPanel({ lang, ui, record, measureIds })}</div>

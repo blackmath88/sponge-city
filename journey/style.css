@@ -38,7 +38,7 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .mapgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}.mapgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .mappanel{margin:0;min-width:0}.mappanel figcaption{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline;margin-bottom:6px}
 .mapframe{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#eef2ee}
-.mapsvg{display:block;width:100%;height:auto;max-height:70vh;touch-action:none;cursor:grab}.mapsvg:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+.mapsvg{display:block;width:100%;height:auto;max-height:70vh;touch-action:pan-y pinch-zoom;cursor:grab}.mapsvg:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
 .mapsvg .seabed{fill:#eef2ee}.mapsvg .pg{stroke-width:.8;vector-effect:non-scaling-stroke}.mapsvg .ln{fill:none;stroke-width:1.6;vector-effect:non-scaling-stroke}.mapsvg .pt{fill:none;stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .mapsvg .sel{stroke:#000!important;stroke-width:3!important;fill-opacity:.9!important}
 .mapsvg [data-f]:hover{stroke:#000;stroke-width:2}
@@ -87,3 +87,8 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .place-button small,small{color:#56625d}
 .steps button[aria-current=step] span{color:#fff}
 .placemark{cursor:pointer}.placemark .pm{fill:#fff;stroke:#243c35;stroke-width:3;vector-effect:non-scaling-stroke}.placemark:hover .pm{fill:#243c35}
+
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tablenav{display:flex;gap:8px;align-items:center;margin:6px 0}.tablenav button{min-height:36px;padding:2px 12px}
+.mapkeys{margin:6px 0}
+.chip.open{background:var(--mint)}

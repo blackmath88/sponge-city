@@ -1,6 +1,6 @@
 # Bilingual learning-and-decision journey
 
-German (default) and English. One path through nine steps in the Decision Canvas (`journey/`):
+German (default) and English. One path through eleven steps in the Decision Canvas (`journey/`):
 
 | # | Step | Kind | What it does | Source of content |
 |---|------|------|--------------|-------------------|
@@ -45,8 +45,8 @@ Observed, derived, modelled, assumed and unknown stay distinct everywhere. A gap
 
 Reported honestly; none blocks the journey:
 - **Linked references, English only:** Evidence atlas, situation map, intervention catalogue page (`catalogue.html`), adaptive state-engine demo, solutions hub. The reference links are labelled "(Englisch)" in German.
-- **Residual English inside translated surfaces:** machine enumerations such as access states (`site-check-required`, `operator-held`) in the place export; measure-definition terms in city profiles (labelled "source terms"); source titles, dataset names, tree species, station names, WFS typenames and layer `method` text; property names and values in the map inspector (raw source fields); the raw JSON panel and thrown engine errors in Street Lab; observation notes typed by users; `docs/` research documents. Verification evidence is translated for the Basel claims; evidence for city profile quotes stays in the source language by design.
+- **Residual English inside translated surfaces:** machine enumerations such as access states (`site-check-required`, `operator-held`) in the place export; measure-definition terms in city profiles (labelled "source terms"); source titles, dataset names, tree species, station names, WFS typenames and layer `method` text; property names and values in the map inspector (raw source fields); the layer metadata fields `method`, `unit`, `spatial_scale`, `temporal` and `coverage` (source wording, shown as published in both languages); the raw JSON panel and thrown engine errors in Street Lab; observation notes typed by users; `docs/` research documents. Verification evidence is translated for the Basel claims; evidence for city profile quotes stays in the source language by design.
 - **Source-language limits:** Danish (Copenhagen) and German (Berlin, Zürich) quotations stay verbatim.
 - **Register:** the shell, Rain Walk and Street Lab now address the reader with «Sie».
-- **Browser coverage:** `make browser` drives headless Chromium: both languages on every step, live DE→EN→DE inside all four embedded modules (no reload), place and observation survival, Street Lab edit survival, map interactions and failure state, exports, keyboard, reduced motion, axe contrast, mobile overflow. Not tested: Safari/Firefox, real touch devices, screen readers.
+- **Browser coverage:** `make browser` (31 checks) drives headless Chromium: both languages on every step, live DE→EN→DE inside all four embedded modules (no reload), place and observation survival, Street Lab edit survival, map interactions and failure state, exports, keyboard, reduced motion, axe contrast, mobile overflow. Not tested: Safari/Firefox, real touch devices, screen readers.
 

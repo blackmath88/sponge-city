@@ -1,710 +1,710 @@
 {
-  "schema_version": "sponge-facts/0.1",
-  "updated": "2026-10-03",
-  "title": "Sponge City fact cards",
-  "purpose": "Short, sourced facts that explain each sponge-city intervention or action, for visual explainers. Every fact carries exactly one evidence class; numbers are quoted as their source states them, with the caveat that matters.",
-  "evidence": {
-    "basel-data": "Computed by us from Basel open data; method and dataset named; reproducible with docs/pilots/",
-    "official": "Stated by an authority (Basel-Stadt or another city or canton)",
-    "research": "From a cited study or guideline; the setting may not be Basel",
-    "inference": "Our own reasoning from the facts above; not measured"
+ "schema_version": "sponge-facts/0.1",
+ "updated": "2026-10-03",
+ "title": "Sponge City fact cards",
+ "purpose": "Short, sourced facts that explain each sponge-city intervention or action, for visual explainers. Every fact carries exactly one evidence class; numbers are quoted as their source states them, with the caveat that matters.",
+ "evidence": {
+  "basel-data": "Computed by us from Basel open data; method and dataset named; reproducible with docs/pilots/",
+  "official": "Stated by an authority (Basel-Stadt or another city or canton)",
+  "research": "From a cited study or guideline; the setting may not be Basel",
+  "inference": "Our own reasoning from the facts above; not measured"
+ },
+ "visuals": {
+  "bars": "two or more bars to compare",
+  "trend": "values over time",
+  "share": "part of a whole (stacked bar, 100 squares)",
+  "count": "icon count (trees, bays, barrels)",
+  "slice": "street cross-section, before and after",
+  "map": "points or areas on the Basel map",
+  "quote": "a single striking statement"
+ },
+ "context": [
+  {
+   "id": "basel-sealed",
+   "claim": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %.",
+   "evidence": "basel-data",
+   "visual": "share",
+   "source": {
+    "label": "data.bs.ch 100477 Bodenbedeckung (official survey)",
+    "url": "https://data.bs.ch/explore/dataset/100477/"
+   },
+   "method": "Area of all land-cover polygons by class (36.6 km² total).",
+   "caveat": "Planted areas include gardens and parks; 'unsealed' is not the same as 'absorbs well' (see compaction)."
   },
-  "visuals": {
-    "bars": "two or more bars to compare",
-    "trend": "values over time",
-    "share": "part of a whole (stacked bar, 100 squares)",
-    "count": "icon count (trees, bays, barrels)",
-    "slice": "street cross-section, before and after",
-    "map": "points or areas on the Basel map",
-    "quote": "a single striking statement"
+  {
+   "id": "basel-hot-days",
+   "claim": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024.",
+   "evidence": "basel-data",
+   "visual": "trend",
+   "source": {
+    "label": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
+    "url": "https://data.bs.ch/explore/dataset/100254/"
+   },
+   "method": "Days with daily maximum ≥ 30 °C, averaged per period (complete years only).",
+   "caveat": "Series is not homogenised."
   },
-  "context": [
+  {
+   "id": "basel-heavy-rain",
+   "claim": "Days with 20 mm of rain or more did not become more frequent in Basel's daily record (5.4 a year in 1961–1990, 6.2 in 1991–2020, 5.2 in 2015–2024). The wettest day on record is 25 May 1872 with 94.8 mm; 26 July 1991 had 85 mm.",
+   "evidence": "basel-data",
+   "visual": "trend",
+   "source": {
+    "label": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
+    "url": "https://data.bs.ch/explore/dataset/100254/"
+   },
+   "method": "Days with daily precipitation ≥ 20 mm per period; ranking of daily totals since 1864.",
+   "caveat": "Cloudbursts last minutes to hours; daily totals hide them. Sub-hourly data (MeteoSwiss 10-minute series) is needed for that question."
+  },
+  {
+   "id": "basel-canopy",
+   "claim": "Tree crowns cover about 25 % of the canton (2021 LiDAR evaluation), which has changed only marginally over the past ten years.",
+   "evidence": "official",
+   "visual": "share",
+   "source": {
+    "label": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
+    "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand"
+   }
+  },
+  {
+   "id": "basel-suitable-streets",
+   "claim": "63 % of Basel's street length (194 km) carries little enough traffic to be rated suitable for sponge measures; 10 % (30 km) needs checking and 27 % (81 km) is not suitable.",
+   "evidence": "basel-data",
+   "visual": "share",
+   "source": {
+    "label": "geo.bs.ch SETV Schwammstadt-Eignung nach Tagesverkehr",
+    "url": "https://api.geo.bs.ch/stac/v1/collections/SETV"
+   },
+   "method": "Sum of segment lengths per suitability class of the canton's model (≤ 2,000 vehicles/day suitable, ≥ 4,000 not suitable).",
+   "caveat": "Traffic is one criterion; utilities, groundwater and space are not in this rating."
+  }
+ ],
+ "interventions": [
+  {
+   "id": "protect-old-trees",
+   "name": "Keep the old trees",
+   "de": "Bäume erhalten",
+   "knowledge_id": null,
+   "mechanisms": [
+    "SHADE",
+    "SWEAT",
+    "STORE"
+   ],
+   "what": "A mature tree cannot be replaced by a young one for decades. Protecting and caring for existing trees is the cheapest sponge measure.",
+   "facts": [
     {
-      "id": "basel-sealed",
-      "claim": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %.",
-      "evidence": "basel-data",
-      "visual": "share",
-      "source": {
-        "label": "data.bs.ch 100477 Bodenbedeckung (official survey)",
-        "url": "https://data.bs.ch/explore/dataset/100477/"
-      },
-      "method": "Area of all land-cover polygons by class (36.6 km² total).",
-      "caveat": "Planted areas include gardens and parks; 'unsealed' is not the same as 'absorbs well' (see compaction)."
+     "id": "canopy-by-age",
+     "claim": "Around Basel's street trees, the median canopy within 8 m grows with time at the site: about 20 m² for trees there up to 12 years, 46 m² at 13–25 years, 78 m² at 26–50, 118 m² at 51–80 and 138 m² for trees there more than 80 years.",
+     "evidence": "basel-data",
+     "visual": "bars",
+     "source": {
+      "label": "data.bs.ch 100052 tree cadastre + 100357 LiDAR canopy 2024",
+      "url": "https://data.bs.ch/explore/dataset/100357/"
+     },
+     "method": "Canopy pixels within 8 m of each of 12,504 street trees, grouped by years at site (docs/pilots/tree_pit_canopy.py).",
+     "caveat": "The 8 m circle can include neighbouring crowns; years at site is not tree age."
     },
     {
-      "id": "basel-hot-days",
-      "claim": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024.",
-      "evidence": "basel-data",
-      "visual": "trend",
-      "source": {
-        "label": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
-        "url": "https://data.bs.ch/explore/dataset/100254/"
-      },
-      "method": "Days with daily maximum ≥ 30 °C, averaged per period (complete years only).",
-      "caveat": "Series is not homogenised."
+     "id": "interception-size",
+     "claim": "In Santa Monica, a small young tree intercepted 15 % of the rain falling on it, a mature tree up to 66 %.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "Xiao & McPherson, rainfall interception by Santa Monica's urban forest",
+      "url": "https://urbanforestrysouth.org/resources/library/citations/Citation.2004-11-03.P511"
+     },
+     "caveat": "Californian climate and species; interception is highest in small summer storms."
     },
     {
-      "id": "basel-heavy-rain",
-      "claim": "Days with 20 mm of rain or more did not become more frequent in Basel's daily record (5.4 a year in 1961–1990, 6.2 in 1991–2020, 5.2 in 2015–2024). The wettest day on record is 25 May 1872 with 94.8 mm; 26 July 1991 had 85 mm.",
-      "evidence": "basel-data",
-      "visual": "trend",
-      "source": {
-        "label": "data.bs.ch 100254 NBCN daily climate, MeteoSwiss",
-        "url": "https://data.bs.ch/explore/dataset/100254/"
-      },
-      "method": "Days with daily precipitation ≥ 20 mm per period; ranking of daily totals since 1864.",
-      "caveat": "Cloudbursts last minutes to hours; daily totals hide them. Sub-hourly data (MeteoSwiss 10-minute series) is needed for that question."
+     "id": "interception-season",
+     "claim": "The same large plane tree intercepted about 15 % of a 22 mm winter storm (no leaves) but about 80 % of a 20 mm summer storm.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "Xiao & McPherson, rainfall interception by Santa Monica's urban forest",
+      "url": "https://urbanforestrysouth.org/resources/library/citations/Citation.2004-11-03.P511"
+     }
     },
     {
-      "id": "basel-canopy",
-      "claim": "Tree crowns cover about 25 % of the canton (2021 LiDAR evaluation), which has changed only marginally over the past ten years.",
-      "evidence": "official",
-      "visual": "share",
-      "source": {
-        "label": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
-        "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand"
-      }
+     "id": "renewal-rate",
+     "claim": "Basel renews about 1 % of its tree stock a year; the tree cadastre lists over 28,000 trees, about 2,000 more than ten years ago.",
+     "evidence": "official",
+     "visual": "count",
+     "source": {
+      "label": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
+      "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand"
+     }
     },
     {
-      "id": "basel-suitable-streets",
-      "claim": "63 % of Basel's street length (194 km) carries little enough traffic to be rated suitable for sponge measures; 10 % (30 km) needs checking and 27 % (81 km) is not suitable.",
-      "evidence": "basel-data",
-      "visual": "share",
-      "source": {
-        "label": "geo.bs.ch SETV Schwammstadt-Eignung nach Tagesverkehr",
-        "url": "https://api.geo.bs.ch/stac/v1/collections/SETV"
-      },
-      "method": "Sum of segment lengths per suitability class of the canton's model (≤ 2,000 vehicles/day suitable, ≥ 4,000 not suitable).",
-      "caveat": "Traffic is one criterion; utilities, groundwater and space are not in this rating."
+     "id": "old-tree-inference",
+     "claim": "≈ Felling one old street tree removes canopy that a new tree needs several decades to rebuild.",
+     "evidence": "inference",
+     "visual": "quote",
+     "basis": [
+      "canopy-by-age",
+      "interception-size"
+     ],
+     "caveat": "Growth depends on species and root space."
     }
-  ],
-  "interventions": [
+   ]
+  },
+  {
+   "id": "enlarged-tree-pit",
+   "name": "Give trees more root space",
+   "de": "Grössere Baumrabatte",
+   "knowledge_id": "enlarged-tree-pit",
+   "mechanisms": [
+    "SWEAT",
+    "SHADE",
+    "ABSORB"
+   ],
+   "what": "Enlarge the planted area and the soil volume around a street tree, so roots get water and air.",
+   "facts": [
     {
-      "id": "protect-old-trees",
-      "name": "Keep the old trees",
-      "de": "Bäume erhalten",
-      "knowledge_id": null,
-      "mechanisms": [
-        "SHADE",
-        "SWEAT",
-        "STORE"
-      ],
-      "what": "A mature tree cannot be replaced by a young one for decades. Protecting and caring for existing trees is the cheapest sponge measure.",
-      "facts": [
-        {
-          "id": "canopy-by-age",
-          "claim": "Around Basel's street trees, the median canopy within 8 m grows with time at the site: about 20 m² for trees there up to 12 years, 46 m² at 13–25 years, 78 m² at 26–50, 118 m² at 51–80 and 138 m² for trees there more than 80 years.",
-          "evidence": "basel-data",
-          "visual": "bars",
-          "source": {
-            "label": "data.bs.ch 100052 tree cadastre + 100357 LiDAR canopy 2024",
-            "url": "https://data.bs.ch/explore/dataset/100357/"
-          },
-          "method": "Canopy pixels within 8 m of each of 12,504 street trees, grouped by years at site (docs/pilots/tree_pit_canopy.py).",
-          "caveat": "The 8 m circle can include neighbouring crowns; years at site is not tree age."
-        },
-        {
-          "id": "interception-size",
-          "claim": "In Santa Monica, a small young tree intercepted 15 % of the rain falling on it, a mature tree up to 66 %.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "Xiao & McPherson, rainfall interception by Santa Monica's urban forest",
-            "url": "https://urbanforestrysouth.org/resources/library/citations/Citation.2004-11-03.P511"
-          },
-          "caveat": "Californian climate and species; interception is highest in small summer storms."
-        },
-        {
-          "id": "interception-season",
-          "claim": "The same large plane tree intercepted about 15 % of a 22 mm winter storm (no leaves) but about 80 % of a 20 mm summer storm.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "Xiao & McPherson, rainfall interception by Santa Monica's urban forest",
-            "url": "https://urbanforestrysouth.org/resources/library/citations/Citation.2004-11-03.P511"
-          }
-        },
-        {
-          "id": "renewal-rate",
-          "claim": "Basel renews about 1 % of its tree stock a year; the tree cadastre lists over 28,000 trees, about 2,000 more than ten years ago.",
-          "evidence": "official",
-          "visual": "count",
-          "source": {
-            "label": "Stadtgärtnerei Basel-Stadt: städtischer Baumbestand",
-            "url": "https://www.bs.ch/bvd/stadtgaertnerei/unsere-abteilungen/gruenflaechenunterhalt/staedtischer-baumbestand"
-          }
-        },
-        {
-          "id": "old-tree-inference",
-          "claim": "≈ Felling one old street tree removes canopy that a new tree needs several decades to rebuild.",
-          "evidence": "inference",
-          "visual": "quote",
-          "basis": [
-            "canopy-by-age",
-            "interception-size"
-          ],
-          "caveat": "Growth depends on species and root space."
-        }
-      ]
+     "id": "sealed-trees",
+     "claim": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
+     "evidence": "basel-data",
+     "visual": "share",
+     "source": {
+      "label": "data.bs.ch 100052 + 100477",
+      "url": "https://data.bs.ch/explore/dataset/100052/"
+     },
+     "method": "Tree point inside sealed vs planted land-cover polygon.",
+     "caveat": "An enlarged pit still below the mapping threshold counts as sealed."
     },
     {
-      "id": "enlarged-tree-pit",
-      "name": "Give trees more root space",
-      "de": "Grössere Baumrabatte",
-      "knowledge_id": "enlarged-tree-pit",
-      "mechanisms": [
-        "SWEAT",
-        "SHADE",
-        "ABSORB"
-      ],
-      "what": "Enlarge the planted area and the soil volume around a street tree, so roots get water and air.",
-      "facts": [
-        {
-          "id": "sealed-trees",
-          "claim": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
-          "evidence": "basel-data",
-          "visual": "share",
-          "source": {
-            "label": "data.bs.ch 100052 + 100477",
-            "url": "https://data.bs.ch/explore/dataset/100052/"
-          },
-          "method": "Tree point inside sealed vs planted land-cover polygon.",
-          "caveat": "An enlarged pit still below the mapping threshold counts as sealed."
-        },
-        {
-          "id": "bern-36",
-          "claim": "Bern's guidance sets a target root space of 36 m³ per street tree, with pits at least 1 m deep (1.5 m where needed).",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Stadt Bern: Arbeitshilfe Wurzelraum für Strassenbäume",
-            "url": "https://www.bern.ch/themen/planen-und-bauen/bern-baut/arbeitshilfen/wurzelraum-fuer-baeume-im-strassenraum/anhang/arbeitshilfe-wurzelraum-fur-strassenbaume-version.pdf"
-          }
-        },
-        {
-          "id": "small-pits-cool-less",
-          "claim": "Small-leaved limes in Munich cooled their surroundings with up to 2.3 kW (sap flow up to 8 litres an hour); on narrow paved squares with small tree pits the cooling was at least 20 % lower than in open green squares.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "TU München press release, 14 Sept 2016 (Rahman et al.)",
-            "url": "https://www.tum.de/en/about-tum/news/press-releases/details/33394/"
-          }
-        },
-        {
-          "id": "engelgasse",
-          "claim": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Basel-Stadt media release 2016, Engelgasse",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse"
-          }
-        }
-      ]
+     "id": "bern-36",
+     "claim": "Bern's guidance sets a target root space of 36 m³ per street tree, with pits at least 1 m deep (1.5 m where needed).",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Stadt Bern: Arbeitshilfe Wurzelraum für Strassenbäume",
+      "url": "https://www.bern.ch/themen/planen-und-bauen/bern-baut/arbeitshilfen/wurzelraum-fuer-baeume-im-strassenraum/anhang/arbeitshilfe-wurzelraum-fur-strassenbaume-version.pdf"
+     }
     },
     {
-      "id": "tree-trench",
-      "name": "Tree trench (sponge root bed)",
-      "de": "Baumrigole",
-      "knowledge_id": "tree-trench",
-      "mechanisms": [
-        "STORE",
-        "SLOW",
-        "SWEAT",
-        "SHADE"
-      ],
-      "what": "A connected bed of load-bearing substrate under the pavement: roots grow in it, and runoff from the street is led into it.",
-      "facts": [
-        {
-          "id": "stockholm",
-          "claim": "The Stockholm method fills a large pit with coarse stones that carry the pavement; the gaps hold compost and biochar, roots, air and water. Trees grow larger and the bed takes street runoff.",
-          "evidence": "research",
-          "visual": "slice",
-          "source": {
-            "label": "Vermont Urban & Community Forestry: Using the Stockholm planting method",
-            "url": "https://vtcommunityforestry.org/sites/default/files/2025-06/Using-the-Stockholm-Planting-Method-to-Grow-Bigger-Trees.pdf"
-          }
-        },
-        {
-          "id": "voltanord-pilot",
-          "claim": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved).",
-          "evidence": "official",
-          "visual": "map",
-          "source": {
-            "label": "Regierungsratsbeschluss P251765",
-            "url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse"
-          }
-        },
-        {
-          "id": "zhaw-streets",
-          "claim": "ZHAW develops vegetation building blocks with draining, resource-saving substrates for three Basel streets: Therwilerstrasse, Lysbüchelstrasse and Weinlagerstrasse.",
-          "evidence": "research",
-          "visual": "map",
-          "source": {
-            "label": "ZHAW project 74640",
-            "url": "https://www.zhaw.ch/de/forschung/projekt/74640"
-          }
-        }
-      ]
+     "id": "small-pits-cool-less",
+     "claim": "Small-leaved limes in Munich cooled their surroundings with up to 2.3 kW (sap flow up to 8 litres an hour); on narrow paved squares with small tree pits the cooling was at least 20 % lower than in open green squares.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "TU München press release, 14 Sept 2016 (Rahman et al.)",
+      "url": "https://www.tum.de/en/about-tum/news/press-releases/details/33394/"
+     }
     },
     {
-      "id": "young-tree-care",
-      "name": "Water the young trees",
-      "de": "Jungbäume wässern",
-      "knowledge_id": null,
-      "mechanisms": [
-        "SWEAT"
-      ],
-      "what": "Newly planted trees need regular water for their first years, especially in hot, dry summers.",
-      "facts": [
-        {
-          "id": "50-litres",
-          "claim": "The Woodland Trust advises about 50 litres a week for newly planted street trees in summer, for the first three years. Richmond (London) waters with about 10 litres every two days and plans 19 contractor visits a year for the first three years.",
-          "evidence": "official",
-          "visual": "count",
-          "source": {
-            "label": "Woodland Trust press release, June 2023; London Borough of Richmond: tree watering",
-            "url": "https://woodlandtrust.org.uk/press-centre/2023/06/water-your-street-trees"
-          },
-          "caveat": "UK guidance, not Basel."
-        },
-        {
-          "id": "young-mortality",
-          "claim": "A 2009 survey cited by the Woodland Trust found that 30 % of newly planted street trees die in their first years, often up to 50 %.",
-          "evidence": "research",
-          "visual": "count",
-          "source": {
-            "label": "Woodland Trust press release, June 2023",
-            "url": "https://woodlandtrust.org.uk/press-centre/2023/06/water-your-street-trees"
-          },
-          "caveat": "UK figure from a survey cited by an NGO; causes vary, dry weather is one."
-        },
-        {
-          "id": "hot-days-link",
-          "claim": "≈ With hot days in Basel up from about 9 a year (1961–1990) to about 22 (2015–2024), the first summers are getting harder for new trees.",
-          "evidence": "inference",
-          "visual": "trend",
-          "basis": [
-            "basel-hot-days"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "depave",
-      "name": "Unseal",
-      "de": "Entsiegeln",
-      "knowledge_id": "depave",
-      "mechanisms": [
-        "ABSORB",
-        "SWEAT",
-        "COOL"
-      ],
-      "what": "Remove asphalt or concrete where it is not needed and replace it with soil and planting.",
-      "facts": [
-        {
-          "id": "sealed-share",
-          "claim": "45 % of Basel-Stadt's ground is sealed; roads alone are 347 ha, sidewalks 153 ha.",
-          "evidence": "basel-data",
-          "visual": "share",
-          "source": {
-            "label": "data.bs.ch 100477 Bodenbedeckung",
-            "url": "https://data.bs.ch/explore/dataset/100477/"
-          },
-          "method": "Area of all land-cover polygons by class (36.6 km² total), see context fact basel-sealed."
-        },
-        {
-          "id": "grass-vs-concrete",
-          "claim": "In Manchester, grass lowered maximum surface temperatures by up to 24 °C compared with concrete; tree shade by up to 19 °C, and shade cut the temperature people feel (globe temperature) by 5–7 °C.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "Armson, Stringer & Ennos (2012), Urban Forestry & Urban Greening",
-            "url": "https://research.manchester.ac.uk/en/publications/the-effect-of-tree-shade-and-grass-on-surface-and-globe-temperatu/"
-          }
-        },
-        {
-          "id": "compaction",
-          "claim": "Compaction by construction cut soil infiltration by 70–99 % in a Florida study; without deliberate restoration, recovery can take decades.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "Gregor et al., Journal of Soil and Water Conservation (compaction study)",
-            "url": "https://abe.ufl.edu/faculty/mdukes/pdf/stormwater/Gregor-et-%20al-JSWC-compaction-article.pdf"
-          },
-          "caveat": "Sandy Florida soils; the point is that unsealing alone is not enough, the soil must be loosened."
-        },
-        {
-          "id": "sevogel",
-          "claim": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026).",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Basel-Stadt media release 2025, Sevogelstrasse",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
-          }
-        }
-      ]
-    },
-    {
-      "id": "permeable-parking",
-      "name": "Permeable parking",
-      "de": "Versickerungsfähige Parkplätze",
-      "knowledge_id": "permeable-parking",
-      "mechanisms": [
-        "ABSORB",
-        "SLOW"
-      ],
-      "what": "Parking bays paved with grass-joint stones or open joints let rain soak in where cars stand.",
-      "facts": [
-        {
-          "id": "sevogel-bays",
-          "claim": "Sevogelstrasse gets 14 parking bays with grass-joint stones; parking there goes from 36 to 19 spaces.",
-          "evidence": "official",
-          "visual": "count",
-          "source": {
-            "label": "Basel-Stadt media release 2025, Sevogelstrasse",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
-          }
-        },
-        {
-          "id": "clogging",
-          "claim": "Studies report the infiltration capacity of permeable pavements falling by 63–100 % over time as joints clog; with regular cleaning, systems still performed after eight years.",
-          "evidence": "research",
-          "visual": "trend",
-          "source": {
-            "label": "Villanova Urban Stormwater Partnership: permeable pavement",
-            "url": "https://www.villanova.edu/content/dam/villanova/engineering/VUSP/2022/Permeable-Pavement.pdf"
-          },
-          "caveat": "Figures compiled from several studies; maintenance makes the difference."
-        },
-        {
-          "id": "basel-test",
-          "claim": "Basel tested surfaces for depaved parking spaces in 2022.",
-          "evidence": "official",
-          "visual": "quote",
-          "source": {
-            "label": "Basel-Stadt media release 2022",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze"
-          }
-        }
-      ]
-    },
-    {
-      "id": "rain-garden",
-      "name": "Rain garden",
-      "de": "Versickerungsmulde",
-      "knowledge_id": "rain-garden",
-      "mechanisms": [
-        "STORE",
-        "ABSORB",
-        "SWEAT"
-      ],
-      "what": "A shallow planted hollow that collects runoff from nearby paving and lets it soak in or evaporate.",
-      "facts": [
-        {
-          "id": "bioretention-66",
-          "claim": "Across 20 US studies, bioretention retained, infiltrated or evaporated on average 66 % of the runoff flowing into it; unlined systems reduced volumes by 60–92 %.",
-          "evidence": "research",
-          "visual": "share",
-          "source": {
-            "label": "STEP bioretention synthesis (Toronto)",
-            "url": "https://sustainabletechnologies.ca/app/uploads/2019/10/STEP_Bioretention-Synthesis_Tech-Brief-New-Template-2019-Oct-10.-2019.pdf"
-          }
-        },
-        {
-          "id": "sevogel-beds",
-          "claim": "At Sevogelstrasse the new trees stand in mulch beds where rain from sidewalk and road collects and soaks in.",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Basel-Stadt media release 2025, Sevogelstrasse",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
-          }
-        },
-        {
-          "id": "groundwater-room",
-          "claim": "The shallowest groundwater level over 10 years lies 0.8 m to 20.8 m below ground at Basel's monitoring stations (median 9.8 m).",
-          "evidence": "basel-data",
-          "visual": "map",
-          "source": {
-            "label": "data.bs.ch 100180 groundwater statistics",
-            "url": "https://data.bs.ch/explore/dataset/100180/"
-          },
-          "method": "Terrain height minus 10-year maximum level, shallowest per station (81 stations).",
-          "caveat": "Point values; not interpolated between stations."
-        },
-        {
-          "id": "groundwater-inference",
-          "claim": "≈ Where groundwater can come within a metre or two of the surface (near the Birs), infiltration needs care; at most stations there are many metres of room.",
-          "evidence": "inference",
-          "visual": "map",
-          "basis": [
-            "groundwater-room"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "curb-cut",
-      "name": "Open the kerb",
-      "de": "Randsteinöffnung",
-      "knowledge_id": "curb-cut",
-      "mechanisms": [
-        "SLOW",
-        "STORE"
-      ],
-      "what": "A gap in the kerb lets road runoff flow into a rain garden or tree trench instead of the gully.",
-      "facts": [
-        {
-          "id": "inlet-design",
-          "claim": "Inlet design decides whether it works: small slope differences let low flows bypass the opening, and litter, leaves and sediment can block it.",
-          "evidence": "research",
-          "visual": "slice",
-          "source": {
-            "label": "NACTO Urban Street Stormwater Guide: inlet design",
-            "url": "https://nacto.org/publication/urban-street-stormwater-guide/stormwater-elements/bioretention-design-considerations/inlet-design"
-          }
-        },
-        {
-          "id": "curb-cut-definition",
-          "claim": "Curb cuts are breaks along a curb that let water flow into a planted bed.",
-          "evidence": "research",
-          "visual": "slice",
-          "source": {
-            "label": "STEP LID guide: Inlets",
-            "url": "https://wiki.sustainabletechnologies.ca/wiki/Inlets"
-          }
-        }
-      ]
-    },
-    {
-      "id": "keep-inlets-clear",
-      "name": "Keep gullies clear",
-      "de": "Strassenabläufe reinigen",
-      "knowledge_id": null,
-      "mechanisms": [
-        "SLOW"
-      ],
-      "what": "Leaves, litter and sand in gullies and inlets cause much of the local flooding; cleaning is a sponge action too.",
-      "facts": [
-        {
-          "id": "gullies-70",
-          "claim": "In 12,000 resident flood reports from Haarlem and Breda, 70 % of the problems were caused by blocked gully pots, not by too little pipe capacity. Over ten years their damage equalled that of a once-in-a-century flood.",
-          "evidence": "research",
-          "visual": "share",
-          "source": {
-            "label": "TU Delft, M.-C. ten Veldhuis (2010)",
-            "url": "https://delta.tudelft.nl/?p=109226"
-          }
-        },
-        {
-          "id": "clogging-volume",
-          "claim": "Modelling showed clogged grated inlets capture about 7 % less water when mildly clogged and nearly 50 % less when severely clogged.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "Universidad de Zaragoza: impact of grated inlet clogging on urban pluvial flooding",
-            "url": "https://zaguan.unizar.es/record/164077"
-          }
-        }
-      ]
-    },
-    {
-      "id": "green-roof",
-      "name": "Green roof",
-      "de": "Dachbegrünung (extensiv)",
-      "knowledge_id": "green-roof",
-      "mechanisms": [
-        "STORE",
-        "SLOW",
-        "SWEAT",
-        "COOL"
-      ],
-      "what": "A thin planted layer on a flat roof holds back and evaporates part of the rain.",
-      "facts": [
-        {
-          "id": "bpg-72",
-          "claim": "In Basel-Stadt, flat roofs of 10 m² and more must be greened when built or renovated (§ 72 BPG), with at least 15 cm of regional soil and 20 cm on a third of the roof.",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
-            "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern"
-          }
-        },
-        {
-          "id": "retention-50",
-          "claim": "Extensive green roofs in Southern Ontario retain 60–70 % of rain in the warm season and about 50 % over a full year; a roof in Syracuse retained 56 % over 21 months.",
-          "evidence": "research",
-          "visual": "share",
-          "source": {
-            "label": "STEP LID guide: green roofs",
-            "url": "https://wiki.sustainabletechnologies.ca/wiki/Special:MobileDiff/15606"
-          },
-          "caveat": "North American climates; most is retained in small storms, much less in long heavy rain."
-        }
-      ]
-    },
-    {
-      "id": "roof-garden",
-      "name": "Roof garden",
-      "de": "Dachgarten (intensiv)",
-      "knowledge_id": "green-roof",
-      "mechanisms": [
-        "STORE",
-        "SWEAT",
-        "COOL"
-      ],
-      "what": "Deeper substrate where the structure allows: more water held, more evaporation, more use.",
-      "facts": [
-        {
-          "id": "deeper-holds-more",
-          "claim": "Depending on the building structure, thicker substrate can be used and roofs planted as gardens; the more intensive greening holds back and evaporates more water, helping to cool in summer. Semi-intensive and intensive roofs also need watering.",
-          "evidence": "official",
-          "visual": "slice",
-          "source": {
-            "label": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
-            "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern"
-          }
-        }
-      ]
-    },
-    {
-      "id": "rain-barrel",
-      "name": "Rain barrel or cistern",
-      "de": "Regentonne / Zisterne",
-      "knowledge_id": null,
-      "mechanisms": [
-        "STORE"
-      ],
-      "what": "Collect roof water at the downpipe for watering; it only helps in a storm if it is empty before the rain.",
-      "facts": [
-        {
-          "id": "full-barrel",
-          "claim": "A household study found people rarely empty their rain barrels, and a full barrel does nothing in a storm; a slow-release valve that drains it over 24 hours was proposed.",
-          "evidence": "research",
-          "visual": "quote",
-          "source": {
-            "label": "Insurance Bureau of Canada, Wingham rain barrel study (2012)",
-            "url": "https://insurance-canada.ca/2012/06/01/ibc-old-fashioned-rain-barrels-can-help-solve-a-modern-day-problem/"
-          }
-        },
-        {
-          "id": "roof-plus-cistern",
-          "claim": "A modelling study estimated 87 % annual retention for a green roof that re-used water from a cistern, against 43 % for the green roof alone.",
-          "evidence": "research",
-          "visual": "bars",
-          "source": {
-            "label": "STEP LID guide: green roofs (Florida study)",
-            "url": "https://wiki.sustainabletechnologies.ca/wiki/Special:MobileDiff/15606"
-          }
-        }
-      ]
-    },
-    {
-      "id": "downpipe-disconnection",
-      "name": "Disconnect the downpipe",
-      "de": "Fallrohr abkoppeln",
-      "knowledge_id": null,
-      "mechanisms": [
-        "ABSORB",
-        "SLOW"
-      ],
-      "what": "Lead roof water into a garden or bed instead of the sewer.",
-      "facts": [
-        {
-          "id": "portland",
-          "claim": "Portland (Oregon) disconnected more than 50,000 downspouts since 1995, removing over 1.2 billion gallons (about 4.5 million m³) of stormwater a year from its combined sewer.",
-          "evidence": "official",
-          "visual": "count",
-          "source": {
-            "label": "City of Portland, Downspout Disconnection Program record",
-            "url": "https://efiles.portlandoregon.gov/record/3548994/file/document"
-          },
-          "caveat": "Program figures as reported by the city."
-        }
-      ]
-    },
-    {
-      "id": "water-square",
-      "name": "Water square",
-      "de": "Wasserplatz",
-      "knowledge_id": null,
-      "mechanisms": [
-        "STORE",
-        "SLOW"
-      ],
-      "what": "A public square that is a place to sit and play when dry and a temporary storage basin in heavy rain.",
-      "facts": [
-        {
-          "id": "benthemplein",
-          "claim": "Rotterdam's Benthemplein water square can store about 1,800 m³ of rainwater.",
-          "evidence": "official",
-          "visual": "count",
-          "source": {
-            "label": "Klimaatadaptatie Nederland: Rotterdam water squares",
-            "url": "https://klimaatadaptatienederland.nl/en/@163422/rotterdam-water"
-          }
-        }
-      ]
-    },
-    {
-      "id": "dig-once",
-      "name": "Dig once",
-      "de": "Gleichzeitig bauen",
-      "knowledge_id": null,
-      "mechanisms": [
-        "ABSORB",
-        "STORE",
-        "SHADE"
-      ],
-      "what": "When a street is opened anyway for pipes, heating or tracks, rebuild it as a sponge street in the same works.",
-      "facts": [
-        {
-          "id": "fernwaerme-30",
-          "claim": "Basel uses the district-heating build-out (about 60 km more by 2037) to redesign streets for a better climate: heat protection on about 30 streets so far, with new trees, green areas and unsealing.",
-          "evidence": "official",
-          "visual": "map",
-          "source": {
-            "label": "Basel-Stadt media release, 16 July 2025",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-kanton-sorgt-anlaesslich-des-fernwaermeausbaus-fuer-besseren-hitzeschutz-auf-gut-30-strassen"
-          }
-        },
-        {
-          "id": "fernwaerme-55",
-          "claim": "55 % of Basel's district-heating projects hold potential for unsealing and greening.",
-          "evidence": "official",
-          "visual": "share",
-          "source": {
-            "label": "Basel-Stadt media release 2025, Sevogelstrasse",
-            "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
-          }
-        },
-        {
-          "id": "permit-trail",
-          "claim": "Basel's public-ground permits name utility, sewer, heating, water, gas, electricity or house-connection works in 7,032 construction-site and excavation permits; 334 of them end after 3 October 2026.",
-          "evidence": "basel-data",
-          "visual": "map",
-          "source": {
-            "label": "data.bs.ch 100018 Allmendbewilligungen",
-            "url": "https://data.bs.ch/explore/dataset/100018/"
-          },
-          "method": "Keyword match on permit texts (solutions/data-charter-map/fetch.mjs).",
-          "caveat": "Permits show activity, not the network."
-        },
-        {
-          "id": "dig-once-inference",
-          "claim": "≈ Each upcoming permit is a window: the street is open anyway, so a tree trench or unsealing costs less than on its own.",
-          "evidence": "inference",
-          "visual": "map",
-          "basis": [
-            "permit-trail",
-            "fernwaerme-55"
-          ]
-        }
-      ]
+     "id": "engelgasse",
+     "claim": "In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Basel-Stadt media release 2016, Engelgasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse"
+     }
     }
-  ]
+   ]
+  },
+  {
+   "id": "tree-trench",
+   "name": "Tree trench (sponge root bed)",
+   "de": "Baumrigole",
+   "knowledge_id": "tree-trench",
+   "mechanisms": [
+    "STORE",
+    "SLOW",
+    "SWEAT",
+    "SHADE"
+   ],
+   "what": "A connected bed of load-bearing substrate under the pavement: roots grow in it, and runoff from the street is led into it.",
+   "facts": [
+    {
+     "id": "stockholm",
+     "claim": "The Stockholm method fills a large pit with coarse stones that carry the pavement; the gaps hold compost and biochar, roots, air and water. Trees grow larger and the bed takes street runoff.",
+     "evidence": "research",
+     "visual": "slice",
+     "source": {
+      "label": "Vermont Urban & Community Forestry: Using the Stockholm planting method",
+      "url": "https://vtcommunityforestry.org/sites/default/files/2025-06/Using-the-Stockholm-Planting-Method-to-Grow-Bigger-Trees.pdf"
+     }
+    },
+    {
+     "id": "voltanord-pilot",
+     "claim": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved).",
+     "evidence": "official",
+     "visual": "map",
+     "source": {
+      "label": "Regierungsratsbeschluss P251765",
+      "url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse"
+     }
+    },
+    {
+     "id": "zhaw-streets",
+     "claim": "ZHAW develops vegetation building blocks with draining, resource-saving substrates for three Basel streets: Therwilerstrasse, Lysbüchelstrasse and Weinlagerstrasse.",
+     "evidence": "research",
+     "visual": "map",
+     "source": {
+      "label": "ZHAW project 74640",
+      "url": "https://www.zhaw.ch/de/forschung/projekt/74640"
+     }
+    }
+   ]
+  },
+  {
+   "id": "young-tree-care",
+   "name": "Water the young trees",
+   "de": "Jungbäume wässern",
+   "knowledge_id": null,
+   "mechanisms": [
+    "SWEAT"
+   ],
+   "what": "Newly planted trees need regular water for their first years, especially in hot, dry summers.",
+   "facts": [
+    {
+     "id": "50-litres",
+     "claim": "The Woodland Trust advises about 50 litres a week for newly planted street trees in summer, for the first three years. Richmond (London) waters with about 10 litres every two days and plans 19 contractor visits a year for the first three years.",
+     "evidence": "official",
+     "visual": "count",
+     "source": {
+      "label": "Woodland Trust press release, June 2023; London Borough of Richmond: tree watering",
+      "url": "https://woodlandtrust.org.uk/press-centre/2023/06/water-your-street-trees"
+     },
+     "caveat": "UK guidance, not Basel."
+    },
+    {
+     "id": "young-mortality",
+     "claim": "A 2009 survey cited by the Woodland Trust found that 30 % of newly planted street trees die in their first years, often up to 50 %.",
+     "evidence": "research",
+     "visual": "count",
+     "source": {
+      "label": "Woodland Trust press release, June 2023",
+      "url": "https://woodlandtrust.org.uk/press-centre/2023/06/water-your-street-trees"
+     },
+     "caveat": "UK figure from a survey cited by an NGO; causes vary, dry weather is one."
+    },
+    {
+     "id": "hot-days-link",
+     "claim": "≈ With hot days in Basel up from about 9 a year (1961–1990) to about 22 (2015–2024), the first summers are getting harder for new trees.",
+     "evidence": "inference",
+     "visual": "trend",
+     "basis": [
+      "basel-hot-days"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "depave",
+   "name": "Unseal",
+   "de": "Entsiegeln",
+   "knowledge_id": "depave",
+   "mechanisms": [
+    "ABSORB",
+    "SWEAT",
+    "COOL"
+   ],
+   "what": "Remove asphalt or concrete where it is not needed and replace it with soil and planting.",
+   "facts": [
+    {
+     "id": "sealed-share",
+     "claim": "45 % of Basel-Stadt's ground is sealed; roads alone are 347 ha, sidewalks 153 ha.",
+     "evidence": "basel-data",
+     "visual": "share",
+     "source": {
+      "label": "data.bs.ch 100477 Bodenbedeckung",
+      "url": "https://data.bs.ch/explore/dataset/100477/"
+     },
+     "method": "Area of all land-cover polygons by class (36.6 km² total), see context fact basel-sealed."
+    },
+    {
+     "id": "grass-vs-concrete",
+     "claim": "In Manchester, grass lowered maximum surface temperatures by up to 24 °C compared with concrete; tree shade by up to 19 °C, and shade cut the temperature people feel (globe temperature) by 5–7 °C.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "Armson, Stringer & Ennos (2012), Urban Forestry & Urban Greening",
+      "url": "https://research.manchester.ac.uk/en/publications/the-effect-of-tree-shade-and-grass-on-surface-and-globe-temperatu/"
+     }
+    },
+    {
+     "id": "compaction",
+     "claim": "Compaction by construction cut soil infiltration by 70–99 % in a Florida study; without deliberate restoration, recovery can take decades.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "Gregor et al., Journal of Soil and Water Conservation (compaction study)",
+      "url": "https://abe.ufl.edu/faculty/mdukes/pdf/stormwater/Gregor-et-%20al-JSWC-compaction-article.pdf"
+     },
+     "caveat": "Sandy Florida soils; the point is that unsealing alone is not enough, the soil must be loosened."
+    },
+    {
+     "id": "sevogel",
+     "claim": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026).",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Basel-Stadt media release 2025, Sevogelstrasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
+     }
+    }
+   ]
+  },
+  {
+   "id": "permeable-parking",
+   "name": "Permeable parking",
+   "de": "Versickerungsfähige Parkplätze",
+   "knowledge_id": "permeable-parking",
+   "mechanisms": [
+    "ABSORB",
+    "SLOW"
+   ],
+   "what": "Parking bays paved with grass-joint stones or open joints let rain soak in where cars stand.",
+   "facts": [
+    {
+     "id": "sevogel-bays",
+     "claim": "Sevogelstrasse gets 14 parking bays with grass-joint stones; parking there goes from 36 to 19 spaces.",
+     "evidence": "official",
+     "visual": "count",
+     "source": {
+      "label": "Basel-Stadt media release 2025, Sevogelstrasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
+     }
+    },
+    {
+     "id": "clogging",
+     "claim": "Studies report the infiltration capacity of permeable pavements falling by 63–100 % over time as joints clog; with regular cleaning, systems still performed after eight years.",
+     "evidence": "research",
+     "visual": "trend",
+     "source": {
+      "label": "Villanova Urban Stormwater Partnership: permeable pavement",
+      "url": "https://www.villanova.edu/content/dam/villanova/engineering/VUSP/2022/Permeable-Pavement.pdf"
+     },
+     "caveat": "Figures compiled from several studies; maintenance makes the difference."
+    },
+    {
+     "id": "basel-test",
+     "claim": "Basel tested surfaces for depaved parking spaces in 2022.",
+     "evidence": "official",
+     "visual": "quote",
+     "source": {
+      "label": "Basel-Stadt media release 2022",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2022-die-suche-nach-dem-besten-untergrund-fuer-entsiegelte-parkplaetze"
+     }
+    }
+   ]
+  },
+  {
+   "id": "rain-garden",
+   "name": "Rain garden",
+   "de": "Versickerungsmulde",
+   "knowledge_id": "rain-garden",
+   "mechanisms": [
+    "STORE",
+    "ABSORB",
+    "SWEAT"
+   ],
+   "what": "A shallow planted hollow that collects runoff from nearby paving and lets it soak in or evaporate.",
+   "facts": [
+    {
+     "id": "bioretention-66",
+     "claim": "Across 20 US studies, bioretention retained, infiltrated or evaporated on average 66 % of the runoff flowing into it; unlined systems reduced volumes by 60–92 %.",
+     "evidence": "research",
+     "visual": "share",
+     "source": {
+      "label": "STEP bioretention synthesis (Toronto)",
+      "url": "https://sustainabletechnologies.ca/app/uploads/2019/10/STEP_Bioretention-Synthesis_Tech-Brief-New-Template-2019-Oct-10.-2019.pdf"
+     }
+    },
+    {
+     "id": "sevogel-beds",
+     "claim": "At Sevogelstrasse the new trees stand in mulch beds where rain from sidewalk and road collects and soaks in.",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Basel-Stadt media release 2025, Sevogelstrasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
+     }
+    },
+    {
+     "id": "groundwater-room",
+     "claim": "The shallowest groundwater level over 10 years lies 0.8 m to 20.8 m below ground at Basel's monitoring stations (median 9.8 m).",
+     "evidence": "basel-data",
+     "visual": "map",
+     "source": {
+      "label": "data.bs.ch 100180 groundwater statistics",
+      "url": "https://data.bs.ch/explore/dataset/100180/"
+     },
+     "method": "Terrain height minus 10-year maximum level, shallowest per station (81 stations).",
+     "caveat": "Point values; not interpolated between stations."
+    },
+    {
+     "id": "groundwater-inference",
+     "claim": "≈ Where groundwater can come within a metre or two of the surface (near the Birs), infiltration needs care; at most stations there are many metres of room.",
+     "evidence": "inference",
+     "visual": "map",
+     "basis": [
+      "groundwater-room"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "curb-cut",
+   "name": "Open the kerb",
+   "de": "Randsteinöffnung",
+   "knowledge_id": "curb-cut",
+   "mechanisms": [
+    "SLOW",
+    "STORE"
+   ],
+   "what": "A gap in the kerb lets road runoff flow into a rain garden or tree trench instead of the gully.",
+   "facts": [
+    {
+     "id": "inlet-design",
+     "claim": "Inlet design decides whether it works: small slope differences let low flows bypass the opening, and litter, leaves and sediment can block it.",
+     "evidence": "research",
+     "visual": "slice",
+     "source": {
+      "label": "NACTO Urban Street Stormwater Guide: inlet design",
+      "url": "https://nacto.org/publication/urban-street-stormwater-guide/stormwater-elements/bioretention-design-considerations/inlet-design"
+     }
+    },
+    {
+     "id": "curb-cut-definition",
+     "claim": "Curb cuts are breaks along a curb that let water flow into a planted bed.",
+     "evidence": "research",
+     "visual": "slice",
+     "source": {
+      "label": "STEP LID guide: Inlets",
+      "url": "https://wiki.sustainabletechnologies.ca/wiki/Inlets"
+     }
+    }
+   ]
+  },
+  {
+   "id": "keep-inlets-clear",
+   "name": "Keep gullies clear",
+   "de": "Strassenabläufe reinigen",
+   "knowledge_id": null,
+   "mechanisms": [
+    "SLOW"
+   ],
+   "what": "Leaves, litter and sand in gullies and inlets cause much of the local flooding; cleaning is a sponge action too.",
+   "facts": [
+    {
+     "id": "gullies-70",
+     "claim": "In 12,000 resident flood reports from Haarlem and Breda, 70 % of the problems were caused by blocked gully pots, not by too little pipe capacity. Over ten years their damage equalled that of a once-in-a-century flood.",
+     "evidence": "research",
+     "visual": "share",
+     "source": {
+      "label": "TU Delft, M.-C. ten Veldhuis (2010)",
+      "url": "https://delta.tudelft.nl/?p=109226"
+     }
+    },
+    {
+     "id": "clogging-volume",
+     "claim": "Modelling showed clogged grated inlets capture about 7 % less water when mildly clogged and nearly 50 % less when severely clogged.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "Universidad de Zaragoza: impact of grated inlet clogging on urban pluvial flooding",
+      "url": "https://zaguan.unizar.es/record/164077"
+     }
+    }
+   ]
+  },
+  {
+   "id": "green-roof",
+   "name": "Green roof",
+   "de": "Dachbegrünung (extensiv)",
+   "knowledge_id": "green-roof",
+   "mechanisms": [
+    "STORE",
+    "SLOW",
+    "SWEAT",
+    "COOL"
+   ],
+   "what": "A thin planted layer on a flat roof holds back and evaporates part of the rain.",
+   "facts": [
+    {
+     "id": "bpg-72",
+     "claim": "In Basel-Stadt, flat roofs of 10 m² and more must be greened when built or renovated (§ 72 BPG), with at least 15 cm of regional soil and 20 cm on a third of the roof.",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
+      "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern"
+     }
+    },
+    {
+     "id": "retention-50",
+     "claim": "Extensive green roofs in Southern Ontario retain 60–70 % of rain in the warm season and about 50 % over a full year; a roof in Syracuse retained 56 % over 21 months.",
+     "evidence": "research",
+     "visual": "share",
+     "source": {
+      "label": "STEP LID guide: green roofs",
+      "url": "https://wiki.sustainabletechnologies.ca/wiki/Special:MobileDiff/15606"
+     },
+     "caveat": "North American climates; most is retained in small storms, much less in long heavy rain."
+    }
+   ]
+  },
+  {
+   "id": "roof-garden",
+   "name": "Roof garden",
+   "de": "Dachgarten (intensiv)",
+   "knowledge_id": "green-roof",
+   "mechanisms": [
+    "STORE",
+    "SWEAT",
+    "COOL"
+   ],
+   "what": "Deeper substrate where the structure allows: more water held, more evaporation, more use.",
+   "facts": [
+    {
+     "id": "deeper-holds-more",
+     "claim": "Depending on the building structure, thicker substrate can be used and roofs planted as gardens; the more intensive greening holds back and evaporates more water, helping to cool in summer. Semi-intensive and intensive roofs also need watering.",
+     "evidence": "official",
+     "visual": "slice",
+     "source": {
+      "label": "Stadtgärtnerei Basel-Stadt: Stadtnatur fördern",
+      "url": "https://www.bs.ch/bvd/stadtgaertnerei/biodiversitaet/stadtnatur-foerdern"
+     }
+    }
+   ]
+  },
+  {
+   "id": "rain-barrel",
+   "name": "Rain barrel or cistern",
+   "de": "Regentonne / Zisterne",
+   "knowledge_id": null,
+   "mechanisms": [
+    "STORE"
+   ],
+   "what": "Collect roof water at the downpipe for watering; it only helps in a storm if it is empty before the rain.",
+   "facts": [
+    {
+     "id": "full-barrel",
+     "claim": "A household study found people rarely empty their rain barrels, and a full barrel does nothing in a storm; a slow-release valve that drains it over 24 hours was proposed.",
+     "evidence": "research",
+     "visual": "quote",
+     "source": {
+      "label": "Insurance Bureau of Canada, Wingham rain barrel study (2012)",
+      "url": "https://insurance-canada.ca/2012/06/01/ibc-old-fashioned-rain-barrels-can-help-solve-a-modern-day-problem/"
+     }
+    },
+    {
+     "id": "roof-plus-cistern",
+     "claim": "A modelling study estimated 87 % annual retention for a green roof that re-used water from a cistern, against 43 % for the green roof alone.",
+     "evidence": "research",
+     "visual": "bars",
+     "source": {
+      "label": "STEP LID guide: green roofs (Florida study)",
+      "url": "https://wiki.sustainabletechnologies.ca/wiki/Special:MobileDiff/15606"
+     }
+    }
+   ]
+  },
+  {
+   "id": "downpipe-disconnection",
+   "name": "Disconnect the downpipe",
+   "de": "Fallrohr abkoppeln",
+   "knowledge_id": null,
+   "mechanisms": [
+    "ABSORB",
+    "SLOW"
+   ],
+   "what": "Lead roof water into a garden or bed instead of the sewer.",
+   "facts": [
+    {
+     "id": "portland",
+     "claim": "Portland (Oregon) disconnected more than 50,000 downspouts since 1995, removing over 1.2 billion gallons (about 4.5 million m³) of stormwater a year from its combined sewer.",
+     "evidence": "official",
+     "visual": "count",
+     "source": {
+      "label": "City of Portland, Downspout Disconnection Program record",
+      "url": "https://efiles.portlandoregon.gov/record/3548994/file/document"
+     },
+     "caveat": "Program figures as reported by the city."
+    }
+   ]
+  },
+  {
+   "id": "water-square",
+   "name": "Water square",
+   "de": "Wasserplatz",
+   "knowledge_id": null,
+   "mechanisms": [
+    "STORE",
+    "SLOW"
+   ],
+   "what": "A public square that is a place to sit and play when dry and a temporary storage basin in heavy rain.",
+   "facts": [
+    {
+     "id": "benthemplein",
+     "claim": "Rotterdam's Benthemplein water square can store about 1,800 m³ of rainwater.",
+     "evidence": "official",
+     "visual": "count",
+     "source": {
+      "label": "Klimaatadaptatie Nederland: Rotterdam water squares",
+      "url": "https://klimaatadaptatienederland.nl/en/@163422/rotterdam-water"
+     }
+    }
+   ]
+  },
+  {
+   "id": "dig-once",
+   "name": "Dig once",
+   "de": "Gleichzeitig bauen",
+   "knowledge_id": null,
+   "mechanisms": [
+    "ABSORB",
+    "STORE",
+    "SHADE"
+   ],
+   "what": "When a street is opened anyway for pipes, heating or tracks, rebuild it as a sponge street in the same works.",
+   "facts": [
+    {
+     "id": "fernwaerme-30",
+     "claim": "Basel uses the district-heating build-out (about 60 km more by 2037) to redesign streets for a better climate: heat protection on about 30 streets so far, with new trees, green areas and unsealing.",
+     "evidence": "official",
+     "visual": "map",
+     "source": {
+      "label": "Basel-Stadt media release, 16 July 2025",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-kanton-sorgt-anlaesslich-des-fernwaermeausbaus-fuer-besseren-hitzeschutz-auf-gut-30-strassen"
+     }
+    },
+    {
+     "id": "fernwaerme-55",
+     "claim": "55 % of Basel's district-heating projects hold potential for unsealing and greening.",
+     "evidence": "official",
+     "visual": "share",
+     "source": {
+      "label": "Basel-Stadt media release 2025, Sevogelstrasse",
+      "url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau"
+     }
+    },
+    {
+     "id": "permit-trail",
+     "claim": "Basel's public-ground permits name utility, sewer, heating, water, gas, electricity or house-connection works in 7,032 construction-site and excavation permits; 334 of them end after 3 October 2026.",
+     "evidence": "basel-data",
+     "visual": "map",
+     "source": {
+      "label": "data.bs.ch 100018 Allmendbewilligungen",
+      "url": "https://data.bs.ch/explore/dataset/100018/"
+     },
+     "method": "Keyword match on permit texts (solutions/data-charter-map/fetch.mjs).",
+     "caveat": "Permits show activity, not the network."
+    },
+    {
+     "id": "dig-once-inference",
+     "claim": "≈ Each upcoming permit is a window: the street is open anyway, so a tree trench or unsealing costs less than on its own.",
+     "evidence": "inference",
+     "visual": "map",
+     "basis": [
+      "permit-trail",
+      "fernwaerme-55"
+     ]
+    }
+   ]
+  }
+ ]
 }

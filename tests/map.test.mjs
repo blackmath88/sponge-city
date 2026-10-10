@@ -75,13 +75,38 @@ test('failed layer shows an error and keeps the rest; empty selection says so', 
   assert.match(none, /mapempty/);
 });
 
-test('inspect panel shows source, date, coverage, licence and the screening boundary; links to the measurement', () => {
+test('inspect panel shows source, date, coverage, licence and the screening boundary; the Basel measurement chain is linked only from Basel objects', () => {
   const st = parseMapState('?city=testa&layers=testa.sealing.01&sel=testa.sealing.01:0', packs);
   const rec = inspectRecord(packA.layers[0], geoA['testa.sealing.01'].features[0], 'en');
   const html = mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: rec, measureIds: ['sealing-fraction'] });
-  for (const needle of ['fixture method', '2021', '2026-10-10', 'whole fixture city', 'CC0', 'Fixture data only', 'not a verified site assessment', 'data-indicator-go="sealing-fraction"']) assert.ok(html.includes(needle), needle);
-  const noLink = mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: rec, measureIds: [] });
-  assert.ok(!noLink.includes('data-indicator-go'));
+  for (const needle of ['fixture method', '2021', '2026-10-10', 'whole fixture city', 'CC0', 'Fixture data only', 'not a verified site assessment']) assert.ok(html.includes(needle), needle);
+  assert.ok(!html.includes('data-indicator-go'), 'a non-Basel object must not open the Basel measurement chain');
+  assert.match(html, /data-goto="cities"/, 'it points to the city indicator matrix instead');
+  const basel = mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: { ...rec, city: 'basel' }, measureIds: ['sealing-fraction'] });
+  assert.match(basel, /data-indicator-go="sealing-fraction"/);
+  assert.ok(!mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: geoMap, state: st, record: { ...rec, city: 'basel' }, measureIds: [] }).includes('data-indicator-go'));
+});
+
+test('a not_checked gap without checked[] renders instead of crashing', () => {
+  const pack = { ...packA, gaps: [{ theme: 'green', state: 'not_checked', reason: { de: 'Nicht untersucht.', en: 'Not researched.' } }] };
+  const st = parseMapState('?city=testa', { testa: pack });
+  assert.match(mapView({ lang: 'de', ui: uiFor('de'), packs: { testa: pack }, geoById: geoMap, state: st }), /data-gap="green"/);
+  assert.deepEqual(validateLayerPack(pack, byFile(pack, geoA)), []);
+});
+
+test('the table view reaches every object (paged) and a page past the end is clamped', () => {
+  const big = geo(...Array.from({ length: 120 }, (_, i) => [square(7.01, 47.01, 7.02, 47.02), { cls: i % 2 ? 'high' : 'low' }]));
+  const st = parseMapState('?city=testa&layers=testa.sealing.01', packs);
+  const html = (page) => mapView({ lang: 'en', ui: uiFor('en'), packs, geoById: new Map([['testa.sealing.01', big]]), state: st, mode: 'table', tablePages: { 'testa.sealing.01': page } });
+  assert.match(html(0), /rows 1–50 of 120/); assert.match(html(2), /rows 101–120 of 120/); assert.match(html(2), /data-pick="testa.sealing.01:119"/);
+  assert.match(html(99), /rows 101–120 of 120/, 'clamped');
+  const picked = new Set(); for (const p of [0, 1, 2]) for (const m of html(p).matchAll(/data-pick="[^:"]+:(\d+)"/g)) picked.add(m[1]);
+  assert.equal(picked.size, 120);
+});
+
+test('a selection in the compare panel survives the share link', () => {
+  const st = parseMapState('?city=testa&compare=testb&layers2=testb.sealing.01&sel=testb.sealing.01:1', packs);
+  assert.deepEqual(st.sel, { layer: 'testb.sealing.01', index: 1 });
 });
 
 test('table view is a complete non-map evidence view', () => {

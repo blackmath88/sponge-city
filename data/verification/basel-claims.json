@@ -28,13 +28,15 @@
   {
    "id": "sealed-trees",
    "fact": "sealed-trees",
-   "claim_text": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
+   "claim_text": "About 72 % of Basel's street trees (9,046 of 12,504, recomputed on 2026-10-10 from the live open datasets) stand in surfaces the official survey maps as sealed, so their pit is probably too small to be mapped. The rest stand in mapped planting strips.",
    "claim_type": "context",
    "source_url": "https://data.bs.ch/explore/dataset/100052/",
    "retrieved_on": "2026-10-10",
    "verdict": "confirmed-with-difference",
    "evidence": "Dataset 100052 (Baumkataster), ba_gruppe = 'Strassenbäume': 12,504 points (matches). Point-in-polygon against 100477: 9,046 trees (72.3 %) in befestigt.* polygons (8,062 Trottoir, 427 uebrige_befestigte, 363 Verkehrsinsel, 183 Strasse_Weg, 11 other); 3,376 elsewhere, of which 82 fall in no polygon (9,046+82 = 9,128, close to the claimed 9,132).",
-   "verification_limit": "Number differs: claim 9,132 (73 %) vs recomputed 9,046 (72.3 %); gap of 86 probably from the unmatched points, edge cases and datasets updated since (tree data modified 2026-10-10, land cover 2026-08-20) – cause not established. Median 371 m² of planting strips not checked. 'Street tree' = ba_gruppe 'Strassenbäume' only (the separate group 'Verkehrsgrün / Strassenbäume', 1,530 trees, is excluded). The inference 'pit too small to be mapped' is an interpretation, not stated by the data."
+   "verification_limit": "Number differs: claim 9,132 (73 %) vs recomputed 9,046 (72.3 %); gap of 86 probably from the unmatched points, edge cases and datasets updated since (tree data modified 2026-10-10, land cover 2026-08-20) – cause not established. Median 371 m² of planting strips not checked. 'Street tree' = ba_gruppe 'Strassenbäume' only (the separate group 'Verkehrsgrün / Strassenbäume', 1,530 trees, is excluded). The inference 'pit too small to be mapped' is an interpretation, not stated by the data.",
+   "claim_text_checked": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
+   "corrected_after_review": "2026-10-10: claim reworded after the independent evidence review (R2) so that it states what the source shows."
   },
   {
    "id": "bern-36",
@@ -50,13 +52,15 @@
   {
    "id": "engelgasse",
    "fact": "engelgasse",
-   "claim_text": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
+   "claim_text": "In 2016 Basel announced that it would enlarge the tree pits of the Engelgasse and plant one young tree in each of 50 new, larger pits, because the old pits gave too little root space. Completion is not verified.",
    "claim_type": "implementation",
    "source_url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse",
    "retrieved_on": "2026-10-10",
    "verdict": "confirmed-with-difference",
    "evidence": "Release 26.01.2016: «Ihr Wurzelraum ist zu eng und hemmt ein gesundes Wachstum» … «die Baumrabatten zu vergrössern, die Bäume zu ersetzen» … «Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.» (76 old trees; 26 removed trees to be re-planted nearby per Baumschutzgesetz).",
-   "verification_limit": "The page is an announcement from 2016 (future tense, works until ~mid-2018); it does not report completion. The claim states it as done ('enlarged… replanted 50 young trees'). Completion not verified by any source I fetched. No measured effect on tree growth."
+   "verification_limit": "The page is an announcement from 2016 (future tense, works until ~mid-2018); it does not report completion. The claim states it as done ('enlarged… replanted 50 young trees'). Completion not verified by any source I fetched. No measured effect on tree growth.",
+   "claim_text_checked": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
+   "corrected_after_review": "2026-10-10: claim reworded after the independent evidence review (R2) so that it states what the source shows."
   },
   {
    "id": "sevogel",

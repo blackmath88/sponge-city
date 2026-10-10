@@ -50,8 +50,15 @@ All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers
 | L | Legend label polish (Basel/Berlin/Copenhagen) | Orca claude sonnet, ctx_b8ea5e627327, wt legend-polish | data/maps/{basel,berlin,copenhagen}/layers.json | succeeded; integrated d195e44 |
 | R1 | Independent review: code, UX, boundaries, bilingual (read-only, deep) | Orca claude opus, ctx_3ed409308961, wt review-R1 @ cf64561e74cc | report only: ../review-artifacts/R1-code-ux.md | running |
 | R2 | Independent review: evidence validity (re-fetch sources, licences, matrix) | Orca claude sonnet, ctx_ecf97d456313, wt review-R2 @ cf64561e74cc | report only: ../review-artifacts/R2-evidence.md | running |
-| C | Coordinator (this session): contracts, map step, start page, matrix, briefs, browser suite | foreground Claude Sonnet 5.5 | journey/**, tests/**, scripts/**, docs/** | in progress |
+| C | Coordinator (this session): contracts, map step, start page, matrix, briefs, browser suite | foreground Claude Sonnet 5.5 | journey/**, tests/**, scripts/**, docs/** | review fixes applied (see Review section) |
 
 Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task; replaced by retry) and ctx_c57ea941100f (timeout probe; stopped by `worker-stop`, liveness exited, released) are settled and not live. Orca terminals of finished workers are `retained` (external terminal) but idle.
 
 **Map-stack decision (rationale):** the map step draws bounded GeoJSON snapshots as SVG. Reasons: city isolation and provenance per file; no third-party tile service or WebGL (works in headless tests and on low-end devices); every drawn feature is also in an accessible table; deterministic tests. The existing MapLibre Data Charter map (Basel only, live swisstopo/Basel-Stadt WMS) is reused unchanged as the 'Evidence' step. Raster/WMS layers are listed with source links but not embedded.
+
+## Independent review (read-only, on cf64561e74cc)
+
+- R1 (Opus 5.5, code/UX/boundaries/bilingual): 0 blocker, 4 major, 10 minor. Report: `docs/session/review/R1-code-ux.md`.
+- R2 (Sonnet, evidence validity; re-fetched 86 quotes, 19 layers, 28 matrix cells, 5 Basel verdicts): 0 blocker, 3 major, 16 minor; 86/86 quotes verbatim. Report: `docs/session/review/R2-evidence.md`.
+- Both reviewers ran on a worktree at the exact candidate commit and wrote only to `review-artifacts/`; both settled `succeeded`.
+- Disposition: see `docs/session/review/DISPOSITION.md`.

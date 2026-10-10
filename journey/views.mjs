@@ -80,7 +80,8 @@ export function practiceView({ lang, ui, content }) {
       ${cav ? `<p class="small"><strong>${esc(ui('caveat'))}:</strong> ${esc(cav)}</p>` : ''}${(lang === 'de' ? c.status_note_de : c.status_note_en) ? `<p class="small" data-status-note><strong>${esc(ui('status_note'))}:</strong> ${esc(lang === 'de' ? c.status_note_de : c.status_note_en)}</p>` : ''}${verificationBlock({ lang, ui, content }, c.fact)}<p class="small">${esc(ui('mechanisms'))}: ${c.mechanisms.map(mechLabel).map(esc).join(' · ')}<br>${esc(ui('source'))}: ${link(f.source.url, f.source.label)}</p></article>`; }).join('')}</div><p class="small muted">${esc(ui('source_note'))}</p></div>`;
 }
 
-const clsOf = { open: 'observed', partial: 'partial', restricted: 'unknown', missing: 'unknown' };
+// Access status is not an evidence class: an open dataset is shown as open, never as 'observed'. Only absent evidence is shown as unknown.
+const clsOf = { open: 'open', partial: 'partial', restricted: 'unknown', missing: 'unknown' };
 const fillCls = { run: 'derived', proposed: 'assumed', none: 'unknown' };
 export function measureView({ lang, ui, content }) {
   const byId = new Map(content.charter.indicators.map(i => [i.id, i]));
@@ -101,7 +102,7 @@ export function measureView({ lang, ui, content }) {
     <ol class="dchain">
       ${step(1, ui('ch_question'), t(m.question))}
       ${step(2, ui('ch_needed'), `${esc(pick(m.desirable, lang))}<br>${m.proxy ? `<span class="small">${esc(ui('m_proxy'))}: ${chip(ui('fill_' + ch.fill.status), fillCls[ch.fill.status])} ${esc(pick(m.proxy, lang))}</span>` : `<span class="small">${esc(ui('m_no_proxy'))}</span>`}`)}
-      ${step(3, ui('ch_available'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>${elsewhere}${onMap}${verificationBlock({ lang, ui, content }, 'measurement:' + sel)}`)}
+      ${step(3, ui('ch_available'), `${chip(ui('status_' + status), clsOf[status])}${status === 'restricted' || status === 'missing' ? ' ' + chip(ui('cls_unknown'), 'unknown') : ` <span class="small muted">${esc(ui('m_class_source'))}</span>`}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>${elsewhere}${onMap}${verificationBlock({ lang, ui, content }, 'measurement:' + sel)}`)}
       ${step(4, ui('ch_analysis'), `<strong>${esc(ui('m_supports'))}:</strong> ${t(m.supports)}<br><strong>${esc(ui('m_cannot'))}:</strong> ${t(m.cannot)}`)}
       ${step(5, ui('ch_action'), `${t(m.next_action)}${m.ask ? `<br><span class="small">${esc(ui('m_ask'))}: ${esc(pick(m.ask, lang))}</span>` : ''}`)}
       ${step(6, ui('ch_monitor'), t(m.monitoring))}
