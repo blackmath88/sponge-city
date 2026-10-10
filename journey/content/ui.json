@@ -263,7 +263,20 @@
   "mb_next_generic": "Mit dem Datenhalter klären, was die Ebene belegt, und die Lücke an einer Ortsbegehung prüfen.",
   "mb_city_only": "Diese Notiz enthält nur Quellen aus {city}; keine Daten einer anderen Stadt.",
   "mb_export_json": "Notiz als JSON laden",
-  "mb_export_md": "Notiz als Text laden"
+  "mb_export_md": "Notiz als Text laden",
+  "ver_confirmed": "Quelle geprüft",
+  "ver_confirmed-with-difference": "Geprüft, mit Abweichung",
+  "ver_source-unreachable": "Quelle nicht erreichbar, nicht erneut geprüft",
+  "ver_not-found-on-page": "Auf der Quelle nicht gefunden",
+  "ver_not-checked": "Nicht geprüft",
+  "ver_checked": "Stand",
+  "ver_evidence": "Beleg",
+  "ver_limit": "Prüfgrenze",
+  "ver_english": "Beleg und Prüfgrenze nur in Englisch vorhanden.",
+  "ct_implementation": "Umsetzungsaussage",
+  "ct_measured-performance": "Gemessene Wirkung",
+  "ct_context": "Ausgangslage",
+  "ct_study-elsewhere": "Studie aus anderem Umfeld"
  },
  "en": {
   "skip": "Skip to content",
@@ -529,6 +542,19 @@
   "mb_next_generic": "Clarify with the data holder what the layer evidences, then check the gap on a site visit.",
   "mb_city_only": "This brief contains sources from {city} only; no data from another city.",
   "mb_export_json": "Download brief as JSON",
-  "mb_export_md": "Download brief as Markdown"
+  "mb_export_md": "Download brief as Markdown",
+  "ver_confirmed": "Source checked",
+  "ver_confirmed-with-difference": "Checked, with a difference",
+  "ver_source-unreachable": "Source unreachable, not re-verified",
+  "ver_not-found-on-page": "Not found on the source",
+  "ver_not-checked": "Not checked",
+  "ver_checked": "as of",
+  "ver_evidence": "Evidence",
+  "ver_limit": "Verification limit",
+  "ver_english": "Evidence and limit are available in English only.",
+  "ct_implementation": "Implementation claim",
+  "ct_measured-performance": "Measured performance",
+  "ct_context": "Context",
+  "ct_study-elsewhere": "Study from elsewhere"
  }
 }

@@ -4,6 +4,7 @@ import { createDemoStreet } from "./scenario.ts";
 import { applyPlan } from "./interventions.ts";
 import { simulate } from "./simulation.ts";
 import { StreetDiagram } from "./StreetDiagram.tsx";
+import { loadEdits, saveEdits, sessionStorageOrNull } from "./edit-state.ts";
 import { parseSiteHandoff, scopingToolUrl } from "./site-context.ts";
 import { DATA_READINESS, DESIGN_SOURCES, explainMechanisms } from "./knowledge.ts";
 import {
@@ -28,6 +29,10 @@ const handoff = parseSiteHandoff(window.location.search);
 const handoffFailed = !handoff && !!new URLSearchParams(window.location.search).get("site");
 const baseline = createDemoStreet(handoff?.site);
 const emptyPlan: InterventionPlan = { rainGarden: false, connected: false };
+// Synthetic-street edits survive a language reload; keyed by place id, separate from any site evidence.
+const editStorage = sessionStorageOrNull();
+const placeId = handoff?.site.id;
+const restored = loadEdits(editStorage, placeId);
 function WaterBalance({
   snapshot,
   label,
@@ -92,13 +97,16 @@ function App() {
   useEffect(() => {
     document.title = t("doc.title");
   }, [lang]);
-  const [plan, setPlan] = useState(emptyPlan);
-  const [depthMm, setDepth] = useState(30);
+  const [plan, setPlan] = useState<InterventionPlan>(restored.plan);
+  const [depthMm, setDepth] = useState(restored.depthMm);
   const [selected, select] = useState("zone-2");
   const [frame, setFrame] = useState(0);
   const [running, setRunning] = useState(false);
   const [compare, setCompare] = useState(false);
   const [showCatchments, setShowCatchments] = useState(false);
+  useEffect(() => {
+    saveEdits(editStorage, placeId, { plan, depthMm });
+  }, [plan, depthMm]);
   const world = useMemo(() => applyPlan(baseline, plan), [plan]);
   const frames = useMemo(
     () => simulate(world, { depthMm, durationMinutes: 30 }),

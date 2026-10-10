@@ -56,6 +56,19 @@ export function conceptView({ lang, ui, content }) {
 // Indicator names are only translated where the measurement view carries a translation; otherwise the source name stays.
 export const indNameLocal = (content, id, lang) => pick(content.concept.indicator_names?.[id] ?? id, lang);
 
+// Verification record for one claim (data/verification/basel-claims.json). Evidence and limits are shown in the active language when a translation exists.
+export function verificationBlock({ lang, ui, content }, id) {
+  const c = content.checks?.claims?.find(x => x.id === id); if (!c) return '';
+  const de = lang === 'de' ? content.checksDe?.claims?.[id] : null;
+  const cls = c.verdict === 'confirmed' ? 'observed' : c.verdict === 'confirmed-with-difference' ? 'partial' : 'unknown';
+  const limit = de?.verification_limit_de ?? c.verification_limit, evidence = de?.evidence_de ?? c.evidence;
+  const untranslated = lang === 'de' && !de;
+  return `<details class="verify" data-verdict="${esc(c.verdict)}"><summary class="small">${chip(ui('ver_' + c.verdict), cls)} ${chip(ui('ct_' + c.claim_type))} <span class="muted">${esc(ui('ver_checked'))} ${esc(c.retrieved_on)}</span></summary>
+    <p class="small"><strong>${esc(ui('ver_evidence'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(evidence)}</span></p>
+    ${limit ? `<p class="small"><strong>${esc(ui('ver_limit'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(limit)}</span></p>` : ''}
+    ${untranslated ? `<p class="small muted">${esc(ui('ver_english'))}</p>` : ''}<p class="small">${link(c.source_url, ui('source'))}</p></details>`;
+}
+
 export function practiceView({ lang, ui, content }) {
   const { practice } = content;
   const idx = factIndex(content.facts);
@@ -64,7 +77,7 @@ export function practiceView({ lang, ui, content }) {
   const mechLabel = id => pick(content.concept.mechanisms.find(m => m.id === id)?.label ?? id, lang);
   return `<div class="view practice"><div class="seg" role="group" aria-label="${esc(ui('filter_scope'))}"><button data-filter="all" aria-pressed="${filter === 'all'}">${esc(ui('all'))}</button>${Object.keys(practice.scopes).map(k => `<button data-filter="${esc(k)}" aria-pressed="${filter === k}">${esc(pick(practice.scopes[k], lang))}</button>`).join('')}</div>
     <div class="cards">${cases.map(c => { const f = idx.get(c.fact); const cav = lang === 'de' ? c.caveat_de : c.caveat_en; return `<article class="case" data-fact="${esc(c.fact)}"><p class="eyebrow">${esc(pick(practice.scopes[c.scope], lang))} · ${esc(ui('ev_' + f.evidence))}</p><h4>${esc(pick(c.lesson, lang))}</h4><p>${esc(lang === 'de' ? c.claim_de : c.claim_en)}</p>
-      ${cav ? `<p class="small"><strong>${esc(ui('caveat'))}:</strong> ${esc(cav)}</p>` : ''}<p class="small">${esc(ui('mechanisms'))}: ${c.mechanisms.map(mechLabel).map(esc).join(' · ')}<br>${esc(ui('source'))}: ${link(f.source.url, f.source.label)}</p></article>`; }).join('')}</div><p class="small muted">${esc(ui('source_note'))}</p></div>`;
+      ${cav ? `<p class="small"><strong>${esc(ui('caveat'))}:</strong> ${esc(cav)}</p>` : ''}${verificationBlock({ lang, ui, content }, c.fact)}<p class="small">${esc(ui('mechanisms'))}: ${c.mechanisms.map(mechLabel).map(esc).join(' · ')}<br>${esc(ui('source'))}: ${link(f.source.url, f.source.label)}</p></article>`; }).join('')}</div><p class="small muted">${esc(ui('source_note'))}</p></div>`;
 }
 
 const clsOf = { open: 'observed', partial: 'partial', restricted: 'unknown', missing: 'unknown' };
@@ -88,7 +101,7 @@ export function measureView({ lang, ui, content }) {
     <ol class="dchain">
       ${step(1, ui('ch_question'), t(m.question))}
       ${step(2, ui('ch_needed'), `${esc(pick(m.desirable, lang))}<br>${m.proxy ? `<span class="small">${esc(ui('m_proxy'))}: ${chip(ui('fill_' + ch.fill.status), fillCls[ch.fill.status])} ${esc(pick(m.proxy, lang))}</span>` : `<span class="small">${esc(ui('m_no_proxy'))}</span>`}`)}
-      ${step(3, ui('ch_available'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>${elsewhere}${onMap}`)}
+      ${step(3, ui('ch_available'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>${elsewhere}${onMap}${verificationBlock({ lang, ui, content }, 'measurement:' + sel)}`)}
       ${step(4, ui('ch_analysis'), `<strong>${esc(ui('m_supports'))}:</strong> ${t(m.supports)}<br><strong>${esc(ui('m_cannot'))}:</strong> ${t(m.cannot)}`)}
       ${step(5, ui('ch_action'), `${t(m.next_action)}${m.ask ? `<br><span class="small">${esc(ui('m_ask'))}: ${esc(pick(m.ask, lang))}</span>` : ''}`)}
       ${step(6, ui('ch_monitor'), t(m.monitoring))}

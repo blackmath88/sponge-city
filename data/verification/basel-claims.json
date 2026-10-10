@@ -1,0 +1,183 @@
+{
+ "schema_version": "sponge-claim-checks/1",
+ "checked_on": "2026-10-10",
+ "checker": "worker",
+ "claims": [
+  {
+   "id": "basel-sealed",
+   "fact": "basel-sealed",
+   "claim_text": "45 % of Basel-Stadt's ground is sealed: 16.6 % buildings and 28.5 % paved surfaces. Roads alone cover 9.5 %, sidewalks 4.2 %.",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100477/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Dataset 100477 (Bodenbedeckung, CC BY 4.0, modified 2026-08-20, 49,595 records), field bodenbedeckungsart; GeoJSON export area-weighted by class (equirectangular approximation): Gebaeude.Gebaeude+Gebaeude.Tank 16.56 %; all befestigt.* 28.48 % (incl. Wasserbecken 0.41 %); sum 45.04 %; befestigt.Strasse_Weg 9.47 %; befestigt.Trottoir 4.17 %.",
+   "verification_limit": "Dynamic dataset (re-computed from live export). Own area calculation, not the portal's: total 36.89 km² vs 36.6 km² in the catalogue method note (220 line-only geometries and 19 empty geometries excluded; planar approximation). Percentages match to the stated decimals. 'Sealed' = classes befestigt + Gebaeude as defined in the catalogue, not an official sealing figure."
+  },
+  {
+   "id": "basel-hot-days",
+   "fact": "basel-hot-days",
+   "claim_text": "Basel-Binningen had 8.8 hot days (≥ 30 °C) a year in 1961–1990, 14.3 in 1991–2020, and 21.9 in 2015–2024.",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100254/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Dataset 100254 (NBCN Basel-Binningen, 59,452 daily rows from 1876), field tre200dx >= 30, count per year, mean over complete years: 1961–1990 = 8.80 (30 yrs); 1991–2020 = 14.27 (30 yrs, rounds to 14.3); 2015–2024 = 21.90 (10 yrs).",
+   "verification_limit": "Live dataset (modified 2026-10-10); recomputation by the worker, not a published statistic. Series not homogenised (as caveat says). Years with <365 daily values were excluded; none in 1961–2024."
+  },
+  {
+   "id": "sealed-trees",
+   "fact": "sealed-trees",
+   "claim_text": "73 % of Basel's street trees (9,132 of 12,504) stand in surfaces the official survey maps as sealed: their pit is too small to be mapped. The rest stand in mapped planting strips (median 371 m²).",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100052/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed-with-difference",
+   "evidence": "Dataset 100052 (Baumkataster), ba_gruppe = 'Strassenbäume': 12,504 points (matches). Point-in-polygon against 100477: 9,046 trees (72.3 %) in befestigt.* polygons (8,062 Trottoir, 427 uebrige_befestigte, 363 Verkehrsinsel, 183 Strasse_Weg, 11 other); 3,376 elsewhere, of which 82 fall in no polygon (9,046+82 = 9,128, close to the claimed 9,132).",
+   "verification_limit": "Number differs: claim 9,132 (73 %) vs recomputed 9,046 (72.3 %); gap of 86 probably from the unmatched points, edge cases and datasets updated since (tree data modified 2026-10-10, land cover 2026-08-20) – cause not established. Median 371 m² of planting strips not checked. 'Street tree' = ba_gruppe 'Strassenbäume' only (the separate group 'Verkehrsgrün / Strassenbäume', 1,530 trees, is excluded). The inference 'pit too small to be mapped' is an interpretation, not stated by the data."
+  },
+  {
+   "id": "bern-36",
+   "fact": "bern-36",
+   "claim_text": "Bern's guidance sets a target root space of 36 m³ per street tree, with pits at least 1 m deep (1.5 m where needed).",
+   "claim_type": "implementation",
+   "source_url": "https://www.bern.ch/themen/planen-und-bauen/bern-baut/arbeitshilfen/wurzelraum-fuer-baeume-im-strassenraum/anhang/arbeitshilfe-wurzelraum-fur-strassenbaume-version.pdf",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "PDF text: «Es soll eine Tiefe von mindestens 1,0 m erreicht werden. Wenn damit das Zielvolumen von 36 m³ nicht erreicht werden kann, kann die Tiefe auf 1,5 m vergrössert werden.» (section 'Tiefe der Baumgruben'); «Szenario 2 … Wurzelraum von 36 m³, der strukturstabil, aber nicht überbaubar ist».",
+   "verification_limit": "PDF fetched (4.1 MB). Nuance: 1.5 m is allowed to reach the 36 m³ target when 1.0 m is not enough ('where needed' is a fair paraphrase). Scenario 1 (natural soil in green areas) uses the existing soil rather than a 36 m³ pit. Guidance of another city (Bern), version date not checked."
+  },
+  {
+   "id": "engelgasse",
+   "fact": "engelgasse",
+   "claim_text": "Basel enlarged the tree pits of the Engelgasse and replanted 50 young trees, because the old pits gave too little root space.",
+   "claim_type": "implementation",
+   "source_url": "https://www.bs.ch/medienmitteilungen/bvd/2016-bessere-entfaltungsmoeglichkeiten-fuer-die-baeume-der-engelgasse",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed-with-difference",
+   "evidence": "Release 26.01.2016: «Ihr Wurzelraum ist zu eng und hemmt ein gesundes Wachstum» … «die Baumrabatten zu vergrössern, die Bäume zu ersetzen» … «Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.» (76 old trees; 26 removed trees to be re-planted nearby per Baumschutzgesetz).",
+   "verification_limit": "The page is an announcement from 2016 (future tense, works until ~mid-2018); it does not report completion. The claim states it as done ('enlarged… replanted 50 young trees'). Completion not verified by any source I fetched. No measured effect on tree growth."
+  },
+  {
+   "id": "sevogel",
+   "fact": "sevogel",
+   "claim_text": "At Sevogelstrasse, about 1,000 m² of asphalt will be unsealed and about 600 m² become green space, with 32 new trees (from spring 2026).",
+   "claim_type": "implementation",
+   "source_url": "https://www.bs.ch/medienmitteilungen/bvd/2025-sevogelstrasse-wird-gruen-32-neue-baeume-anlaesslich-fernwaermeausbau",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Release 07.11.2025: «32 Bäume auf beiden Strassenseiten …»; «Rund 1000 Quadratmeter Asphalt werden neu entsiegelt und davon rund 600 Quadratmeter neu begrünt.»; «IWB baut ab dem Frühjahr 2026 …» (works until mid-2027).",
+   "verification_limit": "Planning announcement (plans published for public consultation Nov 2025); 'from spring 2026' refers to the IWB district-heating works. Whether the unsealing was built is not verified (status after Nov 2025 not checked). No measured effect."
+  },
+  {
+   "id": "voltanord-pilot",
+   "fact": "voltanord-pilot",
+   "claim_text": "Basel tests sponge-city elements in the new VoltaNord streets and monitors them scientifically for five years (CHF 280,000 approved).",
+   "claim_type": "implementation",
+   "source_url": "https://www.bs.ch/regierungsratsbeschluesse/P251765?backUrl=/apps/regierungsratsbeschluesse",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Page: P251765 «Ausgabenbewilligung betreffend Monitoring von Schwammstadt-Pilotprojekten im Areal VoltaNord», Sitzung 18.11.2025. Linked resolution PDF (/api/government-resolutions/document/b22c031c…-332/4/Dokument): «Gesamtausgaben in der Höhe von Fr. 280'000»; «Die entsprechenden Pilotprojekte werden … jeweils über eine Zeitdauer von fünf Jahren wissenschaftlich begleitet und ausgewertet.»",
+   "verification_limit": "The cited landing page shows only the title; the figures are in the linked 1-page PDF (fetched). This is a spending approval/plan: it does not show the monitoring has started or any result."
+  },
+  {
+   "id": "interception-season",
+   "fact": "interception-season",
+   "claim_text": "The same large plane tree intercepted about 15 % of a 22 mm winter storm (no leaves) but about 80 % of a 20 mm summer storm.",
+   "claim_type": "study-elsewhere",
+   "source_url": "https://urbanforestrysouth.org/resources/library/citations/Citation.2004-11-03.P511",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Abstract (Xiao & McPherson, Urban Ecosystems 6(4):291–302, 2002): «interception … varied seasonally, averaging 14.8% during a 21.7 mm winter storm and 79.5% during a 20.3 mm summer storm for a large, deciduous Platanus acerifolia tree.»",
+   "verification_limit": "Only the abstract on a library citation page was read, not the paper. Claim rounds 21.7→22 mm and 20.3→20 mm; 'no leaves' in winter is implied by 'deciduous' but not stated in the abstract. Santa Monica, California (Mediterranean climate), simulated by a model: a modelled effect, not a Basel measurement."
+  },
+  {
+   "id": "retention-50",
+   "fact": "retention-50",
+   "claim_text": "Extensive green roofs in Southern Ontario retain 60–70 % of rain in the warm season and about 50 % over a full year; a roof in Syracuse retained 56 % over 21 months.",
+   "claim_type": "study-elsewhere",
+   "source_url": "https://wiki.sustainabletechnologies.ca/wiki/Special:MobileDiff/15606",
+   "retrieved_on": "2026-10-10",
+   "verdict": "source-unreachable",
+   "evidence": "Not retrieved. HTTP 403 (Cloudflare 'Just a moment' challenge) from curl and from WebFetch; the URL is a wiki diff view (Special:MobileDiff/15606), not a stable article page.",
+   "verification_limit": "Claim not checked against any source; no replacement source was substituted because only the cited source was in scope. Figures come from other climates/settings; ranges unverified."
+  },
+  {
+   "id": "compaction",
+   "fact": "compaction",
+   "claim_text": "Compaction by construction cut soil infiltration by 70–99 % in a Florida study; without deliberate restoration, recovery can take decades.",
+   "claim_type": "study-elsewhere",
+   "source_url": "https://abe.ufl.edu/faculty/mdukes/pdf/stormwater/Gregor-et-%20al-JSWC-compaction-article.pdf",
+   "retrieved_on": "2026-10-10",
+   "verdict": "source-unreachable",
+   "evidence": "Not retrieved. HTTP 404 (also with the space removed from the path).",
+   "verification_limit": "Claim not checked against any source; no replacement source was substituted because only the cited source was in scope. Figures come from other climates/settings; ranges unverified."
+  },
+  {
+   "id": "clogging",
+   "fact": "clogging",
+   "claim_text": "Studies report the infiltration capacity of permeable pavements falling by 63–100 % over time as joints clog; with regular cleaning, systems still performed after eight years.",
+   "claim_type": "study-elsewhere",
+   "source_url": "https://www.villanova.edu/content/dam/villanova/engineering/VUSP/2022/Permeable-Pavement.pdf",
+   "retrieved_on": "2026-10-10",
+   "verdict": "source-unreachable",
+   "evidence": "Not retrieved. HTTP 404.",
+   "verification_limit": "Claim not checked against any source; no replacement source was substituted because only the cited source was in scope. Figures come from other climates/settings; ranges unverified."
+  },
+  {
+   "id": "benthemplein",
+   "fact": "benthemplein",
+   "claim_text": "Rotterdam's Benthemplein water square can store about 1,800 m³ of rainwater.",
+   "claim_type": "implementation",
+   "source_url": "https://klimaatadaptatienederland.nl/en/@163422/rotterdam-water",
+   "retrieved_on": "2026-10-10",
+   "verdict": "source-unreachable",
+   "evidence": "Not retrieved. HTTP 404 (curl and WebFetch); site root /en/ loads, so the page moved or was removed.",
+   "verification_limit": "Claim not checked against any source; no replacement source was substituted because only the cited source was in scope. Design capacity of a foreign project, not a measured result."
+  },
+  {
+   "id": "measurement:land-cover",
+   "fact": null,
+   "claim_text": "Cadastral land cover: 49,595 polygons with classes such as sidewalk, road, traffic island, tram area, building, garden, water. CC BY 4.0, updated 2026-08-20.",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100477/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Dataset 100477 metadata: records_count 49,595; modified 2026-08-20; license CC BY 4.0; field bodenbedeckungsart includes befestigt.Trottoir, befestigt.Strasse_Weg, befestigt.Verkehrsinsel, befestigt.Bahn.Tramareal, Gebaeude.Gebaeude, humusiert.Gartenanlage.*, Gewaesser.*.",
+   "verification_limit": "Live dataset; counts and date are as of 2026-10-10 and will change at the next update. Statement lives in journey/content/measurements.json (indicator land-cover, field actual)."
+  },
+  {
+   "id": "measurement:sealing-fraction",
+   "fact": null,
+   "claim_text": "No published sealed-share or water-balance layer. The inputs are open (land cover, statistical blocks).",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Negative claim: data.bs.ch catalogue search (API v2.1, search()) for 'Versiegel' and 'Wasserbilanz' returned 0 datasets. Inputs open: 100477 land cover (49,595 polygons) and 100040 'Statistische Raumeinheiten: Blöcke' (1,490 records).",
+   "verification_limit": "Absence claim: checked only the data.bs.ch catalogue by keyword (German terms); other portals, geo.bs.ch/MapBS layers and federal sources not searched. Weaker than a positive confirmation."
+  },
+  {
+   "id": "measurement:tree-pits",
+   "fact": null,
+   "claim_text": "The tree cadastre has no pit size or root-space field.",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100052/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Dataset 100052 field list: geo_point_2d, geo_shape, gml_id, ba_baumnr, ba_art, baumart_lateinisch, baumart_deutsch, timeposition, ba_baumalter, ba_standjahr, ba_schutzstatus, ba_strasse, ba_kreis, ba_gruppe, ba_gemeinde, map_links – no pit-size or root-space field. Catalogue search 'Baumgrube' and 'Wurzelraum': 0 hits.",
+   "verification_limit": "Checks the open dataset schema as of 2026-10-10; internal (non-open) tree-management data not examined."
+  },
+  {
+   "id": "measurement:sewer-network",
+   "fact": null,
+   "claim_text": "Network data not found in the reviewed open Basel and federal sources. Open: the wastewater-plant catchment (13 polygons). Published, not as data: the 2012 GEP map of drainage systems (combined, combined with infiltration duty, modified separate) and infiltration bans in protection zones (PDF, 1:20,000).",
+   "claim_type": "context",
+   "source_url": "https://data.bs.ch/explore/dataset/100336/",
+   "retrieved_on": "2026-10-10",
+   "verdict": "confirmed",
+   "evidence": "Catalogue search on data.bs.ch: 'Abwasser'/'ARA' → 100336 'Einzugsgebiet der ARA Basel' (13 records) plus two wastewater-monitoring (public-health) datasets; 'Kanalisation', 'Entwässerung', 'Leitung' → no sewer-network dataset.",
+   "verification_limit": "Only the data.bs.ch part was checked. NOT checked (not fetched): the federal sources, and the claimed 2012 GEP drainage-system map / infiltration-ban map (PDF, 1:20,000). Absence claim by keyword search."
+  }
+ ]
+}
