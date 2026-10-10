@@ -222,6 +222,19 @@ for (const [w, h, label] of [[390, 844, 'mobile'], [1280, 900, 'desktop']]) {
   });
 }
 
+let axeSource = null; try { axeSource = readFileSync(createRequire(pwDir).resolve('axe-core/axe.min.js'), 'utf8'); } catch {}
+if (axeSource) await check('accessibility (axe, WCAG 2 A/AA incl. contrast): no serious or critical violations on the native steps, both languages', async () => {
+  const bad = [];
+  for (const lang of ['de', 'en']) for (const [stage, extra] of [['start', ''], ['concept', ''], ['practice', ''], ['measure', ''], ['cities', ''], ['map', '&city=zurich'], ['export', '']]) {
+    const { page, ctx } = await open(`?stage=${stage}&lang=${lang}${extra}`); await settle(page, 1000);
+    await page.addScriptTag({ content: axeSource });
+    const res = await page.evaluate(() => axe.run(document, { runOnly: ['wcag2a', 'wcag2aa'], resultTypes: ['violations'] }));
+    for (const v of res.violations.filter(v => ['serious', 'critical'].includes(v.impact))) bad.push(`${stage}/${lang}: ${v.id} (${v.nodes.length}) ${v.nodes[0].target.join(' ')}`);
+    await ctx.close();
+  }
+  assert(!bad.length, bad.slice(0, 8).join('\n      '));
+});
+
 await check('keyboard: Tab reaches the language switch and the step buttons with a visible focus style', async () => {
   const { page, ctx } = await open('?lang=de');
   const seen = new Set();
