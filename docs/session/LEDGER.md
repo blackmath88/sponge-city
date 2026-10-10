@@ -1,6 +1,10 @@
 # Delivery ledger — bilingual evidence session
 
-Start **2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard stop 16:56. Not accepted Weavr execution; the gated V2 Mission is untouched.
+> **Active limits (current):** integration cutoff **23:10 Europe/Rome**, hard stop **23:55**. Not reset. The deadlines in the session headings below (session 1: 16:26 / 16:56; session 2: 23:15 with the final 45 minutes from 22:30) are **historical and superseded**; they are kept as history only.
+>
+> **Current state:** pushed/tested head and counts are listed in the PR description and in `docs/session/review/DISPOSITION.md` ("Current state"). Counts quoted in individual entries below (tests, browser checks, SHAs) were true when written and are not current unless stated.
+
+Start **2026-10-10 14:26 CEST**. (Historical, superseded: integration cutoff 16:26, hard stop 16:56.) Not accepted Weavr execution; the gated V2 Mission is untouched.
 
 ## Base decision
 - Pinned **3aeca87** (PR #4 head, `feat/post-hackathon-consolidation`). `make smoke` passes there.
@@ -28,7 +32,7 @@ All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers
 
 
 ---
-# Session 2 — multicity + maps (started 2026-10-10 16:15:48 CEST; deadline 23:15; final 45 min from 22:30)
+# Session 2 — multicity + maps (started 2026-10-10 16:15:48 CEST; historical deadline 23:15, final 45 min from 22:30 — superseded by the active limits above)
 
 **Base decision:** continue PR #6 on the same branch (head 163fb0b, based on #4 3aeca87). #5 head 9efebe7 still fails its own mission test (gated V2, not touched). No other active coordinator: only terminal in this worktree is this session. Existing `weavr-sponge-city-*` worktrees and runs untouched.
 
@@ -48,11 +52,17 @@ All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers
 | T | German translation of claim evidence | Claude Code subagent (general-purpose, sonnet), not Orca | data/verification/basel-claims.de.json | completed; spot-read |
 | Z2 | Zürich gap closing | Orca claude sonnet, ctx_1e3d47c65640, wt zurich-gaps | data/cities/zurich.json, data/maps/zurich/** | succeeded: sealing derived (28.6 %), sewer text figures, pluvial window, gaps checked; integrated d195e44 |
 | L | Legend label polish (Basel/Berlin/Copenhagen) | Orca claude sonnet, ctx_b8ea5e627327, wt legend-polish | data/maps/{basel,berlin,copenhagen}/layers.json | succeeded; integrated d195e44 |
-| R1 | Independent review: code, UX, boundaries, bilingual (read-only, deep) | Orca claude opus, ctx_3ed409308961, wt review-R1 @ cf64561e74cc | report only: ../review-artifacts/R1-code-ux.md | running |
-| R2 | Independent review: evidence validity (re-fetch sources, licences, matrix) | Orca claude sonnet, ctx_ecf97d456313, wt review-R2 @ cf64561e74cc | report only: ../review-artifacts/R2-evidence.md | running |
+| R1 | Independent review: code, UX, boundaries, bilingual (read-only, deep) | Orca claude opus, ctx_3ed409308961, wt review-R1 @ cf64561e74cc | report only: `../review-artifacts/R1-code-ux.md` (copy: `docs/session/review/R1-code-ux.md`) | **succeeded**; settled, released (Orca: `succeeded`, stage `settled`); worker_done verified; 0 blocker, 4 major, 10 minor |
+| R2 | Independent review: evidence validity (re-fetch sources, licences, matrix) | Orca claude sonnet, ctx_ecf97d456313, wt review-R2 @ cf64561e74cc | report only: `../review-artifacts/R2-evidence.md` (copy: `docs/session/review/R2-evidence.md`) | **succeeded**; settled, released; 0 blocker, 3 major, 16 minor; 86/86 quotes verbatim |
+| R3 | Focused re-review of the R1/R2 fixes @ cd8b222 (deep, read-only) | Orca claude opus, ctx_67f2fd8c9955, wt review-R3 | report only: `docs/session/review/R3-focused.md` | **succeeded**; settled, released; 0 blocker, 1 major, 10 minor; fixed afterwards |
+| R4 | Review of the post-R3 delta @ d74342a (deep, read-only) | Orca claude opus, ctx_596a79a1f0c5, wt review-R4 | `docs/session/review/R4-post-r3.md` | **succeeded**; settled, released; 0 blocker, 1 major, 6 minor; fixed in 5f6eaee |
+| R5 | Independent recomputation of the Zürich 28.6 % sealing share (read-only, pinned WFS download) | Orca claude sonnet, ctx_93e0e9044cd2, wt review-R5 | `docs/session/review/zurich-recompute/` | **succeeded**; settled, released; REPRODUCED (qualified) |
+| R6 | Review of the delta d74342a..5f6eaee (deep, read-only) | Orca claude opus, ctx_dc16bf3af5b0, wt review-R6 | `docs/session/review/R6-final-delta.md` | **succeeded**; settled, released; 0 blocker, 0 major, 4 minor; last independent review |
 | C | Coordinator (this session): contracts, map step, start page, matrix, briefs, browser suite | foreground Claude Sonnet 5.5 | journey/**, tests/**, scripts/**, docs/** | review fixes applied (see Review section) |
 
 Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task; replaced by retry) and ctx_c57ea941100f (timeout probe; stopped by `worker-stop`, liveness exited, released) are settled and not live. Orca terminals of finished workers are `retained` (external terminal) but idle.
+
+**Settlement accounting (checked 22:39 CEST against `orca orchestration worker-list --run run_791a78c3c736`):** 15 dispatches in the run: 13 `succeeded` (11 with an external, retained, idle terminal and liveness `unverifiable`, 2 released: ctx_0a03c844a875, ctx_11571b5a7c78), 2 `failed` (ctx_679c6c42c48d at agent_readiness; ctx_c57ea941100f stopped by `worker-stop`, liveness `exited`, released). None is live; no worker started after session 2. `unverifiable` liveness on retained terminals is absence of evidence, not proof of exit; the agents delivered `worker_done` and settled.
 
 **Map-stack decision (rationale):** the map step draws bounded GeoJSON snapshots as SVG. Reasons: city isolation and provenance per file; no third-party tile service or WebGL (works in headless tests and on low-end devices); every drawn feature is also in an accessible table; deterministic tests. The existing MapLibre Data Charter map (Basel only, live swisstopo/Basel-Stadt WMS) is reused unchanged as the 'Evidence' step. Raster/WMS layers are listed with source links but not embedded.
 
@@ -73,3 +83,10 @@ Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task
 - Continuation 4: author self-audit (not independent) of 5f6eaee..8b22429; two reproduced defects fixed with mutation-checked tests (see DISPOSITION). Same foreground route; no worker; isolation/timeout enforcement unavailable.
 - Continuation 5: rapid-transition audit (author-only): cache race found and fixed, new concurrent-transitions browser check, three mutations detected. 36 browser checks, 73 node tests, smoke passes. Same foreground route; no worker; isolation/timeout enforcement unavailable; no independent review after `5f6eaee`.
 - Continuation 6: mobile table equivalence, export state and bilingual parity audited (author-only); no defect found; 3 new checks with mutation proof; 77 node tests, 38 browser checks. Same foreground route; no worker; isolation/timeout enforcement unavailable; no independent review after `5f6eaee`.
+
+## Accounting notes (added in the final pre-cutoff pass)
+- **No enforced controls:** Orca writable-path isolation and timeout enforcement were never available (`--timeout-ms` is a start-wait; workers launch with permissions bypassed). Scope was held by separate worktrees, written instructions, supervisor-side `worker-stop` and `git diff` review, not by enforcement. Same-model reviewers (Claude Opus/Sonnet) reviewed Claude-authored work.
+- **Observable usage:** the Orca CLI exposed no quota or usage reading. The Claude TUI displayed **82 % weekly usage at 21:18 CEST**: provider-level and timestamped, separate from per-call usage, which was not observable (one Claude Code subagent reported 55,183 tokens for the claim-evidence translation; Orca workers reported none).
+- **Other repositories (operator accounting, not verified by this session's Sponge work):** a crossed Weavr terminal was released only after its clean scratch clone, no child-agent rows and no OS descendants were verified; Weavr2 PR #25 remains isolated at `0179d2e`; Weavr trial 0002 was never started. No Weavr or Weavr2 repository was touched by the Sponge changes.
+- **Review status:** the last independent review covered `5f6eaee` (R6). Everything after it is author-tested only, including the two author self-audits and the rapid-transition, mobile, export and bilingual checks.
+- **Unresolved evidence flags (unchanged):** Basel area percentages, the 9,046 paved-polygon count and the hot-day counts are not reproduced from repository data (recorded gaps); the four unreachable Basel sources; no-public-evidence searches not independently repeated; Zürich canopy raster not computed; Zürich sealing is this project's own computation; thin quotes (Copenhagen listing facet text, Zürich terms reference); R2 m15 remainder.
