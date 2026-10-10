@@ -117,7 +117,8 @@ try {
     if (geoCache.has(id)) return;
     const layer = packs[city]?.layers.find(l=>l.id===id);
     if (!layer || layer.kind!=='geojson-snapshot') return;
-    try { geoCache.set(id, await load(`content/maps/${city}/${layer.file}`)); } catch { geoCache.set(id, null); }
+    // Two renders may fetch the same layer at once. A success always wins; a late failure must never replace data that already arrived.
+    try { geoCache.set(id, await load(`content/maps/${city}/${layer.file}`)); } catch { if (!geoCache.has(id)) geoCache.set(id, null); }
   };
   const selRecord = () => {
     const sel = mapState.sel; if (!sel) return null;

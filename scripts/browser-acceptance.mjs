@@ -330,6 +330,33 @@ await check('audit: a gap link abandoned during a load leaves no stale highlight
   assert(await page.evaluate(() => [...document.querySelectorAll('details > summary [data-flag-summary]')].length) >= 1, 'the unchecked flag is visible without opening the source'); await ctx.close();
 });
 
+await check('concurrent transitions: only the newest render may change the view; a stale success, a stale failure or an abandoned load cannot overwrite it', async () => {
+  const { page, ctx } = await open('?stage=map&lang=en&city=basel'); await settle(page, 1200);
+  const seen = {};
+  // (A) the first request for each Berlin layer fails late; every later request succeeds at once
+  await page.route('**/content/maps/berlin/*.geojson', async r => { const u = r.request().url(); seen[u] = (seen[u] ?? 0) + 1; if (seen[u] === 1) { await new Promise(x => setTimeout(x, 1800)); return r.abort(); } return r.continue(); });
+  await page.click('[data-map-city="berlin"]'); await page.waitForTimeout(150);
+  await page.click('button[data-lang="de"]'); await page.waitForTimeout(800); // a newer render fetches the layers again and succeeds
+  const state = () => page.evaluate(() => ({ city: document.querySelector('.mapview')?.dataset.city, drawn: document.querySelectorAll('.mapsvg [data-f]').length, error: !!document.querySelector('.maperror'), inert: document.getElementById('view').inert, busy: document.getElementById('view').hasAttribute('aria-busy'), url: location.search, live: document.getElementById('live').textContent }));
+  let st = await state(); assert(st.city === 'berlin' && st.drawn > 0 && !st.error && !st.inert && !st.busy && /city=berlin/.test(st.url), `newest render shown: ${JSON.stringify(st)}`);
+  await page.waitForTimeout(2300); // the stale request fails now
+  st = await state(); assert(st.drawn > 0 && !st.error && !st.inert, 'a stale failure did not touch the view');
+  await page.click('button[data-lang="en"]'); await page.waitForTimeout(900); // a later render reads the cache
+  st = await state(); assert(st.drawn > 0 && !st.error, `a stale failure must not have replaced loaded data in the cache: ${JSON.stringify(st)}`);
+  await page.unroute('**/content/maps/berlin/*.geojson');
+  // (B) a slow load for city X is abandoned by a gap link to city Y; X finishing late must not repaint, refocus, announce or change the URL
+  await page.route('**/content/maps/copenhagen/*.geojson', async r => { await new Promise(x => setTimeout(x, 1600)); r.continue(); });
+  await page.click('[data-map-city="copenhagen"]'); await page.waitForTimeout(200);
+  await page.click('[data-stage="cities"]'); await page.waitForTimeout(150); await page.click('[data-goto-map-gap^="zurich:"]');
+  await page.waitForTimeout(900); st = await state(); assert(st.city === 'zurich' && /city=zurich/.test(st.url) && st.drawn > 0 && !st.inert, `Zürich shown while Copenhagen is still pending: ${JSON.stringify(st)}`);
+  const gap = await page.evaluate(() => document.activeElement?.getAttribute('data-gap')); assert(gap, 'the gap link focused its gap');
+  await page.waitForTimeout(2200); // Copenhagen finishes
+  st = await state(); assert(st.city === 'zurich' && /city=zurich/.test(st.url) && !st.error && !st.inert && !st.busy, `a stale success must not replace the current view: ${JSON.stringify(st)}`);
+  assert(await page.evaluate(g => document.activeElement?.getAttribute('data-gap') === g && !!document.querySelector('.gap-hl'), gap), 'focus and gap highlight stayed');
+  assert(!/Copenhagen|Kopenhagen/.test(st.live), `no announcement for the abandoned city: ${st.live}`);
+  assert(!(await page.$('[data-layer-group^="copenhagen."]')), 'no Copenhagen layer was drawn'); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');
