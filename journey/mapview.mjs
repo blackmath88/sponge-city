@@ -4,6 +4,7 @@ import { esc } from './views.mjs';
 import { fitView, makeProjection, geometryPath, isPointGeom, isLineGeom, colorFor, legendEntries, inspectRecord, comparableLayers, packSummary } from './map.mjs';
 
 const MAX_FEATURES = 4000;
+const r1 = v => Math.round(v * 10) / 10;
 const chip = (text, kind = '') => `<span class="chip ${esc(kind)}">${esc(text)}</span>`;
 
 function layerGroup(layer, geo, proj) {
@@ -19,7 +20,7 @@ function layerGroup(layer, geo, proj) {
   return `<g class="layer layer-${esc(layer.theme)}" data-layer-group="${esc(layer.id)}">${paths}</g>`;
 }
 
-function mapPanel({ lang, ui, pack, geoById, state, side, selection }) {
+function mapPanel({ lang, ui, pack, geoById, state, side, selection, places = [] }) {
   const proj = makeProjection(pack.extent.bbox);
   const active = pack.layers.filter(l => l.kind === 'geojson-snapshot' && state.layers.includes(l.id));
   const failed = active.filter(l => !geoById.get(l.id));
@@ -33,7 +34,7 @@ function mapPanel({ lang, ui, pack, geoById, state, side, selection }) {
   return `<figure class="mappanel" data-city="${esc(pack.city)}" data-side="${side}">
     <figcaption><strong>${esc(name)}</strong> <span class="small muted">${esc(ui('map_extent'))}: ${w.toFixed(3)}–${e.toFixed(3)} °E · ${s.toFixed(3)}–${n.toFixed(3)} °N</span></figcaption>
     <div class="mapframe"><svg class="mapsvg" role="img" aria-label="${esc(ui('map_aria').replace('{city}', name))}" viewBox="0 0 ${proj.width} ${proj.height}" data-fit="${fit ? fit.join(' ') : ''}" data-w="${proj.width}" data-h="${proj.height}" preserveAspectRatio="xMidYMid meet" tabindex="0">
-      <rect class="seabed" x="0" y="0" width="${proj.width}" height="${proj.height}"/>${groups}${selection ? '' : ''}</svg>
+      <rect class="seabed" x="0" y="0" width="${proj.width}" height="${proj.height}"/>${groups}${places.map(pl => `<g class="placemark" data-place-mark="${esc(pl.key)}"><circle cx="${r1(proj.x(pl.coordinates[0]))}" cy="${r1(proj.y(pl.coordinates[1]))}" r="7" class="pm"/></g>`).join('')}</svg>
       <div class="zoom" role="group" aria-label="${esc(ui('map_zoom'))}"><button data-zoom="in" aria-label="${esc(ui('map_zoom_in'))}">+</button><button data-zoom="out" aria-label="${esc(ui('map_zoom_out'))}">−</button><button data-zoom="reset" aria-label="${esc(ui('map_zoom_reset'))}">⌂</button></div>
       ${drawn.length ? '' : `<p class="mapempty">${esc(pack.layers.some(l => l.kind === 'geojson-snapshot') ? ui('map_no_layer_selected') : ui('map_no_snapshot'))}</p>`}
       ${failed.length ? `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}: ${failed.map(l => esc(pick(l.title, lang))).join(', ')}</p>` : ''}
@@ -93,7 +94,7 @@ function tableView({ lang, ui, pack, geoById, state }) {
     <div class="scroll"><table><thead><tr><th>${esc(ui('map_layer'))}</th><th>${esc(ui('map_origin'))}</th><th>${esc(ui('map_method'))}</th><th>${esc(ui('map_unit'))}</th><th>${esc(ui('map_scale'))}</th><th>${esc(ui('map_date'))}</th><th>${esc(ui('map_coverage'))}</th><th>${esc(ui('source'))}</th><th>${esc(ui('map_licence'))}</th></tr></thead><tbody>${layers}</tbody></table></div>${feats}</div>`;
 }
 
-export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measureIds = [], record = null }) {
+export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measureIds = [], record = null, places = [] }) {
   const ids = Object.keys(packs);
   const pack = packs[state.city];
   const other = state.compare ? packs[state.compare] : null;
@@ -116,7 +117,8 @@ export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measure
     ${compareNote}
     ${mode === 'table'
       ? `<div class="tablewrap">${tableView({ lang, ui, pack, geoById, state })}${other ? tableView({ lang, ui, pack: other, geoById, state: otherState }) : ''}</div>`
-      : `<div class="mapgrid ${other ? 'two' : ''}">${mapPanel({ lang, ui, pack, geoById, state, side: 'a' })}${other ? mapPanel({ lang, ui, pack: other, geoById, state: otherState, side: 'b' }) : ''}</div>`}
+      : `<div class="mapgrid ${other ? 'two' : ''}">${mapPanel({ lang, ui, pack, geoById, state, side: 'a', places: state.city === 'basel' ? places : [] })}${other ? mapPanel({ lang, ui, pack: other, geoById, state: otherState, side: 'b', places: state.compare === 'basel' ? places : [] }) : ''}</div>`}
+    ${state.city === 'basel' || state.compare === 'basel' ? `<p class="small placelinks" data-placelinks>${esc(ui('map_places'))}: ${places.map(pl => `<a href="#" data-goto-place="${esc(pl.key)}">${esc(pl.name)} →</a>`).join(' · ')}</p>` : ''}
     <div class="mapside"><div class="controls">${layerControls({ lang, ui, pack, state, side: 'a' })}${other ? layerControls({ lang, ui, pack: other, state: otherState, side: 'b' }) : ''}</div>
       ${inspectPanel({ lang, ui, record, measureIds })}</div>
   </div>`;

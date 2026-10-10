@@ -199,6 +199,15 @@ await check('map brief: selecting an object exports a city-isolated brief in the
   const md = readFileSync(await m.path(), 'utf8'); assert(/Untersuchungsnotiz/.test(md) && !markers.test(md), 'german markdown'); await ctx.close();
 });
 
+await check('map → place: a Basel place link opens Inspect-a-place for that place; other cities offer none', async () => {
+  const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
+  assert(await page.$('[data-place-mark="klybeck"]'), 'place marker on the Basel map');
+  await page.click('[data-goto-place="klybeck"]'); await settle(page, 1800);
+  assert(/stage=place/.test(page.url()) && /place=klybeck/.test(page.url()), 'url'); assert(/klybeck/i.test(frameOf(page).url()), 'frame shows klybeck');
+  await page.goto(base + '?stage=map&lang=de&city=berlin'); await settle(page, 1200);
+  assert(!(await page.$('[data-place-mark]')) && !(await page.$('[data-placelinks]')), 'no Basel places on the Berlin map'); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');

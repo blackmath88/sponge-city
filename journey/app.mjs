@@ -121,7 +121,7 @@ try {
     const need = [...st.layers.map(id=>[st.city,id]), ...(st.compare?(st.layersCompare??[]).map(id=>[st.compare,id]):[]), ...(st.sel?[[Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===st.sel.layer)),st.sel.layer]]:[])];
     await Promise.all(need.map(([c,id])=>loadGeo(c,id)));
     if (token !== mapToken || stage.kind!=='map') return;
-    $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,measureIds:measureIds(),record:selRecord()});
+    $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
     bindMap(); markSelected();
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
@@ -142,6 +142,8 @@ try {
     };
     if ($('map-share')) $('map-share').onclick = async () => { const note=$('map-share-note'); try { await navigator.clipboard.writeText(location.href); note.textContent=ui('map_shared'); } catch { note.textContent=ui('map_share_fail'); } };
     for (const b of document.querySelectorAll('[data-pick]')) b.onclick = () => { const [l,i]=b.dataset.pick.split(/:(\d+)$/); pickFeature(l,Number(i)); document.getElementById('inspect')?.scrollIntoView({block:'nearest'}); };
+    for (const a of document.querySelectorAll('[data-goto-place]')) a.onclick = e => { e.preventDefault(); place = data.places.find(p=>p.key===a.dataset.gotoPlace); stage = manifest.modules.find(m=>m.id==='place'); update(); };
+    for (const g of document.querySelectorAll('[data-place-mark]')) g.onclick = e => { e.stopPropagation(); place = data.places.find(p=>p.key===g.dataset.placeMark); stage = manifest.modules.find(m=>m.id==='place'); update(); };
     for (const svg of document.querySelectorAll('.mapsvg')) bindSvg(svg);
     bindGoto();
   }

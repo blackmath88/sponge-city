@@ -277,7 +277,8 @@
   "ct_measured-performance": "Gemessene Wirkung",
   "ct_context": "Ausgangslage",
   "ct_study-elsewhere": "Studie aus anderem Umfeld",
-  "status_note": "Umsetzungsstand"
+  "status_note": "Umsetzungsstand",
+  "map_places": "Orte für die Untersuchung (Kontextpunkte, keine vermessene Geometrie)"
  },
  "en": {
   "skip": "Skip to content",
@@ -557,6 +558,7 @@
   "ct_measured-performance": "Measured performance",
   "ct_context": "Context",
   "ct_study-elsewhere": "Study from elsewhere",
-  "status_note": "Implementation status"
+  "status_note": "Implementation status",
+  "map_places": "Places for investigation (context points, not surveyed geometry)"
  }
 }

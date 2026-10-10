@@ -86,3 +86,4 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .group-label{color:#56625d!important;opacity:1!important}.status{color:#7a4f2c}
 .place-button small,small{color:#56625d}
 .steps button[aria-current=step] span{color:#fff}
+.placemark{cursor:pointer}.placemark .pm{fill:#fff;stroke:#243c35;stroke-width:3;vector-effect:non-scaling-stroke}.placemark:hover .pm{fill:#243c35}
