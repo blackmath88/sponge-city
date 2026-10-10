@@ -36,3 +36,11 @@ Observed, derived, modelled, assumed and unknown stay distinct everywhere. A gap
 - **PR #5:** used for architectural guidance only (Charter → Gap → Place → Action; Stage 2/3 field names). Its files are not part of this branch.
 - **Reused:** Data Charter and atlas data, sponge facts, catalogue vocabulary, Street X-Ray profiles, Rain Walk, Street Lab, connected case, the Decision Canvas shell.
 - **Deferred:** a real PlaceProvider for a surveyed segment; Andy's Tellplatz adapter; observation import with independent verification; the Weavr-governed delivery of V2 stages. Archives and Andy's attribution (`contributions/andy/`, `archive/`) are untouched.
+
+## Untranslated legacy surfaces (outside the delivered journey, or residual)
+
+Reported honestly; none blocks the journey:
+- **Linked references, English only:** Evidence atlas, situation map, intervention catalogue page (`catalogue.html`), adaptive state-engine demo, solutions hub. The reference links are labelled "(Englisch)" in German.
+- **Residual English inside translated modules:** machine enumerations such as access states (`site-check-required`, `operator-held`) in the export view; measure-definition terms in city profiles (labelled "source terms"); source titles, dataset names, tree species and station names; the raw JSON panel and thrown engine errors in Street Lab; observation notes typed by users; `docs/` research documents.
+- **Register:** Rain Walk and Street Lab address the reader with «du», the journey shell with «Sie». Harmonise in a copy-edit pass.
+- **Browser coverage:** the modules were checked in headless Chromium for German on desktop (and the journey views on mobile); the live language switch inside embedded frames (`postMessage`) and the English renderings of the embedded modules were not exercised interactively.

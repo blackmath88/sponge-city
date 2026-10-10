@@ -24,7 +24,7 @@
   "references": [
     {"label":{"de":"Situationskarte","en":"Situation map"},"path":"situation-map.html"},
     {"label":{"de":"Belegatlas (Englisch)","en":"Evidence atlas"},"path":"evidence-atlas.html"},
-    {"label":{"de":"Massnahmen und Mechanismen (Katalog)","en":"Interventions and mechanisms"},"path":"catalogue.html"},
+    {"label":{"de":"Massnahmen und Mechanismen (Katalog, Englisch)","en":"Interventions and mechanisms"},"path":"catalogue.html"},
     {"label":{"de":"Adaptives Zustandsmodell · Lernmodell (Englisch)","en":"Adaptive state engine · learning model"},"path":"adaptive-interface/demo/index.html"}
   ]
 }
