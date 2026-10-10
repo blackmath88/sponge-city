@@ -109,9 +109,9 @@ export function measureView({ lang, ui, content }) {
     </ol></article><p class="small muted">${esc(ui('charter_updated'))}: ${esc(content.charter.updated)} · ${esc(ui('cls_observed'))} / ${esc(ui('cls_derived'))} / ${esc(ui('cls_modelled'))} / ${esc(ui('cls_assumed'))} / ${esc(ui('cls_unknown'))}</p></div>`;
 }
 
-const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.id)}"><p class="eyebrow">${chip(ui('sc_' + e.scope), 'scope-' + e.scope)} ${chip(ui('cls_' + e.origin), e.origin)} ${e.evidence_state !== 'found' ? chip(ui('st_' + e.evidence_state), 'state-' + e.evidence_state) : ''}</p><p>${esc(pick(e.text, lang))}</p>
+export const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.id)}"><p class="eyebrow">${chip(ui('sc_' + e.scope), 'scope-' + e.scope)} ${chip(ui('cls_' + e.origin), e.origin)} ${e.evidence_state !== 'found' ? chip(ui('st_' + e.evidence_state), 'state-' + e.evidence_state) : ''}</p><p>${esc(pick(e.text, lang))}</p>
   ${e.measure ? `<p class="small"><em>${esc(ui('measure_def'))}:</em> <strong>${esc(e.measure.quantity)}</strong> · ${esc(e.measure.unit)} · ${esc(e.measure.method)} · ${esc(e.measure.spatial_scale)}${e.measure.period ? ' · ' + esc(e.measure.period) : ''}</p>` : ''}
-  ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote></details>`).join('')}</article>`;
+  ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}${s.verification ? ` · <span class="vflag ${esc(s.verification.verdict)}" data-verification="${esc(s.verification.verdict)}">${esc(ui('ver_' + s.verification.verdict))}</span>` : ''}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote></details>`).join('')}</article>`;
 
 export function matrixView({ lang, ui, content }) {
   const m = content.matrix; if (!m) return '';

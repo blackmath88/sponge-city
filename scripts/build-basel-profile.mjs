@@ -14,8 +14,15 @@ for (const i of facts.interventions) for (const f of i.facts) byFact.set(f.id, f
 const ind = new Map(charter.indicators.map(i => [i.id, i]));
 const mDe = new Map(measurements.indicators.map(i => [i.id, i]));
 const dePractice = new Map(practice.cases.map(c => [c.fact, c.claim_de]));
-const retrieved = '2026-10-03'; // when the repository statements were collected; only SOURCE_QUOTES entries were re-fetched (2026-10-10)
-const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved, quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement', ...(SOURCE_QUOTES[id] ? { ...SOURCE_QUOTES[id], retrieved: '2026-10-10' } : {}) }]; };
+const COLLECTED = '2026-10-03'; // when the repository statements were collected
+// A source gets the later retrieval date only where data/verification/basel-claims.json records a check that reached the source
+// (confirmed or confirmed-with-difference). Unreachable or unchecked sources keep the collection date; nothing is re-dated by a version bump.
+const checks = new Map(read('data/verification/basel-claims.json').claims.map(c => [c.id, c]));
+const reached = key => { const c = checks.get(key); return c && ['confirmed', 'confirmed-with-difference'].includes(c.verdict) ? c : null; };
+const retrievedFor = key => reached(key)?.retrieved_on ?? COLLECTED;
+const verificationFor = key => { const c = checks.get(key); return c ? { verdict: c.verdict, checked_on: c.retrieved_on } : { verdict: 'not-checked', checked_on: null }; };
+const retrieved = COLLECTED;
+const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved: retrievedFor(id), verification: verificationFor(id), quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement', ...(SOURCE_QUOTES[id] ? SOURCE_QUOTES[id] : {}) }]; };
 // Verbatim source sentences verified on 2026-10-10 (data/verification/basel-claims.json) replace the repository statement as the entry's quote.
 const SOURCE_QUOTES = { engelgasse: { quote: 'Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.', quote_lang: 'de', quote_basis: 'source-verbatim' } };
 const entries = [];
@@ -23,7 +30,7 @@ const fact = (id, dimension, origin, scope, de, measure = null) => entries.push(
 const charterEntry = (indId, dimension, state, origin, scope, textDe, textEn) => {
   const i = ind.get(indId);
   entries.push({ id: `basel.${dimension}.${indId}`, dimension, text: { de: textDe, en: textEn ?? i.basel.detail }, origin, scope, evidence_state: state, measure: null,
-    sources: i.basel.sources.length ? i.basel.sources.map(s => ({ title: s.label, url: s.url, publisher: s.label, retrieved: charter.updated, quote: i.basel.detail, quote_lang: 'en', quote_basis: 'repository-statement' })) : [] });
+    sources: i.basel.sources.length ? i.basel.sources.map(s => ({ title: s.label, url: s.url, publisher: s.label, retrieved: reached('measurement:' + indId) ? retrievedFor('measurement:' + indId) : charter.updated, verification: verificationFor('measurement:' + indId), quote: i.basel.detail, quote_lang: 'en', quote_basis: 'repository-statement' })) : [] });
 };
 fact('basel-sealed', 'context', 'derived', 'city-wide', null, { topic: 'sealing', quantity: 'sealed share of ground area', unit: '%', method: 'area of cadastral land-cover polygons by class', spatial_scale: 'Canton Basel-Stadt (36.6 km²)', period: 'land cover updated 2026-08-20' });
 fact('basel-hot-days', 'context', 'derived', 'city-wide', null);
@@ -31,7 +38,8 @@ fact('basel-canopy', 'context', 'observed', 'city-wide', 'Baumkronen decken rund
 fact('bpg-72', 'interventions', 'observed', 'city-wide', 'In Basel-Stadt müssen Flachdächer ab 10 m² bei Neubau oder Sanierung begrünt werden (§ 72 BPG), mit mindestens 15 cm regionalem Substrat und 20 cm auf einem Drittel des Dachs.');
 fact('fernwaerme-30', 'interventions', 'observed', 'programme', 'Basel nutzt den Fernwärmeausbau (rund 60 km mehr bis 2037), um Strassen klimafreundlicher zu gestalten: Hitzeschutz auf rund 30 Strassen bisher, mit neuen Bäumen, Grünflächen und Entsiegelung.');
 fact('sevogel', 'interventions', 'observed', 'project', null);
-fact('engelgasse', 'interventions', 'observed', 'project', null);
+// the cited release announces the works (2016); completion is not verified, so the entry is not an observation of the built result
+fact('engelgasse', 'interventions', 'unknown', 'project', null);
 fact('voltanord-pilot', 'measurement', 'observed', 'project', 'Basel testet Schwammstadt-Elemente in den neuen Strassen im VoltaNord und überwacht sie fünf Jahre lang wissenschaftlich (CHF 280 000 bewilligt). Ergebnisse sind in dieser Quelle nicht enthalten.');
 charterEntry('rainfall', 'measurement', 'found', 'observed', 'city-wide', mDe.get('rainfall').actual.de);
 charterEntry('street-temperature', 'measurement', 'found', 'observed', 'city-wide', 'Rund 200 städtische Sensoren liefern stündliche Lufttemperatur, offen, aber als Rohdaten (nicht qualitätsgeprüft).');

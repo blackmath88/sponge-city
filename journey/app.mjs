@@ -132,13 +132,13 @@ try {
 
     try {
     const need = [...st.layers.map(id=>[st.city,id]), ...(st.compare?(st.layersCompare??[]).map(id=>[st.compare,id]):[]), ...(st.sel?[[Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===st.sel.layer)),st.sel.layer]]:[])];
-    if (need.some(([c,id])=>!geoCache.has(id)) && $('view').querySelector('.mapview')) { $('view').inert = true; $('view').setAttribute('aria-busy','true'); announce(ui('loading')); }
+    if (need.some(([c,id])=>!geoCache.has(id)) && $('view').querySelector('.mapview')) { const live = $('live'); if ($('view').contains(document.activeElement) && live) { live.tabIndex = -1; live.focus({preventScroll:true}); } /* keep a focus anchor outside the inert view */ $('view').inert = true; $('view').setAttribute('aria-busy','true'); announce(ui('loading')); }
     await Promise.all(need.map(([c,id])=>loadGeo(c,id)));
     if (token !== mapToken || stage.kind!=='map') return;
     $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,tablePages,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
     $('view').inert = false; $('view').removeAttribute('aria-busy');
-    bindMap(); markSelected(); { const a = document.activeElement; if (!a || a === document.body || $('view').contains(a)) restoreFocus(focusAt); } announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
-    } catch (error) { console.error(error); $('view').inert = false; $('view').removeAttribute('aria-busy'); if (token === mapToken) { $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
+    bindMap(); markSelected(); { const a = document.activeElement; if (!a || a === document.body || a === $('live') || $('view').contains(a)) restoreFocus(focusAt); } announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
+    } catch (error) { console.error(error); if (token === mapToken) { $('view').inert = false; $('view').removeAttribute('aria-busy'); $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
   const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); for (const tr of document.querySelectorAll('tr.sel-row')) { tr.classList.remove('sel-row'); tr.removeAttribute('aria-current'); } if (mapState.sel) { const tr = document.querySelector(`[data-pick="${CSS.escape(mapState.sel.layer)}:${mapState.sel.index}"]`)?.closest('tr'); if (tr) { tr.classList.add('sel-row'); tr.setAttribute('aria-current','true'); } } bindGoto(); syncUrl(); };

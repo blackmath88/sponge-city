@@ -43,3 +43,8 @@ Reviews: R1 (code/UX/boundaries/bilingual, Opus 5.5) and R2 (evidence validity, 
 - **R4** (Opus, post-R3 delta at d74342a8935c): 0 blocker, 1 major (view stayed inert after leaving the map during a load), 6 minor. Fixed in 5f6eaee (inert reset, focus not pulled back, loading cue only when loading, row mark and page follow a pick, retrieval dates, wording).
 - **R6** (Opus, delta d74342a..5f6eaee): R4 6 of 7 fixed, 1 partly; 0 blocker, 0 major, 4 minor, **open**: Engelgasse `origin: observed` for an unverified announcement; retrieval dates are literals in the profile script; focus is on BODY while a city loads (inert); two fixes are not pinned by a browser test; a catch clears `inert` before its token check (unreachable today).
 - **R5** (Sonnet, independent recomputation of the Zürich sealing share from a pinned WFS download): REPRODUCED. See `zurich-recompute/report.md`.
+
+## Follow-up after R6 (this session continuation)
+- Engelgasse `origin` is now `unknown` (announcement, completion unverified); retrieval dates in `data/cities/basel.json` are derived from `data/verification/basel-claims.json` (later date only where a check reached the source; every source carries its verification verdict, and unchecked or unreachable sources are flagged in the UI). Checked by `tests/provenance.test.mjs`.
+- Focus keeps an anchor (status line) while a city loads; the stale-token catch no longer clears `inert`; browser checks now pin the no-"loading"-on-cached-paging and selection-opens-its-page behaviour.
+- These changes have not had an independent review (R6 covered 5f6eaee).

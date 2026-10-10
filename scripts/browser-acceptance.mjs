@@ -216,6 +216,19 @@ await check('table paging: the page holding the selected object opens with its r
   await page.click('[data-stage="map"]'); await settle(page, 1800);
   await page.click('[data-map-city="berlin"]'); await page.focus('button[data-lang="en"]'); await settle(page, 3000);
   assert(await page.evaluate(() => document.activeElement?.dataset?.lang) === 'en', 'focus is not pulled back after a load once the user moved on');
+  // R6 minors: focus keeps an anchor (the status line) while a city loads; cached paging does not announce loading; a later pick moves the table page
+  await page.click('[data-stage="map"]'); await settle(page, 1500);
+  await page.route('**/content/maps/copenhagen/*.geojson', async r => { await new Promise(x => setTimeout(x, 1200)); r.continue(); });
+  await page.focus('[data-map-city="copenhagen"]'); await page.keyboard.press('Enter'); await page.waitForTimeout(200);
+  assert(await page.evaluate(() => document.activeElement?.id) === 'live', 'focus sits on the status line (not BODY) while the city loads'); await settle(page, 2500);
+  assert(await page.evaluate(() => document.activeElement?.dataset?.mapCity) === 'copenhagen', 'focus returns to the city button after the load');
+  await page.click('[data-map-city="basel"]'); await settle(page, 1200); await page.click('[data-map-mode="table"]'); await settle(page, 600);
+  await page.evaluate(() => { window.__live = []; new MutationObserver(() => window.__live.push(document.getElementById('live').textContent)).observe(document.getElementById('live'), { childList: true, characterData: true, subtree: true }); });
+  await page.click('[data-table-page$=":1"]:not([aria-disabled="true"])'); await settle(page, 500);
+  assert(!(await page.evaluate(() => window.__live)).some(t => /Wird geladen|Loading/i.test(t)), 'cached paging does not announce a load');
+  await page.click('[data-map-mode="map"]'); await settle(page, 600); await (await page.$('.mapsvg [data-layer="basel.sealing.01"][data-f="10"]')).dispatchEvent('click'); await settle(page, 300);
+  await page.click('[data-map-mode="table"]'); await settle(page, 600);
+  assert(await page.$('tr.sel-row[aria-current="true"]'), 'a selection made on the map opens its table page with the row marked');
   // picking a row in the table marks it
   await page.click('[data-map-mode="table"]'); await settle(page, 600); await page.click('[data-pick]'); await settle(page, 300);
   assert(await page.$('tr.sel-row[aria-current="true"]'), 'a picked table row is marked at once'); await ctx.close();

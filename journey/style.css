@@ -94,3 +94,4 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .chip.open{background:var(--mint)}
 .tablenav button.is-disabled{opacity:.45;cursor:not-allowed}.sel-row{background:var(--mint)}
 #place-title:focus{outline:none}
+.vflag{font-weight:600}.vflag.not-checked,.vflag.source-unreachable{color:var(--amber)}
