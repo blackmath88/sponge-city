@@ -32,3 +32,28 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 @media(max-width:700px){.canvas-panel{padding:0 14px 20px}.step-group{border-right:0}iframe{height:640px}header span{flex-basis:100%;order:3}}
 .decision .indicator dl{grid-template-columns:minmax(0,1fr)}
 @media(max-width:700px){.group-label{display:none}.step-group{gap:0}.steps{gap:2px 4px}}
+/* --- map step --- */
+.maptoolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:8px 0 12px}.maptoolbar .seg{margin:0}.cmp{font-size:13px;display:flex;gap:8px;align-items:center}.cmp select{font:inherit;padding:7px 8px;min-height:38px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink)}
+.download.secondary{background:var(--panel);color:var(--ink)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}.mapgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mappanel{margin:0;min-width:0}.mappanel figcaption{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline;margin-bottom:6px}
+.mapframe{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#eef2ee}
+.mapsvg{display:block;width:100%;height:auto;max-height:70vh;touch-action:none;cursor:grab}.mapsvg:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+.mapsvg .seabed{fill:#eef2ee}.mapsvg .pg{stroke-width:.8;vector-effect:non-scaling-stroke}.mapsvg .ln{fill:none;stroke-width:1.6;vector-effect:non-scaling-stroke}.mapsvg .pt{fill:none;stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.mapsvg .sel{stroke:#000!important;stroke-width:3!important;fill-opacity:.9!important}
+.mapsvg [data-f]:hover{stroke:#000;stroke-width:2}
+.zoom{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:4px}.zoom button{width:44px;height:44px;border:1px solid var(--line);background:var(--panel);border-radius:6px;font-size:18px}
+.mapempty,.maperror{position:absolute;left:12px;right:60px;bottom:10px;margin:0;padding:8px 10px;background:var(--panel);border:1px solid var(--line);border-radius:6px;font-size:13px}.maperror{border-color:#a14}
+.legends{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:8px;font-size:12px}.legend ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 12px}.legend li{display:flex;align-items:center;gap:6px}.legend i{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.35);display:inline-block}
+.mapside{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px;margin-top:16px;align-items:start}
+.layerbox{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px}.layerbox h4{margin:0 0 8px}.layerbox h5{margin:12px 0 6px;font-size:13px}
+.layers,.gaps{list-style:none;margin:0;padding:0;display:grid;gap:10px}.layerrow{display:grid;gap:3px;border-top:1px solid var(--line);padding-top:8px;font-size:13px}.layerrow label{display:flex;gap:8px;align-items:center;min-height:32px}.layerrow input{width:20px;height:20px}
+.gaps li{font-size:13px;border-top:1px solid var(--line);padding-top:8px}
+.inspect{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;position:sticky;top:8px}.inspect.empty{border-style:dashed}.inspect h4{margin:0 0 8px}
+.props{border-collapse:collapse;font-size:13px;margin:6px 0 12px;width:100%}.props th,.props td{text-align:left;padding:4px 8px;border-top:1px solid var(--line);vertical-align:top}.props th{width:38%;color:var(--muted);font-weight:500}
+.meta{display:grid;grid-template-columns:minmax(90px,130px) 1fr;gap:6px 12px;font-size:13px;margin:0}.meta dt{color:var(--muted);font-size:12px}.meta dd{margin:0;overflow-wrap:anywhere}
+.links a{margin-right:14px}
+.scroll{overflow-x:auto}.tableview table{border-collapse:collapse;font-size:12px;min-width:640px}.tableview th,.tableview td{text-align:left;padding:5px 8px;border-top:1px solid var(--line);vertical-align:top}.tableview button{min-height:32px;padding:2px 10px}
+.pair.ok{color:var(--green)}.pair.no{color:var(--amber)}
+@media(max-width:900px){.mapgrid.two{grid-template-columns:minmax(0,1fr)}.mapside{grid-template-columns:minmax(0,1fr)}.inspect{position:static}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

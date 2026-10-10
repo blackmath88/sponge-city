@@ -1,30 +1,242 @@
 {
-  "schema_version": "sponge-journey/2",
-  "title": "Sponge City Basel",
-  "default_place": "kanonengasse",
-  "default_language": "de",
-  "languages": ["de", "en"],
-  "modules": [
-    {"id":"concept","kind":"view","group":"learn","label":{"de":"Verstehen","en":"Understand"},"question":{"de":"Wie hält eine Stadt Wasser, kühlt und beschattet?","en":"How does a city hold water, cool and shade?"},"boundary":{"de":"Erklärung von Mechanismen. Keine Aussage über einen bestimmten Ort.","en":"An explanation of mechanisms. No statement about a particular place."}},
-    {"id":"practice","kind":"view","group":"learn","label":{"de":"Aus der Praxis","en":"From practice"},"question":{"de":"Was berichten Städte und Studien, und wie belastbar ist es?","en":"What do cities and studies report, and how solid is it?"},"boundary":{"de":"Projektbeispiele und Studien aus anderen Klimazonen sind keine Belege für Basel.","en":"Project examples and studies from other climates are not evidence for Basel."}},
-    {"id":"measure","kind":"view","group":"measure","label":{"de":"Messen","en":"Measure"},"question":{"de":"Welche Messgrösse stützt welche Entscheidung?","en":"Which measurement supports which decision?"},"boundary":{"de":"Gemessen, berechnet, modelliert, angenommen und unbekannt bleiben getrennt.","en":"Observed, derived, modelled, assumed and unknown stay separate."}},
-    {"id":"evidence","kind":"frame","group":"measure","label":{"de":"Datenlage","en":"Evidence"},"question":{"de":"Was ist verfügbar, berechenbar oder bei anderen?","en":"What is available, computable or held elsewhere?"},"path":"wrapper/data-charter-map/index.html","context":"reference","boundary":{"de":"Die Karte ordnet Daten und erlaubte Verwendungen ein. Eine sichtbare Ebene ist keine Freigabe für eine Massnahme.","en":"The charter classifies evidence and permitted uses. A visible layer is not an intervention clearance."}},
-    {"id":"cities","kind":"view","group":"compare","label":{"de":"Städte vergleichen","en":"Compare cities"},"question":{"de":"Was machen Basel und zwei andere Städte, und was lässt sich übertragen?","en":"What do Basel and two other cities do, and what could transfer?"},"boundary":{"de":"Kein Ranking. Fehlende öffentliche Belege heissen nicht, dass nicht gemessen wird.","en":"No ranking. Missing public evidence does not mean nothing is measured."}},
-    {"id":"place","kind":"frame","group":"place","needs_place":true,"label":{"de":"Ort ansehen","en":"Inspect a place"},"question":{"de":"Was wissen wir über diese Strasse?","en":"What do we know about this street?"},"path":"wrapper/street-xray/index.html","context":"street-profile","boundary":{"de":"Die Zeichnung ist schematisch. Offene Daten zeigen den Kontext; der Untergrund bleibt unbekannt.","en":"The street drawing is schematic. Open records establish context; underground conditions remain unknown."}},
-    {"id":"observe","kind":"frame","group":"place","needs_place":true,"label":{"de":"Beobachten","en":"Observe"},"question":{"de":"Was könnte man auf der Strasse feststellen?","en":"What could a person on the street establish?"},"path":"wrapper/street-workspace/rain-walk/index.html","context":"observation","boundary":{"de":"Meldungen bleiben auf diesem Gerät und müssen geprüft werden. Der Massstab ist ein Übungslayout von 120 m; der Ort ist Untersuchungskontext, keine vermessene Geometrie.","en":"Reports are saved on this device and need review. The distance scale is a 120 m practice layout; the selected place is investigation context, not surveyed geometry."}},
-    {"id":"explore","kind":"frame","group":"place","needs_place":true,"label":{"de":"Erkunden","en":"Explore"},"question":{"de":"Wie würde eine verbundene Schwammmassnahme wirken?","en":"How would a connected sponge intervention work?"},"path":"wrapper/street-workspace/index.html","context":"candidate","boundary":{"de":"Der Ort wird nur als Kontext übergeben. Das Strassenlabor nutzt eine synthetische Strasse und illustrative Wasserparameter.","en":"The selected place travels as context only. Street Lab uses a synthetic street and illustrative water parameters."}},
-    {"id":"export","kind":"view","group":"place","needs_place":true,"label":{"de":"Nächste Untersuchung","en":"Next investigation"},"question":{"de":"Was dürfen wir jetzt entscheiden?","en":"What may we decide now?"},"boundary":{"de":"Die fehlende Untersuchung veranlassen. Keine Bau- oder Ingenieurempfehlung.","en":"Commission the missing investigation. No construction or engineering recommendation is implied."}}
-  ],
-  "groups": {
-    "learn": {"de":"Konzept und Praxis","en":"Concept and practice"},
-    "measure": {"de":"Messen und Belege","en":"Measurement and evidence"},
-    "compare": {"de":"Vergleich","en":"Comparison"},
-    "place": {"de":"Ein Ort in Basel","en":"One place in Basel"}
+ "schema_version": "sponge-journey/2",
+ "title": "Sponge City Basel",
+ "default_place": "kanonengasse",
+ "default_language": "de",
+ "languages": [
+  "de",
+  "en"
+ ],
+ "modules": [
+  {
+   "id": "concept",
+   "kind": "view",
+   "group": "learn",
+   "label": {
+    "de": "Verstehen",
+    "en": "Understand"
+   },
+   "question": {
+    "de": "Wie hält eine Stadt Wasser, kühlt und beschattet?",
+    "en": "How does a city hold water, cool and shade?"
+   },
+   "boundary": {
+    "de": "Erklärung von Mechanismen. Keine Aussage über einen bestimmten Ort.",
+    "en": "An explanation of mechanisms. No statement about a particular place."
+   }
   },
-  "references": [
-    {"label":{"de":"Situationskarte","en":"Situation map"},"path":"situation-map.html"},
-    {"label":{"de":"Belegatlas (Englisch)","en":"Evidence atlas"},"path":"evidence-atlas.html"},
-    {"label":{"de":"Massnahmen und Mechanismen (Katalog, Englisch)","en":"Interventions and mechanisms"},"path":"catalogue.html"},
-    {"label":{"de":"Adaptives Zustandsmodell · Lernmodell (Englisch)","en":"Adaptive state engine · learning model"},"path":"adaptive-interface/demo/index.html"}
-  ]
+  {
+   "id": "practice",
+   "kind": "view",
+   "group": "learn",
+   "label": {
+    "de": "Aus der Praxis",
+    "en": "From practice"
+   },
+   "question": {
+    "de": "Was berichten Städte und Studien, und wie belastbar ist es?",
+    "en": "What do cities and studies report, and how solid is it?"
+   },
+   "boundary": {
+    "de": "Projektbeispiele und Studien aus anderen Klimazonen sind keine Belege für Basel.",
+    "en": "Project examples and studies from other climates are not evidence for Basel."
+   }
+  },
+  {
+   "id": "measure",
+   "kind": "view",
+   "group": "measure",
+   "label": {
+    "de": "Messen",
+    "en": "Measure"
+   },
+   "question": {
+    "de": "Welche Messgrösse stützt welche Entscheidung?",
+    "en": "Which measurement supports which decision?"
+   },
+   "boundary": {
+    "de": "Gemessen, berechnet, modelliert, angenommen und unbekannt bleiben getrennt.",
+    "en": "Observed, derived, modelled, assumed and unknown stay separate."
+   }
+  },
+  {
+   "id": "evidence",
+   "kind": "frame",
+   "group": "measure",
+   "label": {
+    "de": "Datenlage",
+    "en": "Evidence"
+   },
+   "question": {
+    "de": "Was ist verfügbar, berechenbar oder bei anderen?",
+    "en": "What is available, computable or held elsewhere?"
+   },
+   "path": "wrapper/data-charter-map/index.html",
+   "context": "reference",
+   "boundary": {
+    "de": "Die Karte ordnet Daten und erlaubte Verwendungen ein. Eine sichtbare Ebene ist keine Freigabe für eine Massnahme.",
+    "en": "The charter classifies evidence and permitted uses. A visible layer is not an intervention clearance."
+   }
+  },
+  {
+   "id": "cities",
+   "kind": "view",
+   "group": "compare",
+   "label": {
+    "de": "Städte vergleichen",
+    "en": "Compare cities"
+   },
+   "question": {
+    "de": "Was machen Basel und zwei andere Städte, und was lässt sich übertragen?",
+    "en": "What do Basel and two other cities do, and what could transfer?"
+   },
+   "boundary": {
+    "de": "Kein Ranking. Fehlende öffentliche Belege heissen nicht, dass nicht gemessen wird.",
+    "en": "No ranking. Missing public evidence does not mean nothing is measured."
+   }
+  },
+  {
+   "id": "map",
+   "kind": "map",
+   "group": "compare",
+   "label": {
+    "de": "Karte",
+    "en": "Map"
+   },
+   "question": {
+    "de": "Welche räumlichen Daten gibt es in jeder Stadt, und was sagen sie aus?",
+    "en": "What spatial data exists in each city, and what does it say?"
+   },
+   "boundary": {
+    "de": "Kartenscreening ist keine geprüfte Standortbeurteilung. Jede Stadt zeigt nur eigene Quellen; fehlende Ebenen sind Datenlücken, keine Messaussage.",
+    "en": "Map screening is not a verified site assessment. Each city shows only its own sources; a missing layer is a data gap, not a statement about measurement."
+   }
+  },
+  {
+   "id": "place",
+   "kind": "frame",
+   "group": "place",
+   "needs_place": true,
+   "label": {
+    "de": "Ort ansehen",
+    "en": "Inspect a place"
+   },
+   "question": {
+    "de": "Was wissen wir über diese Strasse?",
+    "en": "What do we know about this street?"
+   },
+   "path": "wrapper/street-xray/index.html",
+   "context": "street-profile",
+   "boundary": {
+    "de": "Die Zeichnung ist schematisch. Offene Daten zeigen den Kontext; der Untergrund bleibt unbekannt.",
+    "en": "The street drawing is schematic. Open records establish context; underground conditions remain unknown."
+   }
+  },
+  {
+   "id": "observe",
+   "kind": "frame",
+   "group": "place",
+   "needs_place": true,
+   "label": {
+    "de": "Beobachten",
+    "en": "Observe"
+   },
+   "question": {
+    "de": "Was könnte man auf der Strasse feststellen?",
+    "en": "What could a person on the street establish?"
+   },
+   "path": "wrapper/street-workspace/rain-walk/index.html",
+   "context": "observation",
+   "boundary": {
+    "de": "Meldungen bleiben auf diesem Gerät und müssen geprüft werden. Der Massstab ist ein Übungslayout von 120 m; der Ort ist Untersuchungskontext, keine vermessene Geometrie.",
+    "en": "Reports are saved on this device and need review. The distance scale is a 120 m practice layout; the selected place is investigation context, not surveyed geometry."
+   }
+  },
+  {
+   "id": "explore",
+   "kind": "frame",
+   "group": "place",
+   "needs_place": true,
+   "label": {
+    "de": "Erkunden",
+    "en": "Explore"
+   },
+   "question": {
+    "de": "Wie würde eine verbundene Schwammmassnahme wirken?",
+    "en": "How would a connected sponge intervention work?"
+   },
+   "path": "wrapper/street-workspace/index.html",
+   "context": "candidate",
+   "boundary": {
+    "de": "Der Ort wird nur als Kontext übergeben. Das Strassenlabor nutzt eine synthetische Strasse und illustrative Wasserparameter.",
+    "en": "The selected place travels as context only. Street Lab uses a synthetic street and illustrative water parameters."
+   }
+  },
+  {
+   "id": "export",
+   "kind": "view",
+   "group": "place",
+   "needs_place": true,
+   "label": {
+    "de": "Nächste Untersuchung",
+    "en": "Next investigation"
+   },
+   "question": {
+    "de": "Was dürfen wir jetzt entscheiden?",
+    "en": "What may we decide now?"
+   },
+   "boundary": {
+    "de": "Die fehlende Untersuchung veranlassen. Keine Bau- oder Ingenieurempfehlung.",
+    "en": "Commission the missing investigation. No construction or engineering recommendation is implied."
+   }
+  }
+ ],
+ "groups": {
+  "learn": {
+   "de": "Konzept und Praxis",
+   "en": "Concept and practice"
+  },
+  "measure": {
+   "de": "Messen und Belege",
+   "en": "Measurement and evidence"
+  },
+  "compare": {
+   "de": "Vergleich und Karte",
+   "en": "Comparison and map"
+  },
+  "place": {
+   "de": "Ein Ort in Basel",
+   "en": "One place in Basel"
+  }
+ },
+ "references": [
+  {
+   "label": {
+    "de": "Situationskarte",
+    "en": "Situation map"
+   },
+   "path": "situation-map.html"
+  },
+  {
+   "label": {
+    "de": "Belegatlas (Englisch)",
+    "en": "Evidence atlas"
+   },
+   "path": "evidence-atlas.html"
+  },
+  {
+   "label": {
+    "de": "Massnahmen und Mechanismen (Katalog, Englisch)",
+    "en": "Interventions and mechanisms"
+   },
+   "path": "catalogue.html"
+  },
+  {
+   "label": {
+    "de": "Adaptives Zustandsmodell · Lernmodell (Englisch)",
+    "en": "Adaptive state engine · learning model"
+   },
+   "path": "adaptive-interface/demo/index.html"
+  }
+ ]
 }

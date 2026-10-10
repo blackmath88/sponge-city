@@ -16,6 +16,7 @@ const checks=[
   ['Connected case','wrapper/achim/connected-case',['--experimental-strip-types','--no-warnings','--test','tests/connected-case.test.mjs']],
   ['Basel profile current','.',['scripts/build-basel-profile.mjs','--check']],
   ['Bilingual journey, city profiles, exports','.',['--test','tests/journey-bilingual.test.mjs']],
+  ['Map layers, share state, map view','.',['--test','tests/map.test.mjs']],
   ['Rain Walk language','.',['--test','tests/rain-walk-i18n.test.mjs']],
   ['Orchestration boundaries','.', ['--experimental-strip-types','--no-warnings','--test','tests/orchestration.test.mjs']]
 ];
