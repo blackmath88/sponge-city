@@ -1,0 +1,405 @@
+{
+ "schema_version": "sponge-city-layers/1",
+ "city": "berlin",
+ "extent": {
+  "bbox": [
+   13.08835,
+   52.33825,
+   13.76116,
+   52.67551
+  ],
+  "source": "Bounding box of Landesgrenze Berlin (ALKIS), WFS https://gdi.berlin.de/services/wfs/alkis_land, layer alkis_land:landesgrenze"
+ },
+ "layers": [
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (FIS-Broker / Umweltatlas)",
+   "licence": "Datenlizenz Deutschland – Zero – Version 2.0 (dl-de/zero-2-0)",
+   "licence_url": "https://www.govdata.de/dl-de/zero-2-0",
+   "attribution": "Geoportal Berlin / ALKIS Berlin, dl-de/zero-2-0",
+   "retrieved": "2026-10-10",
+   "id": "berlin.boundary.01",
+   "theme": "boundary",
+   "title": {
+    "de": "Landesgrenze Berlin",
+    "en": "Berlin state boundary"
+   },
+   "file": "berlin.boundary.01.geojson",
+   "origin": "observed",
+   "method": "Landesgrenze abgeleitet aus dem ALKIS-Datenbestand (Publisher); vereinfacht (ca. 25 m) durch scripts/maps/berlin.mjs",
+   "unit": "polygon",
+   "spatial_scale": "state",
+   "temporal": "ALKIS (current at retrieval)",
+   "coverage": "Whole of Berlin",
+   "source_url": "https://gdi.berlin.de/services/wfs/alkis_land?service=WFS&request=GetCapabilities",
+   "limitations": {
+    "de": "Vereinfachte Geometrie, nicht für Vermessungszwecke.",
+    "en": "Simplified geometry, not for survey use."
+   },
+   "legend": {
+    "type": "single",
+    "items": [
+     {
+      "value": "boundary",
+      "label": {
+       "de": "Landesgrenze",
+       "en": "State boundary"
+      },
+      "color": "#444444"
+     }
+    ]
+   },
+   "properties_shown": [
+    "name"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (FIS-Broker / Umweltatlas)",
+   "licence": "Datenlizenz Deutschland – Zero – Version 2.0 (dl-de/zero-2-0)",
+   "licence_url": "https://www.govdata.de/dl-de/zero-2-0",
+   "attribution": "Geoportal Berlin / Umweltatlas «Versiegelung 2021», SenStadt, dl-de/zero-2-0",
+   "retrieved": "2026-10-10",
+   "id": "berlin.sealing.01",
+   "theme": "sealing",
+   "title": {
+    "de": "Versiegelung 2021 (Block- und Blockteilflächen) – Ausschnitt Mitte",
+    "en": "Sealing 2021 (urban blocks) – Mitte window"
+   },
+   "file": "berlin.sealing.01.geojson",
+   "origin": "derived",
+   "method": "Publisher: Versiegelung von Block- und Blockteilflächen in 10 %-Stufen, ermittelt aus Satellitenbilddaten (Sentinel-2B, unbebauter Anteil) und Gebäudedaten (bebauter Anteil) auf Grundlage der Blockkarte 1:5'000 (ISU5), Stand 2020",
+   "unit": "% sealed share of block area",
+   "spatial_scale": "urban block / block part (ISU5)",
+   "temporal": "Versiegelung 2021 (Veränderung 2016–2021 im Datensatz)",
+   "coverage": "Ausschnitt Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 126 Blöcke im Fenster / Window in Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 126 blocks in the window",
+   "source_url": "https://gdi.berlin.de/services/wfs/ua_versiegelung_2021?service=WFS&request=GetCapabilities",
+   "limitations": {
+    "de": "Nur ein Ausschnitt. Ableitung aus Satellitendaten, Auflösung = Blockflächen; keine Aussage zu einzelnen Flächen oder zur Durchlässigkeit. Geometrie vereinfacht.",
+    "en": "Window only. Derived from satellite data at block resolution; no statement on single surfaces or permeability. Geometry simplified."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "vg_class",
+    "items": [
+     {
+      "value": "≤ 5",
+      "label": {
+       "de": "Versiegelungsgrad ≤ 5 %",
+       "en": "Degree of sealing ≤ 5 %"
+      },
+      "color": "#BCFF79"
+     },
+     {
+      "value": "> 5–10",
+      "label": {
+       "de": "Versiegelungsgrad > 5–10 %",
+       "en": "Degree of sealing > 5–10 %"
+      },
+      "color": "#FFFF80"
+     },
+     {
+      "value": "> 10–20",
+      "label": {
+       "de": "Versiegelungsgrad > 10–20 %",
+       "en": "Degree of sealing > 10–20 %"
+      },
+      "color": "#FFFF00"
+     },
+     {
+      "value": "> 20–30",
+      "label": {
+       "de": "Versiegelungsgrad > 20–30 %",
+       "en": "Degree of sealing > 20–30 %"
+      },
+      "color": "#FFD0A2"
+     },
+     {
+      "value": "> 30–40",
+      "label": {
+       "de": "Versiegelungsgrad > 30–40 %",
+       "en": "Degree of sealing > 30–40 %"
+      },
+      "color": "#DCA603"
+     },
+     {
+      "value": "> 40–50",
+      "label": {
+       "de": "Versiegelungsgrad > 40–50 %",
+       "en": "Degree of sealing > 40–50 %"
+      },
+      "color": "#FF8000"
+     },
+     {
+      "value": "> 50–60",
+      "label": {
+       "de": "Versiegelungsgrad > 50–60 %",
+       "en": "Degree of sealing > 50–60 %"
+      },
+      "color": "#F94F06"
+     },
+     {
+      "value": "> 60–70",
+      "label": {
+       "de": "Versiegelungsgrad > 60–70 %",
+       "en": "Degree of sealing > 60–70 %"
+      },
+      "color": "#FF0000"
+     },
+     {
+      "value": "> 70–80",
+      "label": {
+       "de": "Versiegelungsgrad > 70–80 %",
+       "en": "Degree of sealing > 70–80 %"
+      },
+      "color": "#BF00BF"
+     },
+     {
+      "value": "> 80–90",
+      "label": {
+       "de": "Versiegelungsgrad > 80–90 %",
+       "en": "Degree of sealing > 80–90 %"
+      },
+      "color": "#800080"
+     },
+     {
+      "value": "> 90–100",
+      "label": {
+       "de": "Versiegelungsgrad > 90–100 %",
+       "en": "Degree of sealing > 90–100 %"
+      },
+      "color": "#000099"
+     },
+     {
+      "value": "keine Angabe",
+      "label": {
+       "de": "Keine Angabe (Versiegelungsgrad fehlt)",
+       "en": "No value given"
+      },
+      "color": "#cccccc"
+     }
+    ]
+   },
+   "properties_shown": [
+    "sealing_pct",
+    "structure_type",
+    "block"
+   ],
+   "measure_topic": "sealing-fraction"
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (FIS-Broker / Umweltatlas)",
+   "licence": "Datenlizenz Deutschland – Zero – Version 2.0 (dl-de/zero-2-0)",
+   "licence_url": "https://www.govdata.de/dl-de/zero-2-0",
+   "attribution": "Geoportal Berlin / Umweltatlas «Gründächer 2020», SenStadt, dl-de/zero-2-0",
+   "retrieved": "2026-10-10",
+   "id": "berlin.green.01",
+   "theme": "green",
+   "title": {
+    "de": "Begrünte Dachteilflächen (Gebäude) 2020 – Ausschnitt Mitte",
+    "en": "Green roof sub-areas (buildings) 2020 – Mitte window"
+   },
+   "file": "berlin.green.01.geojson",
+   "origin": "derived",
+   "method": "Publisher: bestehende Gründachteilflächen (extensiv und intensiv) der Gebäude, Gründächer 2020 (Umweltatlas)",
+   "unit": "polygon, class",
+   "spatial_scale": "roof sub-area",
+   "temporal": "2020",
+   "coverage": "Ausschnitt Berlin-Mitte (Alexanderplatz/Spree), lon 13.3999–13.4101, lat 52.5174–52.5226; 854 Dachteilflächen im Fenster / Window in Berlin-Mitte (Alexanderplatz/Spree), lon 13.3999–13.4101, lat 52.5174–52.5226; 854 roof sub-areas in the window",
+   "source_url": "https://gdi.berlin.de/services/wfs/ua_gruendaecher_2020?service=WFS&request=GetCapabilities",
+   "limitations": {
+    "de": "Nur ein Ausschnitt; Stand 2020. Ableitung aus Fernerkundung, nicht vor Ort geprüft; Aufbau/Retention nicht erfasst.",
+    "en": "Window only; state 2020. Derived from remote sensing, not field verified; build-up and retention not captured."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "type",
+    "items": [
+     {
+      "value": "extensiv",
+      "label": {
+       "de": "Extensive Begrünung",
+       "en": "Extensive green roof"
+      },
+      "color": "#FFFF80"
+     },
+     {
+      "value": "intensiv",
+      "label": {
+       "de": "Intensive Begrünung",
+       "en": "Intensive green roof"
+      },
+      "color": "#BCFF79"
+     }
+    ]
+   },
+   "properties_shown": [
+    "type"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (FIS-Broker / Umweltatlas)",
+   "licence": "Datenlizenz Deutschland – Zero – Version 2.0 (dl-de/zero-2-0)",
+   "licence_url": "https://www.govdata.de/dl-de/zero-2-0",
+   "attribution": "Geoportal Berlin / Umweltatlas «Klimabewertungskarten 2022», SenStadt, dl-de/zero-2-0",
+   "retrieved": "2026-10-10",
+   "id": "berlin.heat.01",
+   "theme": "heat",
+   "title": {
+    "de": "Bioklimatische Gesamtbewertung Siedlungsflächen 2022 – Ausschnitt Mitte",
+    "en": "Bioclimatic overall assessment of settlement areas 2022 – Mitte window"
+   },
+   "file": "berlin.heat.01.geojson",
+   "origin": "modelled",
+   "method": "Publisher: Klimabewertungskarten 2022 (Planungshinweise Stadtklima), Gesamtbewertung anhand der Tag- und Nachtsituation, Klimamodellierung",
+   "unit": "class (günstig … sehr ungünstig)",
+   "spatial_scale": "urban block",
+   "temporal": "2022",
+   "coverage": "Ausschnitt Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 85 Flächen im Fenster / Window in Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 85 areas in the window",
+   "source_url": "https://gdi.berlin.de/services/wfs/ua_klimabewertung_2022?service=WFS&request=GetCapabilities",
+   "limitations": {
+    "de": "Modellergebnis (Planungshinweis), keine Messung. Nur ein Ausschnitt, nur Siedlungsflächen (keine Verkehrs- und Grünflächen).",
+    "en": "Model result (planning guidance), not a measurement. Window only, settlement areas only (no traffic or green areas)."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "rating",
+    "items": [
+     {
+      "value": "günstig",
+      "label": {
+       "de": "Günstig",
+       "en": "Favourable"
+      },
+      "color": "#FFFFCC"
+     },
+     {
+      "value": "weniger günstig",
+      "label": {
+       "de": "Weniger günstig",
+       "en": "Less favourable"
+      },
+      "color": "#FFEA00"
+     },
+     {
+      "value": "ungünstig",
+      "label": {
+       "de": "Ungünstig",
+       "en": "Unfavourable"
+      },
+      "color": "#FF5500"
+     },
+     {
+      "value": "sehr ungünstig",
+      "label": {
+       "de": "Sehr ungünstig",
+       "en": "Very unfavourable"
+      },
+      "color": "#E600A9"
+     }
+    ]
+   },
+   "properties_shown": [
+    "rating",
+    "block"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin (FIS-Broker / Umweltatlas)",
+   "licence": "Datenlizenz Deutschland – Zero – Version 2.0 (dl-de/zero-2-0)",
+   "licence_url": "https://www.govdata.de/dl-de/zero-2-0",
+   "attribution": "Geoportal Berlin / Baumbestand Berlin, SenStadt, dl-de/zero-2-0",
+   "retrieved": "2026-10-10",
+   "id": "berlin.trees.01",
+   "theme": "trees",
+   "title": {
+    "de": "Strassenbäume – Ausschnitt Mitte",
+    "en": "Street trees – Mitte window"
+   },
+   "file": "berlin.trees.01.geojson",
+   "origin": "observed",
+   "method": "Baumbestand Berlin – Strassenbäume (Strassenbaumkataster der Bezirke), Punkte im Fenster",
+   "unit": "tree (point)",
+   "spatial_scale": "single tree",
+   "temporal": "register as of retrieval",
+   "coverage": "Ausschnitt Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 803 Bäume im Fenster / Window in Berlin-Mitte (Alexanderplatz/Spree), lon 13.3950–13.4150, lat 52.5150–52.5250; 803 trees in the window",
+   "source_url": "https://gdi.berlin.de/services/wfs/baumbestand?service=WFS&request=GetCapabilities",
+   "limitations": {
+    "de": "Nur Strassenbäume des Landes, keine Park- (Anlagen-) oder Privatbäume; Ausschnitt. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "State-owned street trees only, no park (Anlagen) or private trees; window only. Legend colours are our choice; the publisher defines classes only."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "group",
+    "items": [
+     {
+      "value": "Laubbäume",
+      "label": {
+       "de": "Laubbäume",
+       "en": "Laubbäume (publisher group, German)"
+      },
+      "color": "#2d6a4f"
+     },
+     {
+      "value": "Obstbäume",
+      "label": {
+       "de": "Obstbäume",
+       "en": "Obstbäume (publisher group, German)"
+      },
+      "color": "#bc6c25"
+     },
+     {
+      "value": "Großsträucher",
+      "label": {
+       "de": "Grosssträucher",
+       "en": "Grosssträucher (publisher group, German)"
+      },
+      "color": "#74a57f"
+     }
+    ]
+   },
+   "properties_shown": [
+    "species",
+    "age_years",
+    "street",
+    "crown_diameter_m"
+   ],
+   "measure_topic": null
+  }
+ ],
+ "gaps": [
+  {
+   "theme": "flood-hazard",
+   "reason": {
+    "de": "Starkregengefahrenkarte Berlin: nur WMS (Darstellung) und ATOM-Grossdownload verfügbar, kein WFS; Lizenz je Modellgebiet gemischt (dl-de/zero-2-0, Moabit/Flughafensee CC BY 4.0). Kein begrenzter Vektorabruf möglich, daher keine Geometrie übernommen.",
+    "en": "Berlin heavy-rain hazard map: only WMS (display) and ATOM bulk download are available, no WFS; licence differs by model area (dl-de/zero-2-0; Moabit/Flughafensee CC BY 4.0). No bounded vector query possible, so no geometry included."
+   },
+   "checked": [
+    "https://gdi.berlin.de/services/wfs/stark_regen_gefahr → 404",
+    "https://gdi.berlin.de/data/ua_srgk/atom/ → 200, bulk download feed, rights text read, not downloaded",
+    "https://gdi.berlin.de/services/wms/ua_srgk?request=GetCapabilities&service=WMS → listed in catalogue (raster only, not used)"
+   ]
+  },
+  {
+   "theme": "water",
+   "reason": {
+    "de": "Hochwassergefahrenkarten (Fliessgewässer) nicht abgerufen: ausserhalb der Aufgabe, Fokus Starkregen/Versiegelung.",
+    "en": "River flood hazard maps not fetched: out of scope (focus on heavy rain / sealing)."
+   },
+   "checked": [
+    "https://gdi.berlin.de/services/wfs/ua_hochwassergefahrenkarten (listed in catalogue, not queried)"
+   ]
+  }
+ ]
+}

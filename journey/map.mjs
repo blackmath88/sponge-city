@@ -52,7 +52,7 @@ export function validateLayerPack(pack, files = {}) {
     for (const item of items) if (!/^#[0-9a-f]{6}$/i.test(item.color ?? '') || !item.label?.de || !item.label?.en) add(`${where}: legend item needs color and de/en label`);
   }
   for (const gap of pack?.gaps ?? []) {
-    if (!gap.theme || !gap.reason?.de || !gap.reason?.en || !(gap.checked ?? []).length) add(`gap ${gap.theme ?? '?'}: needs theme, de/en reason and checked[]`);
+    if (!gap.theme || !gap.reason?.de || !gap.reason?.en || (!(gap.checked ?? []).length && gap.state !== 'not_checked')) add(`gap ${gap.theme ?? '?'}: needs theme, de/en reason and checked[]`);
   }
   if (!(pack?.layers ?? []).length && !(pack?.gaps ?? []).length) add('neither layers nor gaps');
   return problems;
@@ -158,10 +158,12 @@ export const packSummary = (pack) => ({
   themes: [...new Set((pack.layers ?? []).map(l => l.theme))],
 });
 
-// Two layers of different cities may sit next to each other. They are comparable only on exact method/unit/scale.
+// Two layers of different cities may sit next to each other. They are comparable only on exact theme, method, unit,
+// scale, origin and reference period; `differs` names the reasons so the view can say why not.
 export function comparableLayers(a, b) {
-  const same = ['theme', 'unit', 'method', 'spatial_scale'].every(f => String(a[f]).trim().toLowerCase() === String(b[f]).trim().toLowerCase());
-  return { comparable: same && a.origin === b.origin, same_theme: a.theme === b.theme };
+  const norm = v => String(v ?? '').trim().toLowerCase();
+  const differs = ['theme', 'unit', 'method', 'spatial_scale', 'origin', 'temporal'].filter(f => norm(a[f]) !== norm(b[f]));
+  return { comparable: differs.length === 0, differs, same_theme: a.theme === b.theme };
 }
 
 // Initial view: zoom to the thematic layers when they cover well under the whole extent. Returns [x,y,w,h] or null.

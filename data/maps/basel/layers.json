@@ -71,15 +71,15 @@
    "spatial_scale": "parcel/object (cadastral survey)",
    "temporal": "dataset modified 2026-08-20",
    "retrieved": "2026-10-10",
-   "coverage": "Ausschnitt ca. 0.8 km × 0.7 km um Rhein/Mittlere Brücke, lon 7.5835–7.5935, lat 47.5555–47.5615; 1138 Objekte (nicht ganz Basel)",
+   "coverage": "Ausschnitt ca. 0.8 km × 0.7 km um Rhein/Mittlere Brücke, lon 7.5835–7.5935, lat 47.5555–47.5615; 1138 Objekte (nicht ganz Basel) / window of about 0.8 km × 0.7 km around the Rhine/Mittlere Brücke, same bbox; 1138 objects (not all of Basel)",
    "publisher": "Grundbuch- und Vermessungsamt Basel-Stadt",
    "licence": "CC BY 4.0",
    "licence_url": "https://creativecommons.org/licenses/by/4.0/",
    "source_url": "https://data.bs.ch/explore/dataset/100477/",
    "attribution": "Grundbuch- und Vermessungsamt Basel-Stadt, Open Data Basel-Stadt, CC BY 4.0",
    "limitations": {
-    "de": "Nur ein Ausschnitt. «Befestigt» ist die Vermessungsklasse und sagt nichts über die Wasserdurchlässigkeit des Belags; Dachflächen und Bäume über Flächen sind nicht erfasst. Geometrie vereinfacht.",
-    "en": "Window only. \"befestigt\" (paved) is the survey class and says nothing about permeability of the surface; roof types and tree canopy over surfaces are not captured. Geometry simplified."
+    "de": "Nur ein Ausschnitt. «Befestigt» ist die Vermessungsklasse und sagt nichts über die Wasserdurchlässigkeit des Belags; Dachflächen und Bäume über Flächen sind nicht erfasst. Geometrie vereinfacht. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Window only. \"befestigt\" (paved) is the survey class and says nothing about permeability of the surface; roof types and tree canopy over surfaces are not captured. Geometry simplified. Legend colours are our choice; the publisher defines classes only."
    },
    "legend": {
     "type": "categorical",
@@ -178,7 +178,7 @@
    "properties_shown": [
     "class"
    ],
-   "measure_topic": "sealing"
+   "measure_topic": "sealing-fraction"
   },
   {
    "id": "basel.trees.01",
@@ -196,15 +196,15 @@
    "spatial_scale": "single tree",
    "temporal": "dataset modified 2026-10-10 (register is updated continuously)",
    "retrieved": "2026-10-10",
-   "coverage": "Dasselbe Fenster wie Bodenbedeckung; 307 Bäume",
+   "coverage": "Dasselbe Fenster wie Bodenbedeckung; 307 Bäume / same window as land cover; 307 trees",
    "publisher": "Stadtgärtnerei Basel-Stadt",
-   "licence": "CC BY 4.0 (+ OpenStreetMap-Vektordaten laut Datensatz)",
+   "licence": "CC BY 4.0 (Datensatz-Lizenzfeld: «CC BY 4.0 + OpenStreetMap»; verlinkt ist die Erlaubnis des GVA vom 2024-08-22, CC-BY-Daten in OpenStreetMap aufzunehmen; sie enthält keine zusätzlichen Auflagen für Nutzende dieses Datensatzes)",
    "licence_url": "https://creativecommons.org/licenses/by/4.0/",
    "source_url": "https://data.bs.ch/explore/dataset/100052/",
    "attribution": "Stadtgärtnerei Basel-Stadt, Open Data Basel-Stadt, CC BY 4.0",
    "limitations": {
-    "de": "Nur von Stadtgärtnerei und Gemeinde Riehen gepflegte Bäume; private Bäume fehlen. Ausschnitt, keine Aussage zur Kronenbedeckung.",
-    "en": "Only trees maintained by the city gardens department and Riehen; private trees are missing. Window only, no statement on canopy cover."
+    "de": "Nur von Stadtgärtnerei und Gemeinde Riehen gepflegte Bäume (inkl. von der Stadtgärtnerei gepflegte Privatbäume); übrige private Bäume fehlen. Ausschnitt, keine Aussage zur Kronenbedeckung. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Only trees maintained by the city gardens department and Riehen (including private trees it maintains); other private trees are missing. Window only, no statement on canopy cover. Legend colours are our choice; the publisher defines classes only."
    },
    "legend": {
     "type": "categorical",
@@ -250,7 +250,7 @@
     "street",
     "group"
    ],
-   "measure_topic": "canopy"
+   "measure_topic": null
   }
  ],
  "gaps": [
@@ -262,7 +262,8 @@
    },
    "checked": [
     "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.bafu.gefaehrdungskarte-oberflaechenabfluss → 200, license \"proprietary\", producer FOEN",
-    "https://wmts.geo.admin.ch/1.0.0/ch.bafu.gefaehrdungskarte-oberflaechenabfluss/default/current/3857/12/2145/1434.png → 200 (tiles reachable, not used)"
+    "https://wmts.geo.admin.ch/1.0.0/ch.bafu.gefaehrdungskarte-oberflaechenabfluss/default/current/3857/12/2145/1434.png → 200 (tiles reachable, not used)",
+    "https://wms.geo.bs.ch/?SERVICE=WMS layer NG_Gefahrenkarten_ProzessWasser (used by the existing page as raster; vector availability not checked)"
    ]
   },
   {

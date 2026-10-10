@@ -1,0 +1,219 @@
+{
+ "schema_version": "sponge-city-layers/1",
+ "city": "zurich",
+ "extent": {
+  "bbox": [
+   8.44689,
+   47.319033,
+   8.627212,
+   47.435141
+  ],
+  "source": "Bounding box of the Stadtkreise WFS response (https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise, adm_stadtkreise_v), fetched 2026-10-10"
+ },
+ "layers": [
+  {
+   "kind": "geojson-snapshot",
+   "tiles": null,
+   "retrieved": "2026-10-10",
+   "publisher": "Stadt Zürich (Open Data Zürich)",
+   "licence": "Creative Commons CCZero (as stated on the Open Data Zürich dataset page; opendata.swiss record states terms_open)",
+   "id": "zurich.heat.01",
+   "theme": "heat",
+   "title": {
+    "de": "Fachplanung Hitzeminderung: Massnahmengebiete",
+    "en": "Heat-mitigation plan: measure areas"
+   },
+   "file": "zurich.heat.01.geojson",
+   "origin": "modelled",
+   "method": "Drei Massnahmengebiete, hergeleitet aus der bioklimatischen Belastung für Tag und Nacht (Klimaanalyse: Planhinweiskarten, Kanton Zürich Baudirektion, 2018). Geometrie vereinfacht (Douglas-Peucker, ca. 6 m).",
+   "unit": "categorical class (MG 1, MG 2, MG 3)",
+   "spatial_scale": "polygons across the city",
+   "temporal": "Dataset updated 14.06.2024; based on 2018 cantonal climate maps",
+   "coverage": "Stadt Zürich (174 polygons)",
+   "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_fachplanung_hitzeminderung_ogd",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Fachplanung_Hitzeminderung_OGD (typename fph_massnahmengebiete_ogd)",
+   "attribution": "Stadt Zürich, Grün Stadt Zürich – Fachplanung Hitzeminderung OGD (CCZero)",
+   "limitations": {
+    "de": "Modellbasierte Planungsgrundlage (Konzeptebene), keine Messung; Klassen sind keine Temperaturwerte und nicht mit Klassen anderer Städte gleichzusetzen. Basis sind die kantonalen Klimakarten von 2018.",
+    "en": "Model-based planning basis (concept level), not a measurement; classes are not temperature values and not equal to classes of other cities. Based on the 2018 cantonal climate maps."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "massnahmengebiet",
+    "items": [
+     {
+      "value": "MG 1 - Tag / Nacht",
+      "label": {
+       "de": "MG 1: Verbesserung Tag und Nacht notwendig",
+       "en": "MG 1: improvement day and night needed"
+      },
+      "color": "#b2182b"
+     },
+     {
+      "value": "MG 2 - Tag",
+      "label": {
+       "de": "MG 2: Verbesserung am Tag notwendig",
+       "en": "MG 2: improvement by day needed"
+      },
+      "color": "#ef8a62"
+     },
+     {
+      "value": "MG 3 - Empfehlung",
+      "label": {
+       "de": "MG 3: Erhaltung oder Verbesserung empfohlen",
+       "en": "MG 3: preservation or improvement recommended"
+      },
+      "color": "#fddbc7"
+     }
+    ]
+   },
+   "properties_shown": [
+    "massnahmengebiet"
+   ],
+   "measure_topic": null
+  },
+  {
+   "kind": "geojson-snapshot",
+   "tiles": null,
+   "retrieved": "2026-10-10",
+   "publisher": "Stadt Zürich (Open Data Zürich)",
+   "licence": "Creative Commons CCZero (as stated on the Open Data Zürich dataset page; opendata.swiss record states terms_open)",
+   "id": "zurich.trees.01",
+   "theme": "trees",
+   "title": {
+    "de": "Baumkataster: Ausschnitt Raum Hardplatz",
+    "en": "Tree register: extract around Hardplatz"
+   },
+   "file": "zurich.trees.01.geojson",
+   "origin": "observed",
+   "method": "Baumstandorte aus dem Baumkataster der Stadt Zürich (WFS-Abfrage mit Rechteck, max. 1500 Objekte); nur vier Attribute behalten.",
+   "unit": "tree points (crown diameter in m as recorded)",
+   "spatial_scale": "individual trees",
+   "temporal": "Open Data record updated 30.08.2026 (continuous maintenance); fetched 2026-10-10",
+   "coverage": "Rechteck 8.510,47.382 bis 8.522,47.390 (Raum Hardplatz); 745 Bäume. Nicht stadtweit.",
+   "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_baumkataster",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Baumkataster (typename baumkataster_baumstandorte)",
+   "attribution": "Stadt Zürich, Grün Stadt Zürich – Baumkataster (CCZero)",
+   "limitations": {
+    "de": "Kleiner Ausschnitt, nicht repräsentativ für die Stadt. Der Baumkataster erfasst städtische Bäume im Strassenraum sowie ausgewählte Anlagen und private Bäume, nicht alle Bäume; er ist keine Kronenflächenkarte.",
+    "en": "Small extract, not representative of the city. The register covers city street trees plus selected green spaces and private trees, not all trees; it is not a crown-area map."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "kategorie",
+    "items": [
+     {
+      "value": "Strassenbaum",
+      "label": {
+       "de": "Strassenbaum",
+       "en": "Street tree"
+      },
+      "color": "#1b7837"
+     },
+     {
+      "value": "Parkbaum",
+      "label": {
+       "de": "Parkbaum",
+       "en": "Park tree"
+      },
+      "color": "#7fbf7b"
+     }
+    ]
+   },
+   "properties_shown": [
+    "baumnamedeu",
+    "kategorie",
+    "pflanzjahr",
+    "kronendurchmesser"
+   ],
+   "measure_topic": "canopy"
+  },
+  {
+   "kind": "geojson-snapshot",
+   "tiles": null,
+   "retrieved": "2026-10-10",
+   "publisher": "Stadt Zürich (Open Data Zürich)",
+   "licence": "Creative Commons CCZero (as stated on the Open Data Zürich dataset page; opendata.swiss record states terms_open)",
+   "id": "zurich.boundary.01",
+   "theme": "boundary",
+   "title": {
+    "de": "Stadtkreise",
+    "en": "City districts (Stadtkreise)"
+   },
+   "file": "zurich.boundary.01.geojson",
+   "origin": "observed",
+   "method": "Amtliche Stadtkreis-Grenzen (WFS adm_stadtkreise_v); Geometrie vereinfacht (ca. 9 m).",
+   "unit": "administrative boundary",
+   "spatial_scale": "12 Stadtkreise",
+   "temporal": "Open Data record updated 08.10.2026",
+   "coverage": "Stadt Zürich (12 Kreise)",
+   "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_stadtkreise",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise (typename adm_stadtkreise_v)",
+   "attribution": "Stadt Zürich, Geomatik + Vermessung – Stadtkreise (CCZero)",
+   "limitations": {
+    "de": "Verwaltungsgrenzen als Orientierung; sagen nichts über Schwammstadt-Eignung aus.",
+    "en": "Administrative boundaries for orientation; they say nothing about sponge-city suitability."
+   },
+   "legend": {
+    "type": "single",
+    "items": [
+     {
+      "value": "Stadtkreis",
+      "label": {
+       "de": "Stadtkreis",
+       "en": "City district"
+      },
+      "color": "#555555"
+     }
+    ]
+   },
+   "properties_shown": [
+    "kname",
+    "knr"
+   ],
+   "measure_topic": null
+  }
+ ],
+ "gaps": [
+  {
+   "theme": "flood-hazard",
+   "reason": {
+    "de": "Die Hinweiskarte Oberflächenabfluss des Kantons Zürich (modelliert, 30/100/300/1000 Jahre) ist nur als Kartendienst im GIS-Browser gelistet; eine Kachel- oder WMS-Adresse wurde nicht aufgelöst, daher keine Ebene. Gefahrenkarten (Hochwasser) zeigen ausdrücklich nicht den Oberflächenabfluss.",
+    "en": "The canton of Zürich surface-runoff indication map (modelled, 30/100/300/1000 years) is listed only as a map service in the GIS browser; no tile or WMS address was resolved, so no layer. Gefahrenkarten (flooding) explicitly do not show surface runoff."
+   },
+   "checked": [
+    "https://ckan.opendata.swiss/api/3/action/package_show?id=oberflachenabfluss: 200, licence terms_open, resource is a SERVICE link to https://geo.zh.ch/maps?initialMapIds=AwelOberAbflussZH (viewer, not fetched as tiles)",
+    "https://www.zh.ch/de/planen-bauen/wasserbau/grundlagen-naturgefahren/gefahrenkarte.html: 200, page text read, no download fetched"
+   ]
+  },
+  {
+   "theme": "sealing",
+   "reason": {
+    "de": "Kein stadtweiter Versiegelungsdatensatz der Stadt Zürich gefunden; der gefundene Wert (14 Prozent) gilt für den Kanton.",
+    "en": "No citywide sealing dataset of the City of Zürich was found; the value found (14 percent) is cantonal."
+   },
+   "checked": [
+    "https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2022/11/14-prozent-der-zuercher-kantonsflaeche-versiegelt.html: 200, cantonal figure only, no geometry"
+   ]
+  },
+  {
+   "theme": "monitoring",
+   "reason": {
+    "de": "Standorte des Stadtklima-Messnetzes (meteoblue) sind als CSV gelistet, die Datensatztitel tragen jedoch \"Nachführung eingestellt\"; nicht als Ebene aufgenommen, um keine veralteten Stationen zu zeigen.",
+    "en": "Locations of the urban-climate network (meteoblue) are listed as CSV, but the dataset titles carry \"Nachführung eingestellt\" (updates discontinued); not included as a layer to avoid showing possibly outdated stations."
+   },
+   "checked": [
+    "https://ckan.opendata.swiss/api/3/action/package_search?q=Stadtklima+Z%C3%BCrich&rows=20&fq=organization:stadt-zurich: 200, metadata read; CSV not downloaded"
+   ]
+  },
+  {
+   "theme": "green",
+   "reason": {
+    "de": "Keine Gründach- oder Grünflächen-Geodaten der Stadt Zürich geprüft (Zeitbudget); weder Lizenz noch Daten gelesen.",
+    "en": "No green-roof or green-space geodata of the City of Zürich were checked (time budget); neither licence nor data were read."
+   },
+   "checked": [],
+   "state": "not_checked"
+  }
+ ]
+}

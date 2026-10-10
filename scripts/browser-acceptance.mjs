@@ -111,11 +111,11 @@ for (const lang of ['de', 'en']) {
     const { page, ctx } = await open(`?stage=export&lang=${lang}&place=kanonengasse`);
     const [d1] = await Promise.all([page.waitForEvent('download'), page.click('#export-md')]);
     const md = readFileSync(await d1.path(), 'utf8');
-    assert(!/klybeck/i.test(md.replace(/klybeck\.[a-z]/gi, '')) || !/klybeck/i.test(md), 'no klybeck in kanonengasse export');
+    assert(!/klybeck/i.test(md), 'no klybeck in kanonengasse markdown');
     assert(!markers.test(md) && !/ß/.test(md), 'markers or ß in markdown');
     const [d2] = await Promise.all([page.waitForEvent('download'), page.click('#export-json')]);
     const json = JSON.parse(readFileSync(await d2.path(), 'utf8'));
-    assert(json.ui_language === lang, 'ui_language'); assert(JSON.stringify(json).length > 500, 'json content');
+    assert(!/klybeck/i.test(JSON.stringify(json)), 'no klybeck in kanonengasse json'); assert(json.ui_language === lang, 'ui_language'); assert(JSON.stringify(json).length > 500, 'json content');
     await ctx.close();
   });
 }
@@ -146,6 +146,20 @@ await check('map: city switch, layer toggle, click-to-inspect, table view, share
   await page.keyboard.press('Tab'); await ctx.close();
 });
 
+await check('export after a live language switch reports the new language and the same place', async () => {
+  const { page, ctx } = await open('?stage=export&lang=de&place=kanonengasse');
+  await page.click('button[data-lang="en"]'); await settle(page, 500);
+  const [d] = await Promise.all([page.waitForEvent('download'), page.click('#export-json')]);
+  const json = JSON.parse(readFileSync(await d.path(), 'utf8'));
+  assert(json.ui_language === 'en', 'ui_language en after switch'); assert(/kanonengasse/i.test(JSON.stringify(json)), 'place kept'); await ctx.close();
+});
+
+await check('reduced motion is respected (no animation or smooth scroll)', async () => {
+  const ctx = await browser.newContext({ reducedMotion: 'reduce' }); const page = await ctx.newPage(); await page.goto(base + '?stage=map&city=basel'); await page.waitForTimeout(800);
+  const v = await page.evaluate(() => { const s = getComputedStyle(document.querySelector('.mapview *') || document.body); return [s.animationName, s.transitionDuration, getComputedStyle(document.documentElement).scrollBehavior].join('|'); });
+  assert(!/smooth/.test(v), `smooth scroll under reduced motion: ${v}`); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');
@@ -174,7 +188,9 @@ await check('keyboard: Tab reaches the language switch and the step buttons with
   const seen = new Set();
   for (let i = 0; i < 14; i++) { await page.keyboard.press('Tab'); seen.add(await page.evaluate(() => document.activeElement?.dataset?.lang ? 'lang' : document.activeElement?.dataset?.stage ? 'stage' : '')); }
   assert(seen.has('lang') && seen.has('stage'), 'lang and stage buttons focusable');
-  assert(await page.evaluate(() => getComputedStyle(document.activeElement).outlineStyle !== 'none' || true), 'focus');
+  await page.focus('[data-stage]'); await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Tab');
+  const outline = await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return `${s.outlineStyle} ${s.outlineWidth}`; });
+  assert(/^solid [2-9]/.test(outline), `focus outline visible, got "${outline}"`);
   await ctx.close();
 });
 

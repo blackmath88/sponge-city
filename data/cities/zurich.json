@@ -1,0 +1,553 @@
+{
+ "schema_version": "sponge-city-profile/1",
+ "id": "zurich",
+ "role": "comparator",
+ "name": {
+  "de": "Zürich",
+  "en": "Zürich"
+ },
+ "country": "CH",
+ "selection": {
+  "rationale": {
+   "de": "Zürich veröffentlicht Baumkataster, Stadtkreise und die Massnahmengebiete der Fachplanung Hitzeminderung als offene Geodaten (CCZero) und hat Fachplanungen zu Hitze und Stadtbäumen; ein Fachplan Regenwasser ist in Arbeit.",
+   "en": "Zürich publishes its tree register, city districts and the measure areas of the heat-mitigation plan as open geodata (CCZero) and has specialist plans for heat and urban trees; a rainwater specialist plan is in preparation."
+  },
+  "contrast": {
+   "de": "Schweizer Grossstadt mit gleicher Rechtsgrundlage und Sprache wie Basel; Vergleichspunkt für Planungsinstrumente und offene Geodaten, nicht für gemessene Wirkung.",
+   "en": "Swiss large city with the same legal basis and language as Basel; a comparator for planning instruments and open geodata, not for measured effect."
+  }
+ },
+ "entries": [
+  {
+   "id": "zurich.context.01",
+   "dimension": "context",
+   "text": {
+    "de": "Im Kanton Zürich fällt im Jahr rund ein Meter Niederschlag; ein AWEL-Vertreter nennt das genug Wasser, um sich für Trocken- oder Hitzeperioden zu wappnen, sofern es effizient gespeichert und genutzt wird. Die Angabe gilt für den Kanton, nicht für die Stadt.",
+    "en": "In the canton of Zürich about one metre of precipitation falls per year; an AWEL representative calls this enough water to prepare for dry or hot periods if it is stored and used efficiently. The figure is cantonal, not for the city."
+   },
+   "origin": "derived",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt – grün, blau und grau gemeinsam denken",
+     "url": "https://www.zh.ch/de/news-uebersicht/mitteilungen/2025/umwelt-tiere/klima/schwammstadt-gruen-blau-grau-gemeinsam-denken.html",
+     "publisher": "Kanton Zürich (Baudirektion / AWEL), Interview-Beitrag 2025",
+     "retrieved": "2026-10-10",
+     "quote": "Im Kanton Zürich fällt im Jahr rund ein Meter Niederschlag – das ist eigentlich genug Wasser, um sich damit für Trocken- oder Hitzeperioden wappnen zu können.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.context.02",
+   "dimension": "context",
+   "text": {
+    "de": "Im Kanton Zürich sind 25 000 Hektaren oder 14 Prozent der Fläche versiegelt (Arealstatistik 2013/18). Das ist ein Kantonswert; für die Stadt Zürich wurde in den gelesenen Quellen kein Wert gefunden.",
+    "en": "In the canton of Zürich 25,000 hectares or 14 percent of the area are sealed (Arealstatistik 2013/18). This is a cantonal value; no figure for the city of Zürich was found in the sources read."
+   },
+   "origin": "derived",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "sealed share of cantonal area",
+    "unit": "percent",
+    "method": "analysis by the cantonal Statistisches Amt based on the federal Arealstatistik 2013/18 (land cover)",
+    "spatial_scale": "Canton of Zürich (not the city)",
+    "period": "Arealstatistik 2013/18"
+   },
+   "sources": [
+    {
+     "title": "14 Prozent der Zürcher Kantonsfläche versiegelt",
+     "url": "https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2022/11/14-prozent-der-zuercher-kantonsflaeche-versiegelt.html",
+     "publisher": "Kanton Zürich, Statistisches Amt",
+     "retrieved": "2026-10-10",
+     "quote": "Die Analyse des Statistischen Amts zeigt: Im Kanton Zürich sind derzeit 25’000 Hektaren oder 14 Prozent der Fläche versiegelt.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.context.03",
+   "dimension": "context",
+   "text": {
+    "de": "Die Fachplanung Hitzeminderung leitet für die Stadt drei Massnahmengebiete mit unterschiedlichem Handlungsbedarf aus den kantonalen Planhinweiskarten von 2018 ab. Die Grundlage ist eine Klimamodellierung, keine Messung.",
+    "en": "The heat-mitigation specialist plan derives three measure areas with different need for action for the city from the 2018 cantonal planning-hint maps. The basis is climate modelling, not measurement."
+   },
+   "origin": "modelled",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Fachplanung Hitzeminderung OGD (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_fachplanung_hitzeminderung_ogd",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "In Abhängigkeit von der bioklimatischen Belastung für Tag und Nacht (vgl. Klimaanalyse: Planhinweiskarten, Kanton Zürich Baudirektion, 2018) wurden drei Massnahmengebiete mit unterschiedlichem Handlungsbedarf hergeleitet.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Neue Klimakarten zeigen noch mehr Details für die Hitzevorsorge",
+     "url": "https://www.zh.ch/de/news-uebersicht/mitteilungen/2025/umwelt-tiere/klima/aktualisierte-klimakarten-hitzevorsorge.html",
+     "publisher": "Kanton Zürich, Baudirektion (AWEL)",
+     "retrieved": "2026-10-10",
+     "quote": "Vor diesem Hintergrund hat das Amt für Abfall, Wasser, Energie und Luft (AWEL) der Baudirektion die klimatische Situation im ganzen Kanton Zürich mit einem Klimamodell flächendeckend analysiert und punktuell durch Messwerte überprüft.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.context.04",
+   "dimension": "context",
+   "text": {
+    "de": "Zur Kanalisation der Stadt (Länge, Anteil Misch- und Trennsystem, Erneuerungsprogramm) wurde in den gelesenen Quellen keine belegbare Angabe gefunden. Eine ERZ-Broschüre (SW_Wasserkreislauf_von_Zuerich_1312.pdf) war unter der gefundenen Adresse nicht abrufbar (HTTP 404); Zahlen aus Suchtreffern wurden nicht übernommen.",
+    "en": "No verifiable figure on the city sewer system (length, share of combined and separate sewers, renewal programme) was found in the sources read. An ERZ brochure (SW_Wasserkreislauf_von_Zuerich_1312.pdf) could not be retrieved at the address found (HTTP 404); figures from search snippets were not adopted."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "zurich.interventions.01",
+   "dimension": "interventions",
+   "text": {
+    "de": "Die Stadt Zürich hat 2020 die Fachplanung Hitzeminderung mit Umsetzungsagenda als Planungsgrundlage geschaffen. Simulationen sollen öffentlicher Hand und Privaten zeigen, was sie tun können und wie sich dies auswirkt.",
+    "en": "In 2020 the City of Zürich created the heat-mitigation specialist plan with an implementation agenda as a planning basis. Simulations are meant to show public bodies and private parties what they can do and what effect it will have."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Hitzeminderung in der Stadt Zürich (Zürcher Umweltpraxis 97)",
+     "url": "https://www.zh.ch/de/umwelt-tiere/umweltschutz/umweltpraxis/definitionsseite/2020/97/zup097_2020_a0090_hitzeminderung-pdf.html",
+     "publisher": "Kanton Zürich, Baudirektion",
+     "retrieved": "2026-10-10",
+     "quote": "Mit der «Fachplanung Hitzeminderung » steht neu ein Werkzeug zur Verfügung, um den Faktor Hitze in der Stadtplanung besser zu berücksichtigen. Simulationen zeigen der öffentlichen Hand sowie Privaten, was sie tun können und wie sich dies auswirken wird.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Hitzeminderung: Stadt Zürich testet Elemente der Schwammstadt",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/medienmitteilungen/2020/12/201203a.html",
+     "publisher": "Stadt Zürich, Tiefbau- und Entsorgungsdepartement",
+     "retrieved": "2026-10-10",
+     "quote": "Die Stadt Zürich hat dazu 2020 mit der umfassenden",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.interventions.02",
+   "dimension": "interventions",
+   "text": {
+    "de": "Die Fachplanung Stadtbäume setzt das Ziel, die durch Bäume beschattete Fläche im Durchschnitt über die Stadt von rund 15 Prozent (Stand 2022) auf 25 Prozent zu erhöhen, mit Richtwerten bis 2050 für Strassenräume, Grünanlagen und das Umfeld von Bauten.",
+    "en": "The tree specialist plan sets the target of raising the tree-shaded area on average across the city from about 15 percent (as of 2022) to 25 percent, with guide values to 2050 for streets, green spaces and building surroundings."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Fachplanung Stadtbäume",
+     "url": "https://www.stadt-zuerich.ch/de/umwelt-und-energie/natur/stadtbaeume/fachplanung-stadtbaeume.html",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Im Schnitt soll die durch Bäume beschattete Fläche über die gesamte Stadt von rund 15 Prozent (Stand 2022) auf 25 Prozent erhöht werden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.interventions.03",
+   "dimension": "interventions",
+   "text": {
+    "de": "Gemäss Bau- und Zonenordnung (Art. 11 Abs. 1) ist in allen Zonen der nicht als Terrasse genutzte Teil eines Flachdachs ökologisch wertvoll zu begrünen, soweit technisch, betrieblich und wirtschaftlich tragbar. Zur begrünten Gesamtfläche wurde keine Angabe gefunden.",
+    "en": "Under the Bau- und Zonenordnung (Art. 11 para. 1) the part of a flat roof not used as a terrace must be given ecologically valuable greening in all zones, as far as technically, operationally and economically viable. No total greened area was found."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Dachsanierungen (Leitfaden Solargründach)",
+     "url": "https://www.stadt-zuerich.ch/artikel/de/leitfaden-solargruendach/planung-umsetzung/dachsanierungen.html",
+     "publisher": "Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "In allen Zonen ist der nicht als begehbare Terrasse genutzte Bereich eines Flachdachs ökologisch wertvoll zu begrünen, auch dort, wo Solaranlagen installiert sind.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Dachsanierungen (Leitfaden Solargründach)",
+     "url": "https://www.stadt-zuerich.ch/artikel/de/leitfaden-solargruendach/planung-umsetzung/dachsanierungen.html",
+     "publisher": "Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "(Bau und Zonenordnung der Stadt Zürich, Art. 11 Abs. 1)",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.interventions.04",
+   "dimension": "interventions",
+   "text": {
+    "de": "An der Giessereistrasse in Zürich-West wurde ein Strassenabschnitt als Pilot nach Schwammstadt-Prinzipien umgebaut (grössere Baumgruben, wasserspeicherndes Substrat, neun zusätzliche Bäume; Kosten rund 680 000 Franken). Das ist ein einzelnes Projekt, kein stadtweites Ergebnis.",
+    "en": "On Giessereistrasse in Zürich-West one street section was rebuilt as a pilot on sponge-city principles (larger tree pits, water-storing substrate, nine additional trees; cost about CHF 680,000). This is a single project, not a city-wide result."
+   },
+   "origin": "observed",
+   "scope": "project",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Hitzeminderung: Stadt Zürich testet Elemente der Schwammstadt",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/medienmitteilungen/2020/12/201203a.html",
+     "publisher": "Stadt Zürich, Tiefbau- und Entsorgungsdepartement",
+     "retrieved": "2026-10-10",
+     "quote": "Mit der Pflanzung von neun zusätzlichen Bäumen wurde der Bau des Projekts heute abgeschlossen.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Hitzeminderung: Stadt Zürich testet Elemente der Schwammstadt",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/medienmitteilungen/2020/12/201203a.html",
+     "publisher": "Stadt Zürich, Tiefbau- und Entsorgungsdepartement",
+     "retrieved": "2026-10-10",
+     "quote": "Die Kosten für das Projekt belaufen sich auf rund 680 000 Franken.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.interventions.05",
+   "dimension": "interventions",
+   "text": {
+    "de": "Entsorgung + Recycling Zürich erarbeitet den Fachplan Regenwasser im Siedlungsraum; er soll parzellengenaue Vorgaben mit Richtwerten für den Abfluss und Zielwerten für Verdunstung und Versickerung enthalten. Diese Werte waren 2025 noch in Diskussion und eine stadtweite Vernehmlassung war für Anfang 2026 vorgesehen.",
+    "en": "Entsorgung + Recycling Zürich is preparing the specialist plan Rainwater in the Settlement Area; it is to contain parcel-specific requirements with guide values for runoff and target values for evaporation and infiltration. In 2025 these values were still under discussion and a city-wide consultation was foreseen for early 2026."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Weltwassertag: Die Ressource Regenwasser",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/news/2025/weltwassertag-2025.html",
+     "publisher": "Stadt Zürich, Entsorgung + Recycling Zürich (ERZ)",
+     "retrieved": "2026-10-10",
+     "quote": "Entsorgung + Recycling Zürich erarbeitet dafür zurzeit den Fachplan Regenwasser im Siedlungsraum.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Der Fachplan Regenwasser im Siedlungsraum Stadt Zürich: Ein systematischer Weg zur Integration von Regenwasser in einem urbanen Verdichtungsraum (Aqua Urbanica 2025, V05)",
+     "url": "https://www.tugraz.at/fileadmin/user_upload/tugrazExternal/c76c507b-d7bb-4008-944c-284302b6351a/PDFs/2025/Beitraege/V05-HAUBER-Beitrag.pdf",
+     "publisher": "Konferenzbeitrag von G. Hauber (Henning Larsen) und M. Antener (ERZ Stadt Zürich), Aqua Urbanica 2025",
+     "retrieved": "2026-10-10",
+     "quote": "Erstmals für den Siedlungsraum in Zürich werden Richtwerte für den Abfluss und Zielwerte für Verdunstung und Versickerung definiert, unterteilt nach Stadt- und Freiraumstrukturen, sowie Strassenräumen.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Der Fachplan Regenwasser im Siedlungsraum Stadt Zürich: Ein systematischer Weg zur Integration von Regenwasser in einem urbanen Verdichtungsraum (Aqua Urbanica 2025, V05)",
+     "url": "https://www.tugraz.at/fileadmin/user_upload/tugrazExternal/c76c507b-d7bb-4008-944c-284302b6351a/PDFs/2025/Beitraege/V05-HAUBER-Beitrag.pdf",
+     "publisher": "Konferenzbeitrag von G. Hauber (Henning Larsen) und M. Antener (ERZ Stadt Zürich), Aqua Urbanica 2025",
+     "retrieved": "2026-10-10",
+     "quote": "Nachfolgende Richt- und Zielwerte sind derzeit in Diskussion",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.interventions.06",
+   "dimension": "interventions",
+   "text": {
+    "de": "Seit dem 1. Dezember 2024 erlaubt das revidierte kantonale Planungs- und Baugesetz den Gemeinden, verbindliche Vorgaben zur Begrünung, Durchlüftung und Hitzeminderung festzulegen. Ob und wie die Stadt Zürich dies nutzt, wurde nicht geprüft.",
+    "en": "Since 1 December 2024 the revised cantonal planning and building act allows municipalities to set binding requirements for greening, ventilation and heat mitigation. Whether and how the City of Zürich uses this was not checked."
+   },
+   "origin": "observed",
+   "scope": "programme",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Neue Klimakarten zeigen noch mehr Details für die Hitzevorsorge",
+     "url": "https://www.zh.ch/de/news-uebersicht/mitteilungen/2025/umwelt-tiere/klima/aktualisierte-klimakarten-hitzevorsorge.html",
+     "publisher": "Kanton Zürich, Baudirektion (AWEL)",
+     "retrieved": "2026-10-10",
+     "quote": "Seit dem 1. Dezember 2024 gelten neue",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Neue Klimakarten zeigen noch mehr Details für die Hitzevorsorge",
+     "url": "https://www.zh.ch/de/news-uebersicht/mitteilungen/2025/umwelt-tiere/klima/aktualisierte-klimakarten-hitzevorsorge.html",
+     "publisher": "Kanton Zürich, Baudirektion (AWEL)",
+     "retrieved": "2026-10-10",
+     "quote": "die es den Gemeinden ermöglichen, verbindliche Vorgaben zur Begrünung, Durchlüftung und Hitzeminderung festzulegen",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.01",
+   "dimension": "measurement",
+   "text": {
+    "de": "Der Bund erhebt alle vier Jahre mit Laserscanning (LiDAR) die Kronenfläche in der Stadt Zürich; die Stadt nennt für 2022 rund 15 Prozent beschattete Fläche. Die Medienmitteilung 2022 nannte für 2018 rund 17 Prozent; ob die Werte methodisch vergleichbar sind, wird nicht erklärt.",
+    "en": "The federal government surveys the crown area in the city of Zürich every four years by laser scanning (LiDAR); the city gives about 15 percent shaded area for 2022. The 2022 press release gave about 17 percent for 2018; whether the values are methodologically comparable is not explained."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "topic": "canopy",
+    "quantity": "tree canopy cover share (Kronenfläche, area shaded by trees)",
+    "unit": "percent (stated as about 15)",
+    "method": "LiDAR surface scanning from federal survey flights, every four years",
+    "spatial_scale": "city average as stated (\"über die gesamte Stadt\")",
+    "period": "2022"
+   },
+   "sources": [
+    {
+     "title": "Fachplanung Stadtbäume",
+     "url": "https://www.stadt-zuerich.ch/de/umwelt-und-energie/natur/stadtbaeume/fachplanung-stadtbaeume.html",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Alle vier Jahre erhebt der Bund mit Messflügen die Fläche der Baumkronen in der Stadt Zürich. Dies geschieht mittels Laserabtastung der Oberfläche (Lidar).",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Fachplanung Stadtbäume: Kronenfläche soll bis 2050 erhalten und erhöht werden (Medienmitteilung)",
+     "url": "https://www.stadt-zuerich.ch/de/aktuell/medienmitteilungen/2022/01/220120a2.html",
+     "publisher": "Stadt Zürich, Stadtrat / Medienstelle",
+     "retrieved": "2026-10-10",
+     "quote": "Insgesamt soll die durch Bäume beschattete Fläche (Kronenfläche) im Durchschnitt über die gesamte Stadt von rund 17 Prozent (Stand 2018) auf 25 Prozent erhöht werden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.02",
+   "dimension": "measurement",
+   "text": {
+    "de": "Das Stadtklima-Messnetz der Stadt liefert 15-Minuten-Mittelwerte der Temperatur von rund 90 Stationen im Stadtgebiet seit August 2019. Die Datensätze des meteoblue-Messnetzes tragen im Titel den Zusatz \"Nachführung eingestellt\", obwohl die Beschreibung eine Aktualisierung bis August 2026 nennt.",
+    "en": "The city urban-climate network provides 15-minute mean temperatures from about 90 stations in the city area since August 2019. The meteoblue-network datasets carry the title suffix \"Nachführung eingestellt\" (updates discontinued) although the description names an update as of August 2026."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "air temperature, 15-minute means",
+    "unit": "degrees Celsius",
+    "method": "sensor network (meteoblue network, Umwelt- und Gesundheitsschutz Zürich), quality-adjusted",
+    "spatial_scale": "about 90 stations in the city area",
+    "period": "August 2019 to August 2026"
+   },
+   "sources": [
+    {
+     "title": "Stadtklima Zürich - bereinigte Temperaturmessungen Messnetz meteoblue [Nachführung eingestellt] (opendata.swiss, API-Abruf)",
+     "url": "https://ckan.opendata.swiss/api/3/action/package_search?q=Stadtklima+Z%C3%BCrich&rows=20&fq=organization:stadt-zurich",
+     "publisher": "Stadt Zürich, Umwelt- und Gesundheitsschutz (UGZ), via opendata.swiss",
+     "retrieved": "2026-10-10",
+     "quote": "für rund 90 Stationen auf dem Gebiet der Stadt Zürich",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.03",
+   "dimension": "measurement",
+   "text": {
+    "de": "Die Hinweiskarte Oberflächenabfluss des Kantons ist modelliert (Terrainmodell, Niederschlag, Abflussbereitschaft; Ereignisse 30, 100, 300 und 1000 Jahre) und eine Hinweiskarte im Massstab 1:10 000 bis 1:15 000. Innerhalb von Siedlungen nimmt die Zuverlässigkeit ab, die Befunde sind vor Ort zu plausibilisieren.",
+    "en": "The canton's surface-runoff indication map is modelled (terrain model, precipitation, runoff readiness; 30-, 100-, 300- and 1000-year events) and is an indication map at 1:10,000 to 1:15,000. Reliability decreases within settlements and findings must be checked on site."
+   },
+   "origin": "modelled",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Oberflächenabfluss (opendata.swiss, API-Abruf)",
+     "url": "https://ckan.opendata.swiss/api/3/action/package_show?id=oberflachenabfluss",
+     "publisher": "Kanton Zürich, via opendata.swiss",
+     "retrieved": "2026-10-10",
+     "quote": "Bei der Oberflächenabflusskarte handelt es sich um eine Hinweiskarte, die mit einem Massstab im Bereich von 1:10'000 - 1:15'000 erarbeitet wurde.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Oberflächenabfluss (opendata.swiss, API-Abruf)",
+     "url": "https://ckan.opendata.swiss/api/3/action/package_show?id=oberflachenabfluss",
+     "publisher": "Kanton Zürich, via opendata.swiss",
+     "retrieved": "2026-10-10",
+     "quote": "Mit zunehmender Komplexität der Kleinstrukturen (Randsteine, Mauern, etc.) innerhalb von Siedlungen nimmt die Zuverlässigkeit ab.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.04",
+   "dimension": "measurement",
+   "text": {
+    "de": "Zu gemessenen Ergebnissen der Giessereistrasse-Pilotprojekte (Verdunstung, Versickerung, Baumvitalität, Temperatur) wurde keine öffentliche Auswertung gefunden. Die Stadt kündigte 2020 ein wissenschaftliches Monitoring durch die ZHAW bis 2024 an; die ZHAW führt das Projekt als abgeschlossen (06/2020 bis 07/2025). Das beweist nicht, dass keine Ergebnisse existieren.",
+    "en": "No public evaluation of measured results of the Giessereistrasse pilot (evaporation, infiltration, tree vitality, temperature) was found. In 2020 the city announced scientific monitoring by ZHAW until 2024; ZHAW lists the project as completed (06/2020 to 07/2025). This does not show that no results exist."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "zurich.access.01",
+   "dimension": "access",
+   "text": {
+    "de": "Baumkataster und Fachplanung Hitzeminderung sind bei Open Data Zürich mit der Lizenz Creative Commons CCZero und als GeoJSON, WFS und weiteren Formaten abrufbar; opendata.swiss nennt für dieselben Daten \"terms_open\". Der Baumkataster erfasst nur städtische Bäume im Strassenraum sowie ausgewählte Grünanlagen und private Bäume, nicht alle Bäume.",
+    "en": "Tree register and heat-mitigation plan are available from Open Data Zürich under Creative Commons CCZero and as GeoJSON, WFS and other formats; opendata.swiss states \"terms_open\" for the same data. The tree register covers city street trees plus selected green spaces and private trees, not all trees."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Baumkataster (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_baumkataster",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Creative Commons CCZero",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Baumkataster (opendata.swiss, API-Abruf)",
+     "url": "https://ckan.opendata.swiss/api/3/action/package_show?id=baumkataster",
+     "publisher": "Stadt Zürich, via opendata.swiss",
+     "retrieved": "2026-10-10",
+     "quote": "https://opendata.swiss/terms-of-use#terms_open",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Baumkataster (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_baumkataster",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Im Baumkataster werden alle städtischen Bäume im Strassenraum erfasst, welche von Grün Stadt Zürich verwaltet oder gepflegt werden.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.outcomes.01",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Der Vergleich der Messreihen 2014, 2018 und 2022 zeigt laut Stadt eine Abnahme der Kronenfläche und des Baumbestands, am stärksten auf Privatgrund. Das ist ein beobachteter Rückgang bei einem Hitzeminderungsziel, kein Erfolg einer Massnahme.",
+    "en": "According to the city, the comparison of the 2014, 2018 and 2022 series shows a decrease in crown area and tree stock, largest on private land. This is an observed decline against a heat-mitigation goal, not a success of a measure."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Fachplanung Stadtbäume",
+     "url": "https://www.stadt-zuerich.ch/de/umwelt-und-energie/natur/stadtbaeume/fachplanung-stadtbaeume.html",
+     "publisher": "Stadt Zürich, Grün Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Der Vergleich der Messreihen von 2014, 2018 und 2022 zeigt eine Abnahme der Kronenfläche sowie des Baumbestands. Die grösste Abnahme ist auf Privatgrund zu verzeichnen",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.outcomes.02",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Zu gemessenen Wirkungen von Schwammstadt-Massnahmen der Stadt Zürich auf Abfluss, Überläufe oder Temperatur wurde keine öffentliche quantitative Auswertung gefunden. Gelesen wurden Seiten der Stadt, des Kantons und der ZHAW; das beweist nicht, dass nicht gemessen wird.",
+    "en": "No public quantitative evaluation of measured effects of City of Zürich sponge-city measures on runoff, overflows or temperature was found. Pages of the city, the canton and ZHAW were read; this does not show that nothing is measured."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "zurich.outcomes.03",
+   "dimension": "outcomes",
+   "text": {
+    "de": "Zu Versiegelungsanteil und Fläche begrünter Dächer der Stadt Zürich als Gesamtwert wurde in den gelesenen Quellen keine Angabe gefunden; nur der Kantonswert von 14 Prozent versiegelt liegt vor. Eine Stadtstudie wurde nur als Suchtreffer gesehen und nicht gelesen.",
+    "en": "No citywide figure for the sealed share or the total greened roof area of the city of Zürich was found in the sources read; only the cantonal value of 14 percent sealed is available. A city study was seen only as a search hit and was not read."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "no_public_evidence_found",
+   "measure": null,
+   "sources": []
+  },
+  {
+   "id": "zurich.transfer.01",
+   "dimension": "transfer",
+   "text": {
+    "de": "Das schweizerische Gewässerschutzgesetz von 1991 verankert das Versickern von Regenwasser; diese Rechtsgrundlage gilt auch für Basel. Das ist eine Einordnung für die Übertragbarkeit, keine Messung.",
+    "en": "The Swiss water protection act of 1991 anchors infiltration of rainwater; this legal basis also applies to Basel. This is an assessment of transferability, not a measurement."
+   },
+   "origin": "assumed",
+   "scope": "unspecified",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Schwammstadt – grün, blau und grau gemeinsam denken",
+     "url": "https://www.zh.ch/de/news-uebersicht/mitteilungen/2025/umwelt-tiere/klima/schwammstadt-gruen-blau-grau-gemeinsam-denken.html",
+     "publisher": "Kanton Zürich (Baudirektion / AWEL), Interview-Beitrag 2025",
+     "retrieved": "2026-10-10",
+     "quote": "Seit der Einführung des Gewässerschutzgesetzes 1991 gilt das Prinzip, Regenwasser versickern zu lassen, um den Wasserkreislauf zu unterstützen.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.transfer.02",
+   "dimension": "transfer",
+   "text": {
+    "de": "Offen ist, ob der Fachplan Regenwasser im Siedlungsraum nach der Vernehmlassung beschlossen wurde und mit welchen Richt- und Zielwerten; die Autoren selbst halten fest, dass sich die Zwischenergebnisse signifikant ändern könnten.",
+    "en": "It is open whether the specialist plan Rainwater in the Settlement Area was adopted after the consultation and with which guide and target values; the authors themselves note the interim results could change significantly."
+   },
+   "origin": "unknown",
+   "scope": "unspecified",
+   "evidence_state": "unknown",
+   "measure": null,
+   "sources": []
+  }
+ ],
+ "rubric": {
+  "official_primary_sources": {
+   "rating": "yes",
+   "reason": "Entries rest on pages of the City of Zürich (ERZ, Grün Stadt Zürich, TED, Open Data Zürich), the Canton of Zürich (AWEL, Statistisches Amt) and ZHAW fetched on 2026-10-10; one entry cites an ERZ co-authored conference paper."
+  },
+  "published_monitoring": {
+   "rating": "partial",
+   "reason": "A roughly 90-station temperature network and four-yearly LiDAR crown-area surveys are published; no published results of sponge-city measure monitoring were found, and the meteoblue datasets carry a \"Nachführung eingestellt\" flag."
+  },
+  "public_data_access": {
+   "rating": "yes",
+   "reason": "Tree register, heat-mitigation plan and city districts are downloadable under CCZero with WFS/GeoJSON; the opendata.swiss record states a different wording (terms_open) for the tree register, both permit reuse. Sealing and green-roof area data were not found."
+  },
+  "reported_outcomes": {
+   "rating": "partial",
+   "reason": "Crown-area change is reported (decrease 2014 to 2022) and a 25 percent 2050 target exists; no measured effects of sponge-city or heat measures on runoff or temperature were found."
+  },
+  "weaknesses": [
+   "The Fachplan Regenwasser im Siedlungsraum was not final in the sources read (2025 paper: values in discussion, consultation early 2026); its later status was not checked.",
+   "No citywide sealed share and no greened-roof area were found; the 14 percent sealed value is cantonal (Arealstatistik 2013/18).",
+   "Sewer system facts (length, combined/separate share, renewal programme) could not be sourced: the ERZ brochure URL returned HTTP 404 and search-snippet figures were not adopted.",
+   "The surface-runoff map and the Gefahrenkarte were read only as dataset/web-page descriptions; the runoff map is a cantonal model and no geometry was downloaded (service-only record).",
+   "Crown-area baseline values differ between sources (about 17 percent for 2018 in the 2022 press release, about 15 percent for 2022 on the current page); comparability of the two surveys is not explained, so no trend figure is given.",
+   "Heat measure areas rest on 2018 cantonal climate maps; the canton published 5 m resolution second-generation maps in June 2025, which the city dataset (last updated 14.06.2024) does not yet reflect as far as the sources show.",
+   "The Giessereistrasse and Scheuchzerstrasse pilots are single street projects; ZHAW monitoring results were not found. The 2020 announcement of fee incentives for infiltrating roof water was not followed up.",
+   "The tree register is not a full inventory of trees, and the 745-tree map subset is a bounded sample around Hardplatz, not representative of the city.",
+   "Text of the Giessereistrasse monitoring end (2024 vs ZHAW project end 07/2025) differs between sources."
+  ]
+ }
+}

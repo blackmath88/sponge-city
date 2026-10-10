@@ -1,0 +1,441 @@
+{
+ "schema_version": "sponge-city-layers/1",
+ "city": "copenhagen",
+ "extent": {
+  "bbox": [
+   12.45295,
+   55.61284,
+   12.65208,
+   55.7328
+  ],
+  "source": "Bounding box of the 7 cloudburst catchments of Copenhagen and Frederiksberg (Skybrudsplan, CC BY 4.0), https://admin.opendata.dk/dataset/skybrudsplan-skybrudsoplande. No openly licensed municipal-boundary dataset could be fetched (see gaps), so this is the planning area, not the legal municipal boundary."
+ },
+ "layers": [
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Københavns Kommune (Teknik- og Miljøforvaltningen), via Open Data DK",
+   "licence": "CC BY 4.0 (CKAN licence_id CC-BY-4.0)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Københavns Kommune, Open Data DK, CC BY 4.0",
+   "retrieved": "2026-10-10",
+   "id": "copenhagen.catchments.01",
+   "theme": "water",
+   "title": {
+    "de": "Skybrudsoplande (Wassereinzugsgebiete der Starkregenplanung)",
+    "en": "Cloudburst catchments (Skybrudsplan)"
+   },
+   "file": "copenhagen.catchments.01.geojson",
+   "origin": "modelled",
+   "method": "Publisher: Einteilung von København und Frederiksberg in 7 Wassereinzugsgebiete nach Hydrologie (natürliche Wasserleitung gemäss Höhenmodell); vereinfacht (ca. 5 m) durch scripts/maps/copenhagen.mjs",
+   "unit": "polygon",
+   "spatial_scale": "catchment (7 areas)",
+   "temporal": "dataset modified 2023-12-04",
+   "coverage": "Whole planning area: Copenhagen and Frederiksberg (7 catchments)",
+   "source_url": "https://admin.opendata.dk/dataset/skybrudsplan-skybrudsoplande",
+   "limitations": {
+    "de": "Hydrologische Einteilung aus dem Höhenmodell, keine Überflutungskarte und kein Gefahrenlayer.",
+    "en": "Hydrological partition derived from the elevation model; not a flood map and not a hazard layer."
+   },
+   "legend": {
+    "type": "single",
+    "items": [
+     {
+      "value": "catchment",
+      "label": {
+       "de": "Skybrudsopland",
+       "en": "Cloudburst catchment"
+      },
+      "color": "#3b7ea1"
+     }
+    ]
+   },
+   "properties_shown": [
+    "name"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Københavns Kommune (Teknik- og Miljøforvaltningen), via Open Data DK",
+   "licence": "CC BY 4.0 (CKAN licence_id CC-BY-4.0)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Københavns Kommune, Open Data DK, CC BY 4.0",
+   "retrieved": "2026-10-10",
+   "id": "copenhagen.cloudburst-basins.01",
+   "theme": "water",
+   "title": {
+    "de": "Skybrudsplan – geplante Rückhalteplätze und Becken",
+    "en": "Cloudburst plan – planned detention squares and basins"
+   },
+   "file": "copenhagen.cloudburst-basins.01.geojson",
+   "origin": "assumed",
+   "method": "Publisher: planned climate-adaptation projects to be established over about 20 years to protect Copenhagen from cloudbursts (categories as published: detention square, basin, treatment, cloudburst basin, courtyard project)",
+   "unit": "planned project (polygon)",
+   "spatial_scale": "project",
+   "temporal": "dataset modified 2024-08-01 (plan, not built status)",
+   "coverage": "Whole Copenhagen plan (176 project areas)",
+   "source_url": "https://admin.opendata.dk/dataset/skybrudsplan-bassiner-og-pladser",
+   "limitations": {
+    "de": "Planung über rund 20 Jahre: zeigt, was vorgesehen ist, nicht, was gebaut ist. Keine Gefährdungs- oder Überflutungskarte. Kategorienamen dänisch wie veröffentlicht.",
+    "en": "A plan over about 20 years: shows what is intended, not what is built. Not a hazard or inundation map. Category names are Danish as published."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "type",
+    "items": [
+     {
+      "value": "Forsinkelsesplads",
+      "label": {
+       "de": "Forsinkelsesplads (Rückhalteplatz)",
+       "en": "Forsinkelsesplads (detention square)"
+      },
+      "color": "#2a9d8f"
+     },
+     {
+      "value": "Skybrudsbassin",
+      "label": {
+       "de": "Skybrudsbassin (Starkregenbecken)",
+       "en": "Skybrudsbassin (cloudburst basin)"
+      },
+      "color": "#1d4e89"
+     },
+     {
+      "value": "bassin",
+      "label": {
+       "de": "Bassin (Becken)",
+       "en": "Bassin (basin)"
+      },
+      "color": "#4a90c2"
+     },
+     {
+      "value": "Rensning",
+      "label": {
+       "de": "Rensning (Reinigung)",
+       "en": "Rensning (treatment)"
+      },
+      "color": "#8d6e63"
+     },
+     {
+      "value": "Gårdhaveprojekt",
+      "label": {
+       "de": "Gårdhaveprojekt (Hofprojekt)",
+       "en": "Gårdhaveprojekt (courtyard project)"
+      },
+      "color": "#7bb661"
+     },
+     {
+      "value": "Uvdielse af åen",
+      "label": {
+       "de": "Uvdielse af åen (so veröffentlicht)",
+       "en": "Uvdielse af åen (as published)"
+      },
+      "color": "#e9c46a"
+     },
+     {
+      "value": "ukendt",
+      "label": {
+       "de": "Ohne Kategorie",
+       "en": "No category"
+      },
+      "color": "#999999"
+     }
+    ]
+   },
+   "properties_shown": [
+    "type",
+    "project",
+    "catchment",
+    "expected_year"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Københavns Kommune (Teknik- og Miljøforvaltningen), via Open Data DK",
+   "licence": "CC BY 4.0 (CKAN licence_id CC-BY-4.0)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Københavns Kommune, Open Data DK, CC BY 4.0",
+   "retrieved": "2026-10-10",
+   "id": "copenhagen.cloudburst-roads.01",
+   "theme": "water",
+   "title": {
+    "de": "Skybrudsplan – geplante Strassen, Leitungen und Tunnel",
+    "en": "Cloudburst plan – planned streets, pipes and tunnels"
+   },
+   "file": "copenhagen.cloudburst-roads.01.geojson",
+   "origin": "assumed",
+   "method": "Publisher: planned climate-adaptation projects (cloudburst pipes, green streets, detention streets, cloudburst streets, mix)",
+   "unit": "planned project (line)",
+   "spatial_scale": "street / pipe segment",
+   "temporal": "dataset modified 2024-08-01 (plan, not built status)",
+   "coverage": "Whole Copenhagen plan (974 line segments)",
+   "source_url": "https://admin.opendata.dk/dataset/skybrudsplan-veje-og-tunneller",
+   "limitations": {
+    "de": "Planung, kein Baustand; Linien vereinfacht (ca. 3 m). Kategorienamen dänisch wie veröffentlicht.",
+    "en": "A plan, not build status; lines simplified (about 3 m). Category names are Danish as published."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "type",
+    "items": [
+     {
+      "value": "Skybrudsledning",
+      "label": {
+       "de": "Skybrudsledning (Starkregenleitung)",
+       "en": "Skybrudsledning (cloudburst pipe)"
+      },
+      "color": "#1d4e89"
+     },
+     {
+      "value": "Grønne veje",
+      "label": {
+       "de": "Grønne veje (grüne Strassen)",
+       "en": "Grønne veje (green streets)"
+      },
+      "color": "#2d6a4f"
+     },
+     {
+      "value": "Forsinkelsesveje",
+      "label": {
+       "de": "Forsinkelsesveje (Rückhaltestrassen)",
+       "en": "Forsinkelsesveje (detention streets)"
+      },
+      "color": "#2a9d8f"
+     },
+     {
+      "value": "Skybrudsveje",
+      "label": {
+       "de": "Skybrudsveje (Starkregenstrassen)",
+       "en": "Skybrudsveje (cloudburst streets)"
+      },
+      "color": "#e76f51"
+     },
+     {
+      "value": "mix",
+      "label": {
+       "de": "Mix",
+       "en": "Mix"
+      },
+      "color": "#9b5de5"
+     },
+     {
+      "value": "ukendt",
+      "label": {
+       "de": "Ohne Kategorie",
+       "en": "No category"
+      },
+      "color": "#999999"
+     }
+    ]
+   },
+   "properties_shown": [
+    "type",
+    "project",
+    "catchment"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Københavns Kommune (Teknik- og Miljøforvaltningen), via Open Data DK",
+   "licence": "CC BY 4.0 (CKAN licence_id CC-BY-4.0)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Københavns Kommune, Open Data DK, CC BY 4.0",
+   "retrieved": "2026-10-10",
+   "id": "copenhagen.green.01",
+   "theme": "green",
+   "title": {
+    "de": "Grüne Dächer – Ausschnitt Innenstadt",
+    "en": "Green roofs – inner-city window"
+   },
+   "file": "copenhagen.green.01.geojson",
+   "origin": "derived",
+   "method": "Publisher: Gebäude mit grünem Dach als primärer oder sekundärer Dachkonstruktion, erfasst auf Grundlage von BBR und Luftbild",
+   "unit": "building roof (polygon)",
+   "spatial_scale": "building",
+   "temporal": "dataset modified 2023-12-04",
+   "coverage": "Ausschnitt lon 12.5450–12.5850, lat 55.6700–55.6950; 93 Gebäude im Fenster (gesamter Datensatz 2029) / window lon 12.5450–12.5850, lat 55.6700–55.6950; 93 buildings (whole dataset 2029)",
+   "source_url": "https://admin.opendata.dk/dataset/gronne-tage",
+   "limitations": {
+    "de": "Nur ein Ausschnitt. Aus BBR und Luftbild abgeleitet, nicht vor Ort geprüft; Aufbau und Retention nicht erfasst. Klassen dänisch wie veröffentlicht. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Window only. Derived from the building register (BBR) and aerial photos, not field verified; build-up and retention not captured. Classes are Danish as published. Legend colours are our choice; the publisher defines classes only."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "roof",
+    "items": [
+     {
+      "value": "Primært Grønt tag",
+      "label": {
+       "de": "Primært grønt tag (primär begrünt)",
+       "en": "Primært grønt tag (primarily green)"
+      },
+      "color": "#2d9a4f"
+     },
+     {
+      "value": "Supplerende Grønt tag",
+      "label": {
+       "de": "Supplerende grønt tag (ergänzend begrünt)",
+       "en": "Supplerende grønt tag (supplementary green)"
+      },
+      "color": "#a3d977"
+     },
+     {
+      "value": "Andet tagkonstuktion",
+      "label": {
+       "de": "Andet (anderes Dach, so veröffentlicht)",
+       "en": "Other roof construction (spelling as published)"
+      },
+      "color": "#bdbdbd"
+     }
+    ]
+   },
+   "properties_shown": [
+    "roof",
+    "material",
+    "year"
+   ],
+   "measure_topic": null
+  },
+  {
+   "tiles": null,
+   "kind": "geojson-snapshot",
+   "publisher": "Københavns Kommune (Teknik- og Miljøforvaltningen), via Open Data DK",
+   "licence": "CC BY 4.0 (CKAN licence_id CC-BY-4.0)",
+   "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "Københavns Kommune, Open Data DK, CC BY 4.0",
+   "retrieved": "2026-10-10",
+   "id": "copenhagen.trees.01",
+   "theme": "trees",
+   "title": {
+    "de": "Bevaringsværdige træer (erhaltenswerte Bäume) – Ausschnitt Innenstadt",
+    "en": "Trees designated for preservation – inner-city window"
+   },
+   "file": "copenhagen.trees.01.geojson",
+   "origin": "observed",
+   "method": "Publisher: digitised from local plans (lokalplaner) since 2006 combined with aerial photos of spring 2018; marked trees only, guidance not binding",
+   "unit": "tree (point)",
+   "spatial_scale": "single tree",
+   "temporal": "dataset modified 2024-10-29",
+   "coverage": "Ausschnitt lon 12.5450–12.5850, lat 55.6700–55.6950; 612 Bäume im Fenster / window lon 12.5450–12.5850, lat 55.6700–55.6950; 612 trees",
+   "source_url": "https://admin.opendata.dk/dataset/bevaringsvaerdige-traeer",
+   "limitations": {
+    "de": "Nur in Lokalplänen als erhaltenswert bezeichnete Bäume, nicht der gesamte Baumbestand; Digitalisierung nur richtungweisend. Ausschnitt. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "en": "Only trees designated as worth preserving in local plans, not the whole tree stock; digitisation is indicative only. Window only. Legend colours are our choice; the publisher defines classes only."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "status",
+    "items": [
+     {
+      "value": "Bevaringsværdigt træ",
+      "label": {
+       "de": "Bevaringsværdigt træ (dänisch, wie veröffentlicht)",
+       "en": "Bevaringsværdigt træ (Danish, as published)"
+      },
+      "color": "#2d6a4f"
+     },
+     {
+      "value": "Bevaringsværdigt træ på vilkår",
+      "label": {
+       "de": "Bevaringsværdigt træ på vilkår (dänisch, wie veröffentlicht)",
+       "en": "Bevaringsværdigt træ på vilkår (Danish, as published)"
+      },
+      "color": "#74a57f"
+     },
+     {
+      "value": "Fældet bevaringsværdigt træ",
+      "label": {
+       "de": "Fældet bevaringsværdigt træ (dänisch, wie veröffentlicht)",
+       "en": "Fældet bevaringsværdigt træ (Danish, as published)"
+      },
+      "color": "#bc6c25"
+     },
+     {
+      "value": "Ikke bevaringsværdigt træ",
+      "label": {
+       "de": "Ikke bevaringsværdigt træ (dänisch, wie veröffentlicht)",
+       "en": "Ikke bevaringsværdigt træ (Danish, as published)"
+      },
+      "color": "#999999"
+     },
+     {
+      "value": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt",
+      "label": {
+       "de": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt (dänisch, wie veröffentlicht)",
+       "en": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt (Danish, as published)"
+      },
+      "color": "#9b5de5"
+     }
+    ]
+   },
+   "properties_shown": [
+    "status",
+    "plan",
+    "species"
+   ],
+   "measure_topic": null
+  }
+ ],
+ "gaps": [
+  {
+   "theme": "boundary",
+   "reason": {
+    "de": "Keine offen lizenzierte Gemeindegrenze abrufbar: «Bydele» (KK) hat keine Lizenzangabe im Katalog; DAWA/Dataforsyningen-Endpunkt liefert HTTP 410. Die Ausdehnung stammt deshalb aus den Skybrudsoplande-Polygonen (Planungsgebiet København + Frederiksberg).",
+    "en": "No openly licensed municipal boundary could be fetched: \"Bydele\" (KK) has no licence in the catalogue; the DAWA/Dataforsyningen endpoint returns HTTP 410. The extent therefore comes from the cloudburst catchment polygons (planning area Copenhagen + Frederiksberg)."
+   },
+   "checked": [
+    "https://admin.opendata.dk/api/3/action/package_show?id=bydele → 200, license_id null",
+    "https://api.dataforsyningen.dk/kommuner/0101?format=geojson → 410 Gone",
+    "https://dawa.aws.dk/kommuner/0101?format=geojson → 410 Gone",
+    "https://admin.opendata.dk/dataset/kommunegraense → CC-BY-4.0 but publisher is Horsens Kommune (other municipality, not used)",
+    "k101:kommunaegraense_flade exists on wfs-kbhkort.kk.dk but is not listed as a licensed open dataset (not fetched)"
+   ]
+  },
+  {
+   "theme": "sealing",
+   "reason": {
+    "de": "Kein offener Versiegelungs-/Befestigungslayer für Kopenhagen gefunden.",
+    "en": "No open sealing/impervious-surface layer for Copenhagen found."
+   },
+   "checked": [
+    "https://admin.opendata.dk/api/3/action/package_search q=befæstelse → 0; q=afstrømning → 0"
+   ]
+  },
+  {
+   "theme": "heat",
+   "reason": {
+    "de": "Kein Hitze-/Stadtklimalayer gefunden (Suche «varme»: nur Energieverbrauch Randers).",
+    "en": "No heat/urban-climate layer found (search \"varme\" returned only Randers energy use)."
+   },
+   "checked": [
+    "https://admin.opendata.dk/api/3/action/package_search q=varme → 1 unrelated result"
+   ]
+  },
+  {
+   "theme": "trees",
+   "reason": {
+    "de": "Kommunales Baumregister «Træ basis» (k101:trae_basis) hat keine Lizenzangabe im Katalog → nicht übernommen. Es werden nur die erhaltenswerten Bäume (CC BY 4.0) gezeigt. Trækronedække 2024 ist ein Raster ohne Lizenzangabe/Vektordienst.",
+    "en": "The municipal tree register \"Træ basis\" (k101:trae_basis) has no licence in the catalogue, so it is not included. Only trees designated for preservation (CC BY 4.0) are shown. Tree canopy 2024 has no licence entry or vector service."
+   },
+   "checked": [
+    "https://admin.opendata.dk/dataset/trae-basis-kommunale-traeer → license_id null",
+    "https://admin.opendata.dk/dataset/traekronedaekke-2024-for-kobenhavn → no WFS/GeoJSON resource, license null"
+   ]
+  },
+  {
+   "theme": "other",
+   "reason": {
+    "de": "Lokalplaner (CC BY 4.0 laut Katalog) in dieser Runde nicht abgerufen (Zeitbudget, kein direkter Bezug zur Wasserbilanz); bleibt als mögliche Quelle vermerkt.",
+    "en": "Local plans (CC BY 4.0 per catalogue) not fetched in this round (time budget, no direct link to the water balance); noted as a possible source."
+   },
+   "checked": [
+    "https://admin.opendata.dk/api/3/action/package_search q=lokalplan → lokalplaner (city-of-copenhagen, CC-BY-4.0, not fetched)"
+   ]
+  }
+ ]
+}

@@ -130,7 +130,7 @@ test('Unknown stays unknown: missing and restricted evidence is never presented 
 });
 
 test('City profiles are valid, source-pinned and keep unknown evidence distinct from "not measured"', () => {
-  assert.equal(cities.length, 3);
+  assert.ok(cities.length >= 3);
   assert.equal(cities.filter(c => c.role === 'home').length, 1);
   for (const p of cities) {
     assert.deepEqual(validateProfile(p), []);
@@ -144,12 +144,14 @@ test('City profiles are valid, source-pinned and keep unknown evidence distinct 
   assert.ok(cities.some(c => c.id !== 'basel' && c.role === 'comparator'));
 });
 
-test('Comparable versus incompatible measures are decided by exact quantity, unit, method and scale', () => {
-  const m = { quantity: 'sealed share', unit: '%', method: 'cadastre', spatial_scale: 'canton' };
+test('Comparable versus incompatible measures are decided by exact quantity, unit, method, scale and period', () => {
+  const m = { quantity: 'sealed share', unit: '%', method: 'cadastre', spatial_scale: 'canton', period: '2021' };
   assert.equal(compareMeasures(m, { ...m, unit: 'percent' }).comparable, true);
   const other = compareMeasures(m, { ...m, method: 'satellite', spatial_scale: 'block' });
   assert.equal(other.comparable, false); assert.deepEqual(other.differs, ['method', 'spatial_scale']);
   assert.equal(compareMeasures(m, { ...m, quantity: '' }).comparable, false);
+  const later = compareMeasures(m, { ...m, period: '2023' });
+  assert.equal(later.comparable, false, 'identical units over different periods are not comparable'); assert.deepEqual(later.differs, ['period']);
   const pairs = measurePairs(cities);
   assert.ok(pairs.length >= 1);
   const sealing = pairs.find(p => p.topic === 'sealing');

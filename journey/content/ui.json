@@ -211,7 +211,10 @@
   "start_to_cities": "Städte vergleichen",
   "start_to_export": "Nächste Untersuchung",
   "start_boundary": "Der Einstieg verändert die Belege nicht: Beobachtetes, Berechnetes, Modelliertes, Angenommenes und Unbekanntes bleiben getrennt.",
-  "concept_focus": "Hervorgehoben: Massnahme «{name}»"
+  "concept_focus": "Hervorgehoben: Massnahme «{name}»",
+  "f_period": "Zeitraum",
+  "f_temporal": "Datenstand",
+  "map_not_checked": "Nicht geprüft"
  },
  "en": {
   "skip": "Skip to content",
@@ -425,6 +428,9 @@
   "start_to_cities": "Compare cities",
   "start_to_export": "Next investigation",
   "start_boundary": "The entry point does not change the evidence: observed, derived, modelled, assumed and unknown stay separate.",
-  "concept_focus": "Highlighted: intervention \"{name}\""
+  "concept_focus": "Highlighted: intervention \"{name}\"",
+  "f_period": "period",
+  "f_temporal": "data date",
+  "map_not_checked": "Not checked"
  }
 }

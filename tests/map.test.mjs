@@ -49,6 +49,8 @@ test('legend colours follow the layer property; unknown classes are grey, not a 
 test('equal themes are comparable only on exact method, unit and scale', () => {
   assert.equal(comparableLayers(packA.layers[0], packA.layers[0]).comparable, true);
   assert.equal(comparableLayers(packA.layers[0], packB.layers[0]).comparable, false);
+  const later = comparableLayers(packA.layers[0], { ...packA.layers[0], temporal: '2023' });
+  assert.equal(later.comparable, false); assert.deepEqual(later.differs, ['temporal']);
 });
 
 for (const lang of ['de', 'en']) {

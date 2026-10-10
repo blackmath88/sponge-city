@@ -5,11 +5,11 @@ export const DIMENSIONS = ['context', 'interventions', 'measurement', 'access', 
 export const ORIGINS = ['observed', 'derived', 'modelled', 'assumed', 'unknown'];
 export const SCOPES = ['project', 'programme', 'city-wide', 'unspecified'];
 export const STATES = ['found', 'no_public_evidence_found', 'unknown'];
-export const COMPARE_FIELDS = ['quantity', 'unit', 'method', 'spatial_scale'];
+export const COMPARE_FIELDS = ['quantity', 'unit', 'method', 'spatial_scale', 'period']; // time counts: equal units over different years are not comparable
 
 const norm = value => String(value ?? '').trim().toLowerCase().replace(/\s+/g, ' ').replace(/^(%|percent|prozent)$/, 'percent');
 
-// Comparable only when every comparison field matches exactly (after trimming and case folding).
+// Comparable only when every comparison field (including the period) matches exactly (after trimming and case folding).
 export function compareMeasures(a, b) {
   const differs = COMPARE_FIELDS.filter(field => norm(a?.[field]) !== norm(b?.[field]) || !norm(a?.[field]));
   return { comparable: differs.length === 0, differs };

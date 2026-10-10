@@ -51,7 +51,7 @@ function layerControls({ lang, ui, pack, state, side }) {
       <span class="small">${chip(ui('cls_' + l.origin), l.origin)} ${chip(ui('theme_' + l.theme))}${drawable ? '' : ' ' + chip(ui('map_external'), 'unknown')}</span>
       <span class="small muted">${esc(l.temporal)} · ${esc(l.coverage)}</span>${drawable ? '' : `<a class="small" href="${esc(l.source_url)}" target="_blank" rel="noreferrer">${esc(ui('map_open_source'))} ↗</a>`}</li>`;
   }).join('');
-  const gaps = (pack.gaps ?? []).map(g => `<li class="gap" data-gap="${esc(g.theme)}"><strong>${esc(ui('theme_' + g.theme))}</strong>: ${esc(pick(g.reason, lang))}
+  const gaps = (pack.gaps ?? []).map(g => `<li class="gap" data-gap="${esc(g.theme)}"><strong>${esc(ui('theme_' + g.theme))}</strong> ${g.state === 'not_checked' ? chip(ui('map_not_checked'), 'unknown') : ''} ${esc(pick(g.reason, lang))}
     <details><summary class="small">${esc(ui('map_checked'))}</summary><ul class="small">${g.checked.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details></li>`).join('');
   return `<div class="layerbox" data-side="${side}"><h4>${esc(pick(pack.name, lang))}</h4>
     <ul class="layers">${rows || `<li class="small muted">${esc(ui('map_no_snapshot'))}</li>`}</ul>
@@ -101,7 +101,7 @@ export function mapView({ lang, ui, packs, geoById, state, mode = 'map', measure
   if (other) {
     const a = pack.layers.filter(l => state.layers.includes(l.id)), b = other.layers.filter(l => otherState.layers.includes(l.id));
     const pairs = a.flatMap(x => b.map(y => ({ x, y, ...comparableLayers(x, y) }))).filter(p => p.same_theme);
-    compareNote = `<p class="small boundary" data-compare-note>${esc(ui('map_compare_note'))}${pairs.map(p => ` <span class="pair ${p.comparable ? 'ok' : 'no'}">${esc(ui('theme_' + p.x.theme))}: ${esc(ui(p.comparable ? 'comparable' : 'not_comparable'))}</span>`).join('')}</p>`;
+    compareNote = `<p class="small boundary" data-compare-note>${esc(ui('map_compare_note'))}${pairs.map(p => ` <span class="pair ${p.comparable ? 'ok' : 'no'}">${esc(ui('theme_' + p.x.theme))}: ${esc(ui(p.comparable ? 'comparable' : 'not_comparable'))}${p.comparable ? '' : ` (${esc(ui('differs_in'))} ${p.differs.map(f => esc(ui(f === 'temporal' ? 'f_temporal' : f === 'theme' ? 'map_layer' : f === 'origin' ? 'map_origin' : 'f_' + f))).join(', ')})`}</span>`).join('')}</p>`;
   }
   return `<div class="view mapview" data-city="${esc(state.city)}" data-mode="${mode}">
     <div class="maptoolbar">
