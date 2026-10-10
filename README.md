@@ -14,16 +14,17 @@ make run
 
 Open <http://127.0.0.1:4173/>. `make build` generates the static application in `site/`; `make smoke` builds it and checks the evidence, contracts, state engine, simulation and module handoffs. Missing Street Lab dependencies are installed from its pinned lockfile. No backend is needed for the application. `site/` can be published beneath a GitHub Pages project path.
 
-## The journey
+## The journey (German default, English switch)
 
-1. **Choose a place:** Kanonengasse is computed from open-data snapshots; Klybeck is the earlier illustrative study segment.
-2. **Inspect evidence:** Street X-Ray keeps observed context, derived claims and unknowns separate.
-3. **Find the gaps:** Data Charter names access limits, permitted uses and gap-filling methods.
-4. **Observe:** Rain Walk captures device-local reports in separate place contexts, with review history and export.
-5. **Explore:** Street Lab explains water movement using a synthetic street. The selected place is context only.
-6. **Decide:** Export source-pinned claims, unresolved gates, responsible actors and next actions. The status remains `requires-investigation`.
+1. **Understand:** five mechanisms (retention, infiltration, storage, evaporation, shade) across heavy rain, heat and dry periods.
+2. **From practice:** sourced cases, labelled city-wide, programme, single project or study from another setting.
+3. **Measure:** per indicator, the question, desirable measurement, accepted proxy, what exists in Basel, what it cannot establish, next action and later monitoring.
+4. **Evidence:** the Data Charter map.
+5. **Compare cities:** Basel, Berlin and Copenhagen, with incompatible measures marked not comparable. No ranking.
+6. **One Basel place:** Street X-Ray → Rain Walk → Street Lab (synthetic street, place as context only).
+7. **Next investigation:** unresolved gates, gatekeepers and next actions as JSON and a readable report. Status stays `requires-investigation`.
 
-Need, possibility and potential effect remain separate. A real place selection does not supply measured geometry or hydraulic parameters to a learning model.
+See [Bilingual journey](docs/BILINGUAL-JOURNEY.md), [City profile contract](docs/CITY-PROFILE.md) and [Comparator selection](docs/CITY-SELECTION.md). Need, possibility and potential effect remain separate; a real place selection does not supply measured geometry or hydraulic parameters to a learning model.
 
 ## Modules and contracts
 
@@ -38,6 +39,8 @@ Need, possibility and potential effect remain separate. A real place selection d
 | `wrapper/sponge-catalogue/` | Intervention mechanisms, local precedents, gatekeepers and evidence access vocabulary |
 | `wrapper/achim/connected-case/` | Reproducible Klybeck claim/gap/action graph with schema and source fingerprints |
 | `wrapper/site/basel-site-scoping-tool/` | Preserved discovery snapshot and candidate fixture used by the connected case; illustrative rankings are not authoritative |
+| `data/cities/` | Reusable city evidence profiles (Basel, Berlin, Copenhagen) |
+| `journey/content/` | Bilingual concept, practice, measurement-to-decision and UI strings |
 | `contributions/andy/` | Andy Nkunzimana's Tellplatz evidence audit and Landsat processing, preserved with attribution |
 | `archive/` | Original ZIP snapshot and per-file hashes, before consolidation |
 
