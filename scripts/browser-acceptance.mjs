@@ -357,6 +357,40 @@ await check('concurrent transitions: only the newest render may change the view;
   assert(!(await page.$('[data-layer-group^="copenhagen."]')), 'no Copenhagen layer was drawn'); await ctx.close();
 });
 
+await check('mobile table equivalence: every feature of a layer is reachable by paging, no horizontal overflow in table mode, a tapped row is selected, shared and restored on the right page', async () => {
+  const over = page => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  for (const city of ['basel', 'berlin', 'copenhagen', 'zurich']) for (const lang of ['de', 'en']) {
+    const { page, ctx } = await open(`?stage=map&lang=${lang}&city=${city}&mapview=table`, { w: 390, h: 844, mobile: true }); await settle(page, 900);
+    assert(await over(page) <= 1, `${city}/${lang}: table mode overflows by ${await over(page)}px`); assert((await page.$$('[data-layer-row]')).length > 0, `${city}: layers listed`); await ctx.close();
+  }
+  const { page, ctx } = await open('?stage=map&lang=de&city=basel&layers=basel.trees.01&mapview=table', { w: 390, h: 844, mobile: true }); await settle(page, 1000);
+  const total = await page.evaluate(async () => (await (await fetch('assets/content/maps/basel/basel.trees.01.geojson')).json()).features.length);
+  const seen = new Set();
+  for (let i = 0; i < 40; i++) { for (const k of await page.$$eval('[data-pick]', e => e.map(x => x.dataset.pick))) seen.add(k); const next = await page.$('[data-table-page$=":1"]:not([aria-disabled="true"])'); if (!next) break; await next.tap(); await page.waitForTimeout(200); }
+  assert(seen.size === total && total > 100, `every tree feature reachable on mobile: ${seen.size} of ${total}`);
+  const pk = await page.$eval('[data-pick]', e => e.dataset.pick); await page.tap(`[data-pick="${pk}"]`); await page.waitForTimeout(300);
+  assert(decodeURIComponent(page.url()).includes('sel=' + pk) && /Baumkataster/.test(await page.innerText('#inspect')), 'tap selects the row and fills the inspector');
+  await page.goto(page.url()); await settle(page, 1000);
+  const nav = await page.innerText('[data-table-nav]'); assert(new RegExp(`Seite ${Math.floor(Number(pk.split(':')[1]) / 50) + 1} von`).test(nav), `restored on the page holding the object: ${nav}`);
+  assert(await page.$('tr.sel-row[aria-current="true"]'), 'the selected row is marked after restore'); assert(await over(page) <= 1, 'no overflow after restore'); await ctx.close();
+});
+
+await check('export state: map briefs reflect only the current city, layer, object and language (selection, city switch, language switch, compare panel, gap link)', async () => {
+  const dlJson = async (page, sel = '#brief-json') => { const [d] = await Promise.all([page.waitForEvent('download'), page.click(sel)]); return JSON.parse(readFileSync(await d.path(), 'utf8')); };
+  const { page, ctx } = await open('?stage=map&lang=de&city=zurich&layers=zurich.boundary.01,zurich.sealing.01'); await settle(page, 1200);
+  await (await page.$('.mapsvg [data-layer="zurich.sealing.01"][data-f]')).dispatchEvent('click'); await settle(page, 300);
+  let rec = await dlJson(page); assert(rec.city.id === 'zurich' && rec.selection.layer_id === 'zurich.sealing.01' && rec.ui_language === 'de', 'zurich sealing, de');
+  assert(rec.evidence_flags.includes('own-computation'), 'the own-computation flag travels into the brief'); assert(rec.gap_themes.includes('sealing'), 'the recorded gap theme travels into the brief');
+  await page.click('button[data-lang="en"]'); await settle(page, 700); rec = await dlJson(page); assert(rec.ui_language === 'en' && rec.selection.layer_id === 'zurich.sealing.01', 'language switch keeps the object, changes the language');
+  await page.click('[data-map-city="berlin"]'); await settle(page, 1200);
+  assert(!(await page.$('#brief-json')), 'after a city switch no brief is offered until an object of the new city is selected (no stale Zürich selection)');
+  await (await page.$('.mapsvg [data-f]')).dispatchEvent('click'); await settle(page, 300); rec = await dlJson(page); assert(rec.city.id === 'berlin' && !/zurich|z[üu]rich/i.test(JSON.stringify(rec)), 'berlin brief names no Zürich');
+  await page.selectOption('#map-compare', 'zurich'); await settle(page, 1200);
+  await (await page.$('.mapsvg [data-layer^="zurich."][data-f]')).dispatchEvent('click'); await settle(page, 300); rec = await dlJson(page); assert(rec.city.id === 'zurich' && !/berlin/i.test(JSON.stringify(rec)), 'an object picked in the compare panel exports its own city only');
+  await page.click('[data-stage="cities"]'); await settle(page, 400); await page.click('[data-goto-map-gap^="basel:"]'); await settle(page, 1200);
+  assert(!(await page.$('#brief-json')), 'a gap link clears the selection: nothing stale to export'); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');

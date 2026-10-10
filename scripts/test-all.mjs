@@ -18,6 +18,7 @@ const checks=[
   ['Bilingual journey, city profiles, exports','.',['--test','tests/journey-bilingual.test.mjs']],
   ['Map layers, share state, map view','.',['--test','tests/map.test.mjs']],
   ['Basel tree recomputation','.',['scripts/recompute-basel-trees.mjs','--check']],
+  ['Bilingual coverage (dynamic keys, placeholders, source wording)','.',['--test','tests/i18n-coverage.test.mjs']],
   ['Reproducibility record','.',['--test','tests/reproducibility.test.mjs']],
   ['Evidence labels and retrieval dates','.',['--test','tests/provenance.test.mjs']],
   ['Claim verification','.',['--test','tests/verification.test.mjs']],
