@@ -75,6 +75,7 @@ try {
   const render = () => { pendingFocus = focusKey(); renderInner(); if (stage.kind !== 'map') { restoreFocus(pendingFocus); pendingFocus = null; } announce(pick(stage.label,lang)); };
   const renderInner = () => {
     $('view').inert = false; $('view').removeAttribute('aria-busy'); // a map load that was abandoned by a step change must not leave the view dead
+    if (stage.kind !== 'map') gapFocus = null; // a gap link abandoned before its map finished must not highlight a gap on a later visit
     applyStatic(); renderSteps(); renderPlaces();
     const site = lang==='de' ? {...place.profile.site,...(overlay?.places?.[place.key]?.site??{})} : place.profile.site;
     $('place-panel').hidden = !stage.needs_place;

@@ -49,3 +49,14 @@ test('cantonal items are scoped as canton, the Copenhagen estimate is qualified,
     assert.ok(!/\[(de|en)[:?]/.test(html + h2));
   }
 });
+
+test('unchecked, unreachable and thin sources are flagged on the collapsed source line, confirmed ones are not', () => {
+  const basel = read('data/cities/basel.json'), zurich = cityOf('zurich');
+  for (const lang of ['de', 'en']) {
+    const flagged = (e) => (entryCard(e, lang, ui(lang)).match(/<summary>.*?<\/summary>/g) ?? []).filter(x => /data-flag-summary/.test(x)).length;
+    assert.ok(flagged(basel.entries.find(e => e.id === 'basel.context.basel-canopy')) >= 1, 'not-checked source is flagged in the summary');
+    assert.equal(flagged(basel.entries.find(e => e.id === 'basel.context.basel-sealed')), 0, 'a confirmed source carries no flag');
+    assert.ok(flagged(zurich.entries.find(e => e.id === 'zurich.access.01')) >= 1, 'a reference-only quote is flagged in the summary');
+    assert.ok(!/\[(de|en)[:?]/.test(entryCard(zurich.entries.find(e => e.id === 'zurich.access.01'), lang, ui(lang))));
+  }
+});

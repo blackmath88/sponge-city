@@ -316,6 +316,20 @@ await check('reproducibility: the Basel tree count is shown as reproduced locall
   }
 });
 
+await check('audit: a gap link abandoned during a load leaves no stale highlight; every gap link lands on its gap; collapsed source lines carry the unchecked flag', async () => {
+  const { page, ctx } = await open('?stage=cities&lang=en'); await settle(page, 1000);
+  const links = await page.$$eval('[data-goto-map-gap]', els => els.map(e => e.dataset.gotoMapGap)); assert(links.length >= 13, `gap links present (${links.length})`);
+  await page.route('**/content/maps/zurich/*.geojson', async r => { await new Promise(x => setTimeout(x, 1500)); r.continue(); });
+  await page.click('[data-goto-map-gap^="zurich:"]'); await page.waitForTimeout(200); await page.click('[data-stage="concept"]'); await settle(page, 2200);
+  await page.click('[data-stage="map"]'); await settle(page, 1500);
+  assert(!(await page.$('.gap-hl')), 'no stale gap highlight after returning to the map');
+  await page.unroute('**/content/maps/zurich/*.geojson'); // the artificial delay applies to the abandoned-load probe only
+  await page.goto(base + '?stage=cities&lang=de'); await settle(page, 800);
+  for (const l of links.slice(0, 13)) { await page.click(`[data-goto-map-gap="${l}"]`); await page.waitForTimeout(700); assert(await page.evaluate(t => document.activeElement?.getAttribute('data-gap') === t, l.split(':')[1]), `gap link ${l} lands on its gap`); await page.goto(base + '?stage=cities&lang=de'); await page.waitForTimeout(400); }
+  await page.goto(base + '?stage=cities&lang=en&city=basel'); await settle(page, 800);
+  assert(await page.evaluate(() => [...document.querySelectorAll('details > summary [data-flag-summary]')].length) >= 1, 'the unchecked flag is visible without opening the source'); await ctx.close();
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');

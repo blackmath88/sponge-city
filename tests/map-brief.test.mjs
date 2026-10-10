@@ -43,3 +43,17 @@ for (const [id, layerId] of targets) test(`${layerId}: map brief carries provena
     for (const o of others) { assert.ok(!md.includes(o + '.'), `${id} markdown ids mention ${o}`); for (const n of NAMES[o]) assert.ok(!md.includes(n), `${id} markdown names ${n}`); }
   }
 });
+
+test('brief JSON and Markdown agree on evidence flags and recorded gaps for every drawable layer (author self-audit)', () => {
+  for (const [id, layerId] of targets) {
+    const pack = read(`data/maps/${id}/layers.json`), profile = read(`data/cities/${id}.json`), layer = pack.layers.find(l => l.id === layerId);
+    const args = { pack, profile, layer, index: 0, feature: read(`data/maps/${id}/${layer.file}`).features[0], matrix, measurements };
+    const rec = mapBriefRecord({ ...args, lang: 'en' });
+    for (const lang of ['de', 'en']) {
+      const md = mapBriefMarkdown({ ...args, lang, ui: ui(lang) });
+      const sec = md.split(/## (?:Markierungen|Flags)[^\n]*\n/)[1]?.split('\n## ')[0] ?? '';
+      assert.equal((sec.match(/^- /gm) ?? []).length, rec.evidence_flags.length, `${layerId}/${lang}: flags differ between JSON and Markdown`);
+      assert.equal((md.match(/\.gap\./g) ?? []).length, rec.unresolved_checks.filter(c => /\.gap\./.test(c.id)).length, `${layerId}/${lang}: gaps differ`);
+    }
+  }
+});

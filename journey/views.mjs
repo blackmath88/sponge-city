@@ -120,10 +120,16 @@ export function measureView({ lang, ui, content }) {
     </ol></article><p class="small muted">${esc(ui('charter_updated'))}: ${esc(content.charter.updated)} · ${esc(ui('cls_observed'))} / ${esc(ui('cls_derived'))} / ${esc(ui('cls_modelled'))} / ${esc(ui('cls_assumed'))} / ${esc(ui('cls_unknown'))}</p></div>`;
 }
 
+// A visible marker on the collapsed source line: unchecked, unreachable or thin evidence must not hide inside <details>.
+const sourceFlag = (s, ui) => {
+  const v = s.verification?.verdict;
+  const parts = [...(v === 'not-checked' || v === 'source-unreachable' ? [ui('ver_' + v)] : []), ...(s.quote_note ? [ui('quote_thin')] : [])];
+  return parts.length ? ` <span class="vflag not-checked" data-flag-summary="${esc(parts.join(' / '))}">⚑ ${esc(parts.join(' · '))}</span>` : '';
+};
 export const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.id)}"><p class="eyebrow">${chip(ui('sc_' + e.scope), 'scope-' + e.scope)} ${chip(ui('cls_' + e.origin), e.origin)} ${e.evidence_state !== 'found' ? chip(ui('st_' + e.evidence_state), 'state-' + e.evidence_state) : ''}</p><p>${esc(pick(e.text, lang))}</p>
   ${e.origin_note ? `<p class="small" data-origin-note><strong>${esc(ui('origin_note'))}:</strong> ${esc(pick(e.origin_note, lang))}</p>` : ''}
   ${e.measure ? `<p class="small"><em>${esc(ui('measure_def'))}:</em> <strong>${esc(e.measure.quantity)}</strong> · ${esc(e.measure.unit)} · ${esc(e.measure.method)} · ${esc(e.measure.spatial_scale)}${e.measure.period ? ' · ' + esc(e.measure.period) : ''}</p>` : ''}
-  ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}${s.verification ? ` · <span class="vflag ${esc(s.verification.verdict)}" data-verification="${esc(s.verification.verdict)}">${esc(ui('ver_' + s.verification.verdict))}</span>` : ''}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote>${s.quote_note ? `<p class="small vflag not-checked" data-quote-note>${esc(ui('quote_thin'))}: ${esc(pick(s.quote_note, lang))}</p>` : ''}</details>`).join('')}</article>`;
+  ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}${sourceFlag(s, ui)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}${s.verification ? ` · <span class="vflag ${esc(s.verification.verdict)}" data-verification="${esc(s.verification.verdict)}">${esc(ui('ver_' + s.verification.verdict))}</span>` : ''}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote>${s.quote_note ? `<p class="small vflag not-checked" data-quote-note>${esc(ui('quote_thin'))}: ${esc(pick(s.quote_note, lang))}</p>` : ''}</details>`).join('')}</article>`;
 
 export function matrixView({ lang, ui, content }) {
   const m = content.matrix; if (!m) return '';
