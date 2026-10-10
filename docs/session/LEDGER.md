@@ -46,8 +46,10 @@ All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers
 | B | Basel claim revalidation (16 claims) | Orca claude sonnet, ctx_73f3d2398e83 | data/verification/basel-claims.json, docs/session/research/basel-claims.md | succeeded: 10 confirmed, 2 with difference, 4 source-unreachable; integrated |
 | D | Sie harmonisation + Street Lab edit persistence | Orca claude sonnet, ctx_cabe53755d44 | wrapper/street-workspace/** | succeeded; integrated; 28 node tests; browser check added (edits survive DE/EN/reload, no leak between places) |
 | T | German translation of claim evidence | Claude Code subagent (general-purpose, sonnet), not Orca | data/verification/basel-claims.de.json | completed; spot-read |
-| Z2 | Zürich gap closing | Orca claude sonnet, ctx_1e3d47c65640, wt zurich-gaps | data/cities/zurich.json, data/maps/zurich/** | running |
-| L | Legend label polish (Basel/Berlin/Copenhagen) | Orca claude sonnet, ctx_b8ea5e627327, wt legend-polish | data/maps/{basel,berlin,copenhagen}/layers.json | running |
+| Z2 | Zürich gap closing | Orca claude sonnet, ctx_1e3d47c65640, wt zurich-gaps | data/cities/zurich.json, data/maps/zurich/** | succeeded: sealing derived (28.6 %), sewer text figures, pluvial window, gaps checked; integrated d195e44 |
+| L | Legend label polish (Basel/Berlin/Copenhagen) | Orca claude sonnet, ctx_b8ea5e627327, wt legend-polish | data/maps/{basel,berlin,copenhagen}/layers.json | succeeded; integrated d195e44 |
+| R1 | Independent review: code, UX, boundaries, bilingual (read-only, deep) | Orca claude opus, ctx_3ed409308961, wt review-R1 @ cf64561e74cc | report only: ../review-artifacts/R1-code-ux.md | running |
+| R2 | Independent review: evidence validity (re-fetch sources, licences, matrix) | Orca claude sonnet, ctx_ecf97d456313, wt review-R2 @ cf64561e74cc | report only: ../review-artifacts/R2-evidence.md | running |
 | C | Coordinator (this session): contracts, map step, start page, matrix, briefs, browser suite | foreground Claude Sonnet 5.5 | journey/**, tests/**, scripts/**, docs/** | in progress |
 
 Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task; replaced by retry) and ctx_c57ea941100f (timeout probe; stopped by `worker-stop`, liveness exited, released) are settled and not live. Orca terminals of finished workers are `retained` (external terminal) but idle.
