@@ -1,6 +1,6 @@
 # Delivery ledger — bilingual evidence session
 
-Start 2026-10-06→**2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard stop 16:56. Not accepted Weavr execution; the gated V2 Mission is untouched.
+Start **2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard stop 16:56. Not accepted Weavr execution; the gated V2 Mission is untouched.
 
 ## Base decision
 - Pinned **3aeca87** (PR #4 head, `feat/post-hackathon-consolidation`). `make smoke` passes there.
@@ -15,3 +15,9 @@ Start 2026-10-06→**2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard sto
 ## Tasks
 | id | task | tier | route | status | commit |
 |----|------|------|-------|--------|--------|
+| R1 | Berlin city profile (read-only research) | standard | Agent→sonnet (model ID self-reported claude-sonnet-5-5) | done, validated | data/cities/berlin.json |
+| R2 | Copenhagen city profile (read-only research) | standard | Agent→sonnet (claude-sonnet-5-5) | done, validated | data/cities/copenhagen.json |
+| C1 | Journey shell, i18n, concept/practice/measure/cities/export views, checks | coordinator | direct | done | 7283092, 36148d8 |
+| T1 | Street X-Ray de/en + place overlay | standard | Agent→sonnet (claude-sonnet-5-5), worktree bilingual-w1 | done, browser-checked de | cherry-pick of 8ac0883 |
+| T2 | Rain Walk de/en | standard | Agent→sonnet, worktree bilingual-w2 | done, browser-checked de | cherry-pick of 1cc5073 |
+| T3 | Street Lab de/en | standard | Agent→sonnet, worktree bilingual-w3 | running | |
