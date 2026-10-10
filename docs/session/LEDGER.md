@@ -62,3 +62,9 @@ Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task
 - R2 (Sonnet, evidence validity; re-fetched 86 quotes, 19 layers, 28 matrix cells, 5 Basel verdicts): 0 blocker, 3 major, 16 minor; 86/86 quotes verbatim. Report: `docs/session/review/R2-evidence.md`.
 - Both reviewers ran on a worktree at the exact candidate commit and wrote only to `review-artifacts/`; both settled `succeeded`.
 - Disposition: see `docs/session/review/DISPOSITION.md`.
+
+## Session 3 — foreground continuation (21:00 CEST start; integration cutoff 23:10; hard stop 23:55)
+- **Route:** direct foreground continuation by the coordinator terminal `term_e9cd5b23-b4e9-455c-bb91-8b2e3e913640` (workspace `d1eb1698-9a68-4997-b8fa-ed6e8fcb034b::…/sponge-city-bilingual-evidence-150m`). No Run, Task, Dispatch, subagent, worktree or worker was created. **Orca writable-path isolation and timeout enforcement were not available**, so nothing here is enforced by the runtime; scope was kept by instruction and by `git diff` review before each commit.
+- Input commit `ec38100e098d`. Worker settlement: all earlier dispatches settled `succeeded`/released; none live; none started in this continuation.
+- Done: matrix cells link the recorded map gaps (incl. pluvial/Basel) and carry visible check-status flags; Basel claim verification states whether an independent reviewer re-checked each claim (partial / sampled / not re-checked). Checks: `tests/city-data.test.mjs`, `tests/verification.test.mjs`, browser check "evidence-state clarity".
+- **Independent review:** none after `5f6eaee`; everything after it (ec38100 and this session's commits) is author-tested only.

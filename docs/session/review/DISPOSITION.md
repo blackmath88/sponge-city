@@ -48,3 +48,9 @@ Reviews: R1 (code/UX/boundaries/bilingual, Opus 5.5) and R2 (evidence validity, 
 - Engelgasse `origin` is now `unknown` (announcement, completion unverified); retrieval dates in `data/cities/basel.json` are derived from `data/verification/basel-claims.json` (later date only where a check reached the source; every source carries its verification verdict, and unchecked or unreachable sources are flagged in the UI). Checked by `tests/provenance.test.mjs`.
 - Focus keeps an anchor (status line) while a city loads; the stale-token catch no longer clears `inert`; browser checks now pin the no-"loading"-on-cached-paging and selection-opens-its-page behaviour.
 - These changes have not had an independent review (R6 covered 5f6eaee).
+
+## Session 3 closure of deferred items (author-tested only; not independently reviewed)
+- R2 m9 (`pluvial/basel` cited nothing): the cell now links the recorded Basel flood-hazard gap (and every cell links the gaps its pack records; a test enforces it).
+- Thin or unchecked evidence is flagged on the cells: absence of public evidence = "search not independently repeated"; unknown = "not researched"; Zürich sealing = own computation; Zürich canopy = raster not computed; Basel sealing percentages = not independently recomputed; Zürich sewer = conflicting figures.
+- Basel claim records carry `independent_recheck`: basel-sealed partial (counts only), sealed-trees sampled (9,046 not reproduced), hot days / Engelgasse / VoltaNord re-checked, all others including the four unreachable sources not re-checked.
+- Still open: R2 m15 (thin quotes), m16 (scope/origin labels for cantonal items), Zürich canopy raster, no independent review after 5f6eaee.

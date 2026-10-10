@@ -63,9 +63,10 @@ export function verificationBlock({ lang, ui, content }, id) {
   const cls = c.verdict === 'confirmed' ? 'observed' : c.verdict === 'confirmed-with-difference' ? 'partial' : 'unknown';
   const limit = de?.verification_limit_de ?? c.verification_limit, evidence = de?.evidence_de ?? c.evidence;
   const untranslated = lang === 'de' && !de;
-  return `<details class="verify" data-verdict="${esc(c.verdict)}"><summary class="small">${chip(ui('ver_' + c.verdict), cls)} ${chip(ui('ct_' + c.claim_type))} <span class="muted">${esc(ui('ver_checked'))} ${esc(c.retrieved_on)}</span></summary>
+  return `<details class="verify" data-verdict="${esc(c.verdict)}"><summary class="small">${chip(ui('ver_' + c.verdict), cls)} ${chip(ui('ct_' + c.claim_type))} ${c.independent_recheck ? chip(ui('rc_' + c.independent_recheck.state), c.independent_recheck.state === 'not-rechecked' ? 'unknown' : c.independent_recheck.state === 'rechecked' ? 'observed' : 'partial') : ''} <span class="muted">${esc(ui('ver_checked'))} ${esc(c.retrieved_on)}</span></summary>
     <p class="small"><strong>${esc(ui('ver_evidence'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(evidence)}</span></p>
     ${limit ? `<p class="small"><strong>${esc(ui('ver_limit'))}:</strong> <span ${untranslated ? 'lang="en"' : ''}>${esc(limit)}</span></p>` : ''}
+    ${c.independent_recheck ? `<p class="small" data-recheck="${esc(c.independent_recheck.state)}"><strong>${esc(ui('rc_' + c.independent_recheck.state))}:</strong> ${esc(de?.independent_recheck_note_de ?? c.independent_recheck.note)}</p>` : ''}
     ${untranslated ? `<p class="small muted">${esc(ui('ver_english'))}</p>` : ''}<p class="small">${link(c.source_url, ui('source'))}</p></details>`;
 }
 
@@ -122,10 +123,12 @@ export function matrixView({ lang, ui, content }) {
     return `<td data-cell="${esc(ind.id)}.${esc(id)}"><p class="eyebrow">${chip(ui('ex_' + s.exists), s.exists === 'yes' ? 'observed' : s.exists === 'partial' ? 'partial' : 'unknown')} ${s.basis !== 'unknown' ? chip(ui('cls_' + s.basis), s.basis) : chip(ui('cls_unknown'), 'unknown')}</p>
       <p class="small">${esc(ui('mx_access'))}: ${esc(ui('ac_' + s.access))} · ${esc(ui('mx_derivable'))}: ${esc(ui('dv_' + s.derivable))}</p>
       <p class="small">${esc(ui('mx_needs'))}: ${c.needs.length ? c.needs.map(n => esc(ui('need_' + n))).join(', ') : esc(ui('mx_none'))}</p>
+      ${c.flags?.length ? `<p class="small flags" data-flags="${esc(c.flags.join(' '))}">${c.flags.map(f => chip(ui('flag_' + f), 'unknown')).join(' ')}</p>` : ''}
+      ${c.gaps?.length ? `<p class="small" data-gap-link="${esc(c.gaps.join(' '))}">${esc(ui('mx_gap'))}: <a href="#" data-goto-map-gap="${esc(id)}:${esc(c.gaps[0])}">${esc(ui('mx_gap_open'))} →</a></p>` : ''}
       <details><summary class="small">${esc(ui('mx_refs'))}</summary><p class="small">${esc(pick(c.note, lang))}</p><p class="small muted">${[...c.entries, ...c.layers].map(esc).join(' · ') || '—'}</p></details></td>`; };
   return `<h3>${esc(ui('mx_title'))}</h3><p class="muted">${esc(ui('mx_lead'))}</p><div class="scroll"><table class="matrix"><thead><tr><th></th>${ids.map(id => `<th scope="col">${esc(name(id))}</th>`).join('')}</tr></thead><tbody>
     ${m.indicators.map(ind => `<tr data-indicator-row="${esc(ind.id)}"><th scope="row">${esc(pick(ind.label, lang))}<br><span class="small muted">${esc(pick(ind.question, lang))}</span></th>${ids.map(id => cell(ind, id)).join('')}</tr>`).join('')}</tbody></table></div>
-    <p class="small muted">${esc(ui('mx_reviewed'))}</p>`;
+    <p class="small muted">${esc(ui('mx_reviewed'))} ${esc(pick(m.flag_note, lang))}</p>`;
 }
 
 export function citiesView({ lang, ui, content }) {

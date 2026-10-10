@@ -22,6 +22,15 @@ test('every practice case and featured Basel statement has a dated verification 
   }
 });
 
+test('every claim states whether an independent reviewer re-checked it; the weakly checked ones are flagged', () => {
+  const by = new Map(checks.claims.map(c => [c.id, c]));
+  for (const c of checks.claims) { assert.ok(['rechecked', 'partial', 'sampled', 'not-rechecked'].includes(c.independent_recheck?.state), c.id); assert.ok(c.independent_recheck.note, c.id); if (c.independent_recheck.state === 'not-rechecked') assert.equal(c.independent_recheck.by, null); }
+  assert.equal(by.get('basel-sealed').independent_recheck.state, 'partial'); assert.equal(by.get('sealed-trees').independent_recheck.state, 'sampled');
+  for (const id of ['retention-50', 'compaction', 'clogging', 'benthemplein']) assert.equal(by.get(id).independent_recheck.state, 'not-rechecked');
+  if (checksDe) for (const c of checks.claims) assert.ok(checksDe.claims[c.id].independent_recheck_note_de, `${c.id}: German recheck note`);
+  for (const lang of ['de', 'en']) { const html = practiceView({ lang, ui: ui(lang), content }); assert.match(html, /data-recheck="not-rechecked"/); assert.match(html, /data-recheck="sampled"/); assert.ok(!/\[(de|en)[:?]/.test(html)); }
+});
+
 test('verification renders in both languages; unreachable sources are labelled as not re-verified; German evidence is translated when available', () => {
   for (const lang of ['de', 'en']) {
     const html = practiceView({ lang, ui: ui(lang), content });

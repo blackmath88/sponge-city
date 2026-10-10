@@ -286,7 +286,22 @@
   "map_keys": "Tastatur: Karte fokussieren, dann + und − zoomen, Pfeiltasten verschieben, 0 setzt zurück. Alle Objekte stehen in der Tabellenansicht.",
   "map_to_matrix": "Zur Messgrössen-Matrix der Städte",
   "m_class_source": "Evidenzklasse je Datensatz: siehe Quelle.",
-  "mb_context": "Stand der Daten (nichts offen)"
+  "mb_context": "Stand der Daten (nichts offen)",
+  "rc_rechecked": "Unabhängig nachgeprüft",
+  "rc_partial": "Unabhängig teilweise nachgeprüft",
+  "rc_sampled": "Unabhängig stichprobenartig geprüft",
+  "rc_not-rechecked": "Nicht unabhängig nachgeprüft",
+  "flag_percentages-not-recomputed": "Flächenanteile nicht unabhängig neu berechnet",
+  "flag_own-computation": "Eigene Berechnung, keine amtliche Statistik",
+  "flag_raster-not-computed": "Kronenanteil nicht berechnet (Raster nicht geladen)",
+  "flag_conflicting-figures": "Zahlen widersprechen sich",
+  "flag_search-not-rechecked": "Suche nicht unabhängig wiederholt",
+  "flag_not-researched": "nicht untersucht",
+  "mx_gap": "Datenlücke auf der Karte",
+  "mx_gap_open": "Lücke ansehen",
+  "mx_flags": "Prüfstand",
+  "gap_theme_sealing": "Versiegelung",
+  "mb_flags": "Markierungen (ungeprüft)"
  },
  "en": {
   "skip": "Skip to content",
@@ -575,6 +590,21 @@
   "map_keys": "Keyboard: focus the map, then + and − zoom, arrow keys pan, 0 resets. Every object is listed in the table view.",
   "map_to_matrix": "To the city indicator matrix",
   "m_class_source": "Evidence class per dataset: see the source.",
-  "mb_context": "State of the data (nothing outstanding)"
+  "mb_context": "State of the data (nothing outstanding)",
+  "rc_rechecked": "Independently re-checked",
+  "rc_partial": "Independently re-checked in part",
+  "rc_sampled": "Independently sampled",
+  "rc_not-rechecked": "Not independently re-checked",
+  "flag_percentages-not-recomputed": "area percentages not independently recomputed",
+  "flag_own-computation": "own computation, not an official statistic",
+  "flag_raster-not-computed": "canopy share not computed (raster not downloaded)",
+  "flag_conflicting-figures": "figures conflict",
+  "flag_search-not-rechecked": "search not independently repeated",
+  "flag_not-researched": "not researched",
+  "mx_gap": "Data gap on the map",
+  "mx_gap_open": "View the gap",
+  "mx_flags": "Check status",
+  "gap_theme_sealing": "sealing",
+  "mb_flags": "Flags (unchecked)"
  }
 }

@@ -24,6 +24,7 @@ export function mapBriefRecord({ pack, profile, layer, index, feature, lang, mat
     evidence: { class: layer.origin, theme: layer.theme, method: layer.method, unit: layer.unit, spatial_scale: layer.spatial_scale, data_date: layer.temporal, coverage: layer.coverage, limitations: layer.limitations.en },
     sources: [{ layer_id: layer.id, publisher: layer.publisher, source_url: layer.source_url, licence: layer.licence, licence_url: layer.licence_url, retrieved: layer.retrieved, attribution: layer.attribution }],
     context: cell && !cell.needs.length ? { indicator: row.id, note: cell.note.en } : null,
+    evidence_flags: cell?.flags ?? [], gap_themes: cell?.gaps ?? [],
     related_indicator: indicator ? { id: indicator.id, question: indicator.question.en, next_action: indicator.next_action.en } : null,
     unresolved_checks: [
       { id: `${layer.id}.site-verification`, check: 'Screening result has not been verified on site.', needs: ['site_visit'] },
@@ -56,6 +57,7 @@ export function mapBriefMarkdown({ pack, profile, layer, index, feature, lang, m
     ...(cell && cell.needs.length ? [`- \`${row.id}.${pack.city}\`: ${pick(cell.note, lang)} (${cell.needs.map(needName).join(', ')})`] : []),
     ...gaps.map(g => `- \`${pack.city}.gap.${g.theme}\`: ${pick(g.reason, lang)}`), '',
     ...(cell && !cell.needs.length ? [`## ${ui('mb_context')}`, '', `- \`${row.id}.${pack.city}\`: ${pick(cell.note, lang)}`, ''] : []),
+    ...(cell?.flags?.length ? [`## ${ui('mb_flags')}`, '', ...cell.flags.map(f => `- ${ui('flag_' + f)}`), ''] : []),
     `## ${ui('mb_actors')}`, '', ...rec.actors.map(a => `- ${a}`), '',
     `## ${ui('mb_next')}`, '', ...(indicator ? [`- ${pick(indicator.next_action, lang)}`] : [`- ${ui('mb_next_generic')}`]), '',
     `## ${ui('md_boundaries')}`, '', `- ${ui('map_screening')}`, `- ${ui('md_boundary_obs')}`, `- ${ui('mb_city_only').replace('{city}', pick(profile.name, lang))}`, '',

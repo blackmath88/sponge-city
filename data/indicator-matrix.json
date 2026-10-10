@@ -111,7 +111,11 @@
     "note": {
      "de": "Aus den Vermessungsklassen der amtlichen Bodenbedeckung berechnet; die Karte zeigt nur einen Innenstadt-Ausschnitt.",
      "en": "Computed from the survey classes of the cadastral land cover; the map shows a city-centre window only."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "percentages-not-recomputed"
+    ]
    },
    "berlin": {
     "state": {
@@ -132,7 +136,9 @@
     "note": {
      "de": "Offene Karte in 10-Prozent-Stufen je Block; die Lizenz (Datenlizenz Deutschland Zero 2.0) steht im Dienst-Capabilities-Dokument.",
      "en": "Open map in 10 percent steps per block; the licence (Data Licence Germany Zero 2.0) is stated in the service capabilities document."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "copenhagen": {
     "state": {
@@ -150,7 +156,13 @@
     "note": {
      "de": "Kein offener Versiegelungs-Layer gefunden. Das heisst nicht, dass nicht gemessen wird.",
      "en": "No open sealing layer found. That does not mean nothing is measured."
-    }
+    },
+    "gaps": [
+     "sealing"
+    ],
+    "flags": [
+     "search-not-rechecked"
+    ]
    },
    "zurich": {
     "state": {
@@ -172,7 +184,13 @@
     "note": {
      "de": "Vom Projekt aus der Biotoptypenkartierung 2020 berechnet (28,6 % versiegelt, Wald und Gewässer in der Bezugsfläche), keine amtliche Statistik. Nicht vergleichbar mit der Kantonszahl (14 %) oder mit den Zahlen anderer Städte; die Karte zeigt nur einen Ausschnitt.",
      "en": "Computed by this project from the 2020 biotope map (28.6 percent sealed, forest and water in the reference area), not an official statistic. Not comparable with the cantonal figure (14 percent) or with the figures of other cities; the map shows a window only."
-    }
+    },
+    "gaps": [
+     "sealing"
+    ],
+    "flags": [
+     "own-computation"
+    ]
    }
   },
   "canopy": {
@@ -195,7 +213,9 @@
     "note": {
      "de": "LiDAR-Kronenfläche (GeoTIFF) offen; die Karte zeigt das Baumkataster, nicht die Kronenfläche.",
      "en": "LiDAR canopy (GeoTIFF) is open; the map shows the tree register, not canopy cover."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "berlin": {
     "state": {
@@ -215,7 +235,11 @@
     "note": {
      "de": "Strassenbaumkataster vorhanden; Kronenfläche der Stadt im Profil nicht untersucht.",
      "en": "Street-tree register exists; city canopy cover was not researched in the profile."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "not-researched"
+    ]
    },
    "copenhagen": {
     "state": {
@@ -235,7 +259,13 @@
     "note": {
      "de": "Nur erhaltenswerte Bäume als Ebene; das Baumregister der Gemeinde ist ohne Lizenzangabe nicht übernommen.",
      "en": "Only preserved trees as a layer; the municipal tree register carries no licence statement and was not taken over."
-    }
+    },
+    "gaps": [
+     "trees"
+    ],
+    "flags": [
+     "not-researched"
+    ]
    },
    "zurich": {
     "state": {
@@ -258,7 +288,13 @@
     "note": {
      "de": "Kronenfläche per Laserscan alle vier Jahre; Rückgang seit 2014 berichtet.",
      "en": "Crown area by laser scanning every four years; decline since 2014 reported."
-    }
+    },
+    "gaps": [
+     "trees"
+    ],
+    "flags": [
+     "raster-not-computed"
+    ]
    }
   },
   "heat": {
@@ -279,7 +315,11 @@
     "note": {
      "de": "Rund 200 Sensoren, offen aber roh (nicht qualitätsgeprüft).",
      "en": "About 200 sensors, open but raw (not quality-checked)."
-    }
+    },
+    "gaps": [
+     "heat"
+    ],
+    "flags": []
    },
    "berlin": {
     "state": {
@@ -299,7 +339,9 @@
     "note": {
      "de": "Modellierte Klimabewertung 2022; ein Messnetz ist im Profil nicht belegt.",
      "en": "Modelled climate assessment 2022; a measurement network is not evidenced in the profile."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "copenhagen": {
     "state": {
@@ -320,7 +362,11 @@
     "note": {
      "de": "Die Verwaltung nennt grobe Satellitendaten; keine offene Hitzeebene gefunden.",
      "en": "The administration cites coarse satellite data; no open heat layer found."
-    }
+    },
+    "gaps": [
+     "heat"
+    ],
+    "flags": []
    },
    "zurich": {
     "state": {
@@ -341,7 +387,9 @@
     "note": {
      "de": "Rund 90 Stationen im 15-Minuten-Takt und modellierte Massnahmengebiete; die Datensätze des meteoblue-Netzes tragen den Vermerk «Nachführung eingestellt».",
      "en": "About 90 stations at 15-minute intervals and modelled measure areas; the meteoblue network datasets carry the flag \"Nachführung eingestellt\" (updates discontinued)."
-    }
+    },
+    "gaps": [],
+    "flags": []
    }
   },
   "pluvial": {
@@ -361,7 +409,13 @@
     "note": {
      "de": "Bundeskarte nur als Kachel-Dienst, Lizenzbedingung unklar; keine Geometrie übernommen.",
      "en": "Federal map is a tile service only, licence terms unclear; no geometry taken over."
-    }
+    },
+    "gaps": [
+     "flood-hazard"
+    ],
+    "flags": [
+     "not-researched"
+    ]
    },
    "berlin": {
     "state": {
@@ -381,7 +435,11 @@
     "note": {
      "de": "Stadtweite Hinweiskarte; die genauere Gefahrenkarte nur für ausgewählte Gebiete.",
      "en": "City-wide indication map; the more detailed hazard map only for selected areas."
-    }
+    },
+    "gaps": [
+     "flood-hazard"
+    ],
+    "flags": []
    },
    "copenhagen": {
     "state": {
@@ -402,7 +460,9 @@
     "note": {
      "de": "Überflutungskarten nach Einzugsgebiet (Rechnung 2012), nur als PDF. Die Karte zeigt nur die Einteilung in Einzugsgebiete und geplante Projekte, keine Überflutungsflächen.",
      "en": "Flood maps per catchment (2012 calculation), PDF only. The map layers show only the catchment partition and planned projects, not flood extents."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "zurich": {
     "state": {
@@ -423,7 +483,11 @@
     "note": {
      "de": "Kantonale Modellkarte (CC0, WFS), die mehr als die Stadt abdeckt; die Karte zeigt ein 100-jährliches Ereignis in einem Ausschnitt. Gemeldete Überschwemmungen als CSV (beobachtet), Ursache oft unbekannt.",
      "en": "Cantonal model map (CC0, WFS) covering more than the city; the map shows a 100-year event in one window. Reported flooding as CSV (observed), cause often unknown."
-    }
+    },
+    "gaps": [
+     "flood-hazard"
+    ],
+    "flags": []
    }
   },
   "sewer": {
@@ -445,7 +509,11 @@
     "note": {
      "de": "Netzdaten in den geprüften offenen Quellen nicht gefunden.",
      "en": "Network data not found in the reviewed open sources."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "search-not-rechecked"
+    ]
    },
    "berlin": {
     "state": {
@@ -465,7 +533,11 @@
     "note": {
      "de": "Etwa drei Viertel Trennsystem, ein Viertel Mischsystem; Netz selbst nicht als Geodaten belegt.",
      "en": "About three quarters separate, one quarter combined; the network itself is not evidenced as geodata."
-    }
+    },
+    "gaps": [
+     "water"
+    ],
+    "flags": []
    },
    "copenhagen": {
     "state": {
@@ -485,7 +557,11 @@
     "note": {
      "de": "Im Profil nur als Annahme belegt: Die Mehrheit der Kanäle ist Mischsystem. Kein Netz oder Kennzahl untersucht.",
      "en": "Evidenced in the profile only as an assumption: most sewers are combined. No network or figure researched."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "not-researched"
+    ]
    },
    "zurich": {
     "state": {
@@ -505,7 +581,13 @@
     "note": {
      "de": "Kennzahlen nur als Text (rund 1000 km, etwa 80 % Mischsystem); eine andere Quelle nennt 1500 km. Kein offenes Netz.",
      "en": "Figures as text only (about 1,000 km, about 80 percent combined); another source says 1,500 km. No open network data."
-    }
+    },
+    "gaps": [
+     "water"
+    ],
+    "flags": [
+     "conflicting-figures"
+    ]
    }
   },
   "green-roofs": {
@@ -527,7 +609,11 @@
     "note": {
      "de": "Pflicht bei Flachdächern belegt; Fläche oder Geodaten nicht gefunden.",
      "en": "Obligation for flat roofs evidenced; area or geodata not found."
-    }
+    },
+    "gaps": [
+     "green"
+    ],
+    "flags": []
    },
    "berlin": {
     "state": {
@@ -548,7 +634,9 @@
     "note": {
      "de": "Gründach-Teilflächen 2020 aus Fernerkundung und Luftbildauswertung (jede bewachsene Dachfläche, nicht nur angelegte Gründächer) als Karte; getrennt davon die Programmleistung von 19 640 m² (GründachPLUS). Keine Abflusswirkung belegt.",
      "en": "2020 green-roof sub-areas from remote sensing and aerial-image interpretation (any vegetated roof, not only designed green roofs) as a map; separately the programme output of 19,640 m² (GründachPLUS). No runoff effect evidenced."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "copenhagen": {
     "state": {
@@ -566,7 +654,9 @@
     "note": {
      "de": "Gebäude mit Gründach als Ebene (Ausschnitt); stadtweite Summe nicht ausgewertet.",
      "en": "Buildings with green roofs as a layer (window); no city-wide total derived."
-    }
+    },
+    "gaps": [],
+    "flags": []
    },
    "zurich": {
     "state": {
@@ -587,7 +677,11 @@
     "note": {
      "de": "Vorschrift in der BZO belegt; keine Gesamtfläche gefunden.",
      "en": "Zoning rule evidenced; no total area found."
-    }
+    },
+    "gaps": [
+     "green"
+    ],
+    "flags": []
    }
   },
   "effect": {
@@ -612,7 +706,11 @@
     "note": {
      "de": "Kein offenes Register; VoltaNord wird fünf Jahre wissenschaftlich begleitet (Ergebnisse stehen aus).",
      "en": "No open registry; VoltaNord is monitored scientifically for five years (results pending)."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "search-not-rechecked"
+    ]
    },
    "berlin": {
     "state": {
@@ -634,7 +732,11 @@
     "note": {
      "de": "Leistungen berichtet, gemessene Wirkung nicht.",
      "en": "Outputs are reported, measured effect is not."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "search-not-rechecked"
+    ]
    },
    "copenhagen": {
     "state": {
@@ -656,7 +758,11 @@
     "note": {
      "de": "Piloten laufen; keine veröffentlichten Messungen echter Regenereignisse gefunden.",
      "en": "Pilots are running; no published measurements of real rain events found."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "search-not-rechecked"
+    ]
    },
    "zurich": {
     "state": {
@@ -679,9 +785,17 @@
     "note": {
      "de": "Keine veröffentlichte Auswertung des Pilotprojekts Giessereistrasse.",
      "en": "No published evaluation of the Giessereistrasse pilot."
-    }
+    },
+    "gaps": [],
+    "flags": [
+     "search-not-rechecked"
+    ]
    }
   }
  },
- "reviewed_by": "coordinator, from the city profiles and layer packs in this repository (no new source fetch)"
+ "reviewed_by": "coordinator, from the city profiles and layer packs in this repository (no new source fetch)",
+ "flag_note": {
+  "de": "Markierungen zeigen, was noch nicht geprüft ist. Sie ersetzen keine Prüfung.",
+  "en": "Flags show what is still unchecked. They do not replace a check."
+ }
 }

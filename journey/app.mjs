@@ -59,6 +59,7 @@ try {
     for (const b of document.querySelectorAll('[data-filter]')) b.onclick = () => {content.practiceFilter=b.dataset.filter;render();};
     for (const b of document.querySelectorAll('[data-indicator]')) b.onclick = () => {content.measureSel=b.dataset.indicator;render();};
     for (const b of document.querySelectorAll('[data-dim]')) b.onclick = () => {content.cityDim=b.dataset.dim;render();};
+    for (const a of document.querySelectorAll('[data-goto-map-gap]')) a.onclick = e => { e.preventDefault(); const [city, theme] = a.dataset.gotoMapGap.split(':'); gapFocus = theme; mapState = parseMapState(`?city=${city}`,packs); viewBoxes.a=viewBoxes.b=null; stage = manifest.modules.find(m=>m.id==='map'); update(); syncUrl(); };
     for (const a of document.querySelectorAll('[data-map-layer]')) a.onclick = e => { e.preventDefault(); const [city,id]=a.dataset.mapLayer.split(/:(.+)/); mapState = parseMapState(`?city=${city}&layers=${id}`,packs); viewBoxes.a=viewBoxes.b=null; stage = manifest.modules.find(m=>m.id==='map'); update(); syncUrl(); };
     const download = (name,type,text) => {const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     if ($('export-json')) $('export-json').onclick = () => download(`${place.key}-investigation.${lang}.json`,'application/json',JSON.stringify(exportJson(place,lang,content,overlay),null,2)+'\n');
@@ -109,7 +110,7 @@ try {
 
   // ---- map step ---------------------------------------------------------------------------
   let mapState = parseMapState(location.search, packs); let mapMode = new URLSearchParams(location.search).get('mapview')==='table'?'table':'map';
-  const geoCache = new Map(); const tablePages = {}; const viewBoxes = {a:null,b:null}; let mapToken = 0;
+  const geoCache = new Map(); const tablePages = {}; let gapFocus = null; const viewBoxes = {a:null,b:null}; let mapToken = 0;
   const layerOf = id => Object.values(packs).flatMap(p=>p.layers).find(l=>l.id===id);
   const loadGeo = async (city,id) => {
     if (geoCache.has(id)) return;
@@ -137,7 +138,7 @@ try {
     if (token !== mapToken || stage.kind!=='map') return;
     $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,tablePages,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
     $('view').inert = false; $('view').removeAttribute('aria-busy');
-    bindMap(); markSelected(); { const a = document.activeElement; if (!a || a === document.body || a === $('live') || $('view').contains(a)) restoreFocus(focusAt); } announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
+    bindMap(); markSelected(); { const a = document.activeElement; if (!a || a === document.body || a === $('live') || $('view').contains(a)) restoreFocus(focusAt); } if (gapFocus) { const g = document.querySelector(`[data-gap="${CSS.escape(gapFocus)}"]`); if (g) { g.classList.add('gap-hl'); g.setAttribute('tabindex','-1'); g.focus({preventScroll:false}); } gapFocus = null; } announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
     } catch (error) { console.error(error); if (token === mapToken) { $('view').inert = false; $('view').removeAttribute('aria-busy'); $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };

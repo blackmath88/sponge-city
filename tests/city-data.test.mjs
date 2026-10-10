@@ -79,6 +79,19 @@ test('indicator matrix: complete, every reference resolves, states are consisten
       if (cell.state.basis === 'observed' && cell.layers.some(l => packs[id].layers.find(x => x.id === l).origin === 'modelled')) assert.fail(`${where}: observed cell cites a modelled layer`);
     }
   }
+  // gap linkage and unchecked-state flags (R-disposition: pluvial/Basel and thin evidence must be visibly linked and flagged)
+  const ROWGAP = { sealing: 'sealing', canopy: 'trees', heat: 'heat', pluvial: 'flood-hazard', sewer: 'water', 'green-roofs': 'green' };
+  const FLAGS = ['percentages-not-recomputed', 'own-computation', 'raster-not-computed', 'conflicting-figures', 'search-not-rechecked', 'not-researched'];
+  for (const [ind, row] of Object.entries(matrix.cells)) for (const id of CITIES) {
+    const cell = row[id], themes = packs[id].gaps.map(g => g.theme), where = `${ind}.${id}`;
+    for (const g of cell.gaps) assert.ok(themes.includes(g), `${where}: gap ${g} is not recorded in the ${id} layer pack`);
+    if (ROWGAP[ind] && themes.includes(ROWGAP[ind])) assert.ok(cell.gaps.includes(ROWGAP[ind]), `${where}: the pack records a ${ROWGAP[ind]} gap that the cell does not link`);
+    assert.ok(cell.flags.every(f => FLAGS.includes(f)), `${where}: flag vocabulary`);
+    if (cell.state.exists === 'no_public_evidence_found') assert.ok(cell.flags.includes('search-not-rechecked'), `${where}: absence must say its search was not independently repeated`);
+    if (cell.state.exists === 'unknown') assert.ok(cell.flags.includes('not-researched'), `${where}: unknown must say not researched`);
+  }
+  assert.deepEqual(matrix.cells.pluvial.basel.gaps, ['flood-hazard'], 'pluvial/Basel links the recorded flood-hazard gap');
+  assert.ok(matrix.cells.sealing.zurich.flags.includes('own-computation') && matrix.cells.canopy.zurich.flags.includes('raster-not-computed') && matrix.cells.sealing.basel.flags.includes('percentages-not-recomputed'));
   for (const id of CITIES) { const e = matrix.cells.effect[id]; assert.ok(e.state.access === 'unknown' && e.state.derivable === 'unknown', `effect/${id}: an absence of public evidence is not proof of closure`); }
   const ui = JSON.parse(readFileSync(new URL('../journey/content/ui.json', import.meta.url)));
   for (const lang of ['de', 'en']) {

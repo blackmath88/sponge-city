@@ -290,6 +290,20 @@ await check('map → place: a Basel place link opens Inspect-a-place for that pl
   assert(!(await page.$('[data-place-mark]')) && !(await page.$('[data-placelinks]')), 'no Basel places on the Berlin map'); await ctx.close();
 });
 
+await check('evidence-state clarity: matrix flags and gap links, Basel recheck flags; the pluvial/Basel gap link lands on the recorded gap', async () => {
+  for (const lang of ['de', 'en']) {
+    const { page, ctx } = await open(`?stage=cities&lang=${lang}`); await settle(page, 1200);
+    assert(await page.$('[data-cell="sealing.zurich"] [data-flags~="own-computation"]'), 'Zürich sealing flagged as own computation');
+    assert(await page.$('[data-cell="canopy.zurich"] [data-flags~="raster-not-computed"]'), 'Zürich canopy flagged');
+    assert(await page.$('[data-cell="effect.basel"] [data-flags~="search-not-rechecked"]'), 'absence flagged as not independently repeated');
+    await page.click('[data-cell="pluvial.basel"] [data-goto-map-gap]'); await settle(page, 1500);
+    assert(/stage=map/.test(page.url()) && /city=basel/.test(page.url()), 'opens the Basel map');
+    assert(await page.evaluate(() => { const g = document.querySelector('[data-gap="flood-hazard"]'); return !!g && g.classList.contains('gap-hl') && document.activeElement === g; }), 'the flood-hazard gap is highlighted and focused');
+    await page.goto(base + `?stage=practice&lang=${lang}`); await settle(page, 1000);
+    assert((await page.$$('[data-recheck="not-rechecked"]')).length >= 4 && await page.$('[data-recheck="sampled"]'), 'practice cards state the independent re-check status'); await ctx.close();
+  }
+});
+
 await check('map keyboard: svg focusable, + and arrows change the view', async () => {
   const { page, ctx } = await open('?stage=map&lang=de&city=basel'); await settle(page, 1200);
   await page.focus('.mapsvg'); const before = await page.getAttribute('.mapsvg', 'viewBox');
