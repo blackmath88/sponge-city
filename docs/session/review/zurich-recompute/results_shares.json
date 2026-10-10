@@ -1,0 +1,49 @@
+{
+ "all": {
+  "total_km2": 91.793,
+  "teilweise": 4.66,
+  "unbekannt": 1.13,
+  "unversiegelt": 65.62,
+  "versiegelt": 28.59
+ },
+ "excl_forest_water": {
+  "total_km2": 65.196,
+  "teilweise": 6.57,
+  "unbekannt": 1.59,
+  "unversiegelt": 51.59,
+  "versiegelt": 40.25
+ },
+ "excl_forest_only": {
+  "total_km2": 70.388,
+  "teilweise": 6.08,
+  "unbekannt": 1.48,
+  "unversiegelt": 55.16,
+  "versiegelt": 37.28
+ },
+ "forest_only": {
+  "total_km2": 21.405,
+  "unversiegelt": 100.0
+ },
+ "water_only": {
+  "total_km2": 5.192,
+  "unversiegelt": 100.0
+ },
+ "crosstab_km2": {
+  "01 Wälder | unversiegelt": 21.4051,
+  "02 Gebüsche und Gehölzbestände | unversiegelt": 1.1734,
+  "04 Gewässer | unversiegelt": 5.1916,
+  "05 Gehölzfreie Biotope der Sümpfe, Flachmoore und Ufer | unversiegelt": 0.2802,
+  "08 Magerrasen | unversiegelt": 0.115,
+  "09 Grünland | unversiegelt": 5.7066,
+  "10 Acker- und Gartenbau-Biotope | unversiegelt": 3.3144,
+  "11 Ruderalfluren | unversiegelt": 1.613,
+  "12 Siedlungen | teilweise": 1.0829,
+  "12 Siedlungen | unversiegelt": 21.4061,
+  "13 Gebäude-, Verkehrs- und Industrieflächen | teilweise": 3.1974,
+  "13 Gebäude-, Verkehrs- und Industrieflächen | unbekannt": 1.0385,
+  "13 Gebäude-, Verkehrs- und Industrieflächen | unversiegelt": 0.0276,
+  "13 Gebäude-, Verkehrs- und Industrieflächen | versiegelt": 26.2412
+ },
+ "sealed_plus_partly_all": 33.25,
+ "sealed_plus_partly_excl_forest_water": 46.82
+}

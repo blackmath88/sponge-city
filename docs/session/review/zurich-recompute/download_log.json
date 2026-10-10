@@ -1,0 +1,146 @@
+{
+ "requests": [
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=0&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 14148499,
+   "sha256": "530c6504b60ffe3a82df497474fd855baa9679daed01ce022dbf6157cf5b1e25"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=5000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 13243368,
+   "sha256": "a73b1ae1a8234d709aac91787a474979a91733c207d18198435a6caae607d7c4"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=10000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 14561783,
+   "sha256": "f41cf3a956850912b494edb29a9a2e16a343d306d402086114b1c3466a0c28a6"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=15000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 14207263,
+   "sha256": "2bfba48fa1c33cb34c97dc9a4c5fedee0fcf0d28ebf741a77411ddf86004cb92"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=20000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 15853656,
+   "sha256": "59614f1ab1f15234254f939f2f80d911d8874592203cc9c0831bcca6f71c4d8c"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=25000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 22795832,
+   "sha256": "7a7d8e86a86aa0ddbc0fd19374781f23feac112fca6a88da42dbb3e69e8cf9c3"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=30000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 19945983,
+   "sha256": "2ce2a12bd7254e6cd6dd562b1b252c4c7b05170212f80ca70920896c730ef55d"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=35000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 25891666,
+   "sha256": "dcad31f25e00f27f407680f2c4e734971f93a08e3aa568598ecd1b61ceba744d"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=40000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 24778489,
+   "sha256": "b296e9004061ca333237dbdcdfa7c13c49d2c3d997cd81f9b6227f807e31d4a0"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=45000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 37498006,
+   "sha256": "dd643cae7e565aa46269e005e0adf58a9d29361761fa7ae06c1658cb05f4fd03"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=50000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 16452158,
+   "sha256": "0e81eb70d1d212dac69a56da07a58ad57d8b5763ebb93ff7335763885cb51c61"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=55000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 36825175,
+   "sha256": "4ef88c4cb31ea0c0e110578cdd495eaa0d82a8b4df1dc738a0c21e94bfe35ed9"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=60000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 58585132,
+   "sha256": "ce701e060045fc3417bee42029f8bcbf8881358b6b7212df19a62a25c39baf9a"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=65000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 9990008,
+   "sha256": "8f05020625041ba95426008d8a79b4730c63d3b6678766e39cb9c7f4f90854dd"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=70000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 16164115,
+   "sha256": "545379ecb413ad998277594f393cfacddadac977a157963d18d3515a0ad49f6e"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=75000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 11603915,
+   "sha256": "eaa0419aa52768e1bfaf4cb9f5f02c14e3bbc1b215f58552e96f52e7f0bf5e39"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=80000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 9751607,
+   "sha256": "51fd5d70bf3549fe4bbaf207b545c710bfa106e6feef7a96bafd355c0613839c"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=85000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 10122859,
+   "sha256": "bd769b9a4e5b9e96a84b14c6fe614c1bdf8059cfb73b28f42533964f7c0cf4a0"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=90000&maxFeatures=5000",
+   "http": 200,
+   "features": 5000,
+   "bytes": 55282959,
+   "sha256": "20bedd50e2e0e1e83e733e770c168c8e735a637b69d83103565b4f011bf29e78"
+  },
+  {
+   "url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=btk_2020&outputFormat=GeoJSON&srsName=EPSG:2056&sortBy=objectid&startIndex=95000&maxFeatures=5000",
+   "http": 200,
+   "features": 1178,
+   "bytes": 3259476,
+   "sha256": "864d9e8c62fc30f40c9d78609ca42b5b564e7d6259125e2344a6b653c91ce1d8"
+  }
+ ],
+ "combined_sha256_of_concatenated_pages": "b9a068d83a0e4807ce917ef43a5f725c500ce4b36551fe90019baa7c404d8746",
+ "total_features": 96178
+}
