@@ -73,6 +73,7 @@ try {
   let pendingFocus = null;
   const render = () => { pendingFocus = focusKey(); renderInner(); if (stage.kind !== 'map') { restoreFocus(pendingFocus); pendingFocus = null; } announce(pick(stage.label,lang)); };
   const renderInner = () => {
+    $('view').inert = false; $('view').removeAttribute('aria-busy'); // a map load that was abandoned by a step change must not leave the view dead
     applyStatic(); renderSteps(); renderPlaces();
     const site = lang==='de' ? {...place.profile.site,...(overlay?.places?.[place.key]?.site??{})} : place.profile.site;
     $('place-panel').hidden = !stage.needs_place;
@@ -128,19 +129,20 @@ try {
     if (mapMode==='table' && st.sel && tablePages[st.sel.layer]===undefined) tablePages[st.sel.layer] = Math.floor(st.sel.index/50); // open the page that holds the selected object
     // while a city or layer loads, the old view stays visible but cannot be used (inert) so a stale click cannot change the state
     if (!$('view').querySelector('.mapview')) $('view').innerHTML = `<p class="muted">${esc(ui('loading'))}</p>`;
-    else { $('view').inert = true; $('view').setAttribute('aria-busy','true'); announce(ui('loading')); }
+
     try {
     const need = [...st.layers.map(id=>[st.city,id]), ...(st.compare?(st.layersCompare??[]).map(id=>[st.compare,id]):[]), ...(st.sel?[[Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===st.sel.layer)),st.sel.layer]]:[])];
+    if (need.some(([c,id])=>!geoCache.has(id)) && $('view').querySelector('.mapview')) { $('view').inert = true; $('view').setAttribute('aria-busy','true'); announce(ui('loading')); }
     await Promise.all(need.map(([c,id])=>loadGeo(c,id)));
     if (token !== mapToken || stage.kind!=='map') return;
     $('view').innerHTML = mapView({lang,ui,packs,geoById:geoCache,state:st,mode:mapMode,tablePages,measureIds:measureIds(),record:selRecord(),places:data.places.map(p=>({key:p.key,name:lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name,coordinates:p.profile.site.coordinates}))});
     $('view').inert = false; $('view').removeAttribute('aria-busy');
-    bindMap(); markSelected(); restoreFocus(focusAt); announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
+    bindMap(); markSelected(); { const a = document.activeElement; if (!a || a === document.body || $('view').contains(a)) restoreFocus(focusAt); } announce((announceFn && announceFn()) || `${pick(packs[st.city].name,lang)} · ${pick(stage.label,lang)}`);
     } catch (error) { console.error(error); $('view').inert = false; $('view').removeAttribute('aria-busy'); if (token === mapToken) { $('view').innerHTML = `<p class="maperror" role="alert">${esc(ui('map_layer_failed'))}</p>`; } }
   }
   const markSelected = () => { for (const el of document.querySelectorAll('.mapsvg .sel')) el.classList.remove('sel'); const s=mapState.sel; if (s) document.querySelector(`.mapsvg [data-layer="${CSS.escape(s.layer)}"][data-f="${s.index}"]`)?.classList.add('sel'); };
-  const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); bindGoto(); syncUrl(); };
-  const pickFeature = (layer,index) => { const city = layer.split('.')[0]; if (city !== mapState.city && city !== mapState.compare) return; mapState = {...mapState, sel:{layer,index}}; showInspect(); };
+  const showInspect = () => { $('inspect').outerHTML = inspectPanel({lang,ui,record:selRecord(),measureIds:measureIds()}); markSelected(); for (const tr of document.querySelectorAll('tr.sel-row')) { tr.classList.remove('sel-row'); tr.removeAttribute('aria-current'); } if (mapState.sel) { const tr = document.querySelector(`[data-pick="${CSS.escape(mapState.sel.layer)}:${mapState.sel.index}"]`)?.closest('tr'); if (tr) { tr.classList.add('sel-row'); tr.setAttribute('aria-current','true'); } } bindGoto(); syncUrl(); };
+  const pickFeature = (layer,index) => { const city = layer.split('.')[0]; if (city !== mapState.city && city !== mapState.compare) return; mapState = {...mapState, sel:{layer,index}}; tablePages[layer] = Math.floor(index/50); showInspect(); };
   const briefArgs = () => { const sel = mapState.sel; if (!sel) return null; const city = Object.keys(packs).find(c=>packs[c].layers.some(l=>l.id===sel.layer)); const layer = packs[city].layers.find(l=>l.id===sel.layer); const feature = geoCache.get(sel.layer)?.features?.[sel.index]; const profile = content.cities.find(c=>c.id===city); return feature ? {pack:packs[city],profile,layer,index:sel.index,feature,lang,matrix:content.matrix,measurements:content.measurements} : null; };
   const bindBrief = () => { const dl = (name,type,text)=>{const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     if ($('brief-json')) $('brief-json').onclick = () => { const a=briefArgs(); if(a) dl(`${a.pack.city}-map-brief.${lang}.json`,'application/json',JSON.stringify(mapBriefRecord(a),null,2)+'\n'); };

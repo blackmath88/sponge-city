@@ -202,11 +202,23 @@ await check('table paging: the page holding the selected object opens with its r
   assert(/Seite 7 von 7/.test(await page.innerText('[data-table-nav]')), 'reached the last page');
   assert(await page.evaluate(() => document.activeElement?.getAttribute('data-table-page')?.endsWith(':1')), 'focus stays on the Next button at the last page');
   assert(await page.getAttribute('[data-table-page$=":1"]', 'aria-disabled') === 'true', 'Next is aria-disabled at the end');
-  assert(/Seite 7 von 7/.test(await page.innerText('#live')) || /Basel/.test(await page.innerText('#live')), 'status line updated');
+  assert(/Seite 7 von 7/.test(await page.innerText('#live')), 'the page change is announced in the status line');
   await page.route('**/content/maps/berlin/*.geojson', async r => { await new Promise(x => setTimeout(x, 1500)); r.continue(); });
   await page.click('[data-map-city="berlin"]'); await page.waitForTimeout(150);
   assert(await page.evaluate(() => document.getElementById('view').inert === true), 'the old view is inert while Berlin loads');
-  await settle(page, 2500); assert(await page.evaluate(() => document.getElementById('view').inert === false), 'view usable again'); await ctx.close();
+  await settle(page, 2500); assert(await page.evaluate(() => document.getElementById('view').inert === false), 'view usable again');
+  // leaving the map during a pending load must not leave the next step inert
+  await page.route('**/content/maps/zurich/*.geojson', async r => { await new Promise(x => setTimeout(x, 1500)); r.continue(); });
+  await page.click('[data-map-city="zurich"]'); await page.waitForTimeout(150); await page.click('[data-stage="concept"]'); await settle(page, 2500);
+  assert(await page.evaluate(() => document.getElementById('view').inert === false && !document.getElementById('view').hasAttribute('aria-busy')), 'a step change during a map load leaves the view usable');
+  assert(await page.evaluate(() => { const b = document.querySelector('#view [data-situation]'); b?.focus(); return document.activeElement === b; }), 'a control of the new step can be focused');
+  // moving focus elsewhere during a load is respected
+  await page.click('[data-stage="map"]'); await settle(page, 1800);
+  await page.click('[data-map-city="berlin"]'); await page.focus('button[data-lang="en"]'); await settle(page, 3000);
+  assert(await page.evaluate(() => document.activeElement?.dataset?.lang) === 'en', 'focus is not pulled back after a load once the user moved on');
+  // picking a row in the table marks it
+  await page.click('[data-map-mode="table"]'); await settle(page, 600); await page.click('[data-pick]'); await settle(page, 300);
+  assert(await page.$('tr.sel-row[aria-current="true"]'), 'a picked table row is marked at once'); await ctx.close();
 });
 
 await check('keyboard focus survives a re-render (layer toggle, city button, mode button) and the view is not a live region', async () => {

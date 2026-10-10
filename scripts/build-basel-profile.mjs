@@ -14,8 +14,8 @@ for (const i of facts.interventions) for (const f of i.facts) byFact.set(f.id, f
 const ind = new Map(charter.indicators.map(i => [i.id, i]));
 const mDe = new Map(measurements.indicators.map(i => [i.id, i]));
 const dePractice = new Map(practice.cases.map(c => [c.fact, c.claim_de]));
-const retrieved = facts.updated;
-const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved, quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement', ...(SOURCE_QUOTES[id] ?? {}) }]; };
+const retrieved = '2026-10-03'; // when the repository statements were collected; only SOURCE_QUOTES entries were re-fetched (2026-10-10)
+const factSource = id => { const f = byFact.get(id); return [{ title: f.source.label, url: f.source.url, publisher: f.source.label, retrieved, quote: f.claim, quote_lang: 'en', quote_basis: 'repository-statement', ...(SOURCE_QUOTES[id] ? { ...SOURCE_QUOTES[id], retrieved: '2026-10-10' } : {}) }]; };
 // Verbatim source sentences verified on 2026-10-10 (data/verification/basel-claims.json) replace the repository statement as the entry's quote.
 const SOURCE_QUOTES = { engelgasse: { quote: 'Zum Abschluss der Bauarbeiten wird die Stadtgärtnerei in den fünfzig neuen und grosszügigen Baumrabatten je einen Jungbaum anpflanzen.', quote_lang: 'de', quote_basis: 'source-verbatim' } };
 const entries = [];
