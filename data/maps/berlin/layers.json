@@ -88,95 +88,95 @@
      {
       "value": "≤ 5",
       "label": {
-       "de": "Versiegelungsgrad ≤ 5 %",
-       "en": "Degree of sealing ≤ 5 %"
+       "de": "≤ 5 % versiegelt",
+       "en": "≤ 5 % sealed"
       },
       "color": "#BCFF79"
      },
      {
       "value": "> 5–10",
       "label": {
-       "de": "Versiegelungsgrad > 5–10 %",
-       "en": "Degree of sealing > 5–10 %"
+       "de": "> 5–10 % versiegelt",
+       "en": "> 5–10 % sealed"
       },
       "color": "#FFFF80"
      },
      {
       "value": "> 10–20",
       "label": {
-       "de": "Versiegelungsgrad > 10–20 %",
-       "en": "Degree of sealing > 10–20 %"
+       "de": "> 10–20 % versiegelt",
+       "en": "> 10–20 % sealed"
       },
       "color": "#FFFF00"
      },
      {
       "value": "> 20–30",
       "label": {
-       "de": "Versiegelungsgrad > 20–30 %",
-       "en": "Degree of sealing > 20–30 %"
+       "de": "> 20–30 % versiegelt",
+       "en": "> 20–30 % sealed"
       },
       "color": "#FFD0A2"
      },
      {
       "value": "> 30–40",
       "label": {
-       "de": "Versiegelungsgrad > 30–40 %",
-       "en": "Degree of sealing > 30–40 %"
+       "de": "> 30–40 % versiegelt",
+       "en": "> 30–40 % sealed"
       },
       "color": "#DCA603"
      },
      {
       "value": "> 40–50",
       "label": {
-       "de": "Versiegelungsgrad > 40–50 %",
-       "en": "Degree of sealing > 40–50 %"
+       "de": "> 40–50 % versiegelt",
+       "en": "> 40–50 % sealed"
       },
       "color": "#FF8000"
      },
      {
       "value": "> 50–60",
       "label": {
-       "de": "Versiegelungsgrad > 50–60 %",
-       "en": "Degree of sealing > 50–60 %"
+       "de": "> 50–60 % versiegelt",
+       "en": "> 50–60 % sealed"
       },
       "color": "#F94F06"
      },
      {
       "value": "> 60–70",
       "label": {
-       "de": "Versiegelungsgrad > 60–70 %",
-       "en": "Degree of sealing > 60–70 %"
+       "de": "> 60–70 % versiegelt",
+       "en": "> 60–70 % sealed"
       },
       "color": "#FF0000"
      },
      {
       "value": "> 70–80",
       "label": {
-       "de": "Versiegelungsgrad > 70–80 %",
-       "en": "Degree of sealing > 70–80 %"
+       "de": "> 70–80 % versiegelt",
+       "en": "> 70–80 % sealed"
       },
       "color": "#BF00BF"
      },
      {
       "value": "> 80–90",
       "label": {
-       "de": "Versiegelungsgrad > 80–90 %",
-       "en": "Degree of sealing > 80–90 %"
+       "de": "> 80–90 % versiegelt",
+       "en": "> 80–90 % sealed"
       },
       "color": "#800080"
      },
      {
       "value": "> 90–100",
       "label": {
-       "de": "Versiegelungsgrad > 90–100 %",
-       "en": "Degree of sealing > 90–100 %"
+       "de": "> 90–100 % versiegelt",
+       "en": "> 90–100 % sealed"
       },
       "color": "#000099"
      },
      {
       "value": "keine Angabe",
       "label": {
-       "de": "Keine Angabe (Versiegelungsgrad fehlt)",
+       "de": "Keine Angabe",
        "en": "No value given"
       },
       "color": "#cccccc"
@@ -223,7 +223,7 @@
      {
       "value": "extensiv",
       "label": {
-       "de": "Extensive Begrünung",
+       "de": "Extensive Dachbegrünung",
        "en": "Extensive green roof"
       },
       "color": "#FFFF80"
@@ -231,7 +231,7 @@
      {
       "value": "intensiv",
       "label": {
-       "de": "Intensive Begrünung",
+       "de": "Intensive Dachbegrünung",
        "en": "Intensive green roof"
       },
       "color": "#BCFF79"
@@ -347,7 +347,7 @@
       "value": "Laubbäume",
       "label": {
        "de": "Laubbäume",
-       "en": "Laubbäume (publisher group, German)"
+       "en": "Broadleaf trees"
       },
       "color": "#2d6a4f"
      },
@@ -355,7 +355,7 @@
       "value": "Obstbäume",
       "label": {
        "de": "Obstbäume",
-       "en": "Obstbäume (publisher group, German)"
+       "en": "Fruit trees"
       },
       "color": "#bc6c25"
      },
@@ -363,7 +363,7 @@
       "value": "Großsträucher",
       "label": {
        "de": "Grosssträucher",
-       "en": "Grosssträucher (publisher group, German)"
+       "en": "Large shrubs"
       },
       "color": "#74a57f"
      }

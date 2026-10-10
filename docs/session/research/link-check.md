@@ -30,9 +30,13 @@ Checked 2026-10-10 with a plain GET (redirects followed). A non-200 status is a 
 | copenhagen | copenhagen.green.01 | licence | HTTP 200 | https://creativecommons.org/licenses/by/4.0/ |
 | copenhagen | copenhagen.trees.01 | source | HTTP 200 | https://admin.opendata.dk/dataset/bevaringsvaerdige-traeer |
 | copenhagen | copenhagen.trees.01 | licence | HTTP 200 | https://creativecommons.org/licenses/by/4.0/ |
-| zurich | zurich.heat.01 | source | HTTP 500 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Fachplanung_Hitzeminderung_OGD (typename fph_massnahmengebiete_ogd) |
+| zurich | zurich.heat.01 | source | HTTP 200 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Fachplanung_Hitzeminderung_OGD?service=WFS&request=GetCapabilities |
 | zurich | zurich.heat.01 | licence | HTTP 200 | https://data.stadt-zuerich.ch/dataset/geo_fachplanung_hitzeminderung_ogd |
-| zurich | zurich.trees.01 | source | HTTP 500 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Baumkataster (typename baumkataster_baumstandorte) |
+| zurich | zurich.trees.01 | source | HTTP 200 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Baumkataster?service=WFS&request=GetCapabilities |
 | zurich | zurich.trees.01 | licence | HTTP 200 | https://data.stadt-zuerich.ch/dataset/geo_baumkataster |
-| zurich | zurich.boundary.01 | source | HTTP 500 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise (typename adm_stadtkreise_v) |
+| zurich | zurich.boundary.01 | source | HTTP 200 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise?service=WFS&request=GetCapabilities |
 | zurich | zurich.boundary.01 | licence | HTTP 200 | https://data.stadt-zuerich.ch/dataset/geo_stadtkreise |
+| zurich | zurich.sealing.01 | source | HTTP 200 | https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?service=WFS&request=GetCapabilities |
+| zurich | zurich.sealing.01 | licence | HTTP 200 | https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020 |
+| zurich | zurich.pluvial.01 | source | HTTP 200 | https://maps.zh.ch/wfs/OGDZHWFS?service=WFS&request=GetCapabilities |
+| zurich | zurich.pluvial.01 | licence | HTTP 200 | https://data.stadt-zuerich.ch/dataset/ktzh_oberflaechenabfluss__ogd_ |

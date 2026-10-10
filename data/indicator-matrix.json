@@ -158,23 +158,24 @@
    },
    "zurich": {
     "state": {
-     "exists": "partial",
+     "exists": "yes",
      "basis": "derived",
-     "access": "partial",
-     "derivable": "unknown"
+     "access": "open",
+     "derivable": "yes"
     },
-    "needs": [
-     "request"
-    ],
-    "scale": "unspecified",
+    "needs": [],
+    "scale": "city-wide",
     "entries": [
+     "zurich.context.05",
      "zurich.context.02",
      "zurich.outcomes.03"
     ],
-    "layers": [],
+    "layers": [
+     "zurich.sealing.01"
+    ],
     "note": {
-     "de": "Nur eine Zahl für den Kanton (14 Prozent); für die Stadt wurde keine gefunden.",
-     "en": "Only a canton figure (14 percent); no city figure was found."
+     "de": "Vom Projekt aus der Biotoptypenkartierung 2020 berechnet (28,6 % versiegelt, Wald und Gewässer in der Bezugsfläche), keine amtliche Statistik. Nicht vergleichbar mit der Kantonszahl (14 %) oder mit Basel; die Karte zeigt nur einen Ausschnitt.",
+     "en": "Computed by this project from the 2020 biotope map (28.6 percent sealed, forest and water in the reference area), not an official statistic. Not comparable with the cantonal figure (14 percent) or with Basel; the map shows a window only."
     }
    }
   },
@@ -251,6 +252,7 @@
     "scale": "city-wide",
     "entries": [
      "zurich.measurement.01",
+     "zurich.measurement.05",
      "zurich.outcomes.01",
      "zurich.access.01"
     ],
@@ -412,20 +414,21 @@
     "state": {
      "exists": "yes",
      "basis": "modelled",
-     "access": "partial",
-     "derivable": "unknown"
+     "access": "open",
+     "derivable": "yes"
     },
-    "needs": [
-     "request"
-    ],
-    "scale": "unspecified",
+    "needs": [],
+    "scale": "city-wide",
     "entries": [
-     "zurich.measurement.03"
+     "zurich.measurement.03",
+     "zurich.measurement.06"
     ],
-    "layers": [],
+    "layers": [
+     "zurich.pluvial.01"
+    ],
     "note": {
-     "de": "Kantonale Hinweiskarte, nur als Kartendienst; keine Ebene übernommen.",
-     "en": "Cantonal indication map, map service only; no layer taken over."
+     "de": "Kantonale Modellkarte (CC0, WFS); die Karte zeigt ein 100-jährliches Ereignis in einem Ausschnitt. Gemeldete Überschwemmungen als CSV (beobachtet), Ursache oft unbekannt.",
+     "en": "Cantonal model map (CC0, WFS); the map shows a 100-year event in one window. Reported flooding as CSV (observed), cause often unknown."
     }
    }
   },
@@ -490,22 +493,22 @@
    },
    "zurich": {
     "state": {
-     "exists": "no_public_evidence_found",
-     "basis": "unknown",
-     "access": "unknown",
-     "derivable": "unknown"
+     "exists": "partial",
+     "basis": "observed",
+     "access": "partial",
+     "derivable": "no"
     },
     "needs": [
      "request"
     ],
-    "scale": "unspecified",
+    "scale": "city-wide",
     "entries": [
      "zurich.context.04"
     ],
     "layers": [],
     "note": {
-     "de": "Keine überprüfbare Angabe zum Kanalnetz gefunden.",
-     "en": "No verifiable figure on the sewer system found."
+     "de": "Kennzahlen nur als Text (rund 1000 km, etwa 80 % Mischsystem); eine andere Quelle nennt 1500 km. Kein offenes Netz.",
+     "en": "Figures as text only (about 1,000 km, about 80 percent combined); another source says 1,500 km. No open network data."
     }
    }
   },

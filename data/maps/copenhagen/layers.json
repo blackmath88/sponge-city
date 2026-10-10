@@ -88,48 +88,48 @@
      {
       "value": "Forsinkelsesplads",
       "label": {
-       "de": "Forsinkelsesplads (Rückhalteplatz)",
-       "en": "Forsinkelsesplads (detention square)"
+       "de": "Rückhalteplatz (Forsinkelsesplads)",
+       "en": "Detention square (Forsinkelsesplads)"
       },
       "color": "#2a9d8f"
      },
      {
       "value": "Skybrudsbassin",
       "label": {
-       "de": "Skybrudsbassin (Starkregenbecken)",
-       "en": "Skybrudsbassin (cloudburst basin)"
+       "de": "Starkregenbecken (Skybrudsbassin)",
+       "en": "Cloudburst basin (Skybrudsbassin)"
       },
       "color": "#1d4e89"
      },
      {
       "value": "bassin",
       "label": {
-       "de": "Bassin (Becken)",
-       "en": "Bassin (basin)"
+       "de": "Becken (bassin)",
+       "en": "Basin (bassin)"
       },
       "color": "#4a90c2"
      },
      {
       "value": "Rensning",
       "label": {
-       "de": "Rensning (Reinigung)",
-       "en": "Rensning (treatment)"
+       "de": "Reinigung (Rensning)",
+       "en": "Treatment (Rensning)"
       },
       "color": "#8d6e63"
      },
      {
       "value": "Gårdhaveprojekt",
       "label": {
-       "de": "Gårdhaveprojekt (Hofprojekt)",
-       "en": "Gårdhaveprojekt (courtyard project)"
+       "de": "Hofprojekt (Gårdhaveprojekt)",
+       "en": "Courtyard project (Gårdhaveprojekt)"
       },
       "color": "#7bb661"
      },
      {
       "value": "Uvdielse af åen",
       "label": {
-       "de": "Uvdielse af åen (so veröffentlicht)",
-       "en": "Uvdielse af åen (as published)"
+       "de": "Uvdielse af åen (Schreibweise wie veröffentlicht)",
+       "en": "Uvdielse af åen (spelling as published)"
       },
       "color": "#e9c46a"
      },
@@ -184,40 +184,40 @@
      {
       "value": "Skybrudsledning",
       "label": {
-       "de": "Skybrudsledning (Starkregenleitung)",
-       "en": "Skybrudsledning (cloudburst pipe)"
+       "de": "Starkregenleitung (Skybrudsledning)",
+       "en": "Cloudburst pipe (Skybrudsledning)"
       },
       "color": "#1d4e89"
      },
      {
       "value": "Grønne veje",
       "label": {
-       "de": "Grønne veje (grüne Strassen)",
-       "en": "Grønne veje (green streets)"
+       "de": "Grüne Strassen (Grønne veje)",
+       "en": "Green streets (Grønne veje)"
       },
       "color": "#2d6a4f"
      },
      {
       "value": "Forsinkelsesveje",
       "label": {
-       "de": "Forsinkelsesveje (Rückhaltestrassen)",
-       "en": "Forsinkelsesveje (detention streets)"
+       "de": "Rückhaltestrassen (Forsinkelsesveje)",
+       "en": "Detention streets (Forsinkelsesveje)"
       },
       "color": "#2a9d8f"
      },
      {
       "value": "Skybrudsveje",
       "label": {
-       "de": "Skybrudsveje (Starkregenstrassen)",
-       "en": "Skybrudsveje (cloudburst streets)"
+       "de": "Starkregenstrassen (Skybrudsveje)",
+       "en": "Cloudburst streets (Skybrudsveje)"
       },
       "color": "#e76f51"
      },
      {
       "value": "mix",
       "label": {
-       "de": "Mix",
-       "en": "Mix"
+       "de": "Mischtyp (mix)",
+       "en": "Mixed type (mix)"
       },
       "color": "#9b5de5"
      },
@@ -261,7 +261,7 @@
    "coverage": "Ausschnitt lon 12.5450–12.5850, lat 55.6700–55.6950; 93 Gebäude im Fenster (gesamter Datensatz 2029) / window lon 12.5450–12.5850, lat 55.6700–55.6950; 93 buildings (whole dataset 2029)",
    "source_url": "https://admin.opendata.dk/dataset/gronne-tage",
    "limitations": {
-    "de": "Nur ein Ausschnitt. Aus BBR und Luftbild abgeleitet, nicht vor Ort geprüft; Aufbau und Retention nicht erfasst. Klassen dänisch wie veröffentlicht. Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
+    "de": "Nur ein Ausschnitt. Aus BBR und Luftbild abgeleitet, nicht vor Ort geprüft; Aufbau und Retention nicht erfasst. Klassennamen im Datensatz dänisch (Legende übersetzt). Legendenfarben sind eigene Wahl, nicht Teil der Publisher-Klassen.",
     "en": "Window only. Derived from the building register (BBR) and aerial photos, not field verified; build-up and retention not captured. Classes are Danish as published. Legend colours are our choice; the publisher defines classes only."
    },
    "legend": {
@@ -271,24 +271,24 @@
      {
       "value": "Primært Grønt tag",
       "label": {
-       "de": "Primært grønt tag (primär begrünt)",
-       "en": "Primært grønt tag (primarily green)"
+       "de": "Grünes Dach (Hauptdachkonstruktion)",
+       "en": "Green roof (primary roof construction)"
       },
       "color": "#2d9a4f"
      },
      {
       "value": "Supplerende Grønt tag",
       "label": {
-       "de": "Supplerende grønt tag (ergänzend begrünt)",
-       "en": "Supplerende grønt tag (supplementary green)"
+       "de": "Grünes Dach (ergänzende Dachkonstruktion)",
+       "en": "Green roof (secondary roof construction)"
       },
       "color": "#a3d977"
      },
      {
       "value": "Andet tagkonstuktion",
       "label": {
-       "de": "Andet (anderes Dach, so veröffentlicht)",
-       "en": "Other roof construction (spelling as published)"
+       "de": "Anderes Dach",
+       "en": "Other roof construction"
       },
       "color": "#bdbdbd"
      }
@@ -334,40 +334,40 @@
      {
       "value": "Bevaringsværdigt træ",
       "label": {
-       "de": "Bevaringsværdigt træ (dänisch, wie veröffentlicht)",
-       "en": "Bevaringsværdigt træ (Danish, as published)"
+       "de": "Erhaltenswerter Baum",
+       "en": "Tree worth preserving"
       },
       "color": "#2d6a4f"
      },
      {
       "value": "Bevaringsværdigt træ på vilkår",
       "label": {
-       "de": "Bevaringsværdigt træ på vilkår (dänisch, wie veröffentlicht)",
-       "en": "Bevaringsværdigt træ på vilkår (Danish, as published)"
+       "de": "Erhaltenswerter Baum (unter Bedingungen)",
+       "en": "Tree worth preserving (conditional)"
       },
       "color": "#74a57f"
      },
      {
       "value": "Fældet bevaringsværdigt træ",
       "label": {
-       "de": "Fældet bevaringsværdigt træ (dänisch, wie veröffentlicht)",
-       "en": "Fældet bevaringsværdigt træ (Danish, as published)"
+       "de": "Gefällter erhaltenswerter Baum",
+       "en": "Felled tree that was worth preserving"
       },
       "color": "#bc6c25"
      },
      {
       "value": "Ikke bevaringsværdigt træ",
       "label": {
-       "de": "Ikke bevaringsværdigt træ (dänisch, wie veröffentlicht)",
-       "en": "Ikke bevaringsværdigt træ (Danish, as published)"
+       "de": "Nicht erhaltenswerter Baum",
+       "en": "Tree not worth preserving"
       },
       "color": "#999999"
      },
      {
       "value": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt",
       "label": {
-       "de": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt (dänisch, wie veröffentlicht)",
-       "en": "Træ der kan fældes selv om det lever op til kriterierne for at være bevaringsværdigt (Danish, as published)"
+       "de": "Fällung zulässig, obwohl erhaltenswert",
+       "en": "May be felled although it meets the preservation criteria"
       },
       "color": "#9b5de5"
      }

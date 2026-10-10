@@ -44,8 +44,8 @@
    "id": "zurich.context.02",
    "dimension": "context",
    "text": {
-    "de": "Im Kanton Zürich sind 25 000 Hektaren oder 14 Prozent der Fläche versiegelt (Arealstatistik 2013/18). Das ist ein Kantonswert; für die Stadt Zürich wurde in den gelesenen Quellen kein Wert gefunden.",
-    "en": "In the canton of Zürich 25,000 hectares or 14 percent of the area are sealed (Arealstatistik 2013/18). This is a cantonal value; no figure for the city of Zürich was found in the sources read."
+    "de": "Im Kanton Zürich sind 25 000 Hektaren oder 14 Prozent der Fläche versiegelt (Arealstatistik 2013/18). Das ist ein Kantonswert; ein Stadtwert aus der Biotoptypenkartierung 2020 steht in zurich.context.05 und ist nicht damit vergleichbar.",
+    "en": "In the canton of Zürich 25,000 hectares or 14 percent of the area are sealed (Arealstatistik 2013/18). This is a cantonal value; a city value from the 2020 biotope map is in zurich.context.05 and is not comparable with it."
    },
    "origin": "derived",
    "scope": "unspecified",
@@ -102,14 +102,53 @@
    "id": "zurich.context.04",
    "dimension": "context",
    "text": {
-    "de": "Zur Kanalisation der Stadt (Länge, Anteil Misch- und Trennsystem, Erneuerungsprogramm) wurde in den gelesenen Quellen keine belegbare Angabe gefunden. Eine ERZ-Broschüre (SW_Wasserkreislauf_von_Zuerich_1312.pdf) war unter der gefundenen Adresse nicht abrufbar (HTTP 404); Zahlen aus Suchtreffern wurden nicht übernommen.",
-    "en": "No verifiable figure on the city sewer system (length, share of combined and separate sewers, renewal programme) was found in the sources read. An ERZ brochure (SW_Wasserkreislauf_von_Zuerich_1312.pdf) could not be retrieved at the address found (HTTP 404); figures from search snippets were not adopted."
+    "de": "Die Stadt gibt ihr Kanalnetz mit rund 1000 Kilometern an (davon 104 Kilometer begehbar); das Mischsystem überwiegt mit rund 80 Prozent. Der Umweltbericht 2025 nennt dagegen 1500 Kilometer, ohne den Unterschied zu erklären; offene Geodaten des Netzes wurden nicht gefunden.",
+    "en": "The city gives its sewer network as about 1,000 kilometres (of which 104 kilometres are walkable); the combined system predominates at about 80 percent. The 2025 environmental report instead names 1,500 kilometres without explaining the difference; no open geodata of the network were found."
    },
-   "origin": "unknown",
-   "scope": "unspecified",
-   "evidence_state": "no_public_evidence_found",
-   "measure": null,
-   "sources": []
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "length of the public sewer network (stated by the city, two different figures)",
+    "unit": "km (about 1000 and 1500 as stated)",
+    "method": "statement on city web pages (Entsorgung + Recycling Zürich); survey method not stated",
+    "spatial_scale": "city of Zürich, public network maintained by ERZ",
+    "period": "not stated (pages retrieved 2026-10-10)"
+   },
+   "sources": [
+    {
+     "title": "Die Zürcher Kanalisation",
+     "url": "https://www.stadt-zuerich.ch/artikel/de/klar/siedlungsentwaesserung/kanalisation.html",
+     "publisher": "Stadt Zürich, Entsorgung + Recycling Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Rund 1000 Kilometer umfasst Zürichs Kanalnetz, wobei nur 104 Kilometer eine Höhe von 1,2 Metern bis 5,5 Metern aufweisen, also begehbar sind.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Die Zürcher Kanalisation",
+     "url": "https://www.stadt-zuerich.ch/artikel/de/klar/siedlungsentwaesserung/kanalisation.html",
+     "publisher": "Stadt Zürich, Entsorgung + Recycling Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Der Grund dafür liegt im Mischsystem, das in der Stadt Zürich historisch bedingt mehrheitlich (rund 80 Prozent) Anwendung findet.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Unterhalt Entwässerungsleitungen",
+     "url": "https://www.stadt-zuerich.ch/de/planen-und-bauen/bauberatung-und-dienstleistungen/bauberatung/bauten-anlagen/unterhalt-entwaesserungsleitungen.html",
+     "publisher": "Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "ERZ unterhält ein 1000 Kilometer langes Kanalnetz inklusive aller dazugehörigen Bauwerke und reinigt 36 000 Strassensammler.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Gewässer (Umweltbericht 2025)",
+     "url": "https://www.stadt-zuerich.ch/artikel/de/dossier/2025/umweltbericht/umweltthemen/gewaesser.html",
+     "publisher": "Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Teil des Abwassersystems ist auch das 1500 Kilometer lange Kanalisationsnetz.",
+     "quote_lang": "de"
+    }
+   ]
   },
   {
    "id": "zurich.interventions.01",
@@ -305,7 +344,7 @@
     "topic": "canopy",
     "quantity": "tree canopy cover share (Kronenfläche, area shaded by trees)",
     "unit": "percent (stated as about 15)",
-    "method": "LiDAR surface scanning from federal survey flights, every four years",
+    "method": "LiDAR surface scanning from federal survey flights, every four years; the exact crown-cover threshold is not stated on the page quoted (the city also publishes a 2022 lidar height raster, see zurich.measurement.05), and Basel's quoted source gives no threshold either, so the definitions are not shown to be equal",
     "spatial_scale": "city average as stated (\"über die gesamte Stadt\")",
     "period": "2022"
    },
@@ -360,8 +399,8 @@
    "id": "zurich.measurement.03",
    "dimension": "measurement",
    "text": {
-    "de": "Die Hinweiskarte Oberflächenabfluss des Kantons ist modelliert (Terrainmodell, Niederschlag, Abflussbereitschaft; Ereignisse 30, 100, 300 und 1000 Jahre) und eine Hinweiskarte im Massstab 1:10 000 bis 1:15 000. Innerhalb von Siedlungen nimmt die Zuverlässigkeit ab, die Befunde sind vor Ort zu plausibilisieren.",
-    "en": "The canton's surface-runoff indication map is modelled (terrain model, precipitation, runoff readiness; 30-, 100-, 300- and 1000-year events) and is an indication map at 1:10,000 to 1:15,000. Reliability decreases within settlements and findings must be checked on site."
+    "de": "Die Hinweiskarte Oberflächenabfluss des Kantons ist modelliert (Terrainmodell, Niederschlag, Abflussbereitschaft; Ereignisse 30, 100, 300 und 1000 Jahre) und eine Hinweiskarte im Massstab 1:10 000 bis 1:15 000. Sie ist bei Open Data Zürich als CCZero-Datensatz mit WFS geführt; innerhalb von Siedlungen nimmt die Zuverlässigkeit ab und die Befunde sind vor Ort zu plausibilisieren.",
+    "en": "The canton's surface-runoff indication map is modelled (terrain model, precipitation, runoff readiness; 30-, 100-, 300- and 1000-year events) and is an indication map at 1:10,000 to 1:15,000. It is listed at Open Data Zürich as a CCZero dataset with a WFS; reliability decreases within settlements and findings must be checked on site."
    },
    "origin": "modelled",
    "scope": "unspecified",
@@ -382,6 +421,14 @@
      "publisher": "Kanton Zürich, via opendata.swiss",
      "retrieved": "2026-10-10",
      "quote": "Mit zunehmender Komplexität der Kleinstrukturen (Randsteine, Mauern, etc.) innerhalb von Siedlungen nimmt die Zuverlässigkeit ab.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Oberflächenabfluss (OGD) (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/ktzh_oberflaechenabfluss__ogd_",
+     "publisher": "Kanton Zürich, via Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Lizenz Creative Commons CCZero",
      "quote_lang": "de"
     }
    ]
@@ -476,8 +523,8 @@
    "id": "zurich.outcomes.03",
    "dimension": "outcomes",
    "text": {
-    "de": "Zu Versiegelungsanteil und Fläche begrünter Dächer der Stadt Zürich als Gesamtwert wurde in den gelesenen Quellen keine Angabe gefunden; nur der Kantonswert von 14 Prozent versiegelt liegt vor. Eine Stadtstudie wurde nur als Suchtreffer gesehen und nicht gelesen.",
-    "en": "No citywide figure for the sealed share or the total greened roof area of the city of Zürich was found in the sources read; only the cantonal value of 14 percent sealed is available. A city study was seen only as a search hit and was not read."
+    "de": "Für die Fläche begrünter Dächer der Stadt Zürich wurde kein Gesamtwert und kein Dachkataster in offenen Daten gefunden; die Biotoptypenkartierung 2020 kartiert nur 25 Flachdach-Polygone (rund 0,5 Hektaren) und ist kein Gründachinventar. Ein veröffentlichter Versiegelungswert der Stadt wurde ebenfalls nicht gefunden; der selbst berechnete Wert steht in zurich.context.05.",
+    "en": "No total for the greened roof area of the city of Zürich and no roof register were found in open data; the 2020 biotope map maps only 25 flat-roof polygons (about 0.5 hectares) and is not a green-roof inventory. A published sealing value of the city was likewise not found; the self-computed value is in zurich.context.05."
    },
    "origin": "unknown",
    "scope": "unspecified",
@@ -519,6 +566,125 @@
    "evidence_state": "unknown",
    "measure": null,
    "sources": []
+  },
+  {
+   "id": "zurich.context.05",
+   "dimension": "context",
+   "text": {
+    "de": "Nach unserer Berechnung aus der Biotoptypenkartierung 2020 (Attribut Versiegelung) sind 28,6 Prozent der kartierten Stadtfläche von rund 91,8 km2 versiegelt, weitere 4,7 Prozent teilweise versiegelt. Das ist keine amtliche Statistik der Stadt; Wald (rund 21 km2) und Gewässer (rund 5 km2) sind im Nenner enthalten.",
+    "en": "By our computation from the 2020 biotope map (attribute Versiegelung), 28.6 percent of the mapped city area of about 91.8 km2 is sealed and a further 4.7 percent partly sealed. This is not an official city statistic; forest (about 21 km2) and water (about 5 km2) are in the denominator."
+   },
+   "origin": "derived",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "topic": "sealing",
+    "quantity": "share of mapped city area classed 'versiegelt' (partly sealed 4.7 percent, unknown 1.1 percent reported separately)",
+    "unit": "%",
+    "method": "planar polygon area (EPSG:2056) summed per attribute VERSIEGELUNG of the Biotoptypenkartierung 2020 (WFS btk_2020, 96,178 polygons, 11 without geometry); the publisher defines the attribute as impairment of the natural soil function of the biotope type; computed by this project with scripts/maps/zurich.mjs --only=sealstats",
+    "spatial_scale": "City of Zürich, 91.79 km2 mapped (city total 91.88 km2 per BEV580OD5803), including forest and water bodies",
+    "period": "biotope mapping state 2020 (Open Data record dated 18.01.2024)"
+   },
+   "sources": [
+    {
+     "title": "Biotoptypenkartierung 2020 (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020",
+     "publisher": "Stadt Zürich, GIS-Zentrum / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Flächendeckende Kartierung der Biotoptypen der Stadt Zürich",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Biotoptypenkartierung 2020 (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020",
+     "publisher": "Stadt Zürich, GIS-Zentrum / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Angabe zur Beeinträchtigung der natürlichen Bodenfunktion des Biotoptyps: unversiegelt teilweise versiegelt versiegelt unbekannt.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Fläche nach Bodenbedeckungsart und unterschiedlichen räumlichen Ausprägungen (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/bev_jahr_flaechen_bodenbedeckungsart_od5803",
+     "publisher": "Stadt Zürich, Statistik Stadt Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "In diesem Datensatz wird die Fläche nach Bodenbedeckungsart als Zeitreihe angeboten, nämlich nach Stadtkreis, nach Stadquartier, nach gesamter Stadt, pro Gesamtfläche, pro Landfläche ohne Wald und pro Siedlungsfläche.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.05",
+   "dimension": "measurement",
+   "text": {
+    "de": "Die Stadt veröffentlicht die Baumhöhen 2022 als Lidar-Höhenraster (Vegetation über 3 m, 50-cm-Raster, höchste Vegetationshöhe je Zelle) \"für die Kronenbedeckung\" als CCZero-Datensatz. Ein daraus berechneter Kronenanteil ist auf der Datensatzseite nicht genannt; die Rasterdatei war hier nicht abrufbar.",
+    "en": "The city publishes the 2022 tree heights as a lidar height raster (vegetation above 3 m, 50 cm grid, highest vegetation height per cell) used \"for crown cover\" as a CCZero dataset. A crown share computed from it is not stated on the dataset page; the raster file could not be downloaded here."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": null,
+   "sources": [
+    {
+     "title": "Baumhöhen 2022 (CHM aus Lidar) (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_baumhoehen_2022__chm_aus_lidar_",
+     "publisher": "Stadt Zürich, GIS-Zentrum / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Der Datensatz wird vorrangig zur Ermittlung des Baumvolumens der Stadt Zürich und für die Kronenbedeckung verwendet.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Baumhöhen 2022 (CHM aus Lidar) (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_baumhoehen_2022__chm_aus_lidar_",
+     "publisher": "Stadt Zürich, GIS-Zentrum / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "LAS-Code 5: Vegetation >3m",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Baumhöhen 2022 (CHM aus Lidar) (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/geo_baumhoehen_2022__chm_aus_lidar_",
+     "publisher": "Stadt Zürich, GIS-Zentrum / Open Data Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Es wurde ein Raster mit 50 cm Auslösung erstellt und die höchste Vegetationshöhe pro Zelle verwendet.",
+     "quote_lang": "de"
+    }
+   ]
+  },
+  {
+   "id": "zurich.measurement.06",
+   "dimension": "measurement",
+   "text": {
+    "de": "Open Data Zürich führt Überschwemmungsmeldungen an Schutz & Rettung und ERZ von 1976 bis 2025 (3684 Meldungen in 2496 Zeilen nach Zählung des Projekts); die Ursache ist sehr oft unbekannt. Die Zahlen hängen vom Meldeverhalten ab und sind kein Mass für Starkregen oder Kanalkapazität.",
+    "en": "Open Data Zürich lists flood reports received by Schutz & Rettung and ERZ from 1976 to 2025 (3,684 reports in 2,496 rows by this project's count); the cause is very often unknown. The numbers depend on reporting behaviour and are not a measure of heavy rain or sewer capacity."
+   },
+   "origin": "observed",
+   "scope": "city-wide",
+   "evidence_state": "found",
+   "measure": {
+    "quantity": "flood reports per event date and statistical zone (stznr)",
+    "unit": "reports",
+    "method": "reports received by Schutz & Rettung Zürich and Entsorgung + Recycling Zürich; cause very often unknown (dataset description)",
+    "spatial_scale": "city of Zürich, 211 distinct statistical zones (stznr: zone where the event took place)",
+    "period": "1976-06-10 to 2025-11-09"
+   },
+   "sources": [
+    {
+     "title": "Überschwemmungsmeldungen (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/erz_ent_ueberschwemmungsmeldungen",
+     "publisher": "Stadt Zürich, Entsorgung + Recycling Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Der Datensatz umfasst Übrschwemmungsmeldungen in der Stadt Zürich, die bei Schutz & Rettung Zürich sowie Entsorgung & Recycling Zürich eingehen.",
+     "quote_lang": "de"
+    },
+    {
+     "title": "Überschwemmungsmeldungen (Open Data Zürich)",
+     "url": "https://data.stadt-zuerich.ch/dataset/erz_ent_ueberschwemmungsmeldungen",
+     "publisher": "Stadt Zürich, Entsorgung + Recycling Zürich",
+     "retrieved": "2026-10-10",
+     "quote": "Sehr oft ist die Ursache unbekannt.",
+     "quote_lang": "de"
+    }
+   ]
   }
  ],
  "rubric": {

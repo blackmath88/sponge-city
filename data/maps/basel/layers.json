@@ -88,88 +88,88 @@
      {
       "value": "Gebaeude.Gebaeude",
       "label": {
-       "de": "Gebaeude · Gebaeude",
-       "en": "Gebaeude · Gebaeude (publisher class, German)"
+       "de": "Gebäude",
+       "en": "Building"
       },
       "color": "#7a7a7a"
      },
      {
       "value": "befestigt.Strasse_Weg",
       "label": {
-       "de": "befestigt · Strasse Weg",
-       "en": "befestigt · Strasse Weg (publisher class, German)"
+       "de": "Strasse/Weg (befestigt)",
+       "en": "Road/path (paved)"
       },
       "color": "#b5651d"
      },
      {
       "value": "befestigt.Trottoir",
       "label": {
-       "de": "befestigt · Trottoir",
-       "en": "befestigt · Trottoir (publisher class, German)"
+       "de": "Trottoir (befestigt)",
+       "en": "Footway (paved)"
       },
       "color": "#b5651d"
      },
      {
       "value": "befestigt.Verkehrsinsel",
       "label": {
-       "de": "befestigt · Verkehrsinsel",
-       "en": "befestigt · Verkehrsinsel (publisher class, German)"
+       "de": "Verkehrsinsel (befestigt)",
+       "en": "Traffic island (paved)"
       },
       "color": "#b5651d"
      },
      {
       "value": "befestigt.Wasserbecken",
       "label": {
-       "de": "befestigt · Wasserbecken",
-       "en": "befestigt · Wasserbecken (publisher class, German)"
+       "de": "Wasserbecken (befestigt)",
+       "en": "Water basin (paved)"
       },
       "color": "#b5651d"
      },
      {
       "value": "befestigt.uebrige_befestigte.Sportanlage_befestigt",
       "label": {
-       "de": "befestigt · uebrige befestigte · Sportanlage befestigt",
-       "en": "befestigt · uebrige befestigte · Sportanlage befestigt (publisher class, German)"
+       "de": "Sportanlage (befestigt)",
+       "en": "Sports facility (paved)"
       },
       "color": "#b5651d"
      },
      {
       "value": "befestigt.uebrige_befestigte.uebrige_befestigte",
       "label": {
-       "de": "befestigt · uebrige befestigte · uebrige befestigte",
-       "en": "befestigt · uebrige befestigte · uebrige befestigte (publisher class, German)"
+       "de": "Übrige befestigte Fläche",
+       "en": "Other paved area"
       },
       "color": "#b5651d"
      },
      {
       "value": "humusiert.Gartenanlage.Gartenanlage",
       "label": {
-       "de": "humusiert · Gartenanlage · Gartenanlage",
-       "en": "humusiert · Gartenanlage · Gartenanlage (publisher class, German)"
+       "de": "Gartenanlage (humusiert)",
+       "en": "Garden (humus-covered)"
       },
       "color": "#7bb661"
      },
      {
       "value": "humusiert.Gartenanlage.Parkanlage_Spielplatz",
       "label": {
-       "de": "humusiert · Gartenanlage · Parkanlage Spielplatz",
-       "en": "humusiert · Gartenanlage · Parkanlage Spielplatz (publisher class, German)"
+       "de": "Park/Spielplatz (humusiert)",
+       "en": "Park or playground (humus-covered)"
       },
       "color": "#7bb661"
      },
      {
       "value": "humusiert.uebrige_humusierte.Gewaesservorland_humusiert",
       "label": {
-       "de": "humusiert · uebrige humusierte · Gewaesservorland humusiert",
-       "en": "humusiert · uebrige humusierte · Gewaesservorland humusiert (publisher class, German)"
+       "de": "Gewässervorland (humusiert)",
+       "en": "Waterside land (humus-covered)"
       },
       "color": "#7bb661"
      },
      {
       "value": "humusiert.uebrige_humusierte.uebrige_humusierte",
       "label": {
-       "de": "humusiert · uebrige humusierte · uebrige humusierte",
-       "en": "humusiert · uebrige humusierte · uebrige humusierte (publisher class, German)"
+       "de": "Übrige humusierte Fläche",
+       "en": "Other humus-covered area"
       },
       "color": "#7bb661"
      }
@@ -214,7 +214,7 @@
       "value": "Strassenbäume",
       "label": {
        "de": "Strassenbäume",
-       "en": "Strassenbäume (publisher group, German)"
+       "en": "Street trees"
       },
       "color": "#2d6a4f"
      },
@@ -222,7 +222,7 @@
       "value": "Öffentliche Grünflächen",
       "label": {
        "de": "Öffentliche Grünflächen",
-       "en": "Öffentliche Grünflächen (publisher group, German)"
+       "en": "Public green spaces"
       },
       "color": "#74a57f"
      },
@@ -230,15 +230,15 @@
       "value": "Schul- und Kindergartenareal",
       "label": {
        "de": "Schul- und Kindergartenareal",
-       "en": "Schul- und Kindergartenareal (publisher group, German)"
+       "en": "School and kindergarten grounds"
       },
       "color": "#a3b18a"
      },
      {
       "value": "Privatbäume gepflegt durch STG",
       "label": {
-       "de": "Privatbäume gepflegt durch STG",
-       "en": "Privatbäume gepflegt durch STG (publisher group, German)"
+       "de": "Privatbäume (von der Stadtgärtnerei gepflegt)",
+       "en": "Private trees (maintained by the city gardens department)"
       },
       "color": "#588157"
      }

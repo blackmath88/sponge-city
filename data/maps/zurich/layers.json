@@ -25,13 +25,13 @@
    },
    "file": "zurich.heat.01.geojson",
    "origin": "modelled",
-   "method": "Drei Massnahmengebiete, hergeleitet aus der bioklimatischen Belastung für Tag und Nacht (Klimaanalyse: Planhinweiskarten, Kanton Zürich Baudirektion, 2018). Geometrie vereinfacht (Douglas-Peucker, ca. 6 m).",
+   "method": "Drei Massnahmengebiete, hergeleitet aus der bioklimatischen Belastung für Tag und Nacht (Klimaanalyse: Planhinweiskarten, Kanton Zürich Baudirektion, 2018). Geometrie vereinfacht (Douglas-Peucker, ca. 6 m). (WFS typename fph_massnahmengebiete_ogd)",
    "unit": "categorical class (MG 1, MG 2, MG 3)",
    "spatial_scale": "polygons across the city",
    "temporal": "Dataset updated 14.06.2024; based on 2018 cantonal climate maps",
    "coverage": "Stadt Zürich (174 polygons)",
    "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_fachplanung_hitzeminderung_ogd",
-   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Fachplanung_Hitzeminderung_OGD (typename fph_massnahmengebiete_ogd)",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Fachplanung_Hitzeminderung_OGD?service=WFS&request=GetCapabilities",
    "attribution": "Stadt Zürich, Grün Stadt Zürich – Fachplanung Hitzeminderung OGD (CCZero)",
    "limitations": {
     "de": "Modellbasierte Planungsgrundlage (Konzeptebene), keine Messung; Klassen sind keine Temperaturwerte und nicht mit Klassen anderer Städte gleichzusetzen. Basis sind die kantonalen Klimakarten von 2018.",
@@ -86,13 +86,13 @@
    },
    "file": "zurich.trees.01.geojson",
    "origin": "observed",
-   "method": "Baumstandorte aus dem Baumkataster der Stadt Zürich (WFS-Abfrage mit Rechteck, max. 1500 Objekte); nur vier Attribute behalten.",
+   "method": "Baumstandorte aus dem Baumkataster der Stadt Zürich (WFS-Abfrage mit Rechteck, max. 1500 Objekte); nur vier Attribute behalten. (WFS typename baumkataster_baumstandorte)",
    "unit": "tree points (crown diameter in m as recorded)",
    "spatial_scale": "individual trees",
    "temporal": "Open Data record updated 30.08.2026 (continuous maintenance); fetched 2026-10-10",
    "coverage": "Rechteck 8.510,47.382 bis 8.522,47.390 (Raum Hardplatz); 745 Bäume. Nicht stadtweit.",
    "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_baumkataster",
-   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Baumkataster (typename baumkataster_baumstandorte)",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Baumkataster?service=WFS&request=GetCapabilities",
    "attribution": "Stadt Zürich, Grün Stadt Zürich – Baumkataster (CCZero)",
    "limitations": {
     "de": "Kleiner Ausschnitt, nicht repräsentativ für die Stadt. Der Baumkataster erfasst städtische Bäume im Strassenraum sowie ausgewählte Anlagen und private Bäume, nicht alle Bäume; er ist keine Kronenflächenkarte.",
@@ -148,7 +148,7 @@
    "temporal": "Open Data record updated 08.10.2026",
    "coverage": "Stadt Zürich (12 Kreise)",
    "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_stadtkreise",
-   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise (typename adm_stadtkreise_v)",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Stadtkreise?service=WFS&request=GetCapabilities",
    "attribution": "Stadt Zürich, Geomatik + Vermessung – Stadtkreise (CCZero)",
    "limitations": {
     "de": "Verwaltungsgrenzen als Orientierung; sagen nichts über Schwammstadt-Eignung aus.",
@@ -172,28 +172,235 @@
     "knr"
    ],
    "measure_topic": null
+  },
+  {
+   "kind": "geojson-snapshot",
+   "tiles": null,
+   "retrieved": "2026-10-10",
+   "publisher": "Stadt Zürich, GIS-Zentrum / Grün Stadt Zürich (Open Data Zürich)",
+   "licence": "Creative Commons CCZero (as stated on the Open Data Zürich dataset page; opendata.swiss states terms_open for the Stadt Zürich records)",
+   "id": "zurich.sealing.01",
+   "theme": "sealing",
+   "title": {
+    "de": "Biotoptypenkartierung 2020: Versiegelung (Ausschnitt Raum Hardplatz)",
+    "en": "Biotope map 2020: sealing (extract around Hardplatz)"
+   },
+   "file": "zurich.sealing.01.geojson",
+   "origin": "observed",
+   "method": "Flächendeckende Kartierung der Biotoptypen der Stadt Zürich (Stand 2020, WFS btk_2020); Attribut VERSIEGELUNG = \"Angabe zur Beeinträchtigung der natürlichen Bodenfunktion des Biotoptyps\" (unversiegelt, teilweise versiegelt, versiegelt, unbekannt). Polygone am Ausschnitt abgeschnitten und vereinfacht (ca. 4 m); nur zwei Attribute behalten.",
+   "unit": "categorical class (unversiegelt, teilweise, versiegelt, unbekannt)",
+   "spatial_scale": "mapped biotope polygons",
+   "temporal": "Biotope mapping state 2020; Open Data record dated 18.01.2024; fetched 2026-10-10",
+   "coverage": "Rechteck 8.510,47.382 bis 8.522,47.390 (Raum Hardplatz); 966 Polygone schneiden das Rechteck, 727 nach Zuschnitt und Vereinfachung gezeigt (sehr kleine Polygone entfallen). Nicht stadtweit.",
+   "licence_url": "https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020",
+   "source_url": "https://www.ogd.stadt-zuerich.ch/wfs/geoportal/Biotoptypenkartierung_2020?service=WFS&request=GetCapabilities",
+   "attribution": "Stadt Zürich, Biotoptypenkartierung 2020 (CCZero)",
+   "limitations": {
+    "de": "Kleiner Ausschnitt, nicht repräsentativ für die Stadt. Die Klasse beschreibt die Beeinträchtigung der Bodenfunktion je Biotoptyp, nicht die gemessene Wasserdurchlässigkeit; kleinste Polygone fehlen im Ausschnitt. Der stadtweite Anteil steht im Profil (zurich.context.05) und ist eine eigene Berechnung.",
+    "en": "Small extract, not representative of the city. The class describes the impairment of soil function per biotope type, not measured permeability; the smallest polygons are missing from the extract. The citywide share is in the profile (zurich.context.05) and is this project's own computation."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "versiegelung",
+    "items": [
+     {
+      "value": "unversiegelt",
+      "label": {
+       "de": "unversiegelt",
+       "en": "unsealed"
+      },
+      "color": "#a1d99b"
+     },
+     {
+      "value": "teilweise",
+      "label": {
+       "de": "teilweise versiegelt",
+       "en": "partly sealed"
+      },
+      "color": "#fdae6b"
+     },
+     {
+      "value": "versiegelt",
+      "label": {
+       "de": "versiegelt",
+       "en": "sealed"
+      },
+      "color": "#636363"
+     },
+     {
+      "value": "unbekannt",
+      "label": {
+       "de": "unbekannt",
+       "en": "unknown"
+      },
+      "color": "#d9d9d9"
+     }
+    ]
+   },
+   "properties_shown": [
+    "versiegelung",
+    "biotoptyp"
+   ],
+   "measure_topic": "sealing-fraction"
+  },
+  {
+   "kind": "geojson-snapshot",
+   "tiles": null,
+   "retrieved": "2026-10-10",
+   "publisher": "Kanton Zürich, Baudirektion, AWEL Wasserbau (via Open Data Zürich)",
+   "licence": "Creative Commons CCZero (as stated on the Open Data Zürich dataset page for the cantonal dataset; opendata.swiss states terms_open)",
+   "id": "zurich.pluvial.01",
+   "theme": "flood-hazard",
+   "title": {
+    "de": "Hinweiskarte Oberflächenabfluss: Fliesstiefe, 100-jährliches Ereignis (Ausschnitt Raum Hardplatz)",
+    "en": "Surface-runoff indication map: flow depth, 100-year event (extract around Hardplatz)"
+   },
+   "file": "zurich.pluvial.01.geojson",
+   "origin": "modelled",
+   "method": "Modellierte Oberflächenabflusskarte des Kantons Zürich (Grundlagen: Terrainmodell, Niederschlag, Abflussbereitschaft), Fliesstiefen für ein 100-jährliches Niederschlagsereignis (WFS ogd-0035_awel_wb_ofa_fliesstiefen_p100_f). Polygone am Ausschnitt abgeschnitten und vereinfacht (ca. 4 m).",
+   "unit": "flow depth class in m (0-0.1 … ≥2.0; Gewässer = water body)",
+   "spatial_scale": "modelled runoff polygons (indication map, scale 1:10'000 to 1:15'000)",
+   "temporal": "Model year not stated on the record; Open Data record fetched 2026-10-10",
+   "coverage": "Rechteck 8.510,47.382 bis 8.522,47.390 (Raum Hardplatz), nur das 100-jährliche Ereignis; 513 Polygone nach Zuschnitt. Nicht stadtweit.",
+   "licence_url": "https://data.stadt-zuerich.ch/dataset/ktzh_oberflaechenabfluss__ogd_",
+   "source_url": "https://maps.zh.ch/wfs/OGDZHWFS?service=WFS&request=GetCapabilities",
+   "attribution": "Kanton Zürich, AWEL Abteilung Wasserbau – Oberflächenabfluss (OGD) (CCZero)",
+   "limitations": {
+    "de": "Hinweiskarte, keine Messung und kein Gefahrenkartenersatz; Hauptabflusswege am Siedlungsrand sind zuverlässig, innerhalb von Siedlungen nimmt die Zuverlässigkeit ab; Befunde sind vor Ort zu plausibilisieren. Gezeigt ist nur ein Ereignis (100 Jahre) und ein kleiner Ausschnitt.",
+    "en": "Indication map, not a measurement and not a substitute for hazard maps; main flow paths at the settlement edge are reliable, reliability decreases within settlements; findings must be checked on site. Only one event (100 years) and a small extract are shown."
+   },
+   "legend": {
+    "type": "categorical",
+    "property": "fliesstiefe",
+    "items": [
+     {
+      "value": "0 - 0.1 m",
+      "label": {
+       "de": "0 bis 0,1 m",
+       "en": "0 to 0.1 m"
+      },
+      "color": "#c6dbef"
+     },
+     {
+      "value": "0.1 - 0.25 m",
+      "label": {
+       "de": "0,1 bis 0,25 m",
+       "en": "0.1 to 0.25 m"
+      },
+      "color": "#9ecae1"
+     },
+     {
+      "value": "0.25 - 0.5 m",
+      "label": {
+       "de": "0,25 bis 0,5 m",
+       "en": "0.25 to 0.5 m"
+      },
+      "color": "#6baed6"
+     },
+     {
+      "value": "0.5 - 1.0 m",
+      "label": {
+       "de": "0,5 bis 1,0 m",
+       "en": "0.5 to 1.0 m"
+      },
+      "color": "#3182bd"
+     },
+     {
+      "value": "1.0 - 2.0 m",
+      "label": {
+       "de": "1,0 bis 2,0 m",
+       "en": "1.0 to 2.0 m"
+      },
+      "color": "#08519c"
+     },
+     {
+      "value": ">= 2.0 m",
+      "label": {
+       "de": "ab 2,0 m",
+       "en": "2.0 m or more"
+      },
+      "color": "#08306b"
+     },
+     {
+      "value": "Gewässer",
+      "label": {
+       "de": "Gewässer",
+       "en": "Water body"
+      },
+      "color": "#bdbdbd"
+     }
+    ]
+   },
+   "properties_shown": [
+    "fliesstiefe"
+   ],
+   "measure_topic": null
   }
  ],
  "gaps": [
   {
    "theme": "flood-hazard",
    "reason": {
-    "de": "Die Hinweiskarte Oberflächenabfluss des Kantons Zürich (modelliert, 30/100/300/1000 Jahre) ist nur als Kartendienst im GIS-Browser gelistet; eine Kachel- oder WMS-Adresse wurde nicht aufgelöst, daher keine Ebene. Gefahrenkarten (Hochwasser) zeigen ausdrücklich nicht den Oberflächenabfluss.",
-    "en": "The canton of Zürich surface-runoff indication map (modelled, 30/100/300/1000 years) is listed only as a map service in the GIS browser; no tile or WMS address was resolved, so no layer. Gefahrenkarten (flooding) explicitly do not show surface runoff."
+    "de": "Die Hinweiskarte Oberflächenabfluss ist als offener Datensatz (CCZero) per WFS abrufbar, aber für die ganze Stadt viel zu gross für einen Schnappschuss (ein Ausschnitt von 900 m Seitenlänge liefert unvereinfacht rund 17 bis 20 MB). Darum nur ein Ausschnitt (100-jähriges Ereignis) als Ebene; die übrigen Ereignisse (30, 300, 1000 Jahre) und die Stadtfläche bleiben Kartendienst. Gefahrenkarten (Hochwasser) zeigen ausdrücklich nicht den Oberflächenabfluss.",
+    "en": "The surface-runoff indication map is an open dataset (CCZero) available by WFS, but far too large for a snapshot of the whole city (a 900 m window alone returns roughly 17 to 20 MB unsimplified). Hence only one window (100-year event) is a layer; the other events (30, 300, 1000 years) and the city-wide extent remain a map service. Hazard maps (flooding) explicitly do not show surface runoff."
    },
    "checked": [
-    "https://ckan.opendata.swiss/api/3/action/package_show?id=oberflachenabfluss: 200, licence terms_open, resource is a SERVICE link to https://geo.zh.ch/maps?initialMapIds=AwelOberAbflussZH (viewer, not fetched as tiles)",
-    "https://www.zh.ch/de/planen-bauen/wasserbau/grundlagen-naturgefahren/gefahrenkarte.html: 200, page text read, no download fetched"
+    "https://data.stadt-zuerich.ch/api/3/action/package_show?id=ktzh_oberflaechenabfluss__ogd_: 200, licence cc-zero, resources WFS https://maps.zh.ch/wfs/OGDZHWFS, gpkg and gdb download, WMS https://wms.zh.ch/AwelOberAbflussZHWMS",
+    "https://maps.zh.ch/wfs/OGDZHWFS?SERVICE=WFS&REQUEST=GetCapabilities&VERSION=1.1.0: 200, 754 KB, lists ogd-0035_awel_wb_ofa_fliesstiefen_p30/p100/p300/p1000_f and ogd-0035_awel_wb_ofa_gefaehrdung_f; GetFeature for the Hardplatz window works with BBOX in lat/lon order (47.382,8.510,47.390,8.522,EPSG:4326), with lon/lat order it returns an empty collection",
+    "https://www.stadt-zuerich.ch/geodaten/download/35?format=128 (gpkg): 200 but an HTML page, not the file",
+    "https://ckan.opendata.swiss/api/3/action/package_search: 403 from this client (data.stadt-zuerich.ch CKAN API used instead)",
+    "https://ckan.opendata.swiss/api/3/action/package_show?id=oberflachenabfluss (first pass): 200, licence terms_open, resource is a SERVICE link to https://geo.zh.ch/maps?initialMapIds=AwelOberAbflussZH",
+    "https://www.zh.ch/de/planen-bauen/wasserbau/grundlagen-naturgefahren/gefahrenkarte.html (first pass): 200, page text read: Gefahrenkarten do not show surface runoff"
    ]
   },
   {
    "theme": "sealing",
    "reason": {
-    "de": "Kein stadtweiter Versiegelungsdatensatz der Stadt Zürich gefunden; der gefundene Wert (14 Prozent) gilt für den Kanton.",
-    "en": "No citywide sealing dataset of the City of Zürich was found; the value found (14 percent) is cantonal."
+    "de": "Die Stadt Zürich veröffentlicht keine eigene Statistik zur Versiegelung. Die Ebene zeigt nur einen Ausschnitt; der stadtweite Anteil (28,6 Prozent versiegelt, Stand Biotoptypenkartierung 2020) ist eine eigene Berechnung aus dem Attribut VERSIEGELUNG und kein amtlicher Wert. Der Kantonswert (14 Prozent) bleibt ein Kantonswert.",
+    "en": "The City of Zürich does not publish its own sealing statistic. The layer shows only a window; the citywide share (28.6 percent sealed, biotope mapping state 2020) is this project's own computation from the attribute VERSIEGELUNG and not an official value. The cantonal value (14 percent) remains a cantonal value."
    },
    "checked": [
-    "https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2022/11/14-prozent-der-zuercher-kantonsflaeche-versiegelt.html: 200, cantonal figure only, no geometry"
+    "https://data.stadt-zuerich.ch/dataset/bev_jahr_flaechen_bodenbedeckungsart_od5803 (CSV BEV580OD5803.csv, 200): city area by Stadtkreis/Quartier/city as total, land excl. forest and settlement area only; no sealed or unsealed split",
+    "https://data.stadt-zuerich.ch/dataset/bau_stadtgebiet_bodennutzung_grundeigentum_quartier_seit2009_od6120: listed, CSV 33.6 MB behind a redirect, not read",
+    "https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020: 200, CCZero, attribute VERSIEGELUNG defined; WFS paged (96,178 features) and area summed in EPSG:2056",
+    "https://www.zh.ch/de/news-uebersicht/medienmitteilungen/2022/11/14-prozent-der-zuercher-kantonsflaeche-versiegelt.html: cantonal figure only",
+    "https://www.zh.ch/de/planen-bauen/raumplanung/raumbeobachtung/bodennutzung.html: 200, Arealstatistik for the City of Zürich gives 62 percent Siedlungsfläche, which the page says is not equivalent to sealed land, and notes the survey method does not allow small-area statements; no municipal sealing value. A search hit on a city remote-sensing study (IPSYSCON) was not opened"
+   ]
+  },
+  {
+   "theme": "green",
+   "reason": {
+    "de": "Kein Gründach-Inventar der Stadt Zürich in offenen Daten gefunden. Die Biotoptypenkartierung 2020 enthält zwar Flachdach-Typen (Sedum, Moos, ruderal, intensiv), aber nur 25 Polygone mit zusammen rund 0,5 ha gegenüber rund 1119 ha Gebäudeflächen; sie ist kein Dachkataster, daher keine Ebene und keine Gesamtfläche. Das Datenset Grünflächen betrifft nur die von Grün Stadt Zürich verwalteten Anlagen und nicht begrünte Dächer.",
+    "en": "No green-roof inventory of the City of Zürich was found in open data. The 2020 biotope map does contain flat-roof types (sedum, moss, ruderal, intensive), but only 25 polygons totalling about 0.5 ha against about 1,119 ha of building polygons; it is not a roof register, so there is no layer and no total area. The Grünflächen dataset covers only green spaces managed by Grün Stadt Zürich, not greened roofs."
+   },
+   "checked": [
+    "https://data.stadt-zuerich.ch/api/3/action/package_search?q=Dachbegrünung and q=Gründach: 2 and 0 hits (only orthophoto CIR/NDVI 2010), no roof-greening dataset",
+    "https://data.stadt-zuerich.ch/dataset/geo_biotoptypenkartierung_2020: WFS filtered on lrtyp2text = Flachdach: 25 polygons, 0.52 ha",
+    "https://data.stadt-zuerich.ch/dataset/geo_gruenflaechen: 200, CCZero, management units of Grün Stadt Zürich (parks, green spaces); not read as geometry, not a roof dataset",
+    "https://data.stadt-zuerich.ch/dataset/geo_dachstrukturen_2d: 200, roof aspect and slope from LoD2 for visualisation, no vegetation attribute"
+   ]
+  },
+  {
+   "theme": "water",
+   "reason": {
+    "de": "Keine offenen Geodaten zum Kanalnetz der Stadt Zürich (ERZ) gefunden; die Kennzahlen (rund 1000 km, rund 80 Prozent Mischsystem) stehen nur in Textseiten der Stadt und widersprechen sich teilweise (Umweltbericht: 1500 km). Daher keine Ebene.",
+    "en": "No open geodata on the sewer network of the City of Zürich (ERZ) were found; the key figures (about 1,000 km, about 80 percent combined system) appear only in city text pages and partly conflict (environmental report: 1,500 km). Hence no layer."
+   },
+   "checked": [
+    "https://data.stadt-zuerich.ch/api/3/action/package_search with q=Kanalisation, Kanalnetz, Entwässerung, Abwasser, Siedlungsentwässerung: no sewer-network geometry; related only: Überschwemmungsmeldungen (CSV), Versickerungskarte, Behandelte Abwassermenge Werdhölzli",
+    "https://www.stadt-zuerich.ch/artikel/de/klar/siedlungsentwaesserung/kanalisation.html: 200, text figures read",
+    "https://www.stadt-zuerich.ch/content/dam/stzh/ted/Deutsch/erz/entwaesserung/SW_Wasserkreislauf_von_Zuerich_1312.pdf: 404 (also no Wayback capture of the PDF, only of its thumbnail)"
+   ]
+  },
+  {
+   "theme": "trees",
+   "reason": {
+    "de": "Die Baumhöhen 2022 (CHM aus Lidar, 50 cm Raster, CCZero) sind die Grundlage der Kronenbedeckung, aber die Rasterdatei war nicht abrufbar (Download-Adresse liefert eine HTML-Seite) und ein stadtweiter Kronenanteil wurde daher nicht selbst berechnet; Baumkataster-Ausschnitt bleibt die einzige Baum-Ebene.",
+    "en": "The tree heights 2022 (CHM from lidar, 50 cm raster, CCZero) underlie the crown cover, but the raster file could not be downloaded (the download address returns an HTML page), so no citywide crown share was computed here; the tree-register extract remains the only tree layer."
+   },
+   "checked": [
+    "https://data.stadt-zuerich.ch/dataset/geo_baumhoehen_2022__chm_aus_lidar_: 200, CCZero; resources TIFF, WMS, WMTS",
+    "https://www.stadt-zuerich.ch/geodaten/download/Baumhoehen_2022__CHM_aus_Lidar_?format=10010: 200, text/html (not a TIFF)"
    ]
   },
   {
@@ -205,15 +412,6 @@
    "checked": [
     "https://ckan.opendata.swiss/api/3/action/package_search?q=Stadtklima+Z%C3%BCrich&rows=20&fq=organization:stadt-zurich: 200, metadata read; CSV not downloaded"
    ]
-  },
-  {
-   "theme": "green",
-   "reason": {
-    "de": "Keine Gründach- oder Grünflächen-Geodaten der Stadt Zürich geprüft (Zeitbudget); weder Lizenz noch Daten gelesen.",
-    "en": "No green-roof or green-space geodata of the City of Zürich were checked (time budget); neither licence nor data were read."
-   },
-   "checked": [],
-   "state": "not_checked"
   }
  ]
 }

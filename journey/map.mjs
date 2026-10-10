@@ -30,7 +30,7 @@ export function validateLayerPack(pack, files = {}) {
       if (!layer.limitations?.[lang]) add(`${where}: limitations.${lang}`);
       if (/ß/.test(JSON.stringify([layer.title?.[lang], layer.limitations?.[lang], ...(layer.legend?.items ?? []).map(i => i.label?.[lang])]))) add(`${where}: ß in ${lang}`);
     }
-    if (!/^https?:\/\//.test(layer.licence_url ?? '') || !/^https?:\/\//.test(layer.source_url ?? '')) add(`${where}: licence_url/source_url must be http(s)`);
+    if (!/^https?:\/\/\S+$/.test(layer.licence_url ?? '') || !/^https?:\/\/\S+$/.test(layer.source_url ?? '')) add(`${where}: licence_url/source_url must be http(s)`);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(layer.retrieved ?? '')) add(`${where}: retrieved must be YYYY-MM-DD`);
     if (layer.kind === 'geojson-snapshot') {
       const geo = files[layer.file];
