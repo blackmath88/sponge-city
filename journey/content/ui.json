@@ -276,7 +276,8 @@
   "ct_implementation": "Umsetzungsaussage",
   "ct_measured-performance": "Gemessene Wirkung",
   "ct_context": "Ausgangslage",
-  "ct_study-elsewhere": "Studie aus anderem Umfeld"
+  "ct_study-elsewhere": "Studie aus anderem Umfeld",
+  "status_note": "Umsetzungsstand"
  },
  "en": {
   "skip": "Skip to content",
@@ -555,6 +556,7 @@
   "ct_implementation": "Implementation claim",
   "ct_measured-performance": "Measured performance",
   "ct_context": "Context",
-  "ct_study-elsewhere": "Study from elsewhere"
+  "ct_study-elsewhere": "Study from elsewhere",
+  "status_note": "Implementation status"
  }
 }
