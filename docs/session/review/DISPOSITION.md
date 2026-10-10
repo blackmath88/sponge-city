@@ -41,7 +41,7 @@ Reviews: R1 (code/UX/boundaries/bilingual, Opus 5.5) and R2 (evidence validity, 
 
 ## R4 / R5 / R6 (acceptance slice, 2026-10-10 evening)
 - **R4** (Opus, post-R3 delta at d74342a8935c): 0 blocker, 1 major (view stayed inert after leaving the map during a load), 6 minor. Fixed in 5f6eaee (inert reset, focus not pulled back, loading cue only when loading, row mark and page follow a pick, retrieval dates, wording).
-- **R6** (Opus, delta d74342a..5f6eaee): R4 6 of 7 fixed, 1 partly; 0 blocker, 0 major, 4 minor, **open**: Engelgasse `origin: observed` for an unverified announcement; retrieval dates are literals in the profile script; focus is on BODY while a city loads (inert); two fixes are not pinned by a browser test; a catch clears `inert` before its token check (unreachable today).
+- **R6** (Opus, delta d74342a..5f6eaee): R4 6 of 7 fixed, 1 partly; 0 blocker, 0 major, 4 minor, **open at the time of R6, since closed by the author (not independently reviewed)**: Engelgasse `origin` (now `unknown`), literal retrieval dates (now derived from the verification record), focus on BODY while a city loads (now anchored on the status line), two fixes unpinned (now pinned by browser checks), catch clearing `inert` before its token check (now inside the token guard).
 - **R5** (Sonnet, independent recomputation of the Zürich sealing share from a pinned WFS download): REPRODUCED. See `zurich-recompute/report.md`.
 
 ## Follow-up after R6 (this session continuation)
@@ -55,3 +55,8 @@ Reviews: R1 (code/UX/boundaries/bilingual, Opus 5.5) and R2 (evidence validity, 
 - Basel claim records carry `independent_recheck`: basel-sealed partial (counts only), sealed-trees sampled (9,046 not reproduced), hot days / Engelgasse / VoltaNord re-checked, all others including the four unreachable sources not re-checked.
 - Still open: R2 m15 (thin quotes), m16 (scope/origin labels for cantonal items), Zürich canopy raster, no independent review after 5f6eaee.
 - R2 m15 partly closed: the thin quotes of `zurich.interventions.06`, `zurich.interventions.01` (second) and `zurich.access.01` (licence) now carry full verbatim sentences, machine-checked against the live pages on 2026-10-10; `copenhagen.access.01` (a listing page) and the ClimateADAPT/terms-of-use reference remain thin.
+
+## Session 3 continuation 2 (author-tested only; not independently reviewed)
+- R2 m16 closed: a `canton` scope exists; `zurich.context.01`, `zurich.context.02` and `zurich.measurement.03` use it and render "Canton, not the city". The Copenhagen 7–9 % estimate keeps `origin: unknown` with a visible note (the report calls it an estimate, method not stated; no stronger class is claimed).
+- Thin evidence is labelled, not strengthened: `copenhagen.access.01` (facet text of a listing page) and the `zurich.access.01` terms reference carry a "Thin evidence" note. The second Copenhagen listing quote was replaced by a fuller verbatim dataset sentence read from the live listing. The ClimateADAPT quotes are full sentences and stay.
+- Counts: 33 browser checks, 68 node tests in `tests/*.test.mjs`; `make smoke` passes. Tested SHA `109321d` covered the matrix/flag work; `c801bb7` was data-only (Zürich quotes); this checkpoint supersedes both.

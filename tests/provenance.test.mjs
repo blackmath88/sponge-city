@@ -32,3 +32,20 @@ test('unchecked and unreachable sources are visibly flagged in both languages', 
     assert.match(html, /data-verification="not-checked"/); assert.ok(!/\[(de|en)[:?]/.test(html));
   }
 });
+
+const cityOf = id => read(`data/cities/${id}.json`);
+test('cantonal items are scoped as canton, the Copenhagen estimate is qualified, thin quotes are labelled', () => {
+  const z = cityOf('zurich'), c = cityOf('copenhagen');
+  for (const id of ['zurich.context.01', 'zurich.context.02', 'zurich.measurement.03']) assert.equal(z.entries.find(e => e.id === id).scope, 'canton', id);
+  const est = c.entries.find(e => e.id === 'copenhagen.outcomes.01');
+  assert.equal(est.origin, 'unknown'); assert.match(est.origin_note.en, /estimate/i); assert.match(est.origin_note.en, /method is not stated/i); assert.match(est.origin_note.de, /Schätzung/);
+  const thin = [...z.entries, ...c.entries].flatMap(e => e.sources.map(s => ({ e, s }))).filter(({ s }) => s.quote_note);
+  assert.ok(thin.length >= 2, 'thin or reference-only quotes carry a note');
+  assert.ok(thin.every(({ s }) => s.quote_note.de && s.quote_note.en && !/ß/.test(s.quote_note.de)));
+  assert.ok(thin.some(({ e }) => e.id === 'zurich.access.01') && thin.some(({ e }) => e.id === 'copenhagen.access.01'));
+  for (const lang of ['de', 'en']) {
+    const html = entryCard(c.entries.find(e => e.id === 'copenhagen.outcomes.01'), lang, ui(lang)); assert.match(html, /data-origin-note/);
+    const h2 = entryCard(z.entries.find(e => e.id === 'zurich.access.01'), lang, ui(lang)); assert.match(h2, /data-quote-note/); assert.match(entryCard(z.entries.find(e => e.id === 'zurich.context.02'), lang, ui(lang)), /scope-canton/);
+    assert.ok(!/\[(de|en)[:?]/.test(html + h2));
+  }
+});

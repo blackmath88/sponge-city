@@ -301,7 +301,10 @@
   "mx_gap_open": "Lücke ansehen",
   "mx_flags": "Prüfstand",
   "gap_theme_sealing": "Versiegelung",
-  "mb_flags": "Markierungen (ungeprüft)"
+  "mb_flags": "Markierungen (ungeprüft)",
+  "sc_canton": "Kanton, nicht Stadt",
+  "origin_note": "Hinweis zur Klasse",
+  "quote_thin": "Beleg dünn"
  },
  "en": {
   "skip": "Skip to content",
@@ -605,6 +608,9 @@
   "mx_gap_open": "View the gap",
   "mx_flags": "Check status",
   "gap_theme_sealing": "sealing",
-  "mb_flags": "Flags (unchecked)"
+  "mb_flags": "Flags (unchecked)",
+  "sc_canton": "Canton, not the city",
+  "origin_note": "Note on the class",
+  "quote_thin": "Thin evidence"
  }
 }

@@ -301,14 +301,18 @@
      "publisher": "OS2opendatadk / Københavns Kommune",
      "retrieved": "2026-10-10",
      "quote": "Licens Creative Commons Attribution 4.0 6 Opdateringsfrekvens Årligt 5 Løbende 1",
-     "quote_lang": "da"
+     "quote_lang": "da",
+     "quote_note": {
+      "de": "Facettentext einer Suchergebnisseite (Zähler je Lizenz und Aktualisierung), keine Prosa-Aussage des Herausgebers.",
+      "en": "Facet text of a search-results page (counts per licence and update frequency), not a prose statement by the publisher."
+     }
     },
     {
      "title": "Åbne data fra Københavns Kommune, søgning: tag skybrud",
      "url": "https://www.opendata.dk/search?q=tags:skybrud%20organization:city-of-copenhagen",
      "publisher": "OS2opendatadk / Københavns Kommune",
      "retrieved": "2026-10-10",
-     "quote": "Skybrudsplan - bassiner og pladser Københavns Kommune Datasættet viser de planlagte klimatilpasningsprojekter der skal etableres på sigt",
+     "quote": "Datasættet viser de planlagte klimatilpasningsprojekter der skal etableres på sigt, for at sikre København mod skybrud. Implementeringen vil ske over en periode på 20 år.",
      "quote_lang": "da"
     }
    ]
@@ -377,7 +381,11 @@
      "quote": "har reduceret risikoen for oversvømmelse i byen med ca. 7-9 %, hvilket anslås til, at ca. 6.000 københavnere",
      "quote_lang": "da"
     }
-   ]
+   ],
+   "origin_note": {
+    "de": "Der Bericht nennt den Wert selbst eine Schätzung («anslås»); die Methode ist nicht angegeben. Deshalb wird keine stärkere Klasse (modelliert, abgeleitet) behauptet.",
+    "en": "The report itself calls the figure an estimate (\"anslås\"); the method is not stated, so no stronger class (modelled, derived) is claimed."
+   }
   },
   {
    "id": "copenhagen.outcomes.02",

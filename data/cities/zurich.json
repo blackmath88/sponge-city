@@ -26,7 +26,7 @@
     "en": "In the canton of Zürich about one metre of precipitation falls per year; an AWEL representative calls this enough water to prepare for dry or hot periods if it is stored and used efficiently. The figure is cantonal, not for the city."
    },
    "origin": "derived",
-   "scope": "unspecified",
+   "scope": "canton",
    "evidence_state": "found",
    "measure": null,
    "sources": [
@@ -48,7 +48,7 @@
     "en": "In the canton of Zürich 25,000 hectares or 14 percent of the area are sealed (Arealstatistik 2013/18). This is a cantonal value; a city value from the 2020 biotope map is in zurich.context.05 and is not comparable with it."
    },
    "origin": "derived",
-   "scope": "unspecified",
+   "scope": "canton",
    "evidence_state": "found",
    "measure": {
     "quantity": "sealed share of cantonal area",
@@ -395,7 +395,7 @@
     "en": "The canton's surface-runoff indication map is modelled (terrain model, precipitation, runoff readiness; 30-, 100-, 300- and 1000-year events) and is an indication map at 1:10,000 to 1:15,000. It is listed at Open Data Zürich as a CCZero dataset with a WFS; reliability decreases within settlements and findings must be checked on site."
    },
    "origin": "modelled",
-   "scope": "unspecified",
+   "scope": "canton",
    "evidence_state": "found",
    "measure": null,
    "sources": [
@@ -481,7 +481,11 @@
      "publisher": "Stadt Zürich, via opendata.swiss",
      "retrieved": "2026-10-10",
      "quote": "https://opendata.swiss/terms-of-use#terms_open",
-     "quote_lang": "de"
+     "quote_lang": "de",
+     "quote_note": {
+      "de": "Nur Verweis: Die Quelle nennt die Nutzungsbedingungen «terms_open» als Adresse; der Text des opendata.swiss-Eintrags wurde in dieser Sitzung nicht erneut gelesen.",
+      "en": "Reference only: the source gives the terms \"terms_open\" as an address; the opendata.swiss record text was not re-read in this session."
+     }
     },
     {
      "title": "Baumkataster (Open Data Zürich)",

@@ -3,7 +3,7 @@ import { pick } from './i18n.mjs';
 
 export const DIMENSIONS = ['context', 'interventions', 'measurement', 'access', 'outcomes', 'transfer'];
 export const ORIGINS = ['observed', 'derived', 'modelled', 'assumed', 'unknown'];
-export const SCOPES = ['project', 'programme', 'city-wide', 'unspecified'];
+export const SCOPES = ['project', 'programme', 'city-wide', 'canton', 'unspecified']; // canton: a cantonal figure or model, not a city result
 export const STATES = ['found', 'no_public_evidence_found', 'unknown'];
 export const COMPARE_FIELDS = ['quantity', 'unit', 'method', 'spatial_scale', 'period']; // time counts: equal units over different years are not comparable
 

@@ -68,3 +68,4 @@ Settlement: ctx_679c6c42c48d (failed at agent_readiness, never received its task
 - Input commit `ec38100e098d`. Worker settlement: all earlier dispatches settled `succeeded`/released; none live; none started in this continuation.
 - Done: matrix cells link the recorded map gaps (incl. pluvial/Basel) and carry visible check-status flags; Basel claim verification states whether an independent reviewer re-checked each claim (partial / sampled / not re-checked). Checks: `tests/city-data.test.mjs`, `tests/verification.test.mjs`, browser check "evidence-state clarity".
 - **Independent review:** none after `5f6eaee`; everything after it (ec38100 and this session's commits) is author-tested only.
+- Continuation 2 (same foreground route, binding re-verified at c801bb7; no worker): m16 scope/origin qualification, thin-quote labels, stale counts corrected. Isolation/timeout enforcement still unavailable. Independent review still absent after `5f6eaee`.
