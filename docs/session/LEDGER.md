@@ -26,3 +26,21 @@ Start **2026-10-10 14:26 CEST**. Integration cutoff 16:26, hard stop 16:56. Not 
 
 All workers (R1,R2,T1–T4,RV) completed and settled; none live. No Orca workers used (no verified enforcing timeout). Usage not observable. Session started 14:26; final checks ~15:0x CEST (well inside budget; all accepted scope delivered).
 
+
+---
+# Session 2 — multicity + maps (started 2026-10-10 16:15:48 CEST; deadline 23:15; final 45 min from 22:30)
+
+**Base decision:** continue PR #6 on the same branch (head 163fb0b, based on #4 3aeca87). #5 head 9efebe7 still fails its own mission test (gated V2, not touched). No other active coordinator: only terminal in this worktree is this session. Existing `weavr-sponge-city-*` worktrees and runs untouched.
+
+**Orca preflight (≈15 min, run_791a78c3c736):**
+- CLI: `orca status` ready; `worker-start --agent claude --model <id>` launches `claude --dangerously-skip-permissions --model <id>` (Orca's launch; permission prompts are bypassed inside the worker, so writable-path isolation = separate worktree + instruction, not enforcement).
+- Completion probe ctx_11571b5a7c78 (haiku, read-only, current worktree): worker_done received, model self-reported claude-haiku-5-5 and matched `--model haiku`, settled `succeeded`, released (transcript archived).
+- Timeout probe ctx_c57ea941100f (`--timeout-ms 60000`, sleeping worker): **not enforcing** — still live after 100 s (timeout is a start-wait only). `worker-stop` settled it as `exited` (positive proof). Supervisor rule for this session: I enforce wall-clock deadlines by checking and calling `worker-stop`.
+- Finding: a brand-new worktree shows Claude's *folder-trust* prompt; `worker-start --worktree new-child` then fails at `agent_readiness` (ctx_679c6c42c48d). I accepted trust for that one project-local folder, and retried once (ctx_0a03c844a875). Later worktrees: create worktree + terminal first, accept trust, then `worker-start --terminal`.
+- Routing plugin inside the worker: not inspected beyond launch; tier tag is carried in the spec text only (the routing mod acts on Claude Code subagents, not Orca dispatches). Model is chosen with `--model`.
+
+| id | task | owner/route | base | writable | deadline | status |
+|----|------|-------------|------|----------|----------|--------|
+| Z | Zürich profile + layers | Orca claude sonnet, ctx_0a03c844a875 (retry of ctx_679c6c42c48d), wt zurich-research | 5359336 | data/cities/zurich.json, data/maps/zurich/**, scripts/maps/zurich.mjs, docs/session/research/zurich-notes.md | 17:00+75m | running |
+| M | Layer packs Basel/Berlin/Copenhagen | Orca claude sonnet, ctx_d5999ff450ed, wt maps-research | 5359336 | data/maps/{basel,berlin,copenhagen}/**, scripts/maps/{basel,berlin,copenhagen}.mjs, docs/session/research/maps-notes.md | +80m | running |
+| C | Coordinator: shared contracts, map step, DE/EN | this session | HEAD | journey/**, tests/**, docs/** | — | in progress |
