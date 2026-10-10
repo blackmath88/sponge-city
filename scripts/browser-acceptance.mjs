@@ -74,6 +74,17 @@ for (const stage of ['evidence', 'place', 'observe', 'explore']) {
   });
 }
 
+await check('Street Lab: a placed (synthetic) intervention survives DE → EN → DE and a reload, per place', async () => {
+  const { page, ctx } = await open('?stage=explore&lang=de&place=kanonengasse'); await settle(page, 2500);
+  let f = frameOf(page);
+  const garden = () => f.locator('button[aria-pressed]').filter({ hasText: /Versickerungsmulde|Rain garden|Garten|garden/i }).first();
+  assert(await garden().count(), 'rain-garden toggle found'); await garden().click(); await settle(page, 300);
+  assert(await garden().getAttribute('aria-pressed') === 'true', 'garden on');
+  for (const lang of ['en', 'de']) { await page.click(`button[data-lang="${lang}"]`); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'true', `garden kept after switch to ${lang}`); }
+  await page.reload(); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'true', 'garden kept after reload');
+  await page.click('[data-place="klybeck"]'); await settle(page, 2500); f = frameOf(page); assert(await garden().getAttribute('aria-pressed') === 'false', 'edits do not leak to another place'); await ctx.close();
+});
+
 await check('selected place survives language switching and reload', async () => {
   const { page, ctx } = await open('?stage=place&lang=de&place=klybeck'); await settle(page, 1800);
   assert(/klybeck/i.test(frameOf(page).url()), 'frame is klybeck');
