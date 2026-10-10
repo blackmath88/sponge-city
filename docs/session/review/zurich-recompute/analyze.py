@@ -6,7 +6,7 @@ from shapely.geometry import shape
 from shapely.strtree import STRtree
 from shapely.ops import unary_union
 getcontext().prec=50
-feats=[]; 
+feats=[];
 for f in sorted(glob.glob("src/pages/p*.json")):
     d=json.load(open(f),parse_float=Decimal)   # keep exact decimals for method B
     feats+=d["features"]

@@ -1,6 +1,6 @@
 # Disposition of the independent review (candidate cf64561e74cc)
 
-> **Current state (final pre-cutoff accounting):** 77 node tests (`tests/*.test.mjs`), `make smoke`, 38 browser checks (`make browser`), all author-run. Last independent review: R6 at `5f6eaee`. Counts and SHAs inside the sections below are historical (true when written). Active limits: integration cutoff 23:10 Europe/Rome, hard stop 23:55. Unresolved evidence flags and the no-independent-review-after-`5f6eaee` status are unchanged; see the "Accounting notes" in `docs/session/LEDGER.md`.
+> **Current state (final pre-cutoff accounting):** 77 node tests (`tests/*.test.mjs`), `make smoke`, 38 browser checks (`make browser`), all author-run. Last independent review: R6 at `5f6eaee`. Counts and SHAs inside the sections below are historical (true when written). Active limits: integration cutoff 23:10 Europe/Rome, hard stop 23:55. Unresolved evidence flags and the no-independent-review-after-`5f6eaee` status are unchanged; see the "Accounting notes" in `docs/session/LEDGER.md` (including the correction about Weavr2, which is separate from Sponge).
 
 
 Reviews: R1 (code/UX/boundaries/bilingual, Opus 5.5) and R2 (evidence validity, Sonnet), both read-only on the exact commit. Neither found a blocker. R2 verified 86/86 city-profile quotes verbatim on their cited pages. Every finding below was fixed unless marked **deferred**; the fixes are in the commits after cf64561 and are checked by `make smoke` and `make browser`.
