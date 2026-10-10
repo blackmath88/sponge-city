@@ -138,7 +138,8 @@
   "md_known": "Bekannt (mit Belegtyp)",
   "md_boundaries": "Grenzen",
   "md_boundary_obs": "Beobachtungsprüfung und illustrative Simulation heben Behördenfreigaben nicht auf.",
-  "md_sha": "Prüfsumme der Quelle"
+  "md_sha": "Prüfsumme der Quelle",
+  "measure_def": "Messdefinition (Begriffe der Quelle)"
  },
  "en": {
   "skip": "Skip to content",
@@ -279,6 +280,7 @@
   "md_known": "Known (with evidence class)",
   "md_boundaries": "Boundaries",
   "md_boundary_obs": "Observation review and illustrative simulations do not clear authority gates.",
-  "md_sha": "Source SHA-256"
+  "md_sha": "Source SHA-256",
+  "measure_def": "Measure definition (source terms)"
  }
 }

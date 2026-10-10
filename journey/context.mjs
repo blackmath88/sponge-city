@@ -24,9 +24,10 @@ export function encodeHandoff(value) {
   const bytes = new TextEncoder().encode(JSON.stringify(value));
   return btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
 }
-export function moduleUrl(module, place) {
+export function moduleUrl(module, place, lang = null) {
   if (!module.path) return null;
   const params = new URLSearchParams();
+  if (lang) params.set('lang', lang);
   if (module.context === 'street-profile') params.set('street', place.key);
   if (module.context === 'candidate') params.set('site', encodeHandoff(candidateHandoff(place.profile)));
   if (module.context === 'observation') {

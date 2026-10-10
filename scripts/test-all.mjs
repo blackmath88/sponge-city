@@ -14,6 +14,8 @@ const checks=[
   ['Street assessment engine','wrapper/street-xray/engine',['--test','test/profile.test.mjs']],
   ['Street explainer','wrapper/prototypes/sponge-street',['smoke.mjs']],
   ['Connected case','wrapper/achim/connected-case',['--experimental-strip-types','--no-warnings','--test','tests/connected-case.test.mjs']],
+  ['Basel profile current','.',['scripts/build-basel-profile.mjs','--check']],
+  ['Bilingual journey, city profiles, exports','.',['--test','tests/journey-bilingual.test.mjs']],
   ['Orchestration boundaries','.', ['--experimental-strip-types','--no-warnings','--test','tests/orchestration.test.mjs']]
 ];
 const failed=[];

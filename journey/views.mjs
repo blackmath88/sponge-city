@@ -14,7 +14,6 @@ export function conceptView({ lang, ui, content }) {
   const s = content.conceptSituation ?? concept.situations[0].id;
   const situation = concept.situations.find(x => x.id === s);
   const nameOf = id => { const i = idx.get(id); return i ? (lang === 'de' ? i.de ?? i.name : i.name) : id; };
-  const indName = id => { const i = content.charter.indicators.find(x => x.id === id); const m = content.measurements.indicators.find(x => x.id === id); return i ? (lang === 'de' && !m ? i.name + ' ·en' : i.name) : id; };
   const cards = concept.cells.filter(c => c.situation === s).map(c => {
     const mech = concept.mechanisms.find(m => m.id === c.mechanism);
     const facts = (c.facts ?? []).map(id => content.practice.cases.find(p => p.fact === id)).filter(Boolean);
@@ -30,10 +29,7 @@ export function conceptView({ lang, ui, content }) {
     <p class="boundary">${esc(pick(concept.boundary, lang))}</p></div>`;
 }
 // Indicator names are only translated where the measurement view carries a translation; otherwise the source name stays.
-export const indNameLocal = (content, id, lang) => {
-  const i = content.charter.indicators.find(x => x.id === id);
-  return pick(content.indicatorNames?.[id] ?? i?.name ?? id, lang);
-};
+export const indNameLocal = (content, id, lang) => pick(content.concept.indicator_names?.[id] ?? id, lang);
 
 export function practiceView({ lang, ui, content }) {
   const { practice } = content;
@@ -72,7 +68,7 @@ export function measureView({ lang, ui, content }) {
 }
 
 const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.id)}"><p class="eyebrow">${chip(ui('sc_' + e.scope), 'scope-' + e.scope)} ${chip(ui('cls_' + e.origin), e.origin)} ${e.evidence_state !== 'found' ? chip(ui('st_' + e.evidence_state), 'state-' + e.evidence_state) : ''}</p><p>${esc(pick(e.text, lang))}</p>
-  ${e.measure ? `<p class="small"><strong>${esc(e.measure.quantity)}</strong> · ${esc(e.measure.unit)} · ${esc(e.measure.method)} · ${esc(e.measure.spatial_scale)}${e.measure.period ? ' · ' + esc(e.measure.period) : ''}</p>` : ''}
+  ${e.measure ? `<p class="small"><em>${esc(ui('measure_def'))}:</em> <strong>${esc(e.measure.quantity)}</strong> · ${esc(e.measure.unit)} · ${esc(e.measure.method)} · ${esc(e.measure.spatial_scale)}${e.measure.period ? ' · ' + esc(e.measure.period) : ''}</p>` : ''}
   ${(e.sources ?? []).map(s => `<details><summary>${esc(s.title)}</summary><p class="small">${link(s.url, s.publisher || s.url)} · ${esc(ui('retrieved'))} ${esc(s.retrieved)}</p><blockquote lang="${esc(s.quote_lang || 'en')}">${esc(s.quote)}</blockquote></details>`).join('')}</article>`;
 
 export function citiesView({ lang, ui, content }) {
