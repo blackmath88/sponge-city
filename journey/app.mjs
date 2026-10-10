@@ -38,7 +38,7 @@ try {
     for(const b of document.querySelectorAll('[data-stage]'))b.onclick=()=>{stage=manifest.modules.find(m=>m.id===b.dataset.stage);update();};
   };
   const renderPlaces = () => {
-    $('places').innerHTML=data.places.map(p=>`<button class="place-button" data-place="${esc(p.key)}" aria-pressed="${p.key===place.key}"><strong>${esc(p.profile.site.name)}</strong><small>${esc(ui(p.key==='kanonengasse'?'place_kanon':'place_klybeck'))}</small></button>`).join('');
+    $('places').innerHTML=data.places.map(p=>`<button class="place-button" data-place="${esc(p.key)}" aria-pressed="${p.key===place.key}"><strong>${esc(lang==='de'?(overlay?.places?.[p.key]?.site?.name??p.profile.site.name):p.profile.site.name)}</strong><small>${esc(ui(p.key==='kanonengasse'?'place_kanon':'place_klybeck'))}</small></button>`).join('');
     for(const b of document.querySelectorAll('[data-place]'))b.onclick=()=>{place=data.places.find(p=>p.key===b.dataset.place);update();};
   };
   const bindView = () => {
