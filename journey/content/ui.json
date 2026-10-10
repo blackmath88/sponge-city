@@ -239,7 +239,15 @@
   "mx_refs": "Belege",
   "mx_none": "nichts offen",
   "mx_reviewed": "Zusammengestellt aus den Städteprofilen und Kartenebenen dieses Projekts, ohne neue Quellenabfrage.",
-  "sc_unspecified_short": "Massstab unbestimmt"
+  "sc_unspecified_short": "Massstab unbestimmt",
+  "ch_question": "Frage",
+  "ch_needed": "Benötigte Evidenz",
+  "ch_available": "Vorhandene Evidenz",
+  "ch_analysis": "Belastbare Analyse",
+  "ch_action": "Mögliche Massnahme",
+  "ch_monitor": "Spätere Wirkungsbeobachtung",
+  "m_elsewhere": "Und in den anderen Städten?",
+  "m_on_map": "Auf der Karte"
  },
  "en": {
   "skip": "Skip to content",
@@ -481,6 +489,14 @@
   "mx_refs": "Evidence",
   "mx_none": "nothing outstanding",
   "mx_reviewed": "Compiled from this project's city profiles and map layers, without a new source fetch.",
-  "sc_unspecified_short": "scale unspecified"
+  "sc_unspecified_short": "scale unspecified",
+  "ch_question": "Question",
+  "ch_needed": "Needed evidence",
+  "ch_available": "Available evidence",
+  "ch_analysis": "Defensible analysis",
+  "ch_action": "Potential action",
+  "ch_monitor": "Later outcome monitoring",
+  "m_elsewhere": "And in the other cities?",
+  "m_on_map": "On the map"
  }
 }

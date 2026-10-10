@@ -52,20 +52,23 @@ export function measureView({ lang, ui, content }) {
   const ch = byId.get(sel);
   const status = ch.basel.status;
   const t = x => esc(pick(x, lang));
-  const section = (label, body) => `<div class="field"><dt>${esc(label)}</dt><dd>${body}</dd></div>`;
+  const step = (n, label, body) => `<li class="dstep" data-step="${n}"><span class="dnum" aria-hidden="true">${n}</span><div><h5>${esc(label)}</h5><p>${body}</p></div></li>`;
+  const row = (content.matrix?.indicators ?? []).find(i => i.featured_indicator === sel);
+  const elsewhere = row ? `<details class="elsewhere"><summary class="small">${esc(ui('m_elsewhere'))}</summary><ul class="small">${content.cities.map(c => { const cell = content.matrix.cells[row.id]?.[c.id]; return cell ? `<li data-elsewhere="${esc(c.id)}"><strong>${esc(pick(c.name, lang))}:</strong> ${esc(ui('ex_' + cell.state.exists))} · ${esc(ui('cls_' + cell.state.basis))} · ${esc(ui('ac_' + cell.state.access))} — ${esc(pick(cell.note, lang))}</li>` : ''; }).join('')}</ul></details>` : '';
+  const mapLayers = Object.entries(content.packs ?? {}).flatMap(([city, pack]) => pack.layers.filter(l => l.measure_topic === sel).map(l => ({ city, l })));
+  const onMap = mapLayers.length ? `<br><span class="small">${esc(ui('m_on_map'))}: ${mapLayers.map(({ city, l }) => `<a href="#" data-map-layer="${esc(city)}:${esc(l.id)}">${esc(pick(content.cities.find(c => c.id === city).name, lang))} · ${esc(pick(l.title, lang))} →</a>`).join(' · ')}</span>` : '';
   const srcs = ch.basel.sources.map(s => link(s.url, s.label)).join(' · ') || esc(ui('none_listed'));
   return `<div class="view measure"><h3>${esc(ui('m_title'))}</h3><p class="muted">${esc(ui('m_lead'))}</p>
     <div class="seg wrap" role="group">${content.measurements.indicators.map(x => `<button data-indicator="${esc(x.id)}" aria-pressed="${x.id === sel}">${esc(pick(x.question, lang))}</button>`).join('')}</div>
-    <article class="indicator" data-indicator-id="${esc(sel)}"><p class="eyebrow">${esc(sel)}</p><h4>${t(m.question)}</h4><dl>
-      ${section(ui('m_why'), t(m.why))}
-      ${section(ui('m_desirable'), `${esc(pick(m.desirable, lang))}`)}
-      ${section(ui('m_proxy'), m.proxy ? `${chip(ui('fill_' + ch.fill.status), fillCls[ch.fill.status])} ${esc(pick(m.proxy, lang))}<br><span class="small">${esc(pick(ch.fill.confidence ? { de: 'Vertrauen laut Quelle: ' + ch.fill.confidence + ' (englisch)', en: 'Confidence per source: ' + ch.fill.confidence } : '', lang))}</span>` : esc(ui('m_no_proxy')))}
-      ${section(ui('m_actual'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>`)}
-      ${section(ui('m_supports'), t(m.supports))}
-      ${section(ui('m_cannot'), t(m.cannot))}
-      ${section(ui('m_next'), `${t(m.next_action)}${m.ask ? `<br><span class="small">${esc(ui('m_ask'))}: ${esc(pick(m.ask, lang))}</span>` : ''}`)}
-      ${section(ui('m_monitor'), t(m.monitoring))}
-    </dl></article><p class="small muted">${esc(ui('charter_updated'))}: ${esc(content.charter.updated)} · ${esc(ui('cls_observed'))} / ${esc(ui('cls_derived'))} / ${esc(ui('cls_modelled'))} / ${esc(ui('cls_assumed'))} / ${esc(ui('cls_unknown'))}</p></div>`;
+    <article class="indicator" data-indicator-id="${esc(sel)}"><p class="eyebrow">${esc(sel)}</p><h4>${t(m.question)}</h4><p class="muted">${t(m.why)}</p>
+    <ol class="dchain">
+      ${step(1, ui('ch_question'), t(m.question))}
+      ${step(2, ui('ch_needed'), `${esc(pick(m.desirable, lang))}<br>${m.proxy ? `<span class="small">${esc(ui('m_proxy'))}: ${chip(ui('fill_' + ch.fill.status), fillCls[ch.fill.status])} ${esc(pick(m.proxy, lang))}</span>` : `<span class="small">${esc(ui('m_no_proxy'))}</span>`}`)}
+      ${step(3, ui('ch_available'), `${chip(ui('status_' + status), clsOf[status])}${status === 'partial' ? '' : ' ' + chip(ui('cls_' + clsOf[status]), clsOf[status])}<br>${esc(pick(m.actual, lang))}<br><span class="small">${esc(ui('m_sources'))}: ${srcs}</span><br><span class="small muted">${esc(ui('m_scale'))}</span>${elsewhere}${onMap}`)}
+      ${step(4, ui('ch_analysis'), `<strong>${esc(ui('m_supports'))}:</strong> ${t(m.supports)}<br><strong>${esc(ui('m_cannot'))}:</strong> ${t(m.cannot)}`)}
+      ${step(5, ui('ch_action'), `${t(m.next_action)}${m.ask ? `<br><span class="small">${esc(ui('m_ask'))}: ${esc(pick(m.ask, lang))}</span>` : ''}`)}
+      ${step(6, ui('ch_monitor'), t(m.monitoring))}
+    </ol></article><p class="small muted">${esc(ui('charter_updated'))}: ${esc(content.charter.updated)} · ${esc(ui('cls_observed'))} / ${esc(ui('cls_derived'))} / ${esc(ui('cls_modelled'))} / ${esc(ui('cls_assumed'))} / ${esc(ui('cls_unknown'))}</p></div>`;
 }
 
 const entryCard = (e, lang, ui) => `<article class="entry" data-entry="${esc(e.id)}"><p class="eyebrow">${chip(ui('sc_' + e.scope), 'scope-' + e.scope)} ${chip(ui('cls_' + e.origin), e.origin)} ${e.evidence_state !== 'found' ? chip(ui('st_' + e.evidence_state), 'state-' + e.evidence_state) : ''}</p><p>${esc(pick(e.text, lang))}</p>

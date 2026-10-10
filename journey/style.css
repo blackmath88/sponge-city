@@ -66,3 +66,10 @@ blockquote{margin:6px 0;padding:6px 10px;border-left:3px solid var(--line);color
 .mech.hl{border-color:var(--green);box-shadow:inset 4px 0 0 var(--green)}.focus button{border:0;background:transparent;font-size:16px;min-width:32px;min-height:32px}
 /* --- indicator matrix --- */
 .matrix{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}.matrix th,.matrix td{border-top:1px solid var(--line);padding:10px;vertical-align:top;text-align:left}.matrix thead th{font-size:12px;color:var(--muted);border-top:0}.matrix tbody th{width:20%;font-weight:600}
+/* --- decision chain --- */
+.dchain{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0;counter-reset:none}
+.dstep{display:grid;grid-template-columns:36px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line);position:relative}
+.dnum{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:600 13px/1 Inter,sans-serif}
+.dstep h5{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.dstep p{margin:0}
+.dstep[data-step="3"] .dnum{background:var(--green)}.dstep[data-step="6"] .dnum{background:var(--blue)}
+.elsewhere{margin-top:8px}.elsewhere li{margin-bottom:6px}

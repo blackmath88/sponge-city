@@ -118,7 +118,7 @@ test('Unknown stays unknown: missing and restricted evidence is never presented 
   for (const lang of ['de', 'en']) for (const m of measurements.indicators) {
     const status = charter.indicators.find(i => i.id === m.id).basel.status;
     const html = measureView({ lang, ui: ui(lang), content: { ...content, measureSel: m.id } });
-    const actual = html.split(ui(lang)('m_actual'))[1].split(ui(lang)('m_supports'))[0];
+    const actual = html.split('data-step="3"')[1].split('data-step="4"')[0];
     if (status === 'missing' || status === 'restricted') { assert.match(actual, /chip unknown/); assert.doesNotMatch(actual, /chip observed/, `${m.id} presented as observed`); }
     else if (status === 'partial') { assert.doesNotMatch(actual, /chip observed/); assert.match(actual, /chip partial/); }
     else assert.match(actual, /chip observed/);

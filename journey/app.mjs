@@ -23,7 +23,7 @@ try {
     if (pack) packs[profile.id] = {...pack, city: profile.id, name: profile.name, context: profile.selection.rationale};
   }
   void names;
-  const content = {matrix,concept,practice,measurements,charter,facts,cities:[basel,berlin,copenhagen,...extraCities],citiesNote:null,indicatorNames:{}};
+  const content = {matrix,packs,concept,practice,measurements,charter,facts,cities:[basel,berlin,copenhagen,...extraCities],citiesNote:null,indicatorNames:{}};
   ui = key => dict[lang]?.[key] ?? `[${lang}:${key}]`;
   const params = new URLSearchParams(location.search);
   let place = data.places.find(p=>p.key===params.get('place')) || data.places.find(p=>p.key===manifest.default_place);
@@ -56,6 +56,7 @@ try {
     for (const b of document.querySelectorAll('[data-filter]')) b.onclick = () => {content.practiceFilter=b.dataset.filter;render();};
     for (const b of document.querySelectorAll('[data-indicator]')) b.onclick = () => {content.measureSel=b.dataset.indicator;render();};
     for (const b of document.querySelectorAll('[data-dim]')) b.onclick = () => {content.cityDim=b.dataset.dim;render();};
+    for (const a of document.querySelectorAll('[data-map-layer]')) a.onclick = e => { e.preventDefault(); const [city,id]=a.dataset.mapLayer.split(/:(.+)/); mapState = parseMapState(`?city=${city}&layers=${id}`,packs); viewBoxes.a=viewBoxes.b=null; stage = manifest.modules.find(m=>m.id==='map'); update(); syncUrl(); };
     const download = (name,type,text) => {const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     if ($('export-json')) $('export-json').onclick = () => download(`${place.key}-investigation.${lang}.json`,'application/json',JSON.stringify(exportJson(place,lang,content,overlay),null,2)+'\n');
     if ($('export-md')) $('export-md').onclick = () => download(`${place.key}-investigation.${lang}.md`,'text/markdown',exportMarkdown(place,lang,content,ui,overlay));
