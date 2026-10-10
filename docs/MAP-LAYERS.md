@@ -20,7 +20,7 @@ One folder per city: `data/maps/<city>/layers.json` plus bounded GeoJSON snapsho
     "retrieved": "YYYY-MM-DD", "coverage": "what area/part of the city is covered",
     "publisher": "…", "licence": "…", "licence_url": "https://…", "source_url": "https://…", "attribution": "text to display",
     "limitations": {"de": "…", "en": "…"},          // screening, not site verified etc.
-    "legend": {"type": "categorical|sequential|single", "items": [{"value": "…", "label": {"de":"…","en":"…"}, "color": "#rrggbb"}]},
+    "legend": {"type": "categorical|sequential|single", "property": "feature property whose value picks the legend colour (omit for single)", "items": [{"value": "…", "label": {"de":"…","en":"…"}, "color": "#rrggbb"}]},
     "properties_shown": ["property names that the click-inspect shows"],
     "measure_topic": "sealing|…|null"              // links to a measurement indicator in journey/content/measurements.json
   }],
@@ -29,6 +29,7 @@ One folder per city: `data/maps/<city>/layers.json` plus bounded GeoJSON snapsho
 ```
 
 Rules
+- Map renders `geojson-snapshot` layers itself (SVG, no basemap); `raster-service` layers are listed with source link but not drawn. Prefer snapshots. Legend `items[].value` is compared as a string with the feature property named by `legend.property`.
 - Only layers whose data you actually fetched and whose licence you read. Record the licence text/URL; if the licence is unclear, do not include the geometry — record a gap.
 - Never invent geometry from narrative text. Never reuse another city's data. Simplify on the way in (script in `scripts/maps/`); keep the original coordinates' meaning.
 - `origin` is what the publisher says (modelled hazard ≠ observed). Colour classes follow the publisher's classes where they exist; do not imply two cities' colours are equal measurements.
