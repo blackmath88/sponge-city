@@ -5,7 +5,7 @@
 export const STUDIO_DE = {
   // Evidence and provenance
   evidenceLabel: "Visualisierung",
-  evidenceDescription: "Diese Darstellung ist rein illustrativ und stellt keine vermessene Strassengeometrie oder Machbarkeitspruefung dar.",
+  evidenceDescription: "Diese Darstellung ist rein illustrativ und stellt keine vermessene Strassengeometrie oder Machbarkeitsprüfung dar.",
 
   // General
   studioTitle: "Strassen-Transformationsstudio",
@@ -25,16 +25,16 @@ export const STUDIO_DE = {
     "gehweg-nord": "Gehweg Nord",
     "parkierung": "Parkierung",
     "fahrbahn": "Fahrbahn",
-    "gehweg-sued": "Gehweg Sued",
+    "gehweg-sued": "Gehweg Süd",
   },
 
   // Actions
-  addPlacement: "Hinzufuegen",
+  addPlacement: "Hinzufügen",
   removePlacement: "Entfernen",
   togglePlacement: "Umschalten",
   cloneProposal: "Kopieren",
-  revertProposal: "Zuruecksetzen",
-  resetState: "Alles zuruecksetzen",
+  revertProposal: "Zurücksetzen",
+  resetState: "Alles zurücksetzen",
 
   // Messages
   unknownSlot: "Unbekannter Bereich",
@@ -51,7 +51,7 @@ export const STUDIO_DE = {
 
   // Validation
   validation: {
-    invalidInput: "Ungueltige Eingabe",
+    invalidInput: "Ungültige Eingabe",
     parseError: "Die Daten konnten nicht gelesen werden",
   },
 
