@@ -1,4 +1,4 @@
-import { BASELINE, type Baseline, type InterventionKind, isKindAllowedInSlot } from "./layout.ts";
+import { BASELINE, type Baseline, type InterventionKind, isKindAllowedInSlot, compareStrings } from "./layout.ts";
 
 /**
  * Proposal IDs - only A and B are valid
@@ -57,6 +57,36 @@ export type OperationResult<T> =
   | { ok: false; error: string };
 
 /**
+ * Deep freeze a StudioState and all its nested objects/arrays.
+ * Ensures complete immutability.
+ */
+export function freezeState(state: StudioState): StudioState {
+  // Deep freeze placements arrays and placement objects
+  const frozenProposals: Record<ProposalId, Proposal> = {
+    A: {
+      id: "A",
+      placements: Object.freeze([...state.proposals.A.placements].map((p) => Object.freeze({ ...p }))),
+    },
+    B: {
+      id: "B",
+      placements: Object.freeze([...state.proposals.B.placements].map((p) => Object.freeze({ ...p }))),
+    },
+  };
+  
+  Object.freeze(frozenProposals.A);
+  Object.freeze(frozenProposals.B);
+  Object.freeze(frozenProposals);
+
+  return Object.freeze({
+    version: state.version,
+    evidence: state.evidence,
+    placeId: state.placeId,
+    baseline: state.baseline,
+    proposals: frozenProposals,
+  });
+}
+
+/**
  * Create a new StudioState with the given placeId
  * Proposals A and B start empty (no placements)
  */
@@ -66,12 +96,16 @@ export function createState(placeId: string | null): StudioState {
     B: { id: "B", placements: Object.freeze([]) },
   };
   
-  return Object.freeze({
+  Object.freeze(proposals.A);
+  Object.freeze(proposals.B);
+  Object.freeze(proposals);
+  
+  return freezeState({
     version: STATE_VERSION,
     evidence: EVIDENCE,
     placeId,
     baseline: BASELINE,
-    proposals: Object.freeze(proposals),
+    proposals,
   });
 }
 
@@ -83,10 +117,10 @@ export function isEmpty(proposal: Proposal): boolean {
 }
 
 /**
- * Sort placements by slotId for deterministic ordering
+ * Sort placements by slotId for deterministic ordering (code-point based)
  */
 function sortPlacements(placements: readonly Placement[]): readonly Placement[] {
-  return Object.freeze([...placements].sort((a, b) => a.slotId.localeCompare(b.slotId)));
+  return Object.freeze([...placements].sort((a, b) => compareStrings(a.slotId, b.slotId)));
 }
 
 /**
@@ -129,19 +163,18 @@ export function addPlacement(
   const newPlacement: Placement = { slotId, kind };
   const newPlacements = sortPlacements([...proposal.placements, newPlacement]);
 
-  return {
-    ok: true,
-    value: Object.freeze({
-      ...state,
-      proposals: {
-        ...state.proposals,
-        [proposalId]: {
-          id: proposalId,
-          placements: newPlacements,
-        },
+  const newState: StudioState = {
+    ...state,
+    proposals: {
+      ...state.proposals,
+      [proposalId]: {
+        id: proposalId,
+        placements: newPlacements,
       },
-    }),
+    },
   };
+
+  return { ok: true, value: freezeState(newState) };
 }
 
 /**
@@ -164,23 +197,20 @@ export function removePlacement(
     return { ok: false, error: `No placement found for slot ${slotId} in proposal ${proposalId}` };
   }
 
-  const newPlacements = Object.freeze(
-    [...proposal.placements].filter((_, i) => i !== existingIndex)
-  );
+  const newPlacements = [...proposal.placements].filter((_, i) => i !== existingIndex);
 
-  return {
-    ok: true,
-    value: Object.freeze({
-      ...state,
-      proposals: {
-        ...state.proposals,
-        [proposalId]: {
-          id: proposalId,
-          placements: newPlacements,
-        },
+  const newState: StudioState = {
+    ...state,
+    proposals: {
+      ...state.proposals,
+      [proposalId]: {
+        id: proposalId,
+        placements: Object.freeze(newPlacements),
       },
-    }),
+    },
   };
+
+  return { ok: true, value: freezeState(newState) };
 }
 
 /**
@@ -224,19 +254,18 @@ export function togglePlacement(
     p.slotId === slotId ? { slotId, kind } : p
   );
 
-  return {
-    ok: true,
-    value: Object.freeze({
-      ...state,
-      proposals: {
-        ...state.proposals,
-        [proposalId]: {
-          id: proposalId,
-          placements: sortPlacements(Object.freeze(newPlacements)),
-        },
+  const newState: StudioState = {
+    ...state,
+    proposals: {
+      ...state.proposals,
+      [proposalId]: {
+        id: proposalId,
+        placements: sortPlacements(newPlacements),
       },
-    }),
+    },
   };
+
+  return { ok: true, value: freezeState(newState) };
 }
 
 /**
@@ -250,26 +279,30 @@ export function cloneProposal(
 ): StudioState {
   if (from === to) return state;
 
-  return Object.freeze({
+  const newState: StudioState = {
     ...state,
     proposals: {
       ...state.proposals,
       [to]: deepCloneProposal(state.proposals[from]),
     },
-  });
+  };
+
+  return freezeState(newState);
 }
 
 /**
  * Revert a proposal to baseline (empty state, matching the baseline)
  */
 export function revertProposal(state: StudioState, id: ProposalId): StudioState {
-  return Object.freeze({
+  const newState: StudioState = {
     ...state,
     proposals: {
       ...state.proposals,
       [id]: { id, placements: Object.freeze([]) },
     },
-  });
+  };
+
+  return freezeState(newState);
 }
 
 /**
@@ -285,22 +318,5 @@ export function resetState(state: StudioState): StudioState {
  */
 export function diffFromBaseline(proposal: Proposal): readonly Placement[] {
   // Baseline has no placements, so all placements in the proposal are additions
-  return Object.freeze([...proposal.placements].sort((a, b) => a.slotId.localeCompare(b.slotId)));
-}
-
-/**
- * Type guard to check if a value is a valid StudioState
- */
-export function isStudioState(value: unknown): value is StudioState {
-  if (value === null || typeof value !== "object") return false;
-  const state = value as Partial<StudioState>;
-  return (
-    state.version === STATE_VERSION &&
-    state.evidence === EVIDENCE &&
-    typeof state.placeId === "string" || state.placeId === null &&
-    state.baseline !== undefined &&
-    state.proposals !== undefined &&
-    state.proposals.A !== undefined &&
-    state.proposals.B !== undefined
-  );
+  return Object.freeze([...proposal.placements].sort((a, b) => compareStrings(a.slotId, b.slotId)));
 }

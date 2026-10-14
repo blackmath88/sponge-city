@@ -1,15 +1,14 @@
 /**
- * German user-facing strings for the Studio.
+ * German user-facing strings for the Studio (Swiss German spelling).
  * One plain exported object, no i18n library.
  */
 export const STUDIO_DE = {
   // Evidence and provenance
-  evidence: "illustrative",
   evidenceLabel: "Visualisierung",
-  evidenceDescription: "Diese Darstellung ist rein illustrativ und stellt keine vermessene Straßengeometrie oder Machbarkeitsprüfung dar.",
+  evidenceDescription: "Diese Darstellung ist rein illustrativ und stellt keine vermessene Strassengeometrie oder Machbarkeitspruefung dar.",
 
   // General
-  studioTitle: "Straßen-Transformationsstudio",
+  studioTitle: "Strassen-Transformationsstudio",
   proposalA: "Variante A",
   proposalB: "Variante B",
   baseline: "Ausgangszustand",
@@ -17,7 +16,7 @@ export const STUDIO_DE = {
   // Intervention kinds (from catalogue)
   intervention: {
     "tree-trench": "Baumrigole",
-    "rain-garden": "Regenbeet",
+    "rain-garden": "Regengarten",
     "depave": "Entsiegelung",
   },
 
@@ -26,16 +25,16 @@ export const STUDIO_DE = {
     "gehweg-nord": "Gehweg Nord",
     "parkierung": "Parkierung",
     "fahrbahn": "Fahrbahn",
-    "gehweg-sued": "Gehweg Süd",
+    "gehweg-sued": "Gehweg Sued",
   },
 
   // Actions
-  addPlacement: "Hinzufügen",
+  addPlacement: "Hinzufuegen",
   removePlacement: "Entfernen",
   togglePlacement: "Umschalten",
   cloneProposal: "Kopieren",
-  revertProposal: "Zurücksetzen",
-  resetState: "Alles zurücksetzen",
+  revertProposal: "Zuruecksetzen",
+  resetState: "Alles zuruecksetzen",
 
   // Messages
   unknownSlot: "Unbekannter Bereich",
@@ -45,14 +44,14 @@ export const STUDIO_DE = {
 
   // Tooltips and help
   help: {
-    schematic: "Schematische Darstellung – nicht maßstabsgetreu",
-    illustrative: "Reine Visualisierung ohne reelle Daten",
-    placement: "Platziere eine Maßnahme in einem Bereich",
+    schematic: "Schematische Darstellung – nicht massstabsgetreu",
+    illustrative: "Reine Visualisierung ohne gemessene Daten",
+    placement: "Platziere eine Massnahme in einem Bereich",
   },
 
   // Validation
   validation: {
-    invalidInput: "Ungültige Eingabe",
+    invalidInput: "Ungueltige Eingabe",
     parseError: "Die Daten konnten nicht gelesen werden",
   },
 

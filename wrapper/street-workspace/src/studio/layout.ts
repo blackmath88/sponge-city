@@ -24,15 +24,18 @@ export const BAND_IDS = [
 
 /**
  * Allowed intervention kinds per band.
- * sidewalk (gehweg) → tree-trench, rain-garden
- * parking (parkierung) → tree-trench, rain-garden, depave
- * road (fahrbahn) → none (no interventions allowed)
+ * Based on intervention-knowledge.json:
+ * - sidewalk (gehweg-nord, gehweg-sued) → tree-trench, rain-garden, depave
+ *   (these apply to element_types: ["sidewalk", "parking"])
+ * - parking (parkierung) → tree-trench, rain-garden, depave
+ *   (these apply to element_types: ["sidewalk", "parking"])
+ * - road (fahrbahn) → none (no interventions apply to "road" element_type)
  */
 export const ALLOWED_KINDS: Record<(typeof BAND_IDS)[number], readonly InterventionKind[]> = {
-  "gehweg-nord": ["tree-trench", "rain-garden"],
+  "gehweg-nord": ["tree-trench", "rain-garden", "depave"],
   "parkierung": ["tree-trench", "rain-garden", "depave"],
   "fahrbahn": [],
-  "gehweg-sued": ["tree-trench", "rain-garden"],
+  "gehweg-sued": ["tree-trench", "rain-garden", "depave"],
 } as const;
 
 /**
@@ -68,6 +71,14 @@ export function getBandForSlot(slotId: string): (typeof BAND_IDS)[number] | null
     }
   }
   return null;
+}
+
+/**
+ * Deterministic string comparison using code-point order.
+ * Used instead of localeCompare for consistent sorting across all locales.
+ */
+export function compareStrings(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
 }
 
 /**

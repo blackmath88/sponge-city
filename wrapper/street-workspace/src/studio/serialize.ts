@@ -1,11 +1,12 @@
 import {
   EVIDENCE,
   STATE_VERSION,
+  freezeState,
   type StudioState,
   type ProposalId,
   type Placement,
 } from "./state.ts";
-import { BASELINE, isKindAllowedInSlot, ALL_SLOT_IDS } from "./layout.ts";
+import { BASELINE, isKindAllowedInSlot, ALL_SLOT_IDS, compareStrings } from "./layout.ts";
 
 /**
  * Serialize a StudioState to a JSON string.
@@ -19,8 +20,8 @@ export function serialize(state: StudioState): string {
   
   // Sort proposals by id (A, B)
   const sortedProposals: Record<ProposalId, { id: ProposalId; placements: readonly Placement[] }> = {
-    A: { id: "A", placements: [...state.proposals.A.placements].sort((a, b) => a.slotId.localeCompare(b.slotId)) },
-    B: { id: "B", placements: [...state.proposals.B.placements].sort((a, b) => a.slotId.localeCompare(b.slotId)) },
+    A: { id: "A", placements: [...state.proposals.A.placements].sort((a, b) => compareStrings(a.slotId, b.slotId)) },
+    B: { id: "B", placements: [...state.proposals.B.placements].sort((a, b) => compareStrings(a.slotId, b.slotId)) },
   };
 
   const serialized = {
@@ -152,44 +153,20 @@ export function parse(raw: unknown): StudioState | null {
     }
 
     // Sort by slotId for determinism
-    validPlacements.sort((a, b) => a.slotId.localeCompare(b.slotId));
+    validPlacements.sort((a, b) => compareStrings(a.slotId, b.slotId));
     validatedProposals[proposalId] = {
       id: proposalId,
       placements: Object.freeze(validPlacements),
     };
   }
 
-  return Object.freeze({
+  const builtState: StudioState = {
     version: STATE_VERSION,
     evidence: EVIDENCE,
     placeId: obj.placeId as string | null,
     baseline: BASELINE,
     proposals: Object.freeze(validatedProposals),
-  });
-}
+  };
 
-/**
- * Check if serialized output contains no numeric effect fields.
- * This is a test helper to ensure we're not serializing any numeric fields
- * related to effects (m², m³, °C, %, runoff, cooling, scores, etc.)
- */
-export function hasNumericEffectFields(serialized: string): boolean {
-  const forbiddenPatterns = [
-    /"m2"/,
-    /"m3"/,
-    /"m²"/,
-    /"m³"/,
-    /"runoff"/,
-    /"cooling"/,
-    /"score"/,
-    /"temperature"/,
-    /"percent"/,
-    /"%"/,
-    /"sewerM3"/,
-    /"storedM3"/,
-    /"infiltratedM3"/,
-    /"balanceErrorM3"/,
-  ];
-  
-  return forbiddenPatterns.some((pattern) => pattern.test(serialized));
+  return freezeState(builtState);
 }
