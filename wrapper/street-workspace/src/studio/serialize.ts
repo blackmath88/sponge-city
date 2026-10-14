@@ -1,11 +1,11 @@
 import {
   EVIDENCE,
   STATE_VERSION,
-  freezeState,
   type StudioState,
   type ProposalId,
   type Placement,
 } from "./state.ts";
+import { freezeState } from "./freeze.ts";
 import { BASELINE, isKindAllowedInSlot, ALL_SLOT_IDS, compareStrings } from "./layout.ts";
 
 /**
