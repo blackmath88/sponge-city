@@ -2,6 +2,8 @@
 
 Status: research-backed design direction. Exact field schemas, licences, endpoints and update cadences must be verified during implementation.
 
+Verified dataset ids, endpoints, fields and licences (checked 3 October 2026): [docs/DATA-SOURCES.md](../docs/DATA-SOURCES.md).
+
 ## Principle
 
 There is no single “sponge-city dataset”.

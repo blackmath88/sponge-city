@@ -1,0 +1,1657 @@
+{
+  "source": "https://planetarycomputer.microsoft.com/api/stac/v1",
+  "collection": "landsat-c2-l2",
+  "period": {
+    "start": "2021-06-01T00:00:00Z",
+    "end": "2025-08-31T23:59:59Z"
+  },
+  "cloud_filter": "< 20%",
+  "cloud_filter_relaxed": false,
+  "qa_bits_excluded": {
+    "fill": 0,
+    "dilated_cloud": 1,
+    "cirrus": 2,
+    "cloud": 3,
+    "cloud_shadow": 4,
+    "snow_ice": 5
+  },
+  "scenes": [
+    {
+      "id": "LC08_L2SP_196027_20210821_02_T1",
+      "datetime": "2021-08-21T10:22:51.798854+00:00",
+      "cloud_cover": 4.35,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 35.25619874000006,
+        "mean_c": 35.09117476719426,
+        "min_c": 32.740536020000036,
+        "max_c": 36.52086614000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 36.20640830000002,
+        "mean_c": 35.199271112146384,
+        "min_c": 22.322411060000036,
+        "max_c": 45.192382880000025
+      },
+      "anomaly_c": -0.950209559999962,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20210814_02_T1",
+      "datetime": "2021-08-14T10:16:38.990585+00:00",
+      "cloud_cover": 2.48,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 44.026838060000046,
+        "mean_c": 44.08391161697844,
+        "min_c": 42.40327855999999,
+        "max_c": 45.373537940000006
+      },
+      "ring": {
+        "valid_pixel_count": 8361,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6377574370709382,
+        "median_c": 43.30221782000001,
+        "mean_c": 42.05009746818086,
+        "min_c": 26.926484000000016,
+        "max_c": 52.318954580000025
+      },
+      "anomaly_c": 0.7246202400000357,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20210720_02_T1",
+      "datetime": "2021-07-20T10:22:38.665507+00:00",
+      "cloud_cover": 2.13,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 36.613152679999985,
+        "mean_c": 36.664521340287784,
+        "min_c": 35.31772310000002,
+        "max_c": 37.84022186000004
+      },
+      "ring": {
+        "valid_pixel_count": 8351,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6369946605644546,
+        "median_c": 35.755229660000055,
+        "mean_c": 34.66917641853193,
+        "min_c": 22.014789260000043,
+        "max_c": 44.748040280000055
+      },
+      "anomaly_c": 0.8579230199999301,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20210611_02_T1",
+      "datetime": "2021-06-11T10:16:19.420774+00:00",
+      "cloud_cover": 18.35,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.78313708000002,
+        "mean_c": 40.78168626575541,
+        "min_c": 39.36124075999999,
+        "max_c": 42.00337022000002
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 39.85343564000004,
+        "mean_c": 38.45976301832837,
+        "min_c": 22.506984139999986,
+        "max_c": 49.86139820000005
+      },
+      "anomaly_c": 0.9297014399999739,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20220825_02_T1",
+      "datetime": "2022-08-25T10:16:44.466634+00:00",
+      "cloud_cover": 1.67,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 38.99209460000003,
+        "mean_c": 38.950684918848935,
+        "min_c": 37.66248482000003,
+        "max_c": 40.12345922000003
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 38.51357180000002,
+        "mean_c": 37.70611270029656,
+        "min_c": 26.71798478000005,
+        "max_c": 48.24467474000005
+      },
+      "anomaly_c": 0.47852280000000746,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20220816_02_T1",
+      "datetime": "2022-08-16T10:22:53.558661+00:00",
+      "cloud_cover": 7.18,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 38.05897514000003,
+        "mean_c": 37.9857950858993,
+        "min_c": 36.613152679999985,
+        "max_c": 39.12197936000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 37.40271530000001,
+        "mean_c": 36.74331127395913,
+        "min_c": 27.203343620000055,
+        "max_c": 46.323747500000025
+      },
+      "anomaly_c": 0.6562598400000184,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20220809_02_T1",
+      "datetime": "2022-08-09T10:16:39.783281+00:00",
+      "cloud_cover": 0.61,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 38.86220983999999,
+        "mean_c": 38.88151304647484,
+        "min_c": 37.35144500000001,
+        "max_c": 40.297778240000014
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 38.769923300000016,
+        "mean_c": 37.9922454825326,
+        "min_c": 27.36057254000002,
+        "max_c": 45.69824984000002
+      },
+      "anomaly_c": 0.09228653999997505,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20220808_02_T1",
+      "datetime": "2022-08-08T10:23:10.499541+00:00",
+      "cloud_cover": 0.37,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 37.68641095999999,
+        "mean_c": 37.75664020546765,
+        "min_c": 36.54137426,
+        "max_c": 39.019438760000014
+      },
+      "ring": {
+        "valid_pixel_count": 8362,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6378337147215866,
+        "median_c": 37.68811997,
+        "mean_c": 36.95331188851712,
+        "min_c": 26.588100020000013,
+        "max_c": 45.38037398000006
+      },
+      "anomaly_c": -0.0017090100000132225,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20220715_02_T1",
+      "datetime": "2022-07-15T10:22:29.632535+00:00",
+      "cloud_cover": 2.74,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.89251372000001,
+        "mean_c": 40.88029245424462,
+        "min_c": 38.83144765999998,
+        "max_c": 42.05464052000002
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 40.509695480000005,
+        "mean_c": 39.654820599801525,
+        "min_c": 27.545145620000028,
+        "max_c": 48.46001000000001
+      },
+      "anomaly_c": 0.38281824000000597,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20220708_02_T1",
+      "datetime": "2022-07-08T10:16:20.982873+00:00",
+      "cloud_cover": 10.22,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 36.80114378000002,
+        "mean_c": 36.79701264791368,
+        "min_c": 35.362157360000026,
+        "max_c": 38.41786724000002
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 36.12779383999998,
+        "mean_c": 35.28905391060387,
+        "min_c": 24.783385459999977,
+        "max_c": 44.68993394000006
+      },
+      "anomaly_c": 0.6733499400000369,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20220613_02_T1",
+      "datetime": "2022-06-13T10:22:17.020149+00:00",
+      "cloud_cover": 4.88,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 36.15855601999999,
+        "mean_c": 36.09152348388491,
+        "min_c": 34.617029,
+        "max_c": 37.25232242000004
+      },
+      "ring": {
+        "valid_pixel_count": 7980,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6086956521739131,
+        "median_c": 35.58091064000001,
+        "mean_c": 34.6570241172331,
+        "min_c": 22.715483360000007,
+        "max_c": 42.129836960000034
+      },
+      "anomaly_c": 0.5776453799999786,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20230820_02_T1",
+      "datetime": "2023-08-20T10:16:28.826630+00:00",
+      "cloud_cover": 4.06,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 42.553671440000016,
+        "mean_c": 42.636736703021604,
+        "min_c": 41.03948858000001,
+        "max_c": 43.96189568
+      },
+      "ring": {
+        "valid_pixel_count": 5657,
+        "pixel_count": 13110,
+        "valid_fraction": 0.4315026697177727,
+        "median_c": 40.53020360000005,
+        "mean_c": 39.67007460668908,
+        "min_c": 26.45821526000003,
+        "max_c": 46.57668097999999
+      },
+      "anomaly_c": 2.0234678399999666,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20230811_02_T1",
+      "datetime": "2023-08-11T10:22:32.822541+00:00",
+      "cloud_cover": 1.09,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.01066456000001,
+        "mean_c": 40.05743487683455,
+        "min_c": 39.15957758000002,
+        "max_c": 41.148865220000005
+      },
+      "ring": {
+        "valid_pixel_count": 8361,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6377574370709382,
+        "median_c": 39.58683008000003,
+        "mean_c": 38.51385673720131,
+        "min_c": 24.99188468,
+        "max_c": 47.98490522000003
+      },
+      "anomaly_c": 0.42383447999998225,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20230711_02_T1",
+      "datetime": "2023-07-11T10:16:05.702083+00:00",
+      "cloud_cover": 5.73,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 48.53862446000005,
+        "mean_c": 48.46298539870506,
+        "min_c": 46.47755840000002,
+        "max_c": 49.88874236000004
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 47.12698220000004,
+        "mean_c": 45.888448368676336,
+        "min_c": 30.14967686,
+        "max_c": 57.38787824000002
+      },
+      "anomaly_c": 1.4116422600000078,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20230625_02_T1",
+      "datetime": "2023-06-25T10:15:49.235407+00:00",
+      "cloud_cover": 1.3,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 42.06489457999999,
+        "mean_c": 42.01111609266189,
+        "min_c": 40.79339114000004,
+        "max_c": 42.998014040000044
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 41.032652540000015,
+        "mean_c": 39.85886450041614,
+        "min_c": 26.05147088000001,
+        "max_c": 49.98102890000001
+      },
+      "anomaly_c": 1.0322420399999714,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20230617_02_T1",
+      "datetime": "2023-06-17T10:15:58.523134+00:00",
+      "cloud_cover": 16.08,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 41.572699700000044,
+        "mean_c": 41.61703559971224,
+        "min_c": 39.92521406000003,
+        "max_c": 42.86129324000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 40.49602340000001,
+        "mean_c": 39.3323819303695,
+        "min_c": 24.95428646000005,
+        "max_c": 48.53178842
+      },
+      "anomaly_c": 1.076676300000031,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20230609_02_T1",
+      "datetime": "2023-06-09T10:15:55.009451+00:00",
+      "cloud_cover": 7.33,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 43.12448078,
+        "mean_c": 43.14139874949643,
+        "min_c": 41.408634740000025,
+        "max_c": 44.77196642000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 42.15376309999999,
+        "mean_c": 40.81739902148034,
+        "min_c": 26.297568319999982,
+        "max_c": 51.037197080000055
+      },
+      "anomaly_c": 0.970717680000007,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20230608_02_T1",
+      "datetime": "2023-06-08T10:22:05.491956+00:00",
+      "cloud_cover": 18.72,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.76262896000003,
+        "mean_c": 40.77637481021584,
+        "min_c": 39.48428948000003,
+        "max_c": 41.96235397999999
+      },
+      "ring": {
+        "valid_pixel_count": 8357,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6374523264683448,
+        "median_c": 39.96281227999998,
+        "mean_c": 38.87197187199236,
+        "min_c": 25.72334096000003,
+        "max_c": 49.878488300000015
+      },
+      "anomaly_c": 0.799816680000049,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20230601_02_T1",
+      "datetime": "2023-06-01T10:15:48.860636+00:00",
+      "cloud_cover": 16.97,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.43449903999999,
+        "mean_c": 40.35502392748203,
+        "min_c": 38.69130884000003,
+        "max_c": 41.69916644
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 39.22793797999998,
+        "mean_c": 37.9307705761282,
+        "min_c": 22.688139200000023,
+        "max_c": 48.20024048000005
+      },
+      "anomaly_c": 1.2065610600000127,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20240829_02_T1",
+      "datetime": "2024-08-29T10:22:26.577314+00:00",
+      "cloud_cover": 0.61,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 39.73380494000003,
+        "mean_c": 39.74956717611512,
+        "min_c": 38.27431039999999,
+        "max_c": 40.97112818000005
+      },
+      "ring": {
+        "valid_pixel_count": 8362,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6378337147215866,
+        "median_c": 39.106598270000035,
+        "mean_c": 38.1916063334346,
+        "min_c": 25.617382340000006,
+        "max_c": 47.59525094000003
+      },
+      "anomaly_c": 0.6272066699999925,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20240822_02_T1",
+      "datetime": "2024-08-22T10:16:16.000770+00:00",
+      "cloud_cover": 8.85,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 35.75181164000003,
+        "mean_c": 35.75586900187052,
+        "min_c": 34.38118562,
+        "max_c": 37.17370796
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 35.150240120000035,
+        "mean_c": 34.40550984100923,
+        "min_c": 24.88592606000003,
+        "max_c": 44.18406698000001
+      },
+      "anomaly_c": 0.6015715199999931,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20240813_02_T1",
+      "datetime": "2024-08-13T10:22:20.075356+00:00",
+      "cloud_cover": 3.12,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 43.52780714000005,
+        "mean_c": 43.537864479424485,
+        "min_c": 42.191361320000055,
+        "max_c": 45.02148188000001
+      },
+      "ring": {
+        "valid_pixel_count": 8362,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6378337147215866,
+        "median_c": 43.22873039000001,
+        "mean_c": 42.224503687809154,
+        "min_c": 28.44066686000002,
+        "max_c": 51.98398861999999
+      },
+      "anomaly_c": 0.2990767500000402,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20240806_02_T1",
+      "datetime": "2024-08-06T10:16:03.580881+00:00",
+      "cloud_cover": 4.74,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 38.882717960000036,
+        "mean_c": 38.85743936604319,
+        "min_c": 37.676156900000024,
+        "max_c": 40.07902496000003
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 37.93934444000001,
+        "mean_c": 37.2426344197513,
+        "min_c": 25.142277560000025,
+        "max_c": 47.10647408
+      },
+      "anomaly_c": 0.9433735200000228,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20240805_02_T1",
+      "datetime": "2024-08-05T10:22:12.105829+00:00",
+      "cloud_cover": 7.25,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.23967190000002,
+        "mean_c": 40.30232740330937,
+        "min_c": 38.27772842000002,
+        "max_c": 41.53510147999998
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 39.904705939999985,
+        "mean_c": 39.00895418902549,
+        "min_c": 26.776091120000046,
+        "max_c": 48.62407496000003
+      },
+      "anomaly_c": 0.33496596000003365,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20240729_02_T1",
+      "datetime": "2024-07-29T10:15:58.248082+00:00",
+      "cloud_cover": 5.76,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 37.25574044000001,
+        "mean_c": 37.26633876100722,
+        "min_c": 35.95347482,
+        "max_c": 38.52382585999999
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 36.790889719999996,
+        "mean_c": 35.86044647606602,
+        "min_c": 24.769713379999985,
+        "max_c": 44.932613360000005
+      },
+      "anomaly_c": 0.46485072000001537,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20240720_02_T1",
+      "datetime": "2024-07-20T10:22:08.456053+00:00",
+      "cloud_cover": 9.49,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 44.901851179999994,
+        "mean_c": 44.84743335079139,
+        "min_c": 43.26461960000006,
+        "max_c": 46.05372392000004
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 43.883281220000015,
+        "mean_c": 42.69899062631593,
+        "min_c": 27.893783660000054,
+        "max_c": 53.17687760000001
+      },
+      "anomaly_c": 1.0185699599999793,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20240610_02_T1",
+      "datetime": "2024-06-10T10:21:46.214978+00:00",
+      "cloud_cover": 10.45,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 32.62090532000002,
+        "mean_c": 32.58333169007196,
+        "min_c": 31.530556939999997,
+        "max_c": 33.51642656000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 31.821088640000028,
+        "mean_c": 30.934541388418047,
+        "min_c": 19.772568140000033,
+        "max_c": 40.625908159999994
+      },
+      "anomaly_c": 0.7998166799999922,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20250825_02_T1",
+      "datetime": "2025-08-25T10:16:33.537264+00:00",
+      "cloud_cover": 1.86,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 32.32353757999999,
+        "mean_c": 32.28424264503599,
+        "min_c": 30.90164126000002,
+        "max_c": 33.30792733999999
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 31.80741655999998,
+        "mean_c": 31.162212255214655,
+        "min_c": 22.896638420000045,
+        "max_c": 40.35588458000001
+      },
+      "anomaly_c": 0.5161210200000141,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20250824_02_T1",
+      "datetime": "2025-08-24T10:22:48.502023+00:00",
+      "cloud_cover": 4.67,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 30.942657499999996,
+        "mean_c": 30.952591889064763,
+        "min_c": 29.68482614000004,
+        "max_c": 31.879194980000022
+      },
+      "ring": {
+        "valid_pixel_count": 8362,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6378337147215866,
+        "median_c": 30.558130250000005,
+        "mean_c": 30.030840373448957,
+        "min_c": 22.51723820000001,
+        "max_c": 38.99551262
+      },
+      "anomaly_c": 0.3845272499999908,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20250816_02_T1",
+      "datetime": "2025-08-16T10:22:44.089232+00:00",
+      "cloud_cover": 9.02,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 137,
+        "pixel_count": 210,
+        "valid_fraction": 0.6523809523809524,
+        "median_c": 34.00520342000004,
+        "mean_c": 34.053978814890534,
+        "min_c": 32.825986520000015,
+        "max_c": 35.13656804000004
+      },
+      "ring": {
+        "valid_pixel_count": 2218,
+        "pixel_count": 13110,
+        "valid_fraction": 0.16918382913806254,
+        "median_c": 33.53693468000006,
+        "mean_c": 33.346598121731304,
+        "min_c": 23.590496480000013,
+        "max_c": 38.920316179999986
+      },
+      "anomaly_c": 0.468268739999985,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20250809_02_T1",
+      "datetime": "2025-08-09T10:16:30.772145+00:00",
+      "cloud_cover": 0.58,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.55412974000001,
+        "mean_c": 40.50984302043167,
+        "min_c": 39.183503719999976,
+        "max_c": 41.589789800000005
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 39.69962473999999,
+        "mean_c": 38.52248897808922,
+        "min_c": 24.198904040000002,
+        "max_c": 47.94730700000002
+      },
+      "anomaly_c": 0.8545050000000174,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20250808_02_T1",
+      "datetime": "2025-08-08T10:22:41.545594+00:00",
+      "cloud_cover": 0.01,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 40.068770900000004,
+        "mean_c": 40.00282032705039,
+        "min_c": 38.22987613999999,
+        "max_c": 40.98821828000001
+      },
+      "ring": {
+        "valid_pixel_count": 8361,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6377574370709382,
+        "median_c": 39.29971640000002,
+        "mean_c": 38.22303682955869,
+        "min_c": 25.039736960000027,
+        "max_c": 48.025921460000006
+      },
+      "anomaly_c": 0.7690544999999815,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_195027_20250630_02_T1",
+      "datetime": "2025-06-30T10:16:13.151572+00:00",
+      "cloud_cover": 3.7,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 48.08402780000006,
+        "mean_c": 48.11378178705038,
+        "min_c": 46.41261602000003,
+        "max_c": 49.55719442000003
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 47.48587429999998,
+        "mean_c": 46.124820616054066,
+        "min_c": 30.41286439999999,
+        "max_c": 55.48404110000001
+      },
+      "anomaly_c": 0.5981535000000804,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20250629_02_T1",
+      "datetime": "2025-06-29T10:22:26.437592+00:00",
+      "cloud_cover": 0.63,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 45.537602900000024,
+        "mean_c": 45.53246357496404,
+        "min_c": 43.801248740000005,
+        "max_c": 46.84328654000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 45.16845674000001,
+        "mean_c": 43.88246748356333,
+        "min_c": 28.341544279999994,
+        "max_c": 53.894661799999994
+      },
+      "anomaly_c": 0.3691461600000139,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_195027_20250622_02_T1",
+      "datetime": "2025-06-22T10:16:12.983765+00:00",
+      "cloud_cover": 1.29,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 44.932613360000005,
+        "mean_c": 45.00080162949643,
+        "min_c": 43.685036060000016,
+        "max_c": 46.443378199999984
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 43.011686120000036,
+        "mean_c": 41.83140944170754,
+        "min_c": 25.96602038000003,
+        "max_c": 51.98740664000002
+      },
+      "anomaly_c": 1.920927239999969,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC09_L2SP_196027_20250621_02_T1",
+      "datetime": "2025-06-21T10:22:20.166652+00:00",
+      "cloud_cover": 2.8,
+      "platform": "landsat-9",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 43.80466676000003,
+        "mean_c": 43.80250283366908,
+        "min_c": 42.18794330000003,
+        "max_c": 45.02148188000001
+      },
+      "ring": {
+        "valid_pixel_count": 8363,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6379099923722349,
+        "median_c": 43.20309524000004,
+        "mean_c": 41.92022891681934,
+        "min_c": 27.50754740000002,
+        "max_c": 51.92930030000002
+      },
+      "anomaly_c": 0.6015715199999931,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20250613_02_T1",
+      "datetime": "2025-06-13T10:22:17.925825+00:00",
+      "cloud_cover": 1.0,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 139,
+        "pixel_count": 210,
+        "valid_fraction": 0.6619047619047619,
+        "median_c": 43.603003580000006,
+        "mean_c": 43.574823357553974,
+        "min_c": 41.92817378000001,
+        "max_c": 44.88476108000003
+      },
+      "ring": {
+        "valid_pixel_count": 8361,
+        "pixel_count": 13110,
+        "valid_fraction": 0.6377574370709382,
+        "median_c": 41.81196110000002,
+        "mean_c": 40.3752917876857,
+        "min_c": 23.751143420000005,
+        "max_c": 50.36726515999999
+      },
+      "anomaly_c": 1.7910424799999873,
+      "accepted": true,
+      "rejection_reasons": []
+    },
+    {
+      "id": "LC08_L2SP_196027_20230624_02_T1",
+      "datetime": "2023-06-24T10:22:11.303979+00:00",
+      "cloud_cover": 0.29,
+      "platform": "landsat-8",
+      "thermal_asset": "lwir11",
+      "qa_asset": "qa_pixel",
+      "calibration": {
+        "scale": 0.00341802,
+        "offset": 149.0,
+        "nodata": 0,
+        "unit": "kelvin"
+      },
+      "qa_bits_excluded": {
+        "fill": 0,
+        "dilated_cloud": 1,
+        "cirrus": 2,
+        "cloud": 3,
+        "cloud_shadow": 4,
+        "snow_ice": 5
+      },
+      "aoi": {
+        "valid_pixel_count": 0,
+        "pixel_count": 210,
+        "valid_fraction": 0.0,
+        "median_c": null,
+        "mean_c": null,
+        "min_c": null,
+        "max_c": null
+      },
+      "ring": {
+        "valid_pixel_count": 1171,
+        "pixel_count": 13110,
+        "valid_fraction": 0.0893211289092296,
+        "median_c": 34.75716782000001,
+        "mean_c": 34.05087820818106,
+        "min_c": 24.725279119999982,
+        "max_c": 40.184983579999994
+      },
+      "anomaly_c": null,
+      "accepted": false,
+      "rejection_reasons": [
+        "zero valid AOI pixels",
+        "AOI valid fraction 0.000 below 0.50"
+      ]
+    }
+  ]
+}

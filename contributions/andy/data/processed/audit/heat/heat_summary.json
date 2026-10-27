@@ -1,0 +1,36 @@
+{
+  "source_file": "data/raw_data/heat/basel_stadt_waermeinseleffekt_current_epsg2056.gpkg",
+  "source_layer": "fokusgebiet_hitzeentwicklung",
+  "source_type": "categorical",
+  "status": "FAIL",
+  "source": "delivered official local GeoPackage",
+  "indicator": "Fokusgebiete Stadtklimakonzept, not a numerical heat indicator",
+  "crs": "EPSG:2056",
+  "unit": null,
+  "model_year": null,
+  "resolution": null,
+  "value_field": null,
+  "feature_or_pixel_count": 976,
+  "valid_value_count": 0,
+  "null_or_nodata_count": null,
+  "coverage_area_m2": 125322.12182409684,
+  "coverage_fraction": 0.9999999999999949,
+  "mean_heat_island_k": null,
+  "area_weighted_mean_heat_island_k": null,
+  "median_heat_island_k": null,
+  "minimum_heat_island_k": null,
+  "maximum_heat_island_k": null,
+  "class_areas_m2": {
+    "übriges Gebiet": 15758.958752146118,
+    "Fokus": 109563.16307195071
+  },
+  "class_fractions": {
+    "übriges Gebiet": 0.12574762159122585,
+    "Fokus": 0.8742523784087689
+  },
+  "limitations": [
+    "The only numeric fields are FID and Id_Fokusgebiet identifiers.",
+    "Art contains planning categories Erhalten, Fokus, Verbessern and übriges Gebiet, not heat intensity.",
+    "No unit, model year, resolution, heat value field or metadata tables are present."
+  ]
+}

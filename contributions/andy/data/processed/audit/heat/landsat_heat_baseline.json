@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "source": "https://planetarycomputer.microsoft.com/api/stac/v1",
+  "variable": "satellite-derived daytime land-surface-temperature baseline",
+  "unit": "degC",
+  "period": {
+    "start": "2021-06-01T00:00:00Z",
+    "end": "2025-08-31T23:59:59Z"
+  },
+  "scene_count": {
+    "candidate": 38,
+    "usable": 37,
+    "rejected": 1
+  },
+  "tellplatz": {
+    "median_c": 40.23967190000002,
+    "scene_range_c": {
+      "min": 30.942657499999996,
+      "max": 48.53862446000005
+    }
+  },
+  "reference_ring": {
+    "median_c": 39.58683008000003,
+    "buffers_m": {
+      "inner": 500,
+      "outer": 1500
+    },
+    "scene_range_c": {
+      "min": 30.558130250000005,
+      "max": 47.48587429999998
+    }
+  },
+  "relative_anomaly": {
+    "median_c": 0.6562598400000184,
+    "range_c": {
+      "min": -0.950209559999962,
+      "max": 2.0234678399999666
+    }
+  },
+  "limitations": [
+    "Landsat LST is satellite land-surface temperature, not air temperature or official Basel heat-island intensity.",
+    "Thermal pixels are coarse relative to the 12.5 ha AOI; no street- or parcel-level claims are supported.",
+    "AOI acceptance requires at least 50% valid pixels; this is a conservative coverage threshold for area statistics."
+  ]
+}

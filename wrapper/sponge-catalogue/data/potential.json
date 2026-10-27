@@ -1,0 +1,62 @@
+{
+  "schema_version": "sponge-potential/0.1",
+  "evidence": "derived",
+  "validation": "not validated",
+  "permitted_use": [
+    "explain",
+    "screen"
+  ],
+  "suitable-in-heat": {
+    "suitable_km_by_heat_area": {
+      "Erhalten": 50.6,
+      "Fokus": 77.9,
+      "Verbessern": 59.8,
+      "outside": 0.2,
+      "übriges Gebiet": 5.8
+    },
+    "suitable_km_in_fokus_or_verbessern": 137.7
+  },
+  "works-near-suitable": {
+    "snapshot": "2026-10-03T20:36:22.296Z",
+    "upcoming": 334,
+    "near_suitable_in_heat": 231,
+    "by_category": {
+      "utility": 166,
+      "sewer": 38,
+      "heat": 17,
+      "power": 8,
+      "water": 2
+    }
+  },
+  "sealed-by-parcel": {
+    "area_ha": {
+      "allmend": {
+        "building": 5,
+        "road": 245,
+        "paved-other": 45,
+        "planted": 101,
+        "water": 128
+      },
+      "other-parcels": {
+        "building": 601,
+        "road": 262,
+        "paved-other": 490,
+        "planted": 1766,
+        "water": 9
+      },
+      "no-parcel": {
+        "building": 0,
+        "road": 0,
+        "paved-other": 0,
+        "planted": 9,
+        "water": 0
+      }
+    },
+    "sealed_ha": {
+      "allmend": 296,
+      "other-parcels": 1353,
+      "no-parcel": 1
+    },
+    "total_ha": 3664
+  }
+}

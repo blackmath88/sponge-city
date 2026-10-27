@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sponge-squad.example/contracts/candidate-site-context.v1.schema.json",
+  "title": "Candidate site handoff v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "site", "provenance"],
+  "properties": {
+    "version": { "const": 1 },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "district", "coordinates", "indicators", "constraints", "directions"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "district": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "coordinates": {
+          "description": "[longitude, latitude] in WGS84; identity context only.",
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }],
+          "items": false
+        },
+        "indicators": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sources", "missingData"],
+          "properties": {
+            "sources": { "$ref": "#/$defs/textList" },
+            "missingData": { "$ref": "#/$defs/textList" }
+          }
+        },
+        "constraints": { "$ref": "#/$defs/textList" },
+        "directions": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "source", "note"],
+      "properties": {
+        "classification": { "const": "illustrative" },
+        "source": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "note": { "type": "string", "minLength": 1, "maxLength": 240 }
+      }
+    }
+  },
+  "$defs": {
+    "textList": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+    }
+  }
+}

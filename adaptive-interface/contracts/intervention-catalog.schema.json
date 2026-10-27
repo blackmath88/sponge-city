@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/intervention-catalog.schema.json",
+  "title": "InterventionCatalogue (intervention-catalog/0.1)",
+  "description": "Replaceable catalogue of sponge-city interventions as declarative data. Status per place is computed by the scenario engine: not-applicable (no eligible element), excluded (a known requirement fails), requires-investigation (a requirement or check is unknown), candidate (all known and pass). A catalogue never claims engineering feasibility.",
+  "type": "object",
+  "required": ["schema_version", "catalogue_id", "interventions"],
+  "properties": {
+    "schema_version": { "const": "intervention-catalog/0.1" },
+    "catalogue_id": { "type": "string" },
+    "label": { "type": "string" },
+    "note": { "type": "string" },
+    "interventions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/intervention" } }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["id", "label", "context_key"],
+      "description": "Reads PlaceModel.context[context_key]. Unknown value ⇒ requires-investigation. fail_if_in / pass_if_in turn a known value into pass or fail.",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "context_key": { "type": "string" },
+        "fail_if_in": { "type": "array" },
+        "pass_if_in": { "type": "array" },
+        "basis": { "type": "string", "description": "Where the rule comes from, e.g. 'placeholder', a regulation or a source id" }
+      }
+    },
+    "param": {
+      "type": "object",
+      "required": ["default", "state"],
+      "properties": {
+        "default": { "type": "number" },
+        "state": { "const": "assumed" },
+        "note": { "type": "string" }
+      }
+    },
+    "op": {
+      "type": "object",
+      "required": ["op"],
+      "properties": {
+        "op": { "enum": ["carve", "set-surface", "add", "reduce-count"] },
+        "to": { "enum": ["sealed", "permeable", "planted", "water"], "description": "set-surface: new surface of the target" },
+        "area_param": { "type": "string", "description": "carve: param holding the area taken from the target" },
+        "new_element": {
+          "type": "object",
+          "description": "carve/add: element created in the scenario (state 'assumed')",
+          "properties": {
+            "type": { "type": "string" },
+            "surface": { "type": "string" },
+            "label": { "type": "string" },
+            "tags": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "when_target_type": { "type": "string", "description": "only run this op for this target type" },
+        "area_per_unit_param": { "type": "string", "description": "reduce-count: area per counted unit (e.g. parking bay)" }
+      }
+    },
+    "intervention": {
+      "type": "object",
+      "required": ["id", "label", "summary", "mechanisms", "target", "requirements", "checks", "transform", "sources"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "label": { "type": "string" },
+        "summary": { "type": "string" },
+        "mechanisms": { "type": "array", "items": { "enum": ["ABSORB", "STORE", "SLOW", "SWEAT", "SHADE", "COOL"] } },
+        "target": {
+          "type": "object",
+          "required": ["types"],
+          "properties": {
+            "types": { "type": "array", "items": { "type": "string" } },
+            "surfaces": { "type": "array", "items": { "enum": ["sealed", "permeable", "planted", "water"] } }
+          }
+        },
+        "params": { "type": "object", "additionalProperties": { "$ref": "#/$defs/param" } },
+        "requirements": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "checks": { "type": "array", "items": { "$ref": "#/$defs/rule" } },
+        "transform": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/op" } },
+        "reports": { "type": "array", "items": { "type": "string" } },
+        "sources": {
+          "type": "array",
+          "items": { "type": "object", "required": ["label", "url"], "properties": { "label": { "type": "string" }, "url": { "type": "string" } } }
+        }
+      }
+    }
+  }
+}

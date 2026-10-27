@@ -1,0 +1,7 @@
+{
+  "name": "adaptive-interface",
+  "private": true,
+  "type": "module",
+  "description": "Replaceable orchestration layer between Situation Map, place data, intervention catalogue and renderer. No dependencies.",
+  "scripts": { "test": "node --test tests/adaptive-interface.test.mjs tests/state-engine.test.mjs" }
+}

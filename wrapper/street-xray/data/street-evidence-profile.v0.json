@@ -1,0 +1,200 @@
+{
+  "schema_version": "street-evidence-profile/0.1",
+  "updated": "2026-10-04",
+  "site": {
+    "id": "KLY-XRAY-01",
+    "name": "Klybeckstrasse study segment",
+    "district": "Klybeck",
+    "coordinates": [7.588, 47.573],
+    "length_m": 160,
+    "identity_status": "illustrative segment anchored to Andy's Klybeck candidate",
+    "boundary": "The centre point is real. The 160 m segment, its width and every drawn object are a demo fixture until surveyed."
+  },
+  "snapshot": {
+    "source": "wrapper/data-charter-map/data/charter-map.json",
+    "fetched_at": "2026-10-03T20:36:22.296Z",
+    "tree_radius_m": 100,
+    "tree_count": 16,
+    "nearest_groundwater_station": {
+      "id": "813",
+      "name": "Klybeckstrasse / BVB (0813)",
+      "distance_m": 222,
+      "terrain_masl": 251.12,
+      "level_10y_max_masl": 246.08,
+      "derived_depth_min_m": 5,
+      "period": "2016-01-01–2025-12-31"
+    }
+  },
+  "layers": [
+    {
+      "id": "known",
+      "label": "Known now",
+      "short_label": "Known",
+      "question": "What can we responsibly say before a site visit?",
+      "summary": "Open records establish context around the study point. They do not describe the street section or underground routing.",
+      "tone": "green"
+    },
+    {
+      "id": "derived",
+      "label": "Derived carefully",
+      "short_label": "Derived",
+      "question": "What hypotheses can computation make visible?",
+      "summary": "A candidate footprint and water path make the design question tangible. Both remain unvalidated screening hypotheses.",
+      "tone": "blue"
+    },
+    {
+      "id": "ask",
+      "label": "Must ask or measure",
+      "short_label": "Must ask",
+      "question": "What stops this becoming a recommendation?",
+      "summary": "Utility clearance, drainage routing and local infiltration capacity are decisive and unavailable in the open snapshot.",
+      "tone": "amber"
+    }
+  ],
+  "claims": [
+    {
+      "id": "tree-context",
+      "layer": "known",
+      "title": "16 registered trees within 100 m",
+      "value": "16",
+      "unit": "tree-cadastre points",
+      "evidence_class": "observed",
+      "origin": "official-record",
+      "access_state": "open",
+      "validation": "snapshot-reproduced",
+      "permitted_use": ["explain", "screen"],
+      "source": "Basel-Stadt tree cadastre 100052",
+      "source_url": "https://data.bs.ch/explore/dataset/100052/",
+      "method": "Count points within a 100 m radius of the study centre in the 3 October snapshot.",
+      "limitation": "Nearby tree points do not prove canopy, shade, root-space quality or availability inside the proposed footprint."
+    },
+    {
+      "id": "groundwater-context",
+      "layer": "known",
+      "title": "Nearest groundwater station is 222 m away",
+      "value": "5.0",
+      "unit": "m derived minimum depth at station",
+      "evidence_class": "derived",
+      "origin": "official-record",
+      "access_state": "open",
+      "validation": "arithmetic-checked",
+      "permitted_use": ["explain", "screen"],
+      "source": "Basel-Stadt groundwater statistics 100180",
+      "source_url": "https://data.bs.ch/explore/dataset/100180/",
+      "method": "Station terrain elevation minus its published 10-year maximum groundwater level.",
+      "limitation": "A station value 222 m away is context, not groundwater clearance at the candidate footprint."
+    },
+    {
+      "id": "candidate-footprint",
+      "layer": "derived",
+      "title": "A 2.4 m edge strip could frame the test",
+      "value": "384",
+      "unit": "m² scenario footprint",
+      "evidence_class": "assumed",
+      "origin": "scenario",
+      "access_state": "unknown",
+      "validation": "not-validated",
+      "permitted_use": ["explain"],
+      "source": "SpongeSquad demo fixture",
+      "source_url": "",
+      "method": "Illustrative 160 m segment × 2.4 m edge strip.",
+      "limitation": "No survey, ownership check, kerb measurement or accessibility clearance supports this footprint."
+    },
+    {
+      "id": "surface-flow-hypothesis",
+      "layer": "derived",
+      "title": "Rain may collect along the drawn kerb line",
+      "value": "review",
+      "unit": "flow hypothesis",
+      "evidence_class": "modelled",
+      "origin": "terrain-hypothesis",
+      "access_state": "unknown",
+      "validation": "not-validated",
+      "permitted_use": ["explain", "screen"],
+      "source": "SpongeSquad schematic",
+      "source_url": "",
+      "method": "A manually seeded downhill arrow demonstrates the future terrain-analysis output.",
+      "limitation": "No elevation raster or field level check has been sampled for this segment."
+    },
+    {
+      "id": "utility-clearance",
+      "layer": "ask",
+      "title": "Can this strip be excavated?",
+      "value": "gated",
+      "unit": "decision input",
+      "evidence_class": "unknown",
+      "origin": "gatekeeper",
+      "access_state": "restricted",
+      "validation": "not-available",
+      "permitted_use": [],
+      "source": "Area-limited planning extract and operator confirmation",
+      "source_url": "",
+      "gatekeeper": "Cadastral authority + relevant network operator",
+      "unlock_action": "Request an area-limited extract; confirm depth and clearance before excavation.",
+      "decision_blocked": "Whether the proposed footprint is buildable.",
+      "limitation": "Visible street space cannot reveal buried networks."
+    },
+    {
+      "id": "drainage-routing",
+      "layer": "ask",
+      "title": "Where does the inlet actually lead?",
+      "value": "gated",
+      "unit": "decision input",
+      "evidence_class": "unknown",
+      "origin": "gatekeeper",
+      "access_state": "restricted",
+      "validation": "not-available",
+      "permitted_use": [],
+      "source": "Drainage / GEP records and field inspection",
+      "source_url": "",
+      "gatekeeper": "Tiefbauamt drainage / GEP owner",
+      "unlock_action": "Confirm inlet, catchment, connection, capacity and safe overflow route.",
+      "decision_blocked": "Whether street runoff can be connected safely.",
+      "limitation": "A visible inlet does not establish its connection or capacity."
+    },
+    {
+      "id": "infiltration-test",
+      "layer": "ask",
+      "title": "Will water infiltrate safely here?",
+      "value": "site check",
+      "unit": "decision input",
+      "evidence_class": "unknown",
+      "origin": "field-survey",
+      "access_state": "site-check-required",
+      "validation": "not-measured",
+      "permitted_use": [],
+      "source": "Qualified site investigation",
+      "source_url": "",
+      "gatekeeper": "Project owner + qualified specialist",
+      "unlock_action": "Test permeability, pavement build-up, contamination and groundwater clearance locally.",
+      "decision_blocked": "Whether infiltration is a credible mechanism.",
+      "limitation": "Nearby geology and groundwater context cannot replace a local test."
+    }
+  ],
+  "intervention": {
+    "id": "kerbside-rain-garden",
+    "name": "Kerbside rain garden + tree trench",
+    "status": "requires-investigation",
+    "why": "The concept could intercept kerb runoff, add root space and make the sponge mechanism visible.",
+    "scenario": {
+      "footprint_m2": 384,
+      "rainfall_mm": 20,
+      "rain_on_footprint_m3": 7.68,
+      "classification": "assumed",
+      "note": "Rainfall depth × illustrative footprint only. It is not retained volume, flood reduction or design performance."
+    },
+    "supporting_claims": ["tree-context", "groundwater-context"],
+    "hypothesis_claims": ["candidate-footprint", "surface-flow-hypothesis"],
+    "blocking_claims": ["utility-clearance", "drainage-routing", "infiltration-test"]
+  },
+  "engine": {
+    "interventions": ["tree-trench", "infiltrating-rain-garden"],
+    "facts": { "protection_zone": "none" },
+    "fact_sources": { "protection_zone": "data.bs.ch 100292 Grundwasserschutz: no zone intersects the study point (queried 2026-10-04)" },
+    "checks": {
+      "utility-clearance": { "fact": "utilities", "options": ["clear", "conflict"] },
+      "drainage-routing": { "fact": "overflow_route", "options": ["allowed", "not-allowed"] },
+      "infiltration-test": { "fact": "infiltration", "options": ["ok", "poor"] }
+    }
+  }
+}

@@ -10,7 +10,7 @@ if (errors.length) {
   process.exit(1);
 }
 
-const hub = await readFile(join(root, "site", "index.html"), "utf8");
+const hub = await readFile(join(root, "site", "solutions.html"), "utf8");
 for (const solution of solutions) {
   if (!hub.includes(`"href":"${solution.id}.html"`)) {
     console.error(`Hub does not list ${solution.id}. Run make build.`);

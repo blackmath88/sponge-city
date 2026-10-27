@@ -1,0 +1,11 @@
+{
+  "name": "sponge-catalogue",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "doc": "node scripts/build-doc.mjs",
+    "compute": "python3 scripts/compute_potential.py",
+    "test": "node scripts/build-doc.mjs --check"
+  }
+}

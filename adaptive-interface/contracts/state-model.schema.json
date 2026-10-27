@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/state-model.schema.json",
+  "title": "StateModel (adaptive-state/0.2)",
+  "description": "Internal engine view of a place: semantic elements with surface, subsurface, vegetation and thermal-driver state, plus a typed water-routing graph. Produced from PlaceModel 0.1 by runtime/place-to-state.js; changed only by state operations (runtime/state-ops.js). Not a provider contract: the data team keeps delivering PlaceModel 0.1. Every property is an evidence value; unknown stays unknown (value null). runtime/validate.js#validateStateModel enforces the cross-field rules.",
+  "type": "object",
+  "required": ["schema_version", "place_id", "elements", "connections", "routing", "context", "applied"],
+  "properties": {
+    "schema_version": { "const": "adaptive-state/0.2" },
+    "place_id": { "type": "string" },
+    "label": { "type": "string" },
+    "meta": { "type": "object", "description": "PlaceModel fields carried through untouched (selection, provenance, schematic, fixture)." },
+    "context": { "type": "object", "additionalProperties": { "$ref": "#/$defs/evidence" }, "description": "Place-level evidence, as in PlaceModel 0.1." },
+    "elements": { "type": "array", "items": { "$ref": "#/$defs/element" } },
+    "connections": { "type": "array", "items": { "$ref": "#/$defs/connection" }, "description": "Typed routing edges. A missing edge means unknown routing, never 'goes to the sewer'." },
+    "routing": {
+      "type": "object",
+      "required": ["state", "sources"],
+      "properties": {
+        "state": { "$ref": "#/$defs/state", "description": "unknown when neither the PlaceModel nor injected assumptions describe routing" },
+        "sources": { "type": "array", "items": { "enum": ["place", "assumption"] } },
+        "note": { "type": "string" }
+      }
+    },
+    "applied": { "type": "array", "description": "Interventions applied to reach this state: { intervention_id, target_id, status, assumptions[] }." }
+  },
+  "$defs": {
+    "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected", "unknown", "not-applicable"] },
+    "level": { "enum": ["none", "low", "medium-low", "medium", "medium-high", "high"] },
+    "evidence": {
+      "type": "object",
+      "required": ["value", "state"],
+      "properties": {
+        "value": {}, "state": { "$ref": "#/$defs/state" },
+        "source_id": { "type": "string" }, "method": { "type": "string" }, "note": { "type": "string" },
+        "from": { "type": "string", "description": "Where an adapter took the value from, e.g. archetype:asphalt or context.infiltration_capacity" },
+        "replaces": { "description": "The evidence this value replaced" }
+      }
+    },
+    "levelEvidence": {
+      "allOf": [{ "$ref": "#/$defs/evidence" }],
+      "properties": { "value": { "anyOf": [{ "$ref": "#/$defs/level" }, { "type": "null" }] } }
+    },
+    "element": {
+      "type": "object",
+      "required": ["id", "type", "kind", "presence"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "description": "PlaceModel element types plus network nodes: gully, downpipe, sewer, overflow" },
+        "label": { "type": "string" },
+        "kind": { "enum": ["area", "point", "network"] },
+        "presence": { "$ref": "#/$defs/evidence" },
+        "area_m2": { "$ref": "#/$defs/evidence" },
+        "count": { "$ref": "#/$defs/evidence" },
+        "origin": { "type": "string" },
+        "fixed": { "type": "boolean" },
+        "layout": { "type": "object", "description": "Carried through for 0.1 renderers. The engine never reads it." },
+        "placement": {
+          "type": "object",
+          "description": "Placement provenance: which surface this element occupies or replaces (parking | sidewalk | road | roof | green | parcel | unknown) and how (replaces | occupies | adjacent | unknown). Set by recipes that know it; missing means unknown. Never a renderer stage.",
+          "required": ["surface", "mode"],
+          "properties": { "surface": { "$ref": "#/$defs/evidence" }, "mode": { "$ref": "#/$defs/evidence" } }
+        },
+        "surface": {
+          "type": "object",
+          "description": "Surface state. `class` is the PlaceModel 0.1 surface; the rest are archetype defaults (assumed) unless evidence replaces them.",
+          "required": ["class"],
+          "properties": {
+            "class": { "$ref": "#/$defs/evidence" },
+            "material": { "$ref": "#/$defs/evidence", "description": "Surface archetype id (catalogues/surfaces.json)" },
+            "sealed_fraction": { "$ref": "#/$defs/levelEvidence" },
+            "permeability": { "$ref": "#/$defs/levelEvidence" },
+            "vegetation_fraction": { "$ref": "#/$defs/levelEvidence" },
+            "depression_storage": { "$ref": "#/$defs/levelEvidence" },
+            "albedo": { "$ref": "#/$defs/levelEvidence", "description": "Thermal driver" }
+          }
+        },
+        "subsurface": {
+          "type": "object",
+          "properties": {
+            "infiltration_capacity": { "$ref": "#/$defs/evidence" },
+            "storage_capacity": { "$ref": "#/$defs/levelEvidence" },
+            "rootable_volume": { "$ref": "#/$defs/levelEvidence" },
+            "soil_water_available": { "$ref": "#/$defs/evidence" },
+            "utility_conflict": { "$ref": "#/$defs/evidence" },
+            "groundwater_constraint": { "$ref": "#/$defs/evidence" }
+          }
+        },
+        "vegetation": {
+          "type": "object",
+          "description": "Trees: canopy is a thermal driver (shade) and drives evapotranspiration.",
+          "properties": {
+            "canopy_area": { "$ref": "#/$defs/levelEvidence" },
+            "health": { "$ref": "#/$defs/evidence" },
+            "rooted_in": { "type": ["string", "null"], "description": "Element id of the bed/trench the tree grows in" },
+            "pit": { "$ref": "#/$defs/evidence", "description": "Tree pit / root space: standard | enlarged | trench; unknown when the PlaceModel does not say" }
+          }
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "required": ["from", "to", "mode", "state"],
+      "properties": {
+        "from": { "type": "string" }, "to": { "type": "string" },
+        "medium": { "const": "rainwater" },
+        "mode": { "enum": ["surface-runoff", "roof-drainage", "pipe", "overflow"] },
+        "state": { "enum": ["observed", "modelled", "derived", "assumed", "user-corrected"] },
+        "origin": { "enum": ["place", "assumption"], "description": "absent for edges created by interventions (see method)" },
+        "source_id": { "type": "string" }, "method": { "type": "string" }, "note": { "type": "string" }
+      }
+    }
+  }
+}

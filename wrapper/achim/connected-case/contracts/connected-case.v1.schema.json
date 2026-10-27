@@ -1,0 +1,444 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sponge-squad.example/contracts/connected-case.v1.schema.json",
+  "title": "Connected case v1",
+  "description": "Machine-readable connection layer between independent SpongeSquad modules. It carries claims, gaps, gatekeepers, actions and one bounded decision with provenance. It never carries an engineering recommendation. Rules that a schema cannot express are enforced by scripts/build-case.mjs (enforceRules).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "case_id", "title", "boundary", "rules", "vocabulary", "sources", "subject", "claims", "gatekeepers", "gaps", "actions", "stages", "decision", "summary"],
+  "properties": {
+    "contract": { "const": "connected-case/v1" },
+    "case_id": { "$ref": "#/$defs/slug" },
+    "title": { "$ref": "#/$defs/text" },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "engineering_recommendation", "roles"],
+      "properties": {
+        "statement": { "$ref": "#/$defs/text" },
+        "engineering_recommendation": { "const": false },
+        "roles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["calculate", "constrain", "explain"],
+          "properties": {
+            "calculate": { "$ref": "#/$defs/text" },
+            "constrain": { "$ref": "#/$defs/text" },
+            "explain": { "$ref": "#/$defs/text" }
+          }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "enforced_by"],
+        "properties": {
+          "id": { "$ref": "#/$defs/ruleId" },
+          "statement": { "$ref": "#/$defs/text" },
+          "enforced_by": { "type": "array", "minItems": 1, "items": { "enum": ["schema", "build", "test"] }, "uniqueItems": true }
+        }
+      }
+    },
+    "vocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_states", "source_evidence_class_mapping", "access_states", "permitted_uses"],
+      "properties": {
+        "evidence_states": { "$ref": "#/$defs/glossary" },
+        "source_evidence_class_mapping": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_class", "source_access_state", "evidence_state"],
+            "properties": {
+              "source_class": { "$ref": "#/$defs/slug" },
+              "source_access_state": { "type": ["string", "null"] },
+              "evidence_state": { "$ref": "#/$defs/evidenceState" }
+            }
+          }
+        },
+        "access_states": { "$ref": "#/$defs/glossary" },
+        "permitted_uses": { "$ref": "#/$defs/glossary" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "module", "path", "version", "sha256", "role", "read_only"],
+        "properties": {
+          "id": { "$ref": "#/$defs/sourceId" },
+          "module": { "$ref": "#/$defs/text" },
+          "path": { "$ref": "#/$defs/repoPath" },
+          "version": { "$ref": "#/$defs/text" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "role": { "$ref": "#/$defs/moduleRole" },
+          "read_only": { "const": true }
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "name", "district", "coordinates", "coordinate_use", "claim_ids"],
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1 },
+        "name": { "$ref": "#/$defs/text" },
+        "district": { "$ref": "#/$defs/text" },
+        "coordinates": {
+          "description": "[longitude, latitude] in WGS84; identity context only.",
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }],
+          "items": false,
+          "minItems": 2
+        },
+        "coordinate_use": { "const": "identity-context-only" },
+        "claim_ids": { "$ref": "#/$defs/claimIds" }
+      }
+    },
+    "claims": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/claim" } },
+    "gatekeepers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "role", "provenance"],
+        "properties": {
+          "id": { "$ref": "#/$defs/gatekeeperId" },
+          "name": { "$ref": "#/$defs/text" },
+          "role": { "$ref": "#/$defs/text" },
+          "provenance": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    },
+    "gaps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/gap" } },
+    "actions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/action" } },
+    "stages": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/stage" }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "question", "bounded_next_decision", "not_a_recommendation", "unsupported_states", "blocked_by_gap_ids", "next_action_ids", "reopen_when"],
+      "properties": {
+        "id": { "$ref": "#/$defs/decisionId" },
+        "state": { "const": "requires-investigation" },
+        "question": { "$ref": "#/$defs/text" },
+        "bounded_next_decision": { "$ref": "#/$defs/text" },
+        "not_a_recommendation": { "const": true },
+        "unsupported_states": {
+          "description": "States this case cannot reach with the evidence it carries.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "blocked_by_gap_ids": { "$ref": "#/$defs/gapIdsNonEmpty" },
+        "next_action_ids": { "$ref": "#/$defs/actionIdsNonEmpty" },
+        "reopen_when": { "$ref": "#/$defs/textList" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["why_investigate", "known", "assumed", "missing_or_restricted", "field_observation_could_establish", "scenario_can_show", "scenario_cannot_show", "next_bounded_decision"],
+      "properties": {
+        "why_investigate": { "$ref": "#/$defs/claimIds" },
+        "known": { "$ref": "#/$defs/claimIds" },
+        "assumed": { "$ref": "#/$defs/claimIds" },
+        "missing_or_restricted": { "$ref": "#/$defs/gapIdsNonEmpty" },
+        "field_observation_could_establish": { "$ref": "#/$defs/textList" },
+        "scenario_can_show": { "$ref": "#/$defs/textList" },
+        "scenario_cannot_show": { "$ref": "#/$defs/textList" },
+        "next_bounded_decision": { "$ref": "#/$defs/decisionId" }
+      }
+    }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1, "maxLength": 600 },
+    "textList": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/text" } },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "repoPath": { "type": "string", "pattern": "^wrapper/[A-Za-z0-9._/-]+$" },
+    "glossary": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/text" }
+    },
+    "claimId": { "type": "string", "pattern": "^claim:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "gapId": { "type": "string", "pattern": "^gap:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "actionId": { "type": "string", "pattern": "^action:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "stageId": { "type": "string", "pattern": "^stage:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "sourceId": { "type": "string", "pattern": "^source:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "gatekeeperId": { "type": "string", "pattern": "^gatekeeper:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "decisionId": { "type": "string", "pattern": "^decision:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "ruleId": { "type": "string", "pattern": "^rule:[a-z0-9]+(-[a-z0-9]+)*$" },
+    "claimIds": { "type": "array", "items": { "$ref": "#/$defs/claimId" }, "uniqueItems": true },
+    "gapIds": { "type": "array", "items": { "$ref": "#/$defs/gapId" }, "uniqueItems": true },
+    "gapIdsNonEmpty": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/gapId" }, "uniqueItems": true },
+    "actionIds": { "type": "array", "items": { "$ref": "#/$defs/actionId" }, "uniqueItems": true },
+    "actionIdsNonEmpty": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/actionId" }, "uniqueItems": true },
+    "gatekeeperIdsNonEmpty": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/gatekeeperId" }, "uniqueItems": true },
+    "evidenceState": { "enum": ["known", "derived", "assumed", "modelled", "restricted", "missing"] },
+    "accessState": { "enum": ["open", "registered", "restricted", "operator-held", "project-held", "site-check", "unknown"] },
+    "permittedUse": { "enum": ["identity", "explain", "screen", "prioritise", "design"] },
+    "moduleRole": { "enum": ["identify", "calculate", "classify", "constrain", "observe", "explain", "decide"] },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "locator"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/sourceId" },
+        "locator": { "type": "string", "minLength": 1, "maxLength": 240 }
+      }
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "amount", "unit"],
+          "properties": {
+            "kind": { "const": "number" },
+            "amount": { "type": "number", "exclusiveMinimum": 0 },
+            "unit": { "$ref": "#/$defs/text" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "text"],
+          "properties": { "kind": { "const": "text" }, "text": { "$ref": "#/$defs/text" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "items"],
+          "properties": { "kind": { "const": "list" }, "items": { "$ref": "#/$defs/textList" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "lon", "lat", "crs"],
+          "properties": {
+            "kind": { "const": "coordinates" },
+            "lon": { "type": "number" },
+            "lat": { "type": "number" },
+            "crs": { "const": "WGS84" }
+          }
+        },
+        {
+          "description": "An unknown is explicit. It never becomes zero, safe or suitable.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "amount", "reason"],
+          "properties": {
+            "kind": { "const": "unknown" },
+            "amount": { "type": "null" },
+            "reason": { "$ref": "#/$defs/text" }
+          }
+        }
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "evidence_state", "value", "provenance", "validation", "permitted_use", "limitations", "access_state", "state", "gap_id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/claimId" },
+        "statement": { "$ref": "#/$defs/text" },
+        "evidence_state": { "$ref": "#/$defs/evidenceState" },
+        "value": { "$ref": "#/$defs/value" },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_id", "locator", "original_source", "source_url", "method"],
+          "properties": {
+            "source_id": { "$ref": "#/$defs/sourceId" },
+            "locator": { "type": "string", "minLength": 1, "maxLength": 240 },
+            "original_source": { "$ref": "#/$defs/text" },
+            "source_url": { "type": ["string", "null"], "pattern": "^https://" },
+            "method": { "$ref": "#/$defs/text" }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "note"],
+          "properties": {
+            "status": { "enum": ["snapshot-reproduced", "arithmetic-checked", "source-recorded", "not-validated", "not-available", "not-measured"] },
+            "note": { "$ref": "#/$defs/text" }
+          }
+        },
+        "permitted_use": { "type": "array", "items": { "$ref": "#/$defs/permittedUse" }, "uniqueItems": true },
+        "limitations": { "$ref": "#/$defs/textList" },
+        "access_state": { "$ref": "#/$defs/accessState" },
+        "state": { "enum": ["identity-context", "established-context", "illustrative", "hypothesis", "blocked", "open-gap"] },
+        "gap_id": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/gapId" }] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "evidence_state": { "enum": ["restricted", "missing"] } } },
+          "then": {
+            "properties": {
+              "value": { "type": "object", "properties": { "kind": { "const": "unknown" } } },
+              "state": { "enum": ["blocked", "open-gap"] },
+              "gap_id": { "$ref": "#/$defs/gapId" },
+              "permitted_use": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "evidence_state": { "enum": ["assumed", "modelled"] } } },
+          "then": {
+            "properties": {
+              "state": { "enum": ["illustrative", "hypothesis"] },
+              "permitted_use": { "items": { "enum": ["explain", "screen"] } },
+              "validation": { "properties": { "status": { "enum": ["arithmetic-checked", "not-validated"] } } }
+            }
+          }
+        }
+      ]
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "claim_ids", "evidence_state", "access_state", "gatekeeper_ids", "next_action_ids", "blocks", "state"],
+      "properties": {
+        "id": { "$ref": "#/$defs/gapId" },
+        "question": { "$ref": "#/$defs/text" },
+        "claim_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/claimId" }, "uniqueItems": true },
+        "evidence_state": { "enum": ["restricted", "missing"] },
+        "access_state": { "$ref": "#/$defs/accessState" },
+        "gatekeeper_ids": { "$ref": "#/$defs/gatekeeperIdsNonEmpty" },
+        "next_action_ids": { "$ref": "#/$defs/actionIdsNonEmpty" },
+        "blocks": { "$ref": "#/$defs/text" },
+        "state": { "const": "open" }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "title", "gatekeeper_ids", "resolves_gap_ids", "would_establish", "cannot_establish", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/actionId" },
+        "kind": { "enum": ["request", "site-test", "specialist-review", "field-observation", "spatial-analysis", "decide"] },
+        "title": { "$ref": "#/$defs/text" },
+        "gatekeeper_ids": { "$ref": "#/$defs/gatekeeperIdsNonEmpty" },
+        "resolves_gap_ids": { "$ref": "#/$defs/gapIds" },
+        "would_establish": { "$ref": "#/$defs/text" },
+        "cannot_establish": { "$ref": "#/$defs/text" },
+        "status": { "const": "proposed" }
+      }
+    },
+    "observationTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "label", "can_support", "cannot_establish", "follow_up", "informs_gap_ids"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/slug" },
+        "label": { "$ref": "#/$defs/text" },
+        "can_support": { "$ref": "#/$defs/text" },
+        "cannot_establish": { "$ref": "#/$defs/text" },
+        "follow_up": { "$ref": "#/$defs/text" },
+        "informs_gap_ids": { "$ref": "#/$defs/gapIds" }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "order", "key", "title", "question", "module", "role", "claim_ids", "gap_ids", "action_ids", "can_show", "cannot_show"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stageId" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "key": { "enum": ["candidate-signal", "evidence-classification", "evidence-gate", "field-observation-plan", "intervention-candidate", "illustrative-scenario", "bounded-decision"] },
+        "title": { "$ref": "#/$defs/text" },
+        "question": { "$ref": "#/$defs/text" },
+        "module": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "source_ids"],
+          "properties": {
+            "name": { "$ref": "#/$defs/text" },
+            "source_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/sourceId" }, "uniqueItems": true }
+          }
+        },
+        "role": { "$ref": "#/$defs/moduleRole" },
+        "claim_ids": { "$ref": "#/$defs/claimIds" },
+        "gap_ids": { "$ref": "#/$defs/gapIds" },
+        "action_ids": { "$ref": "#/$defs/actionIds" },
+        "can_show": { "$ref": "#/$defs/textList" },
+        "cannot_show": { "$ref": "#/$defs/textList" },
+        "observation_plan": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "targets", "review_states", "collected_observations", "boundary"],
+          "properties": {
+            "status": { "const": "planned-not-collected" },
+            "targets": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/observationTarget" } },
+            "review_states": { "$ref": "#/$defs/glossary" },
+            "collected_observations": {
+              "description": "v1 carries a plan only. Completed observations must come from a Rain Walk export, never from this build.",
+              "type": "array",
+              "maxItems": 0
+            },
+            "boundary": { "$ref": "#/$defs/text" }
+          }
+        },
+        "intervention": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "name", "catalogue_action_id", "status", "mechanisms_claimed_by_catalogue", "why_considered"],
+          "properties": {
+            "id": { "$ref": "#/$defs/slug" },
+            "name": { "$ref": "#/$defs/text" },
+            "catalogue_action_id": { "$ref": "#/$defs/slug" },
+            "status": { "const": "requires-investigation" },
+            "mechanisms_claimed_by_catalogue": { "type": "array", "items": { "type": "string" } },
+            "why_considered": { "$ref": "#/$defs/text" }
+          }
+        },
+        "scenario": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "quantity", "label", "result_claim_id", "input_claim_ids", "street_lab"],
+          "properties": {
+            "id": { "$ref": "#/$defs/slug" },
+            "quantity": { "const": "rain-falling-on-assumed-footprint" },
+            "label": {
+              "allOf": [
+                { "$ref": "#/$defs/text" },
+                { "not": { "pattern": "[Rr]etain|[Rr]etention|[Cc]apacity|[Ss]tor(ed|age)|[Pp]erformance|[Rr]educ" } }
+              ]
+            },
+            "result_claim_id": { "$ref": "#/$defs/claimId" },
+            "input_claim_ids": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/claimId" }, "uniqueItems": true },
+            "street_lab": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "use", "site", "may_explain", "must_not_be_used_for"],
+              "properties": {
+                "source_id": { "$ref": "#/$defs/sourceId" },
+                "use": { "const": "illustration-only" },
+                "site": { "const": "synthetic-street-not-klybeck" },
+                "may_explain": { "$ref": "#/$defs/textList" },
+                "must_not_be_used_for": { "$ref": "#/$defs/textList" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

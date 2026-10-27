@@ -1,0 +1,26 @@
+{
+  "schema_version": "routing-assumptions/0.1",
+  "id": "demo-street-routing",
+  "label": "Demo routing assumptions",
+  "note": "The PlaceModel has no drainage data. For the demo only, we assume the usual Basel street pattern: roofs drain through downpipes, paved areas through gullies, both into the combined sewer. Every edge is applied as 'assumed'. A real provider replaces this with place.routing.",
+  "nodes": [
+    { "id": "downpipe-north", "type": "downpipe", "label": "Downpipe, north building" },
+    { "id": "downpipe-south", "type": "downpipe", "label": "Downpipe, south building" },
+    { "id": "gully-north", "type": "gully", "label": "Gully, north kerb" },
+    { "id": "gully-south", "type": "gully", "label": "Gully, south kerb" },
+    { "id": "sewer", "type": "sewer", "label": "Combined sewer" }
+  ],
+  "connections": [
+    { "from": "building-north", "to": "downpipe-north", "mode": "roof-drainage" },
+    { "from": "downpipe-north", "to": "sewer", "mode": "pipe" },
+    { "from": "building-south", "to": "downpipe-south", "mode": "roof-drainage" },
+    { "from": "downpipe-south", "to": "sewer", "mode": "pipe" },
+    { "from": "sidewalk-north", "to": "gully-north", "mode": "surface-runoff" },
+    { "from": "parking-north", "to": "gully-north", "mode": "surface-runoff" },
+    { "from": "road", "to": "gully-north", "mode": "surface-runoff" },
+    { "from": "sidewalk-south", "to": "gully-south", "mode": "surface-runoff" },
+    { "from": "tram-stop", "to": "gully-south", "mode": "surface-runoff" },
+    { "from": "gully-north", "to": "sewer", "mode": "pipe" },
+    { "from": "gully-south", "to": "sewer", "mode": "pipe" }
+  ]
+}

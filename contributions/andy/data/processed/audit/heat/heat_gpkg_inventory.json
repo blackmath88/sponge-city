@@ -1,0 +1,120 @@
+{
+  "source_file": "data/raw_data/heat/basel_stadt_waermeinseleffekt_current_epsg2056.gpkg",
+  "file_size_bytes": 6524928,
+  "sqlite_tables": [
+    "fokusgebiet_hitzeentwicklung",
+    "gpkg_contents",
+    "gpkg_extensions",
+    "gpkg_geometry_columns",
+    "gpkg_ogr_contents",
+    "gpkg_spatial_ref_sys",
+    "gpkg_tile_matrix",
+    "gpkg_tile_matrix_set",
+    "rtree_fokusgebiet_hitzeentwicklung_geometry",
+    "rtree_fokusgebiet_hitzeentwicklung_geometry_node",
+    "rtree_fokusgebiet_hitzeentwicklung_geometry_parent",
+    "rtree_fokusgebiet_hitzeentwicklung_geometry_rowid",
+    "sqlite_sequence"
+  ],
+  "contents": [
+    {
+      "table_name": "fokusgebiet_hitzeentwicklung",
+      "data_type": "features",
+      "identifier": "fokusgebiet_hitzeentwicklung",
+      "description": "",
+      "extent": [
+        2608732.6479,
+        1263184.57,
+        2619190.769000001,
+        1272279.217
+      ],
+      "srs_id": 2056,
+      "geometry": {
+        "column": "geometry",
+        "type": "POLYGON",
+        "srs_id": 2056
+      },
+      "feature_count": 976,
+      "columns": [
+        {
+          "name": "FID",
+          "type": "INTEGER",
+          "notnull": true,
+          "primary_key": true
+        },
+        {
+          "name": "geometry",
+          "type": "POLYGON",
+          "notnull": false,
+          "primary_key": false
+        },
+        {
+          "name": "Id_Fokusgebiet",
+          "type": "INTEGER",
+          "notnull": false,
+          "primary_key": false
+        },
+        {
+          "name": "Art",
+          "type": "TEXT",
+          "notnull": false,
+          "primary_key": false
+        }
+      ],
+      "distinct_categorical_values": {
+        "Art": [
+          {
+            "value": "Erhalten",
+            "count": 107
+          },
+          {
+            "value": "Fokus",
+            "count": 49
+          },
+          {
+            "value": "Verbessern",
+            "count": 88
+          },
+          {
+            "value": "übriges Gebiet",
+            "count": 732
+          }
+        ]
+      },
+      "candidate_heat_value_field": null
+    }
+  ],
+  "metadata_tables": [],
+  "tile_matrix_sets": [],
+  "tile_matrices": [],
+  "spatial_ref_systems": [
+    {
+      "srs_id": -1,
+      "organization": "NONE",
+      "organization_coordsys_id": -1,
+      "definition": "undefined",
+      "description": "undefined Cartesian coordinate reference system"
+    },
+    {
+      "srs_id": 0,
+      "organization": "NONE",
+      "organization_coordsys_id": 0,
+      "definition": "undefined",
+      "description": "undefined geographic coordinate reference system"
+    },
+    {
+      "srs_id": 2056,
+      "organization": "EPSG",
+      "organization_coordsys_id": 2056,
+      "definition": "PROJCS[\"CH1903+ / LV95\",GEOGCS[\"CH1903+\",DATUM[\"CH1903+\",SPHEROID[\"Bessel 1841\",6377397.155,299.1528128,AUTHORITY[\"EPSG\",\"7004\"]],AUTHORITY[\"EPSG\",\"6150\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4150\"]],PROJECTION[\"Hotine_Oblique_Mercator_Azimuth_Center\"],PARAMETER[\"latitude_of_center\",46.9524055555556],PARAMETER[\"longitude_of_center\",7.43958333333333],PARAMETER[\"azimuth\",90],PARAMETER[\"rectified_grid_angle\",90],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",2600000],PARAMETER[\"false_northing\",1200000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2056\"]]",
+      "description": null
+    },
+    {
+      "srs_id": 4326,
+      "organization": "EPSG",
+      "organization_coordsys_id": 4326,
+      "definition": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]]",
+      "description": "longitude/latitude coordinates in decimal degrees on the WGS 84 spheroid"
+    }
+  ]
+}

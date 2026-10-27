@@ -1,0 +1,12 @@
+{
+  "name": "street-xray-engine",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Computed street profile and assessment rules for Street X-Ray (ADR 0009)",
+  "scripts": {
+    "select": "python3 scripts/select_street.py",
+    "build": "node scripts/build-profile.mjs",
+    "test": "node scripts/build-profile.mjs --check && node --test test/profile.test.mjs"
+  }
+}

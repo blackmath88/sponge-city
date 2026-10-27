@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/blackmath88/sponge-city/adaptive-interface/contracts/effect-result.schema.json",
+  "title": "EffectResult (adaptive-effects/0.1) and EffectDelta (adaptive-effect-delta/0.1)",
+  "description": "Output of runtime/effect-engine.js. Effects emerge from state under a scenario. Qualitative only: no score, no °C, no runoff %, no rates. Every result names its drivers and keeps a per-element breakdown so local effects can be shown later.",
+  "oneOf": [{ "$ref": "#/$defs/effectResult" }, { "$ref": "#/$defs/effectDelta" }],
+  "$defs": {
+    "effectId": { "enum": ["runoff_tendency", "sewer_load_tendency", "storage_potential", "infiltration_potential", "soil_water_availability", "shade", "evapotranspiration_potential", "surface_heating_tendency"] },
+    "value": {
+      "type": "object",
+      "required": ["value", "state"],
+      "properties": {
+        "value": { "enum": ["low", "medium", "high", null] },
+        "state": { "enum": ["derived", "unknown", "not-applicable"] }
+      },
+      "description": "unknown and not-applicable carry value null"
+    },
+    "result": {
+      "allOf": [{ "$ref": "#/$defs/value" }],
+      "required": ["drivers"],
+      "properties": {
+        "drivers": { "type": "array", "items": { "type": "string" }, "description": "e.g. road.surface.sealed_fraction, connection:road→gully-north, scenario:hot-day.heat.soil_moisture" },
+        "reason": { "type": "string", "description": "why it is unknown / not applicable" },
+        "note": { "type": "string" },
+        "unknown_inputs": { "type": "array", "items": { "type": "string" }, "description": "element ids whose unknowns were bracketed" }
+      }
+    },
+    "placeResult": {
+      "allOf": [{ "$ref": "#/$defs/result" }],
+      "properties": { "by_element": { "type": "object", "additionalProperties": { "$ref": "#/$defs/result" } } }
+    },
+    "effectResult": {
+      "type": "object",
+      "required": ["schema_version", "scenario_id", "effects"],
+      "properties": {
+        "schema_version": { "const": "adaptive-effects/0.1" },
+        "scenario_id": { "type": "string" },
+        "place_id": { "type": "string" },
+        "effects": { "type": "object", "propertyNames": { "$ref": "#/$defs/effectId" }, "additionalProperties": { "$ref": "#/$defs/placeResult" } }
+      }
+    },
+    "effectDelta": {
+      "type": "object",
+      "required": ["schema_version", "scenario_id", "changes"],
+      "properties": {
+        "schema_version": { "const": "adaptive-effect-delta/0.1" },
+        "scenario_id": { "type": "string" },
+        "changes": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/effectId" },
+          "additionalProperties": {
+            "type": "object",
+            "required": ["before", "after", "direction", "assessment", "local"],
+            "properties": {
+              "label": { "type": "string" },
+              "desirable": { "enum": ["lower", "higher"] },
+              "before": { "$ref": "#/$defs/value" },
+              "after": { "$ref": "#/$defs/value" },
+              "direction": { "enum": ["up", "down", "same", "unknown", "not-applicable"] },
+              "assessment": { "enum": ["improves", "worsens", "same", "unknown", "not-applicable"] },
+              "local": { "type": "array", "items": { "type": "object", "required": ["element_id", "before", "after"], "properties": { "element_id": { "type": "string" }, "before": { "$ref": "#/$defs/value" }, "after": { "$ref": "#/$defs/value" } } } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

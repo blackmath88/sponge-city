@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+// @ts-ignore Plain module is also served directly by the standalone campaign.
+import {seed,reviewObservation,passport,validState} from '../public/rain-walk/evidence.mjs';
+test('Review preserves synthetic provenance and never promotes demo to community evidence',()=>{const o=seed()[0];const accepted=reviewObservation(o,'accepted','Practice review');assert.equal(accepted.source,'demo');assert.equal(o.review,'pending');assert.equal(accepted.history.length,1);const p=passport([accepted],'Demo');assert.equal(p.summary.acceptedCommunity,0);assert.equal(p.summary.acceptedDemo,1);assert.match(p.scenarioUpdate,/None/);});
+test('Rejection retains audit history and removes clue from next-check derivation',()=>{const a=reviewObservation(seed()[0],'accepted','Possible structure');const r=reviewObservation(a,'rejected','Actually a shadow');const p=passport([r],'Demo');assert.equal(r.history.length,2);assert.equal(p.observations.length,1);assert.equal(p.nextChecks.length,0);assert.equal(p.summary.rejected,1);});
+test('Review requires valid outcome and reason; stored state rejects invalid positions',()=>{assert.throws(()=>reviewObservation(seed()[0],'authority_confirmed','yes'));assert.throws(()=>reviewObservation(seed()[0],'accepted',' '));assert.equal(validState({version:1,place:'Demo',observations:seed()}),true);assert.equal(validState({version:1,place:'Demo',observations:[{...seed()[0],positionM:999}]}),false);});
